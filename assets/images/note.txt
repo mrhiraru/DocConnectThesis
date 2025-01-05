@@ -1,0 +1,1 @@
+Images that are static, such as the website logo, favicon, etc..

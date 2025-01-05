@@ -1,0 +1,654 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Roboto+Slab:wght@100..900&display=swap');
+
+:root {
+	--primary: #dc3545;
+	--white: whitesmoke;
+	--secondary: #b0eacd;
+	--dark_secondary: #21bf73;
+}
+
+a:hover {
+  color: initial;
+}
+
+.x-large-font {
+  font-size: x-large !important;
+}
+
+.xx-large-font {
+  font-size: xx-large !important;
+}
+
+.xxx-large-font {
+  font-size: xxx-large !important;
+}
+
+.d-name, .d-name span {
+	font-family: "Roboto Slab", sans-serif !important;
+}
+
+.bg-green {
+	background-color: var(--dark_secondary) !important;
+}
+
+.border-green {
+	border: var(--dark_secondary) 2px solid !important;
+}
+
+.text-green {
+	color: var(--dark_secondary);
+}
+
+.c-red {
+	color: var(--primary);
+}
+
+/* DIRTY WHITE BG */
+section#about,
+section#services {
+	background-color: #eeeeee;
+}
+
+/* dropdown-toggle::after */
+.dropdown-toggle::after {
+  display: none;
+}
+
+/* Notification DROPDOWN */
+.notification.dropdown-menu {
+  max-height: 375px !important;
+  overflow-y: scroll;
+}
+
+.notification.dropdown-menu li:hover i {
+  color: var(--dark_secondary) !important;
+}
+
+.notification.dropdown-menu li:hover {
+  color: inherit !important;
+  cursor: pointer;
+}
+
+.notification.dropdown-menu {
+  max-height: 375px !important;
+  overflow-y: auto;
+}
+
+.notification.dropdown-menu::-webkit-scrollbar {
+  width: 8px;
+}
+
+.notification.dropdown-menu::-webkit-scrollbar-track {
+  background: var(--white);
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.notification.dropdown-menu::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  border-radius: 50px; 
+  border: 2px solid var(--white);
+}
+
+.notification.dropdown-menu li:hover i {
+  color: var(--dark_secondary) !important;
+}
+
+.notification.dropdown-menu li:active i.bx,
+.notification.dropdown-menu li:active div.fw-bold,
+.notification.dropdown-menu li:active small.text-muted {
+  color: white !important;
+}
+
+.notification.dropdown-menu li:hover {
+  color: inherit !important;
+  cursor: pointer;
+}
+
+.notification.dropdown-menu .header {
+  pointer-events: none;
+}
+
+.notification.dropdown-menu .header i.bx {
+  pointer-events: auto;
+}
+
+.notification.dropdown-menu .header i.bx:hover {
+  color: var(--dark_secondary) !important;
+  cursor: pointer;
+}
+
+* {
+	font-family: "Oswald", sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	outline: none;
+	border: none;
+	text-decoration: none !important;
+}
+
+html {
+	overflow-x: hidden;
+	scroll-padding-top: 9rem;
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: whitesmoke;
+}
+
+/* MAIN */
+section.main {
+	min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+	border-image: fill 0 linear-gradient(to right, #ad2634, #00000000);
+  background: url(../assets/images/bg-1.png) no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  margin: 0;
+}
+
+/* PAGE CONTAINER */
+.page-container {
+  margin-top: 77px;
+}
+
+/* HEADER NAVLINKS */
+ul.header.nav .nav-link {
+	position: relative;
+}
+
+ul.header.nav .nav-link::after {
+	position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 0%;
+  content: '.';
+  color: transparent;
+  background: var(--primary);
+  height: 1px;
+	transition: all .3s;
+}
+
+ul.header.nav .nav-link.active {
+  background-color: transparent;
+}
+
+ul.header.nav .nav-link.active::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 100%;
+  content: '.';
+  color: transparent;
+  background: var(--primary);
+  height: 1px;
+  transition: all .3s;
+}
+
+ul.header.nav .nav-link:not(.active, .bg-green):hover::after {
+	width: 100%;
+}
+
+/* INDEX SERVICES */
+section#services img {
+	width: 100%;
+}
+
+section#services .card {
+	min-height: 220px;
+	margin-top: -40px;
+}
+
+/* APPPOINTMENT RADIO BUTTONS */
+#doctorDropdown {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.docDropDown .list-group-item {
+  cursor: pointer;
+}
+
+.docDropDown .list-group-item:hover {
+  background-color: #f8f9fa;
+}
+
+/* APPPOINTMENT RADIO BUTTONS */
+.radio-inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 350px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.radio-inputs > * {
+  margin: 5px;
+}
+
+.radio-input:checked + .radio-tile {
+	background-color: var(--primary);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  color: var(--white);
+}
+
+.radio-input:checked + .radio-tile:before {
+  transform: scale(1);
+  opacity: 1;
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.radio-input:checked + .radio-tile .radio-label {
+  color: var(--white);
+}
+
+.radio-input:focus + .radio-tile {
+  border-color: var(--primary);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1), 0 0 0 4px #fcb5b5;
+}
+
+.radio-input:focus + .radio-tile:before {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.radio-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80px;
+  min-height: 80px;
+  border-radius: 0.5rem;
+  border: 2px solid #d9b5b5;
+  background-color: var(--white);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.15s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.radio-tile.time {
+  width: 100px;
+  min-height: 45px;
+}
+
+.radio-tile:hover {
+  border-color: var(--primary);
+}
+
+.radio-label {
+  color: #707070;
+  transition: 0.375s ease;
+  text-align: center;
+  font-size: 13px;
+}
+
+.radio-input {
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(100%);
+  clip-path: inset(100%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* CHAT.PHP CHAT SECTION */
+#messageInput::-webkit-scrollbar {
+  width: .25rem;
+}
+
+#messageInput::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#messageInput::-webkit-scrollbar-thumb {
+  background: gray;
+}
+
+
+section#chat {
+  height: calc(100vh - 63px);
+  max-height: calc(100vh - 63px);
+  margin-top: 62px;
+}
+
+section#chat .body {
+  overflow-y: scroll;
+  height: calc(100% - 145px);
+}
+
+section#chat #chat_text {
+  max-width: 75%;
+}
+
+.chatList.active {
+  background-color: rgb(230, 230, 230);
+}
+
+.chatList:hover {
+  background-color: rgb(230, 230, 230);
+}
+
+#chat input:focus,
+#chat textarea:focus {
+  box-shadow: none !important;
+}
+
+#chat textarea {
+  resize: none;
+  max-height: 150px;
+  overflow-y: auto;
+  height: 40px;
+}
+
+/* ABOUT US SECTION */
+/* section.about-section {
+  margin-top: 100px;
+} */
+
+/* CONTACT SECTION */
+section.main.contact {
+  min-height: 75vh;
+}
+
+section#contacts .box-1 {
+  margin-top: -110px;
+}
+
+/* FOOTER CONTENT */
+.contact-content p::after {
+  bottom: -30px;
+  content: "";
+  height: 1px;
+  left: 50%;
+  position: absolute;
+  transform: translate(-50%);
+  width: 80%;
+}
+
+.contact-content h6 {
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.contact-content span {
+  margin: 0 10px;
+}
+
+.contact-social ul li a {
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  height: 40px;
+  padding-top: 7px;
+  transition: all 0.4s ease;
+  width: 40px;
+}
+
+.contact-social ul li a:hover {
+  border: 1px solid var(--dark_secondary);
+  color: var(--dark_secondary);
+  background: none;
+}
+
+
+/*------------------|
+| DOCTOR'S PAGE CSS |
+|------------------*/
+nav#sidebarMenu,
+main.col-md-9 {
+  margin-top: 69px;
+}
+
+#calendar {
+  max-width: 1100px;
+  margin: 40px auto;
+}
+
+#calendar button {
+  color: whitesmoke;
+}
+
+.doctors_nav .nav-link.active {
+  color: var(--primary) !important;
+  position: relative;
+  background-color: #ad263416;
+}
+
+.doctors_nav .nav-link.active::after {
+  content: "";
+  position: absolute;
+  background-color: var(--primary);
+  top: 0;
+  right: 0;
+  height: 40px;
+  width: 5px;
+}
+/* ----------DASHBOARD------------- */
+.card.overview,
+.card.next_patient {
+  background-color: #ad263416;
+}
+
+.card.chart_appointment {
+  background-color: rgb(242, 242, 242);
+}
+/* ----------DASHBOARD------------- */
+
+/* ----------APPOINMENT------------- */
+.card.appointment_calendar {
+  background-color: #ad263416;
+}
+/* ----------APPOINMENT------------- */
+
+.notification.dropdown-toggle.active {
+  pointer-events: none;
+}
+
+.notification i.bx-bell.active {
+  color: var(--primary);
+  border-radius: 50%;
+  background-color: #ad263416;
+}
+
+/* ----------DoCOTROS_SETTINGS------------- */
+/* ADD/ EDIT CAMPUS */
+.campus-pic {
+  color: transparent;
+  transition: all .3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.campus-pic .bxs-camera-plus {
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  border-radius: 98px;
+  border: 5px solid white;
+}
+
+.campus-pic .label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 150px;
+  height: 150px;
+  z-index: 1000;
+  border-radius: 100px;
+}
+
+.campus-pic .label:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  z-index: 1;
+  transition: background-color .2s ease-in-out;
+  border-radius: 100px;
+  margin-bottom: 0;
+}
+
+.campus-pic .label span{
+  display: inline-flex;
+  padding: .2em;
+  height: 2em;
+  font-size: 1em;
+}
+
+.campus-pic input {
+  display: none;
+}
+
+.campus-pic img {
+  position: absolute;
+  object-fit: cover;
+  height: 150px;
+  width: 150px;
+  border: 3px solid var(--main-color);
+  z-index: 0;
+  border: 2px solid var(--primary);
+}
+/* ----------DoCOTROS_SETTINGS------------- */
+
+/* ----------CHATBOT_links------------- */
+#chat .bot_link {
+  color: #21bf73 !important;
+  text-decoration: underline !important;
+}
+
+#chat .bot_link:hover {
+  color: white !important;
+}
+
+
+#chat_sidepanel {
+  min-width: 25% !important;
+  display: block !important;
+}
+
+#chat_box {
+  display: block !important;
+  width: 75% !important;
+}
+
+/* Styling for mobile view */
+@media (max-width: 768px) {
+  #chat_sidepanel {
+    width: 100% !important;
+    display: block !important;
+  }
+
+  #chat_box {
+    display: none !important;
+    width: 100% !important;
+  }
+}
+
+.show-chat-box #chat_sidepanel {
+  display: none !important;
+}
+
+.show-chat-box #chat_box {
+  display: block !important;
+  width: 100% !important;
+}
+/* ----------CHATBOT_links------------- */
+
+
+@media (max-width:992px) {
+  ul.header.nav .nav-link::after {
+    top: 0;
+  }
+
+  ul.header.nav .nav-link .text {
+    background-color: var(--white);
+    z-index: 100;
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width:450px) {
+	section.main .img {
+		display: none;
+	}
+
+	section#services .card {
+		min-height: 220px;
+		margin-top: -90px;
+	}
+
+	section#about .row {
+		flex-direction: column-reverse;
+	}
+
+	section#about img {
+		margin-bottom: -125px;
+	}
+
+  section.main {
+    border-image: fill 0 linear-gradient(to top, #ad2634, #00000000);
+  }
+
+  .breadcrumb-item a.current {
+    text-decoration: underline;
+    text-decoration-color: lightgreen; 
+    text-decoration-thickness: 2px; 
+    font-weight: bold; 
+    color: inherit; 
+  }
+
+  /*------------------|
+  | DOCTOR'S PAGE CSS |
+  |------------------*/
+  /* ----------DASHBOARD------------- */
+  .fc-header-toolbar,
+  .fc-toolbar,
+  .fc-toolbar-ltr {
+    font-size: 0.85rem !important;
+    padding: 0.5rem 0 !important;
+  }
+
+  .fc .fc-toolbar-title {
+    font-size: 1rem !important;
+  }
+
+  .fc .fc-button {
+    font-size: 0.85rem !important;
+    padding: 0.25rem 0.75rem !important;
+    border-radius: 0px;
+  }
+
+  .fc .fc-button-prev, 
+  .fc .fc-button-next, 
+  .fc .fc-button-today {
+    font-size: 0.85rem !important;
+    padding: 0.25rem 0.5rem !important;
+  }
+
+  .fc .fc-button-group {
+    flex-wrap: wrap;
+  }
+  /* ----------DASHBOARD------------- */
+}
