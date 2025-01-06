@@ -48,8 +48,8 @@ include '../includes/head.php';
           ?>
             <!-- display chat list using php -->
             <a href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2" onclick="loadChatBox(<?= $item['account_id'] ?>)">
-              <img src="<?php if (isset($record['account_image'])) {
-                          echo "../assets/images/" . $record['account_image'];
+              <img src="<?php if (isset($item['account_image'])) {
+                          echo "../assets/images/" . $item['account_image'];
                         } else {
                           echo "../assets/images/default_profile.png";
                         } ?>" alt="Profile" class="rounded-circle me-3" height="40" width="40">

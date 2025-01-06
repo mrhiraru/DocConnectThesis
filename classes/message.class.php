@@ -95,13 +95,12 @@ class Message
 
     function send_message()
     {
-        $sql = "INSERT INTO messages (sender_id, receiver_id, message, status, is_read) VALUES (?, ?, ?, 'sent', 0)";
+        $sql = "INSERT INTO messages (sender_id, receiver_id, message, status, is_read) VALUES (:sender_id, :receiver_id, :message, 'sent', 0)";
 
         $query = $this->db->connect()->prepare($sql);
-        // $query->bindParam(':sender_id', $this->sen);
-        // $query->bindParam(':receiver_id', $account_id);
-        // $query->bindParam(':receiver_id', $account_id);
-        // $query->bindParam(':receiver_id', $account_id);
+        $query->bindParam(':sender_id', $this->sender_id);
+        $query->bindParam(':receiver_id', $this->receiver_id);
+        $query->bindParam(':message', $this->message);
 
         if ($query->execute()) {
             return true;

@@ -4,6 +4,18 @@ require_once("../classes/message.class.php");
 $message = new Message();
 $record = $message->load_chatbox($_GET['account_id']);
 
+if (isset($_POST['send'])) {
+  $message->sender_id = $_SESSION['account_id'];
+  $message->receiver_id = $_GET['account_id'];
+  $message->message = $_POST['message'];
+
+  if ($message->send_message()) {
+    echo "<script>console.log('Message sent.')</script>";
+  } else {
+    echo "<script>console.error('Error sending message.')</script>";
+  }
+}
+
 ?>
 
 <!-- Chat Header -->
@@ -26,6 +38,8 @@ $record = $message->load_chatbox($_GET['account_id']);
   </div>
 </div>
 
+<input type="hidden" id="account_id" value="<?= $_SESSION['account_id'] ?>">
+<input type="hidden" id="chatwith_account_id" value="<?= $_GET['account_id'] ?>">
 <!-- Chat Messages -->
 <div id="chatMessages" class="body flex-grow-1 d-flex flex-column p-3 bg-light">
   <!-- Messages will be dynamically loaded here -->
@@ -33,29 +47,33 @@ $record = $message->load_chatbox($_GET['account_id']);
 </div>
 
 <!-- Chat Input -->
-<div class="chat_input d-flex align-items-end p-3 border-top bg-light">
-  <textarea type="text" id="messageInput" class="form-control border-2 text-dark me-3" placeholder="Type your message"></textarea>
-  <button id="sendMessage" type="button" class="btn btn-light d-flex justify-content-center">
+
+<form action="" method="post" class="chat_input d-flex align-items-end p-3 border-top bg-light">
+  <textarea type="text" id="message" name="message" class="form-control border-2 text-dark me-3" placeholder="Type your message"></textarea>
+  <button id="send" name="send" type="submit" class="btn btn-light d-flex justify-content-center">
     <i class='bx bx-send text-dark fs-4'></i>
   </button>
-</div>
+</form>
+
 
 <script>
   $(document).ready(function() {
-    function loadMessages() {
+    function loadMessages(account_id, chatwith_account_id) {
       $.ajax({
-        url: '../handlers/chat.load_messages.php',
+        url: '../handlers/chat.load_messages.php?account_id=' + account_id + '&chatwith_account_id=' + chatwith_account_id,
         type: 'GET',
         success: function(response) {
           $('#chatMessages').html(response);
         },
         error: function(xhr, status, error) {
-          console.error('Error loading messages:', error);
+          console.error('Error loading chatbox:', error);
         }
       });
     }
 
-    // Call the function to load the chatbox when needed
-    loadMessages();
+    // Call the function to load messages when the chatbox is loaded
+    var account_id = $('#account_id').val();
+    var chatwith_account_id = $('#chatwith_account_id').val();
+    loadMessages(account_id, chatwith_account_id);
   });
 </script>
