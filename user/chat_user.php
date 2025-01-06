@@ -38,7 +38,7 @@ include '../includes/head.php';
           <span class="fs-5 fw-bold">Chats</span>
         </div>
         <div class="input-group mb-3">
-          <input type="text" class="form-control border-2" id="searchChat" placeholder="Search">
+          <input type="text" class="form-control border-2" id="searchChat" placeholder="Search" oninput="update_chatlist(<?= $_SESSION['account_id'] ?>)">
         </div>
         <ul id="chatList" class="list-unstyled mb-0">
           <?php
@@ -93,4 +93,19 @@ include '../includes/head.php';
       }
     });
   }
+
+  function update_chatlist(account_id, user_role) {
+    var search = $('#searchChat').val();
+    $.ajax({
+      url: '../handlers/chat.load_chatlist.php?search=' + search + '&account_id=' + account_id + '&user_role=' + user_role,
+      type: 'GET',
+      success: function(response) {
+        $('#chatList').html(response);
+      },
+      error: function(xhr, status, error) {
+        console.error('Error updating chatlist:', error);
+      }
+    });
+  }
+
 </script>

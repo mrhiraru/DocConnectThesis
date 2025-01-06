@@ -10,7 +10,7 @@ class Message
     public $status;
     public $is_read;
     public $is_created;
-    
+
     public $account_id;
     public $firstname;
     public $middlename;
@@ -49,6 +49,7 @@ class Message
     {
         if (isset($search) && $search != '') {
             $search = trim(htmlentities($search));
+            $searches = explode(" ", $search);
         }
 
         $sql = "SELECT DISTINCT a.*,
@@ -58,18 +59,56 @@ class Message
             WHERE m.sender_id = :account_id AND m.receiver_id != :account_id";
 
         // If a search term is provided, add it to the query
-        if (!empty($search)) {
-            $sql .= " AND (a.firstname LIKE :search OR a.lastname LIKE :search)";
+        // if (!empty($search)) {
+        //     $sql .= " AND (a.firstname LIKE :search OR a.middlename LIKE :search OR a.lastname LIKE :search)";
+        // }
+
+        if (isset($search) && $search != '') {
+            $first_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($first_counter == 0) {
+                    $sql .= " AND ((a.firstname LIKE :search_$key";
+                } else {
+                    $sql .= " OR a.firstname LIKE :search_$key";
+                }
+                $first_counter++;
+            }
+            $sql .= ")";
+            $second_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($second_counter == 0) {
+                    $sql .= " OR (a.middlename LIKE :search_$key";
+                } else {
+                    $sql .= " OR a.middlename LIKE :search_$key";
+                }
+                $second_counter++;
+            }
+            $sql .= ")";
+            $third_counter = 0;
+            foreach ($searches as $key => $word) {
+                if ($third_counter == 0) {
+                    $sql .= " OR (a.lastname LIKE :search_$key";
+                } else {
+                    $sql .= " OR a.lastname LIKE :search_$key";
+                }
+                $third_counter++;
+            }
+            $sql .= "))";
         }
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);
         $query->bindParam(':opposite_role', $opposite_role);
 
-        if (!empty($search)) {
-            $query->bindParam(':search', '%' . $search . '%');
-        }
+        // if (!empty($search)) {
+        //     $query->bindValue(':search', '%' . $search . '%');
+        // }
 
+        if (isset($search) && $search != '') {
+            foreach ($searches as $key => $word) {
+                $query->bindValue(":search_$key", "%$word%");
+            }
+        }
 
         $data = null;
         if ($query->execute()) {
@@ -126,7 +165,8 @@ class Message
         return $data;
     }
 
-    function load_chatbox($account_id) {
+    function load_chatbox($account_id)
+    {
         $sql = "SELECT * FROM account WHERE account_id = :account_id";
 
         $query = $this->db->connect()->prepare($sql);

@@ -7,12 +7,16 @@ $record = $message->load_chatbox($_GET['account_id']);
 if (isset($_POST['send'])) {
   $message->sender_id = $_SESSION['account_id'];
   $message->receiver_id = $_GET['account_id'];
-  $message->message = $_POST['message'];
+  $message->message = htmlentities($_POST['message']);
 
-  if ($message->send_message()) {
-    echo "<script>console.log('Message sent.')</script>";
+  if (validate_field($message->message)) {
+    if ($message->send_message()) {
+      $success = 'success';
+    } else {
+      echo 'An error occured while adding in the database.';
+    }
   } else {
-    echo "<script>console.error('Error sending message.')</script>";
+    $success = 'failed';
   }
 }
 
