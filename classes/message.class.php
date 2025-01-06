@@ -10,6 +10,15 @@ class Message
     public $status;
     public $is_read;
     public $is_created;
+    
+    public $account_id;
+    public $firstname;
+    public $middlename;
+    public $lastname;
+    public $account_image;
+
+
+
 
     protected $db;
 
@@ -41,16 +50,6 @@ class Message
         if (isset($search) && $search != '') {
             $search = trim(htmlentities($search));
         }
-
-        $sql_first = "SELECT DISTINCT a.account_id, a.firstname, a.lastname, a.account_image,
-            (SELECT COUNT(*) FROM messages m
-             WHERE m.receiver_id = :account_id 
-             AND m.sender_id = a.account_id 
-             AND m.is_read = 0) AS unread_count
-             FROM account a
-             LEFT JOIN messages m ON (a.account_id = m.sender_id OR a.account_id = m.receiver_id)
-             WHERE (a.user_role = :opposite_role)
-             AND a.account_id != :account_id";
 
         $sql = "SELECT DISTINCT a.*,
             (SELECT COUNT(*) FROM messages m WHERE m.receiver_id = :account_id AND m.sender_id = a.account_id AND m.is_read = 0) AS unread_count
@@ -109,5 +108,36 @@ class Message
         } else {
             return false;
         }
+    }
+
+    function load_messages($account_id, $chatwith_account_id)
+    {
+        $sql = "SELECT * FROM messages 
+        WHERE sender_id = :account_id AND receiver_id = :chatwith_account_id
+        OR sender_id = :chatwith_account_id AND receiver_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+        $query->bindParam(':chatwith_account_id', $chatwith_account_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function load_chatbox($account_id) {
+        $sql = "SELECT * FROM account WHERE account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+
+        return $data;
     }
 }

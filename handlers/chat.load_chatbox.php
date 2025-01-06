@@ -1,3 +1,11 @@
+<?php
+require_once("../classes/message.class.php");
+
+$message = new Message();
+$record = $message->load_chatbox($_GET['account_id']);
+
+?>
+
 <!-- Chat Header -->
 <div class="head border-bottom bg-light py-3 px-3">
   <div class="d-flex justify-content-between align-items-center">
@@ -5,8 +13,12 @@
       <button id="backToChatList" class="btn p-0 pe-2 btn-light d-flex d-md-none">
         <i class='bx bx-left-arrow-alt fs-3'></i>
       </button>
-      <img src="../assets/images/defualt_profile.png" alt="Profile" class="rounded-circle me-3" height="40" width="40">
-      <span id="chatUser">Select a user to start chatting</span>
+      <img src="<?php if (isset($record['account_image'])) {
+                  echo "../assets/images/" . $record['account_image'];
+                } else {
+                  echo "../assets/images/default_profile.png";
+                } ?>" alt="Profile" class="rounded-circle me-3" height="40" width="40">
+      <span><?= (isset($record['middlename'])) ? ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname'])) : ucwords(strtolower($item['firstname'] . ' ' . $record['lastname'])) ?></span>
     </div>
     <div>
       <i class='bx bx-dots-horizontal-rounded fs-4'></i>
@@ -28,13 +40,11 @@
   </button>
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
     function loadMessages() {
       $.ajax({
-        url: 'handlers/chat.load_messages.php',
+        url: '../handlers/chat.load_messages.php',
         type: 'GET',
         success: function(response) {
           $('#chatMessages').html(response);
