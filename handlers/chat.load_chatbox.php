@@ -4,22 +4,6 @@ require_once("../classes/message.class.php");
 $message = new Message();
 $record = $message->load_chatbox($_GET['account_id']);
 
-if (isset($_POST['send'])) {
-  $message->sender_id = $_SESSION['account_id'];
-  $message->receiver_id = $_GET['account_id'];
-  $message->message = htmlentities($_POST['message']);
-
-  if (validate_field($message->message)) {
-    if ($message->send_message()) {
-      $success = 'success';
-    } else {
-      echo 'An error occured while adding in the database.';
-    }
-  } else {
-    $success = 'failed';
-  }
-}
-
 ?>
 
 <!-- Chat Header -->
@@ -45,20 +29,21 @@ if (isset($_POST['send'])) {
 <input type="hidden" id="account_id" value="<?= $_SESSION['account_id'] ?>">
 <input type="hidden" id="chatwith_account_id" value="<?= $_GET['account_id'] ?>">
 <!-- Chat Messages -->
-<div id="chatMessages" class="body flex-grow-1 d-flex flex-column p-3 bg-light">
+<div id="chatMessages" class="body flex-grow-1 d-flex flex-column p-3 bg-light overflow-auto">
   <!-- Messages will be dynamically loaded here -->
 
 </div>
 
 <!-- Chat Input -->
 
-<form action="" method="post" class="chat_input d-flex align-items-end p-3 border-top bg-light">
+<form id="chatForm" action="" method="post" class="chat_input d-flex align-items-end p-3 border-top bg-light">
+  <input type="hidden" name="sender_id" value="<?= $_SESSION['account_id'] ?>">
+  <input type="hidden" name="receiver_id" value="<?= $_GET['account_id'] ?>">
   <textarea type="text" id="message" name="message" class="form-control border-2 text-dark me-3" placeholder="Type your message"></textarea>
   <button id="send" name="send" type="submit" class="btn btn-light d-flex justify-content-center">
     <i class='bx bx-send text-dark fs-4'></i>
   </button>
 </form>
-
 
 <script>
   $(document).ready(function() {
@@ -68,6 +53,7 @@ if (isset($_POST['send'])) {
         type: 'GET',
         success: function(response) {
           $('#chatMessages').html(response);
+          scrollToBottom();
         },
         error: function(xhr, status, error) {
           console.error('Error loading chatbox:', error);
@@ -75,9 +61,32 @@ if (isset($_POST['send'])) {
       });
     }
 
+    function scrollToBottom() {
+      var chatMessages = document.getElementById('chatMessages');
+      chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
     // Call the function to load messages when the chatbox is loaded
     var account_id = $('#account_id').val();
     var chatwith_account_id = $('#chatwith_account_id').val();
     loadMessages(account_id, chatwith_account_id);
+
+    $('#chatForm').on('submit', function(e) {
+      e.preventDefault();
+      var message = $('#message').val();
+
+      $.ajax({
+        url: '../handlers/chat.send_message.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(response) {
+          $('#message').val('');
+          loadMessages(account_id, chatwith_account_id);
+        },
+        error: function(xhr, status, error) {
+          console.error('Error sending message:', error);
+        }
+      });
+    });
   });
 </script>

@@ -13,10 +13,24 @@ require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 require_once('../classes/message.class.php');
 
-$db = new Database();
-$pdo = $db->connect();
+// $message = new Message();
+// if (isset($_POST['send'])) {
+//   $message->sender_id = $_SESSION['account_id'];
+//   $message->receiver_id = $_POST['receiver_id'];
+//   $message->message = htmlentities($_POST['message']);
 
-$account_id = isset($_SESSION['account_id']) ? $_SESSION['account_id'] : 0;
+//   if (validate_field($message->message)) {
+//     if ($message->send_message()) {
+//       $success = 'success';
+//       // call this loadChatBox(account_id) here but it is javascript is how is that possible
+//     } else {
+//       echo 'An error occured while adding in the database.';
+//     }
+//   } else {
+//     $success = 'failed';
+//   }
+// }
+
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +41,7 @@ include '../includes/head.php';
 ?>
 
 <body class="bg-white">
-  <input type="hidden" id="account_id" value="<?php echo htmlspecialchars($account_id); ?>">
+  <input type="hidden" id="account_id" value="<?= $_SESSION['account_id'] ?>">
   <?php require_once('../includes/header.php'); ?>
 
   <section id="chat" class="padding-medium">
@@ -107,5 +121,4 @@ include '../includes/head.php';
       }
     });
   }
-
 </script>
