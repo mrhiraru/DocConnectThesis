@@ -13,6 +13,7 @@ require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 require_once('../classes/message.class.php');
 
+
 // $message = new Message();
 // if (isset($_POST['send'])) {
 //   $message->sender_id = $_SESSION['account_id'];
@@ -61,7 +62,7 @@ include '../includes/head.php';
           foreach ($chatArray as $item) {
           ?>
             <!-- display chat list using php -->
-            <a href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2 border-bottom" onclick="loadChatBox(<?= $item['account_id'] ?>)">
+            <a href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2 border-bottom" onclick="loadChatBox(<?= $_SESSION['account_id'] ?>,<?= $item['account_id'] ?>)">
               <img src="<?php if (isset($item['account_image'])) {
                           echo "../assets/images/" . $item['account_image'];
                         } else {
@@ -95,9 +96,9 @@ include '../includes/head.php';
 
 
 <script>
-  function loadChatBox(account_id) {
+  function loadChatBox(account_id, chatwith_account_id) {
     $.ajax({
-      url: '../handlers/chat.load_chatbox.php?account_id=' + account_id,
+      url: '../handlers/chat.load_chatbox.php?account_id=' + account_id + '&chatwith_account_id=' + chatwith_account_id,
       type: 'GET',
       success: function(response) {
         $('#chat_box').html(response);
@@ -121,4 +122,5 @@ include '../includes/head.php';
       }
     });
   }
+  
 </script>

@@ -2,7 +2,7 @@
 require_once("../classes/message.class.php");
 
 $message = new Message();
-$record = $message->load_chatbox($_GET['account_id']);
+$record = $message->load_chatbox($_GET['chatwith_account_id']);
 
 ?>
 
@@ -26,8 +26,8 @@ $record = $message->load_chatbox($_GET['account_id']);
   </div>
 </div>
 
-<input type="hidden" id="account_id" value="<?= $_SESSION['account_id'] ?>">
-<input type="hidden" id="chatwith_account_id" value="<?= $_GET['account_id'] ?>">
+<input type="hidden" id="account_id" value="<?= $_GET['account_id'] ?>">
+<input type="hidden" id="chatwith_account_id" value="<?= $_GET['chatwith_account_id'] ?>">
 <!-- Chat Messages -->
 <div id="chatMessages" class="body flex-grow-1 d-flex flex-column p-3 bg-light overflow-auto">
   <!-- Messages will be dynamically loaded here -->
@@ -37,8 +37,8 @@ $record = $message->load_chatbox($_GET['account_id']);
 <!-- Chat Input -->
 
 <form id="chatForm" action="" method="post" class="chat_input d-flex align-items-end p-3 border-top bg-light">
-  <input type="hidden" name="sender_id" value="<?= $_SESSION['account_id'] ?>">
-  <input type="hidden" name="receiver_id" value="<?= $_GET['account_id'] ?>">
+  <input type="hidden" id="sender_id" name="sender_id" value="<?= $_GET['account_id'] ?>">
+  <input type="hidden" id="receiver_id" name="receiver_id" value="<?= $_GET['chatwith_account_id'] ?>">
   <textarea type="text" id="message" name="message" class="form-control border-2 text-dark me-3" placeholder="Type your message"></textarea>
   <button id="send" name="send" type="submit" class="btn btn-light d-flex justify-content-center">
     <i class='bx bx-send text-dark fs-4'></i>
@@ -73,12 +73,18 @@ $record = $message->load_chatbox($_GET['account_id']);
 
     $('#chatForm').on('submit', function(e) {
       e.preventDefault();
-      var message = $('#message').val();
+
+      const formData = {
+        send: $('#send').val(),
+        sender_id: $("#sender_id").val(),
+        receiver_id: $("#receiver_id").val(),
+        message: $("#message").val()
+      }
 
       $.ajax({
         url: '../handlers/chat.send_message.php',
         type: 'POST',
-        data: $(this).serialize(),
+        data: formData,
         success: function(response) {
           $('#message').val('');
           loadMessages(account_id, chatwith_account_id);
