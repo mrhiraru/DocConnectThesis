@@ -150,6 +150,7 @@ class Message
 
     function load_messages($account_id, $chatwith_account_id)
     {
+
         $sql = "SELECT * FROM messages 
         WHERE sender_id = :account_id AND receiver_id = :chatwith_account_id
         OR sender_id = :chatwith_account_id AND receiver_id = :account_id";

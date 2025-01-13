@@ -47,18 +47,37 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
 
 <script>
   $(document).ready(function() {
+
+    let last_message_id = 0;
+
     function loadMessages(account_id, chatwith_account_id) {
       $.ajax({
-        url: '../handlers/chat.load_messages.php?account_id=' + account_id + '&chatwith_account_id=' + chatwith_account_id,
+        url: '../handlers/chat.load_messages.php',
         type: 'GET',
+        data: {
+          account_id: account_id,
+          chatwith_account_id: chatwith_account_id,
+          last_message_id: last_message_id
+        },
         success: function(response) {
-          $('#chatMessages').html(response);
+          $('#chatMessages').append(response);
           scrollToBottom();
+          updateLastMessageId();
         },
         error: function(xhr, status, error) {
           console.error('Error loading chatbox:', error);
+          setTimeout(function() {
+            loadMessages(account_id, chatwith_account_id);
+          }, 5000);
         }
       });
+    }
+
+    function updateLastMessageId() {
+      let messages = $('#chatMessages').children();
+      if (messages.length > 0) {
+        last_message_id = messages.last().data('message-id');
+      }
     }
 
     function scrollToBottom() {
@@ -87,12 +106,13 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
         data: formData,
         success: function(response) {
           $('#message').val('');
-          loadMessages(account_id, chatwith_account_id);
+          //loadMessages(account_id, chatwith_account_id);
         },
         error: function(xhr, status, error) {
           console.error('Error sending message:', error);
         }
       });
     });
+
   });
 </script>

@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const escapedMessage = escapeHtml(messageInput);
     messageElement.innerHTML = `
       <div class="bg-primary text-light p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;">${escapedMessage}</div>
-      <img src="../assets/images/default_profile.png" alt="Profile" class="rounded-circle ms-3" height="30" width="30">`;
+      <img src="../assets/images/default_profile.png" a lt="Profile" class="rounded-circle ms-3" height="30" width="30">`;
   
     chatMessages.appendChild(messageElement);
     document.getElementById('messageInput').value = '';
