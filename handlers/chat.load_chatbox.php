@@ -46,12 +46,18 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
 </form>
 
 <script>
-  $(document).ready(function() {
+  var currentMessagesRequest = null;
 
+  $(document).ready(function() {
     let last_message_id = 0;
 
     function loadMessages(account_id, chatwith_account_id) {
-      $.ajax({
+      if (currentMessagesRequest) {
+        currentMessagesRequest.abort();
+        console.log('Aborted previous request');
+      }
+
+      currentMessagesRequest = $.ajax({
         url: '../handlers/chat.load_messages.php',
         type: 'GET',
         data: {
@@ -63,12 +69,20 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
           $('#chatMessages').append(response);
           scrollToBottom();
           updateLastMessageId();
+          console.log('last_message_id:', last_message_id);
+          console.log('account_id:', account_id);
+          console.log('chatwith_account_id:', chatwith_account_id);
+          loadMessages(account_id, chatwith_account_id);
         },
         error: function(xhr, status, error) {
           console.error('Error loading chatbox:', error);
+
           setTimeout(function() {
             loadMessages(account_id, chatwith_account_id);
           }, 5000);
+        },
+        complete: function() {
+          currentMessagesRequest = null;
         }
       });
     }

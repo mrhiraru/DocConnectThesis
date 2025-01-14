@@ -6,34 +6,27 @@ $message = new Message();
 $timeout = 30;
 $start_time = time();
 
-$last_message_id = isset($_GET['last_message_id']) ? $_GET['last_message_id'] : 0;
-
 while (time() - $start_time < $timeout) {
-$messageArray = $message->load_messages($_GET['account_id'], $_GET['chatwith_account_id'], $last_message_id);
+    $messageArray = $message->load_messages($_GET['account_id'], $_GET['chatwith_account_id'], $_GET['last_message_id']);
 
-if (count($messageArray) > 0) {
-foreach ($messageArray as $item) {
-    $last_message_id = $item['message_id'];
-    if ($item['sender_id'] == $_GET['account_id'] && $item['receiver_id'] == $_GET['chatwith_account_id']) {
+    if (count($messageArray) > 0) {
+        foreach ($messageArray as $item) {
+            if ($item['sender_id'] == $_GET['account_id'] && $item['receiver_id'] == $_GET['chatwith_account_id']) {
 ?>
-        <div class="d-flex align-items-center mb-2" data-message-id="<?= $item['message_id'] ?>">
-            <div class="bg-primary text-light p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
-        </div>
-    <?php
-    } else if ($item['sender_id'] == $_GET['chatwith_account_id'] && $item['receiver_id'] == $_GET['account_id']) {
-    ?>
-        <div class="d-flex align-items-center justify-content-end mb-2" data-message-id="<?= $item['message_id'] ?>">
-            <div class="bg-secondary text-light p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
-        </div>
+                <div class="d-flex align-items-center mb-2" data-message-id="<?= $item['message_id'] ?>">
+                    <div class="bg-primary text-light p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
+                </div>
+            <?php
+            } else if ($item['sender_id'] == $_GET['chatwith_account_id'] && $item['receiver_id'] == $_GET['account_id']) {
+            ?>
+                <div class="d-flex align-items-center justify-content-end mb-2" data-message-id="<?= $item['message_id'] ?>">
+                    <div class="bg-secondary text-light p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
+                </div>
 <?php
             }
         }
         break;
     }
     sleep(2);
-}
-
-if (count($messageArray) == 0) {
-    echo '';
 }
 ?>

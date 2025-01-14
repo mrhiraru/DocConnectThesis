@@ -148,16 +148,25 @@ class Message
         }
     }
 
-    function load_messages($account_id, $chatwith_account_id)
+    function load_messages($account_id, $chatwith_account_id, $last_message_id = 0)
     {
-
         $sql = "SELECT * FROM messages 
-        WHERE sender_id = :account_id AND receiver_id = :chatwith_account_id
-        OR sender_id = :chatwith_account_id AND receiver_id = :account_id";
+        WHERE ((sender_id = :account_id AND receiver_id = :chatwith_account_id)
+        OR (sender_id = :chatwith_account_id AND receiver_id = :account_id))";
+
+        if ($last_message_id > 0) {
+            $sql .= " AND message_id > :last_message_id";
+        }
+
+        $sql .= " ORDER BY message_id ASC";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);
         $query->bindParam(':chatwith_account_id', $chatwith_account_id);
+
+        if ($last_message_id > 0) {
+            $query->bindParam(':last_message_id', $last_message_id);
+        }
 
         $data = null;
         if ($query->execute()) {

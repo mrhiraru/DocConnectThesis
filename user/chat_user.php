@@ -96,8 +96,21 @@ include '../includes/head.php';
 
 
 <script>
+  var currentOpenedChat = null;
+  var currentChatRequest = null;
+
   function loadChatBox(account_id, chatwith_account_id) {
-    $.ajax({
+    if (currentOpenedChat == chatwith_account_id) {
+      return;
+    } else {
+      currentOpenedChat = chatwith_account_id;
+    }
+
+    if (currentChatRequest) {
+      currentChatRequest.abort();
+    }
+
+    currentChatRequest = $.ajax({
       url: '../handlers/chat.load_chatbox.php?account_id=' + account_id + '&chatwith_account_id=' + chatwith_account_id,
       type: 'GET',
       success: function(response) {
@@ -122,5 +135,4 @@ include '../includes/head.php';
       }
     });
   }
-  
 </script>
