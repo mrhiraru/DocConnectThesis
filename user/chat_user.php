@@ -23,13 +23,13 @@ include '../includes/head.php';
 ?>
 
 <body class="bg-white">
-  // input hidden account id removed from here
+  <!-- // input hidden account id removed from here -->
   <?php require_once('../includes/header.php'); ?>
 
   <section id="chat" class="padding-medium">
-    <div class="d-flex h-100">
+    <div class="d-flex h-100 m-0">
       <!-- Left Sidebar (Chats List) -->
-      <div id="chat_sidepanel" class="d-flex flex-column bg-light border-end p-3 mt-3" style="min-width: 25%;">
+      <div id="chat_sidepanel" class="d-flex flex-column bg-light border-end p-3 m-0" style="min-width: 25%;">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <span class="fs-5 fw-bold">Chats</span>
         </div>
@@ -62,7 +62,7 @@ include '../includes/head.php';
 
 
       <!-- Chat Box -->
-      <div id="chat_box" class="flex-grow-1 d-flex flex-column m-0 mt-3">
+      <div id="chat_box" class="flex-grow-1 d-flex flex-column m-0">
         <div class="d-flex flex-column justify-content-center align-items-center h-100">
           <p class="text-muted text-center">Select a user to start messaging.</p>
         </div>
@@ -81,8 +81,6 @@ include '../includes/head.php';
   var currentChatRequest = null;
   var currentMessagesRequest = null;
   var last_message_id = 0;
-  var sender_id = null;
-  var receiver_id = null;
 
   function loadChatBox(account_id, chatwith_account_id) {
     if (currentOpenedChat === chatwith_account_id) {
@@ -93,12 +91,10 @@ include '../includes/head.php';
 
     if (currentChatRequest) {
       currentChatRequest.abort();
-      console.log('Aborted previous chat request');
     }
     
     if (currentMessagesRequest) {
       currentMessagesRequest.abort();
-      console.log('Aborted previous messages request');
     }
 
     currentChatRequest = $.ajax({
@@ -110,8 +106,6 @@ include '../includes/head.php';
       },
       success: function(response) {
         $('#chat_box').html(response);
-        sender_id = account_id;
-        receiver_id = chatwith_account_id;
         last_message_id = 0;
         scrollToBottom();
         loadMessages(account_id, chatwith_account_id);
