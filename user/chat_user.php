@@ -13,25 +13,6 @@ require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 require_once('../classes/message.class.php');
 
-
-// $message = new Message();
-// if (isset($_POST['send'])) {
-//   $message->sender_id = $_SESSION['account_id'];
-//   $message->receiver_id = $_POST['receiver_id'];
-//   $message->message = htmlentities($_POST['message']);
-
-//   if (validate_field($message->message)) {
-//     if ($message->send_message()) {
-//       $success = 'success';
-//       // call this loadChatBox(account_id) here but it is javascript is how is that possible
-//     } else {
-//       echo 'An error occured while adding in the database.';
-//     }
-//   } else {
-//     $success = 'failed';
-//   }
-// }
-
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +23,7 @@ include '../includes/head.php';
 ?>
 
 <body class="bg-white">
-  <input type="hidden" id="account_id" value="<?= $_SESSION['account_id'] ?>">
+  // input hidden account id removed from here
   <?php require_once('../includes/header.php'); ?>
 
   <section id="chat" class="padding-medium">
@@ -98,9 +79,13 @@ include '../includes/head.php';
 <script>
   var currentOpenedChat = null;
   var currentChatRequest = null;
+  var currentMessagesRequest = null;
+  var last_message_id = 0;
+  var sender_id = null;
+  var receiver_id = null;
 
   function loadChatBox(account_id, chatwith_account_id) {
-    if (currentOpenedChat == chatwith_account_id) {
+    if (currentOpenedChat === chatwith_account_id) {
       return;
     } else {
       currentOpenedChat = chatwith_account_id;
@@ -108,16 +93,34 @@ include '../includes/head.php';
 
     if (currentChatRequest) {
       currentChatRequest.abort();
+      console.log('Aborted previous chat request');
+    }
+    
+    if (currentMessagesRequest) {
+      currentMessagesRequest.abort();
+      console.log('Aborted previous messages request');
     }
 
     currentChatRequest = $.ajax({
-      url: '../handlers/chat.load_chatbox.php?account_id=' + account_id + '&chatwith_account_id=' + chatwith_account_id,
+      url: '../handlers/chat.load_chatbox.php',
       type: 'GET',
+      data: {
+        account_id: account_id,
+        chatwith_account_id: chatwith_account_id
+      },
       success: function(response) {
         $('#chat_box').html(response);
+        sender_id = account_id;
+        receiver_id = chatwith_account_id;
+        last_message_id = 0;
+        scrollToBottom();
+        loadMessages(account_id, chatwith_account_id);
       },
       error: function(xhr, status, error) {
         console.error('Error loading chatbox:', error);
+      },
+      complete: function() {
+        currentChatRequest = null;
       }
     });
   }
@@ -135,4 +138,71 @@ include '../includes/head.php';
       }
     });
   }
+
+  function loadMessages(account_id, chatwith_account_id) {
+    currentMessagesRequest = $.ajax({
+      url: '../handlers/chat.load_messages.php',
+      type: 'GET',
+      data: {
+        account_id: account_id,
+        chatwith_account_id: chatwith_account_id,
+        last_message_id: last_message_id
+      },
+      success: function(response) {
+        $('#chatMessages').append(response);
+        scrollToBottom();
+        updateLastMessageId();
+        console.log('last_message_id:', last_message_id);
+        console.log('account_id:', account_id);
+        console.log('chatwith_account_id:', chatwith_account_id);
+        currentMessagesRequest = null;
+        loadMessages(account_id, chatwith_account_id);
+      },
+      error: function(xhr, status, error) {
+        console.error('Error loading messages:', error);
+        if (status !== 'abort') {
+          console.error('Error loading messages:', error);
+          setTimeout(function() {
+            loadMessages(account_id, chatwith_account_id);
+          }, 5000);
+        }
+      }
+    });
+  }
+
+  function updateLastMessageId() {
+    let messages = $('#chatMessages').children();
+    if (messages.length > 0) {
+      last_message_id = messages.last().data('message-id');
+    }
+  }
+
+  function scrollToBottom() {
+    var chatMessages = document.getElementById('chatMessages');
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // $('#chatForm').on('submit', function(e) {
+  //   e.preventDefault();
+
+  //   const formData = {
+  //     send: $('#send').val(),
+  //     sender_id: sender_id,
+  //     receiver_id: receiver_id,
+  //     message: $("#message").val()
+  //   }
+
+  //   $.ajax({
+  //     url: '../handlers/chat.send_message.php',
+  //     type: 'POST',
+  //     data: formData,
+  //     success: function(response) {
+  //       $('#message').val('');
+  //       //loadMessages(account_id, chatwith_account_id);
+  //     },
+  //     error: function(xhr, status, error) {
+  //       console.error('Error sending message:', error);
+  //     }
+  //   });
+  // });
 </script>
