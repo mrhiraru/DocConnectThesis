@@ -55,7 +55,7 @@ include '../includes/head.php';
               <?php
               if ($item['unread_count'] > 0) {
               ?>
-                <span class="top-50 start-100 translate-middle-x badge rounded-pill bg-danger">
+                <span id="unread<?= $item['account_id'] ?>" class="top-50 start-100 translate-middle-x badge rounded-pill bg-danger">
                   <?= $item['unread_count'] ?>
                   <span class="visually-hidden">unread messages</span>
                 </span>
@@ -118,6 +118,7 @@ include '../includes/head.php';
         $('#chat_box').html(response);
         last_message_id = 0;
         scrollToBottom();
+        $('#unread' + chatwith_account_id).remove();
         loadMessages(account_id, chatwith_account_id);
       },
       error: function(xhr, status, error) {
