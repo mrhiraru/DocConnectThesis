@@ -4,11 +4,11 @@ require_once("../classes/message.class.php");
 $message = new Message();
 $record = $message->load_chatbox($_GET['chatwith_account_id']);
 
-if ($message->mark_messages_read($_GET['chatwith_account_id'], $_GET['account_id'])) {
-  $success = 'success';
-} else {
-  echo 'An error occured while adding in the database.';
-}
+// if ($message->mark_messages_read($_GET['chatwith_account_id'], $_GET['account_id'])) {
+//   $success = 'success';
+// } else {
+//   echo 'An error occured while adding in the database.';
+// }
 
 ?>
 
