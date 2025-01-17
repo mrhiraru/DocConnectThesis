@@ -57,7 +57,9 @@ class Message
             FROM messages m 
             LEFT JOIN account a ON (a.account_id = m.receiver_id OR a.account_id = m.sender_id)
             WHERE a.account_id != :account_id 
-            AND (SELECT COUNT(*) FROM messages m WHERE ((m.receiver_id = :account_id AND m.sender_id = a.account_id) OR (m.receiver_id = a.account_id AND m.sender_id = :account_id))) > 0";
+            AND (SELECT COUNT(*) FROM messages m 
+            WHERE ((m.receiver_id = :account_id AND m.sender_id = a.account_id) 
+            OR (m.receiver_id = a.account_id AND m.sender_id = :account_id))) > 0";
         //WHERE m.sender_id = :account_id AND m.receiver_id != :account_id";
 
         // If a search term is provided, add it to the query
