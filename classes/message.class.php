@@ -53,7 +53,7 @@ class Message
         }
 
         $sql = "SELECT DISTINCT a.*,
-            (SELECT COUNT(*) FROM messages m WHERE m.receiver_id = :account_id AND m.sender_id = a.account_id AND m.is_read = 0) AS unread_count
+            (SELECT COUNT(*) FROM messages m WHERE m.receiver_id = a.account_id AND m.sender_id = :account_id AND m.is_read = 0) AS unread_count
             FROM messages m 
             LEFT JOIN account a ON a.account_id = m.receiver_id
             WHERE m.sender_id = :account_id AND m.receiver_id != :account_id";
