@@ -37,6 +37,12 @@ include '../includes/head.php';
           <input type="text" class="form-control border-2" id="searchChat" placeholder="Search" oninput="update_chatlist(<?= $_SESSION['account_id'] ?>)">
         </div>
         <ul id="chatList" class="list-unstyled mb-0">
+          <a href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2 border-bottom" onclick="loadBotChatBox(<?= $_SESSION['account_id'] ?>)">
+            <img src="../assets/images/chatbot_profile.png" alt="Profile" class="rounded-circle me-3 border" height="40" width="40">
+            <div class="w-100">
+              <strong>Chatbot</strong>
+            </div>
+          </a>
           <?php
           $message = new Message();
           $chatArray = $message->get_chats($_SESSION['account_id'], ($_SESSION['user_role'] == 3) ? 1 : 3, "");
@@ -80,6 +86,7 @@ include '../includes/head.php';
     </div>
   </section>
   <script src="../js/chat.js"></script>
+  <script src="../js/chatbot.js"></script>
 </body>
 
 </html>

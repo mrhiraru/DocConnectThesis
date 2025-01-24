@@ -3,6 +3,8 @@ var currentChatRequest = null;
 var currentMessagesRequest = null;
 var last_message_id = 0;
 
+// USER CHAT FUNCTIONS
+
 function loadChatBox(account_id, chatwith_account_id) {
   if (currentOpenedChat === chatwith_account_id) {
     return;
@@ -116,4 +118,70 @@ function updateLastMessageId() {
 function scrollToBottom() {
   var chatMessages = document.getElementById("chatMessages");
   chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+
+// CHATBOT FUNCTIONS
+
+function loadChatBox(account_id, chatwith_account_id) {
+  if (currentOpenedChat === chatwith_account_id) {
+    return;
+  } else {
+    currentOpenedChat = chatwith_account_id;
+  }
+
+  if (currentChatRequest) {
+    currentChatRequest.abort();
+  }
+
+  if (currentMessagesRequest) {
+    currentMessagesRequest.abort();
+  }
+
+  currentChatRequest = $.ajax({
+    url: "../handlers/chatbot.load_chatbox.php",
+    type: "GET",
+    data: {
+      account_id: account_id
+    },
+    success: function (response) {
+      $("#chat_box").html(response);
+      last_message_id = 0;
+      scrollToBottom();
+      loadMessages(account_id, chatwith_account_id);
+    },
+    error: function (xhr, status, error) {
+      console.error("Error loading chatbox:", error);
+    },
+    complete: function () {
+      currentChatRequest = null;
+    },
+  });
+}
+
+function loadBotMessages(account_id) {
+  currentMessagesRequest = $.ajax({
+    url: "../handlers/chatbot.load_messages.php",
+    type: "GET",
+    data: {
+      account_id: account_id,
+      last_message_id: last_message_id,
+    },
+    success: function (response) {
+      $("#chatMessages").append(response);
+      scrollToBottom();
+      updateLastMessageId();
+      currentMessagesRequest = null;
+      loadBotMessages(account_id);
+    },
+    error: function (xhr, status, error) {
+      console.error("Error loading messages:", error);
+      if (status !== "abort") {
+        console.error("Error loading messages:", error);
+        setTimeout(function () {
+          loadBotMessages(account_id);
+        }, 5000);
+      }
+    },
+  });
 }
