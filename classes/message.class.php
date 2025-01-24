@@ -17,7 +17,9 @@ class Message
     public $lastname;
     public $account_image;
 
-
+    public $cb_message_id;
+    public $user_message;
+    public $bot_response;
 
 
     protected $db;
@@ -26,6 +28,8 @@ class Message
     {
         $this->db = new Database();
     }
+
+    // USER CHAT FUNCTIONS
 
     function fetch_messages($account_id, $with_account_id)
     {
@@ -191,6 +195,33 @@ class Message
             $data = $query->fetch();
         }
 
+        return $data;
+    }
+
+    // CHATBOT FUNCTIONS
+
+    function load_chatbot_messages($account_id, $last_message_id = 0)
+    {
+        $sql = "SELECT * FROM chatbot_messages 
+        WHERE account_id = :account_id";
+
+        if ($last_message_id > 0) {
+            $sql .= " AND cb_message_id > :last_message_id";
+        }
+
+        $sql .= " ORDER BY is_created ASC";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+
+        if ($last_message_id > 0) {
+            $query->bindParam(':last_message_id', $last_message_id);
+        }
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
         return $data;
     }
 }
