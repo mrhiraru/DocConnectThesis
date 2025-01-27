@@ -15,7 +15,7 @@ if (isset($_POST['send'])) {
     if (validate_field($message->message)) {
         if ($message->send_bot_message()) {
             $success = 'success';
-            // call this loadChatBox(account_id) here but it is javascript is how is that possible
+            // call chatbot function to get response and save to database.
         } else {
             echo 'An error occured while adding in the database.';
         }
