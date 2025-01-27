@@ -18,8 +18,7 @@ class Message
     public $account_image;
 
     public $cb_message_id;
-    public $user_message;
-    public $bot_response;
+    public $message_type;
 
 
     protected $db;
@@ -223,5 +222,21 @@ class Message
             $data = $query->fetchAll();
         }
         return $data;
+    }
+
+    function send_bot_message()
+    {
+        $sql = "INSERT INTO chatbot_messages (account_id, message, message_type) VALUES (:account_id, :message, :message_type)";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $this->account_id);
+        $query->bindParam(':message', $this->message);
+        $query->bindParam(':message_type', $this->message_type);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

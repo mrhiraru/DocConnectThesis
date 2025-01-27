@@ -36,7 +36,7 @@ $message = new Message();
 <!-- Chat Input -->
 
 <form id="chatForm" action="" method="post" class="chat_input d-flex align-items-end p-3 border-top bg-light">
-  <input type="hidden" name="sender_id" id="sender_id" value="">
+  <input type="hidden" name="account_id" id="account_id" value="<?= $_GET['account_id'] ?>">
   <textarea type="text" id="message" name="message" class="form-control border-2 text-dark me-3" placeholder="Type your message"></textarea>
   <button id="send" name="send" type="submit" class="btn btn-light d-flex justify-content-center">
     <i class='bx bx-send text-dark fs-4'></i>
@@ -51,13 +51,12 @@ $message = new Message();
 
       const formData = {
         send: $('#send').val(),
-        sender_id: $('#sender_id').val(),
-        receiver_id: $('#receiver_id').val(),
+        accoubnt_id: $('#account_id').val(),
         message: $("#message").val()
       }
 
       $.ajax({
-        url: '../handlers/chat.send_message.php',
+        url: '../handlers/chatbot.send_message.php',
         type: 'POST',
         data: formData,
         success: function(response) {
