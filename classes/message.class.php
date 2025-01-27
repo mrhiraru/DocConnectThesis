@@ -209,7 +209,7 @@ class Message
             $sql .= " AND cb_message_id > :last_message_id";
         }
 
-        $sql .= " ORDER BY is_created ASC";
+        $sql .= " ORDER BY cb_message_id ASC";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);

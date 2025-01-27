@@ -2,7 +2,7 @@
 require_once("../classes/message.class.php");
 
 $message = new Message();
-$record = $message->load_chatbox($_GET['chatwith_account_id']);
+//$record = $message->load_botchatbox($_GET['account_id']);
 
 // if ($message->mark_messages_read($_GET['chatwith_account_id'], $_GET['account_id'])) {
 //   $success = 'success';
@@ -36,8 +36,7 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
 <!-- Chat Input -->
 
 <form id="chatForm" action="" method="post" class="chat_input d-flex align-items-end p-3 border-top bg-light">
-  <input type="hidden" name="sender_id" id="sender_id" value="<?= $_GET['account_id'] ?>">
-  <input type="hidden" name="receiver_id" id="receiver_id" value="<?= $_GET['chatwith_account_id'] ?>">
+  <input type="hidden" name="sender_id" id="sender_id" value="">
   <textarea type="text" id="message" name="message" class="form-control border-2 text-dark me-3" placeholder="Type your message"></textarea>
   <button id="send" name="send" type="submit" class="btn btn-light d-flex justify-content-center">
     <i class='bx bx-send text-dark fs-4'></i>

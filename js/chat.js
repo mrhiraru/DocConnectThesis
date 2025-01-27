@@ -120,14 +120,13 @@ function scrollToBottom() {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-
 // CHATBOT FUNCTIONS
 
-function loadChatBox(account_id, chatwith_account_id) {
-  if (currentOpenedChat === chatwith_account_id) {
+function loadBotChatBox(account_id) {
+  if (currentOpenedChat === "chatbot") {
     return;
   } else {
-    currentOpenedChat = chatwith_account_id;
+    currentOpenedChat = "chatbot";
   }
 
   if (currentChatRequest) {
@@ -142,13 +141,13 @@ function loadChatBox(account_id, chatwith_account_id) {
     url: "../handlers/chatbot.load_chatbox.php",
     type: "GET",
     data: {
-      account_id: account_id
+      account_id: account_id,
     },
     success: function (response) {
       $("#chat_box").html(response);
       last_message_id = 0;
       scrollToBottom();
-      loadMessages(account_id, chatwith_account_id);
+      loadBotMessages(account_id);
     },
     error: function (xhr, status, error) {
       console.error("Error loading chatbox:", error);
