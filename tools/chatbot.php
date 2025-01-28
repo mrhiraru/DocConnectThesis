@@ -9,7 +9,7 @@ use Orhanerday\OpenAi\OpenAi;
 
 function chatbot_response($user_message)
 {
-    $open_ai_key = getenv('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');
+    $open_ai_key = getenv('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');
     $open_ai = new OpenAi($open_ai_key);
 
     // Doctor's Data
