@@ -4,7 +4,7 @@ session_start();
 require_once('../vendor/autoload.php');
 require_once('../classes/account.class.php');
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv = Dotenv\Dotenv::createImmutable('../');
 $dotenv->load();
 
 use Orhanerday\OpenAi\OpenAi;
@@ -12,6 +12,8 @@ use Orhanerday\OpenAi\OpenAi;
 
 function chatbot_response($user_message)
 {
+    echo "<script>console.log('user_message: " . $user_message . "');</script>";
+
     $open_ai_key = getenv('OPEN_AI_KEY');
     $open_ai = new OpenAi($open_ai_key);
 
