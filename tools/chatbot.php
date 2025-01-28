@@ -4,12 +4,15 @@ session_start();
 require_once('../vendor/autoload.php');
 require_once('../classes/account.class.php');
 
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 use Orhanerday\OpenAi\OpenAi;
 
 
 function chatbot_response($user_message)
 {
-    $open_ai_key = getenv('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');
+    $open_ai_key = getenv('OPEN_AI_KEY');
     $open_ai = new OpenAi($open_ai_key);
 
     // Doctor's Data
