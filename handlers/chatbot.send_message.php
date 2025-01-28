@@ -14,8 +14,22 @@ if (isset($_POST['send'])) {
 
     if (validate_field($message->message)) {
         if ($message->send_bot_message()) {
-            $success = 'success';
-            // call chatbot function to get response and save to database.
+
+            $new_message = chatbot_response($message->message);
+            var_dump($new_message);
+            $message->message = $new_message;
+            $message->account_id = $_POST['account_id'];
+            $message->message_type = 'bot';
+
+            if (validate_field($message->message)) {
+                if ($message->send_bot_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             echo 'An error occured while adding in the database.';
         }

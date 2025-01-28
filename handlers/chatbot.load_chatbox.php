@@ -51,7 +51,7 @@ $message = new Message();
 
       const formData = {
         send: $('#send').val(),
-        accoubnt_id: $('#account_id').val(),
+        account_id: $('#account_id').val(),
         message: $("#message").val()
       }
 
