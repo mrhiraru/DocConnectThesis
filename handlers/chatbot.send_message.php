@@ -16,7 +16,6 @@ if (isset($_POST['send'])) {
         if ($message->send_bot_message()) {
 
             $new_message = chatbot_response($message->message);
-            var_dump($new_message);
             $message->message = $new_message;
             $message->account_id = $_POST['account_id'];
             $message->message_type = 'bot';

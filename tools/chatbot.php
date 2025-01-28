@@ -4,17 +4,19 @@ session_start();
 require_once('../vendor/autoload.php');
 require_once('../classes/account.class.php');
 
+use Orhanerday\OpenAi\OpenAi;
+
 $dotenv = Dotenv\Dotenv::createImmutable('../');
 $dotenv->load();
 
-use Orhanerday\OpenAi\OpenAi;
-
-
 function chatbot_response($user_message)
 {
-    echo "<script>console.log('user_message: " . $user_message . "');</script>";
+    $open_ai_key = $_ENV['OPEN_AI_KEY'];
 
-    $open_ai_key = getenv('OPEN_AI_KEY');
+    if (empty($open_ai_key)) {
+        return "OpenAI key is not set.";
+    }
+
     $open_ai = new OpenAi($open_ai_key);
 
     // Doctor's Data
