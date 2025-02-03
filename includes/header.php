@@ -16,7 +16,7 @@
 			<li>
 				<hr class="dropdown-divider d-block d-lg-none">
 			</li>
-			<li><a class="dropdown-item" href="./profile.php">Profile</a></li>
+			<li><a class="dropdown-item" href="./profile_general.php">Profile</a></li>
 			<li><a class="dropdown-item" href="./chat_user.php">Chat</a></li>
 			<li>
 				<hr class="dropdown-divider m-0 mt-1">
@@ -56,7 +56,7 @@
 						<li>
 							<hr class="dropdown-divider d-block d-lg-none">
 						</li>
-						<li><a class="dropdown-item" href="./profile.php">Profile</a></li>
+						<li><a class="dropdown-item" href="./profile_general.php">Profile</a></li>
 						<li><a class="dropdown-item" href="./chat_user.php">Chat</a></li>
 						<li>
 							<hr class="dropdown-divider m-0 mt-1">

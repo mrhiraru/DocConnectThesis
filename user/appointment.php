@@ -17,6 +17,7 @@ if (isset($_POST['request'])) {
     $appointment_class->doctor_id = htmlentities($_POST['doctor_id']);
     $appointment_class->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
+    $appointment_class->reason = htmlentities($_POST['reason']);
     $appointment_class->appointment_status = "Pending";
 
     if (
@@ -24,6 +25,7 @@ if (isset($_POST['request'])) {
         validate_field($appointment_class->doctor_id) &&
         validate_field($appointment_class->appointment_date) &&
         validate_field($appointment_class->appointment_time) &&
+        validate_field($appointment_class->reason) &&
         validate_field($appointment_class->appointment_status)
     ) {
         if ($appointment_class->add_appointment()) {
@@ -56,7 +58,7 @@ include '../includes/head.php';
             <div class="col-2"></div>
 
             <div class="col-sm-12 col-md-8">
-                <form action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
+                <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
                     <div class="row">
                         <div class="col-12">
                             <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
@@ -199,7 +201,7 @@ include '../includes/head.php';
                     <hr>
 
                     <div class="w-100 d-flex justify-content-end">
-                        <button id="request" type="submit" class="w-50 w-md-25 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
+                        <button id="request" name="request" type="submit" class="w-50 w-md-25 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
                     </div>
                 </form>
 
@@ -213,25 +215,25 @@ include '../includes/head.php';
       <h4>Appointment Schedule</h4>
       <div class="overflow-y-scroll min-vh-100">
         <?php
-        $appointmentArray = $appointment_class->user_appointments($_SESSION['patient_id']);
-        foreach ($appointmentArray as $item) {
+        //$appointmentArray = $appointment_class->user_appointments($_SESSION['patient_id']);
+        //foreach ($appointmentArray as $item) {
         ?>
           <div class="col-12 border border-2 border-white rounded-2 p-2 mb-1">
             <div class="m-0 mb-1 p-0 px-2">
-              <p class="mb-2 fs-5"><?= $item['doctor_name'] ?></p>
+              <p class="mb-2 fs-5"><?php // $item['doctor_name'] ?></p>
             </div>
             <hr class="text-white my-1 mx-0">
             <div class="row d-flex justify-content-between m-0 mb-1">
-              <p class="col-4 mb-2"><?= $item['appointment_status'] ?></p>
-              <p class="col-8 mb-2 text-end"><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time']))  ?></p>
+              <p class="col-4 mb-2"><?php // $item['appointment_status'] ?></p>
+              <p class="col-8 mb-2 text-end"><?php //  date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time']))  ?></p>
               <div class="col-12">
                 <a href="" class="btn btn-sm btn-light">Chat Doctor</a>
-                <a href="https://meet.google.com/por-udiy-etd" class="btn btn-sm btn-light <?= date("M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) == date("l, M d, Y g:i A") ? '' : 'disabled' ?>">Join Meeting</a>
+                <a href="https://meet.google.com/por-udiy-etd" class="btn btn-sm btn-light <?php // date("M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) == date("l, M d, Y g:i A") ? '' : 'disabled' ?>">Join Meeting</a>
               </div>
             </div>
           </div>
         <?php
-        }
+        //}
         ?>
       </div>
     </div>
@@ -441,6 +443,7 @@ include '../includes/head.php';
                 validate_date();
             });
 
+            const form = document.getElementById('appointmentForm');
             form.addEventListener("submit", function(event) {
                 if (!appointment_date.checkValidity()) {
                     event.preventDefault(); // Prevent submission if the input is invalid
