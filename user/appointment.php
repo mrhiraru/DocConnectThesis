@@ -56,7 +56,7 @@ include '../includes/head.php';
             <div class="col-2"></div>
 
             <div class="col-sm-12 col-md-8">
-                <form action="submit_appointment.php" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
+                <form action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
                     <div class="row">
                         <div class="col-12">
                             <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
@@ -118,7 +118,7 @@ include '../includes/head.php';
                     <!-- Phone Number -->
                     <div class="mb-3">
                         <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly/>
+                        <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
                     </div>
 
                     <!-- Address -->
@@ -163,22 +163,43 @@ include '../includes/head.php';
                         <div class="col-md-6 mb-3 mb-md-0">
                             <label for="appointment_date" class="form-label text-black-50">Select Date</label>
                             <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                            <?php
+                            if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
+                            ?>
+                                <p class="text-dark m-0 ps-2">Select appointment date.</p>
+                            <?php
+                            }
+                            ?>
                         </div>
                         <div class="col-md-6">
                             <label for="appointment_time" class="form-label text-black-50">Select Time</label>
                             <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                            <?php
+                            if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
+                            ?>
+                                <p class="text-dark m-0 ps-2">Select appointment time.</p>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
 
                     <div class="mb-3">
-                        <label for="reasonForAppointment" class="form-label text-black-50">Reason for appointment?</label>
-                        <textarea id="reasonForAppointment" name="reason_for_appointment" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)"></textarea>
+                        <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
+                        <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required></textarea>
+                        <?php
+                        if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                        ?>
+                            <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
+                        <?php
+                        }
+                        ?>
                     </div>
 
                     <hr>
 
                     <div class="w-100 d-flex justify-content-end">
-                        <button id="request" type="submit" class="w-50 w-md-25 btn btn-outline-dark mt-2">Request Appointment</button>
+                        <button id="request" type="submit" class="w-50 w-md-25 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
                     </div>
                 </form>
 
