@@ -41,6 +41,8 @@ include '../includes/head.php';
                         <form id="addEventForm">
                             <div class="mb-3">
                                 patient info
+
+                                <!-- CONTINUE FROM HERE: display patient info and appointment details add event insert and others -->
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="row d-flex flex-wrap justify-content-center justify-content-md-start m-0">
