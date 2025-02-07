@@ -9,8 +9,10 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
+require_once('../classes/user.class.php');
 
 $appointment_class = new Appointment();
+$record = $appointment_class->get_appointment_details($_GET['appointment_id']);
 
 ?>
 
@@ -36,8 +38,6 @@ include '../includes/head.php';
                 <div class="card my-4 col-8">
                     <div class="card-body">
                         <h4>Manage Appointment</h4>
-
-
                         <form id="addEventForm">
                             <div class="mb-3">
                                 patient info

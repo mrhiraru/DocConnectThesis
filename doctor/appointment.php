@@ -23,7 +23,7 @@ include '../includes/head.php';
 
 ?>
 
-<body>
+<body onload="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Pending')">
   <?php
   require_once('../includes/header-doctor.php');
   ?>
@@ -41,16 +41,16 @@ include '../includes/head.php';
                 <button class="nav-link active" id="Pending-tab" data-bs-toggle="tab" data-bs-target="#Pending" type="button" role="tab" aria-controls="Pending" aria-selected="true" onclick="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Pending')">Pending</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="Incoming-tab" data-bs-toggle="tab" data-bs-target="#Incoming" type="button" role="tab" aria-controls="Incoming" aria-selected="false">Incoming</button>
+                <button class="nav-link" id="Incoming-tab" data-bs-toggle="tab" data-bs-target="#Incoming" type="button" role="tab" aria-controls="Incoming" aria-selected="false" onclick="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Incoming')">Incoming</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="Ongoing-tab" data-bs-toggle="tab" data-bs-target="#Ongoing" type="button" role="tab" aria-controls="Ongoing" aria-selected="false">Ongoing</button>
+                <button class="nav-link" id="Ongoing-tab" data-bs-toggle="tab" data-bs-target="#Ongoing" type="button" role="tab" aria-controls="Ongoing" aria-selected="false" onclick="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Ongoing')">Ongoing</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="Compeleted-tab" data-bs-toggle="tab" data-bs-target="#Completed" type="button" role="tab" aria-controls="Completed" aria-selected="false">Completed</button>
+                <button class="nav-link" id="Compeleted-tab" data-bs-toggle="tab" data-bs-target="#Completed" type="button" role="tab" aria-controls="Completed" aria-selected="false" onclick="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Completed')">Completed</button>
               </li>
               <li class="nav-item" role="presentation">
-                <button class="nav-link" id="Cancelled-tab" data-bs-toggle="tab" data-bs-target="#Cancelled" type="button" role="tab" aria-controls="Cancelled" aria-selected="false">Cancelled</button>
+                <button class="nav-link" id="Cancelled-tab" data-bs-toggle="tab" data-bs-target="#Cancelled" type="button" role="tab" aria-controls="Cancelled" aria-selected="false" onclick="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Cancelled')">Cancelled</button>
               </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -58,180 +58,16 @@ include '../includes/head.php';
 
               </div>
               <div class="tab-pane fade" id="Incoming" role="tabpanel" aria-labelledby="Incoming" tabindex="0">
-                <div class="table-responsive">
-                  <table class="table table-striped" id="eventsTable">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Date & Time</th>
-                        <th>Patient</th>
-                        <th>Meeting Link</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Incoming');
-                      $counter = 1;
-                      if (empty(!$appointmentArray)) {
-                        foreach ($appointmentArray as $item) {
-                      ?>
-                          <tr>
-                            <td><?= $counter ?></td>
-                            <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
-                            <td><?= $item['patient_name'] ?></td>
-                            <td><?= $item['appointment_link'] ?></td>
-                            <td class="text-center">
-                              <a href="./update-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit text-light'></i></a>
-                              <button class="btn btn-danger btn-sm ms-2"><i class='bx bxs-trash text-light'></i></button>
-                            </td>
-                          </tr>
-                        <?php
-                          $counter++;
-                        }
-                      } else {
-                        ?>
-                        <tr>
-                          <td colspan="5" class="text-center">No incoming appointments</td>
-                        </tr>
-                      <?php
-                      }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>
+
               </div>
               <div class="tab-pane fade" id="Ongoing" role="tabpanel" aria-labelledby="Ongoing" tabindex="0">
-                <div class="table-responsive">
-                  <table class="table table-striped" id="eventsTable">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Date & Time</th>
-                        <th>Patient</th>
-                        <th>Meeting Link</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Ongoing');
-                      $counter = 1;
-                      if (empty(!$appointmentArray)) {
-                        foreach ($appointmentArray as $item) {
-                      ?>
-                          <tr>
-                            <td><?= $counter ?></td>
-                            <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
-                            <td><?= $item['patient_name'] ?></td>
-                            <td><?= $item['appointment_link'] ?></td>
-                            <td class="text-center">
-                              <a href="./update-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit text-light'></i></a>
-                              <button class="btn btn-danger btn-sm ms-2"><i class='bx bxs-trash text-light'></i></button>
-                            </td>
-                          </tr>
-                        <?php
-                          $counter++;
-                        }
-                      } else {
-                        ?>
-                        <tr>
-                          <td colspan="5" class="text-center">No ongoing appointments</td>
-                        </tr>
-                      <?php
-                      }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>
+
               </div>
               <div class="tab-pane fade" id="Completed" role="tabpanel" aria-labelledby="Completed" tabindex="0">
-                <div class="table-responsive">
-                  <table class="table table-striped" id="eventsTable">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Date & Time</th>
-                        <th>Patient</th>
-                        <th>Meeting Link</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Completed');
-                      $counter = 1;
-                      if (empty(!$appointmentArray)) {
-                        foreach ($appointmentArray as $item) {
-                      ?>
-                          <tr>
-                            <td><?= $counter ?></td>
-                            <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
-                            <td><?= $item['patient_name'] ?></td>
-                            <td><?= $item['appointment_link'] ?></td>
-                            <td class="text-center">
-                              <a href="./update-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit text-light'></i></a>
-                              <button class="btn btn-danger btn-sm ms-2"><i class='bx bxs-trash text-light'></i></button>
-                            </td>
-                          </tr>
-                        <?php
-                          $counter++;
-                        }
-                      } else {
-                        ?>
-                        <tr>
-                          <td colspan="5" class="text-center">No completed appointments</td>
-                        </tr>
-                      <?php
-                      }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>
+
               </div>
               <div class="tab-pane fade" id="Cancelled" role="tabpanel" aria-labelledby="Cancelled" tabindex="0">
-                <div class="table-responsive">
-                  <table class="table table-striped" id="eventsTable">
-                    <thead>
-                      <tr>
-                        <th></th>
-                        <th>Date & Time</th>
-                        <th>Patient</th>
-                        <th>Meeting Link</th>
-                        <th class="text-center">Action</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <?php
-                      $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Cancelled');
-                      $counter = 1;
-                      if (empty(!$appointmentArray)) {
-                        foreach ($appointmentArray as $item) {
-                      ?>
-                          <tr>
-                            <td><?= $counter ?></td>
-                            <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
-                            <td><?= $item['patient_name'] ?></td>
-                            <td><?= $item['appointment_link'] ?></td>
-                            <td class="text-center">
-                              <a href="./update-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm"><i class='bx bxs-edit text-light'></i></a>
-                              <button class="btn btn-danger btn-sm ms-2"><i class='bx bxs-trash text-light'></i></button>
-                            </td>
-                          </tr>
-                        <?php
-                          $counter++;
-                        }
-                      } else {
-                        ?>
-                        <tr>
-                          <td colspan="5" class="text-center">No cancelled appointments</td>
-                        </tr>
-                      <?php
-                      }
-                      ?>
-                    </tbody>
-                  </table>
-                </div>
+
               </div>
             </div>
           </div>
@@ -304,21 +140,22 @@ include '../includes/head.php';
 </html>
 
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
-  //   var calendarEl = document.getElementById('calendar');
-  //   var calendar = new FullCalendar.Calendar(calendarEl, {
-  //     initialView: 'dayGridMonth',
-  //     events: <?php //echo json_encode($events); ?>, // Load events from PHP array
-  //     eventClick: function(info) {
-  //       if (info.event.url) {
-  //         window.open(info.event.url, "_blank");
-  //         info.jsEvent.preventDefault();
-  //       } else {
-  //         alert("This is a Face-to-Face event and does not have an online link.");
-  //       }
-  //     }
-  //   });
-  //   calendar.render();
+  document.addEventListener('DOMContentLoaded', function() {
+    //   var calendarEl = document.getElementById('calendar');
+    //   var calendar = new FullCalendar.Calendar(calendarEl, {
+    //     initialView: 'dayGridMonth',
+    //     events: <?php //echo json_encode($events); 
+                    ?>, // Load events from PHP array
+    //     eventClick: function(info) {
+    //       if (info.event.url) {
+    //         window.open(info.event.url, "_blank");
+    //         info.jsEvent.preventDefault();
+    //       } else {
+    //         alert("This is a Face-to-Face event and does not have an online link.");
+    //       }
+    //     }
+    //   });
+    //   calendar.render();
 
     // Switch between Face-to-Face and Online Meeting
     var meetingTypeSwitch = document.getElementById('meetingTypeSwitch');
@@ -390,7 +227,7 @@ include '../includes/head.php';
         status: status,
       },
       success: function(response) {
-        $("#Pending").html(response);
+        $("#" + status).html(response);
       },
       error: function(xhr, status, error) {
         console.error("Error loading messages:", error);

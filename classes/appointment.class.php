@@ -90,4 +90,20 @@ class Appointment
         return $data;
     }
 
+    function get_appointment_details($appointment_id)
+    {
+        $sql = "SELECT ap.*, p.*, a.* FROM appointment ap
+        INNER JOIN patient_info p ON ap.patient_id = p.patient_id
+        INNER JOIN account a ON p.account_id = a.account_id
+        WHERE appointment_id = :appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':appointment_id', $appointment_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
 }
