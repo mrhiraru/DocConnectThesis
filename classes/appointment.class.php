@@ -71,16 +71,17 @@ class Appointment
         return $data;
     }
 
-    function doctor_appointments($doctor_id)
+    function doctor_appointments($doctor_id, $appointment_status)
     {
         $sql = "SELECT ap.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name 
         FROM appointment ap 
         INNER JOIN patient_info p ON ap.patient_id = p.patient_id 
         INNER JOIN account a ON p.account_id = a.account_id
-        WHERE ap.doctor_id = :doctor_id ORDER BY appointment_date, appointment_time;";
+        WHERE ap.doctor_id = :doctor_id AND ap.appointment_status = :appointment_status ORDER BY appointment_date, appointment_time;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);
+        $query->bindParam(':appointment_status', $appointment_status);
 
         $data = null;
         if ($query->execute()) {
@@ -88,4 +89,5 @@ class Appointment
         }
         return $data;
     }
+
 }

@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var calendarEl = document.getElementById('calendar');
   var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
-    events: <?php echo json_encode($events); ?>, // Load events from PHP array
+    events: '<?php echo json_encode($events); ?>', // Load events from PHP array
     eventClick: function(info) {
       // Check if the event has a URL
       if (info.event.url) {
