@@ -95,7 +95,7 @@ class Appointment
         $sql = "SELECT ap.*, p.*, a.* FROM appointment ap
         INNER JOIN patient_info p ON ap.patient_id = p.patient_id
         INNER JOIN account a ON p.account_id = a.account_id
-        WHERE appointment_id = :appointment_id";
+        WHERE ap.appointment_id = :appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':appointment_id', $appointment_id);

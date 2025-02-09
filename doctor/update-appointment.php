@@ -9,7 +9,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
-require_once('../classes/user.class.php');
+require_once('../classes/account.class.php');
 
 $appointment_class = new Appointment();
 $record = $appointment_class->get_appointment_details($_GET['appointment_id']);
@@ -39,10 +39,25 @@ include '../includes/head.php';
                     <div class="card-body">
                         <h4>Manage Appointment</h4>
                         <form id="addEventForm">
+                            <hr class="my-3 opacity-25">
                             <div class="mb-3">
-                                patient info
-
-                                <!-- CONTINUE FROM HERE: display patient info and appointment details add event insert and others -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="row align-items-center border p-3 mx-2 rounded bg-light">
+                                            <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
+                                                <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
+                                            </div>
+                                            <div class="col-12 col-md-7">
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email">N/A</span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Days: <span class="text-black" id="working_day">N/A</span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Time: <span class="text-black" id="working_time">N/A</span> </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="row d-flex flex-wrap justify-content-center justify-content-md-start m-0">
