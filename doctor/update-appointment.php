@@ -35,7 +35,7 @@ include '../includes/head.php';
             require_once('../includes/sidepanel-doctor.php');
             ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 bg-light d-flex justify-content-center">
-                <div class="card my-4 col-8">
+                <div class="card my-4 col-12 col-md-10 col-lg-8">
                     <div class="card-body">
                         <h4>Manage Appointment</h4>
                         <form id="addEventForm">
@@ -66,7 +66,7 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="row mb-3">
-                                <div class="col-md-6 mb-3 mb-md-0">
+                                <div class="col-md-6">
                                     <label for="appointment_date" class="form-label text-black-50">Select Date</label>
                                     <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" value="<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                                     <?php
@@ -88,8 +88,8 @@ include '../includes/head.php';
                                     }
                                     ?>
                                 </div>
+                                <p class="text-danger m-0 ps-2">Schedule conflict.</p>
                             </div>
-
                             <div class="mb-3">
                                 <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
                                 <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required><?= $record['reason'] ?></textarea>
@@ -103,6 +103,7 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
+                                <button type="submit" class="btn btn-secondary text-light">Update Schedule</button>
                                 <button type="submit" class="btn btn-primary text-light">Confirm Appointment</button>
                             </div>
                         </form>

@@ -8,6 +8,7 @@ class Appointment
     public $patient_id;
     public $appointment_date;
     public $appointment_time;
+    public $estimated_end;
     public $appointment_link;
     public $appointment_status;
     public $reason;
@@ -21,13 +22,14 @@ class Appointment
 
     function add_appointment()
     {
-        $sql = "INSERT INTO appointment (doctor_id, patient_id, appointment_date, appointment_time, reason, appointment_status) VALUES (:doctor_id, :patient_id, :appointment_date, :appointment_time, :reason, :appointment_status);";
+        $sql = "INSERT INTO appointment (doctor_id, patient_id, appointment_date, appointment_time, estimated_end, reason, appointment_status) VALUES (:doctor_id, :patient_id, :appointment_date, :appointment_time, :estimated_end, :reason, :appointment_status);";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $this->doctor_id);
         $query->bindParam(':patient_id', $this->patient_id);
         $query->bindParam(':appointment_date', $this->appointment_date);
         $query->bindParam(':appointment_time', $this->appointment_time);
+        $query->bindParam(':estimated_end', $this->estimated_end);
         $query->bindParam(':appointment_status', $this->appointment_status);
         $query->bindParam(':reason', $this->reason);
 

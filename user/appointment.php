@@ -17,6 +17,7 @@ if (isset($_POST['request'])) {
     $appointment_class->doctor_id = htmlentities($_POST['doctor_id']);
     $appointment_class->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
+    $appointment_class->estimated_end = date('H:i', strtotime('+1 hour', strtotime($appointment_class->appointment_time)));
     $appointment_class->reason = htmlentities($_POST['reason']);
     $appointment_class->appointment_status = "Pending";
 
@@ -197,11 +198,10 @@ include '../includes/head.php';
                         }
                         ?>
                     </div>
-
-                    <hr>
-
+                    <p class="text-black-50 m-0"><span>Note:</span> The scheduled appointment date and time may be adjusted upon the doctor's approval.</p>
+                    <hr class="my-2">
                     <div class="w-100 d-flex justify-content-end">
-                        <button id="request" name="request" type="submit" class="w-50 w-md-25 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
+                        <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
                     </div>
                 </form>
 
@@ -243,21 +243,6 @@ include '../includes/head.php';
     <script src="../js/main.js"></script>
 
     <script>
-        function formatTime(time) {
-            let [hours, minutes] = time.split(':');
-            hours = parseInt(hours);
-            let suffix = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
-
-            return `${hours}:${minutes} ${suffix}`;
-        }
-
-        function formatMySQLTimeTo24Hour(time) {
-            const [hours, minutes] = time.split(':');
-
-            return `${hours}:${minutes}`;
-        }
-
         document.addEventListener("DOMContentLoaded", function() {
             const doctorSearch = document.getElementById("doctorSearch");
             const doctorDropdown = document.getElementById("doctorDropdown");
@@ -317,7 +302,7 @@ include '../includes/head.php';
                                 working_hours.innerHTML = formatTime(doctor.start_wt) + " to " + formatTime(doctor.end_wt);
                                 account_image.src = "../assets/images/" + doctor.account_image;
                                 appointment_time.min = formatMySQLTimeTo24Hour(doctor.start_wt);
-                                appointment_time.max = formatMySQLTimeTo24Hour(doctor.end_wt);
+                                appointment_time.max = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
                                 appointment_date.dataset.startday = doctor.start_day;
                                 appointment_date.dataset.endday = doctor.end_day;
                                 request_button.removeAttribute("disabled");
@@ -435,8 +420,31 @@ include '../includes/head.php';
             let roundedTime = roundTimeToNearestHalfHour(inputTime);
             this.value = roundedTime;
         });
-    </script>
 
+        function formatTime(time) {
+            let [hours, minutes] = time.split(':');
+            hours = parseInt(hours);
+            let suffix = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+
+            return `${hours}:${minutes} ${suffix}`;
+        }
+
+        function formatMySQLTimeTo24Hour(time) {
+            const [hours, minutes] = time.split(':');
+
+            return `${hours}:${minutes}`;
+        }
+
+        function subtractOneHour(time) {
+            let [hours, minutes] = time.split(':');
+            hours = parseInt(hours) - 1;
+            if (hours < 0) {
+                hours = 23;
+            }
+            return `${hours.toString().padStart(2, '0')}:${minutes}`;
+        }
+    </script>
 </body>
 
 </html>
