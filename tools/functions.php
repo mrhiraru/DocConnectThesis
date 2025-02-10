@@ -82,12 +82,18 @@ function validate_time($start, $end)
     $endTime = DateTime::createFromFormat('H:i', $end);
 
     if ($startTime === false || $endTime === false) {
-        return false; 
+        return false;
     }
 
     return $startTime < $endTime;
 }
 
-function check_time_between($start, $end, $time){
-    
+function check_time_between($start, $end, $time) {}
+
+function get_age($birthdate)
+{
+    $birthDate = new DateTime($birthdate);
+    $today = new DateTime('today');
+    $age = $birthDate->diff($today)->y;
+    return $age;
 }

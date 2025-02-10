@@ -92,7 +92,8 @@ class Appointment
 
     function get_appointment_details($appointment_id)
     {
-        $sql = "SELECT ap.*, p.*, a.* FROM appointment ap
+        $sql = "SELECT ap.*, p.*, a.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name 
+        FROM appointment ap
         INNER JOIN patient_info p ON ap.patient_id = p.patient_id
         INNER JOIN account a ON p.account_id = a.account_id
         WHERE ap.appointment_id = :appointment_id";

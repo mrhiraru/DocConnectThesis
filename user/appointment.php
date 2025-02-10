@@ -206,44 +206,6 @@ include '../includes/head.php';
                 </form>
 
             </div>
-
-            <div class="col-2"></div>
-
-            <!-- <div class="col-sm-12 col-md-4 h-100">
-  <div class="d-flex flex-column justify-content-between bg-green p-3 rounded-2 h-100 text-white">
-    <div>
-      <h4>Appointment Schedule</h4>
-      <div class="overflow-y-scroll min-vh-100">
-        <?php
-        //$appointmentArray = $appointment_class->user_appointments($_SESSION['patient_id']);
-        //foreach ($appointmentArray as $item) {
-        ?>
-          <div class="col-12 border border-2 border-white rounded-2 p-2 mb-1">
-            <div class="m-0 mb-1 p-0 px-2">
-              <p class="mb-2 fs-5"><?php // $item['doctor_name'] ?></p>
-            </div>
-            <hr class="text-white my-1 mx-0">
-            <div class="row d-flex justify-content-between m-0 mb-1">
-              <p class="col-4 mb-2"><?php // $item['appointment_status'] ?></p>
-              <p class="col-8 mb-2 text-end"><?php //  date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time']))  ?></p>
-              <div class="col-12">
-                <a href="" class="btn btn-sm btn-light">Chat Doctor</a>
-                <a href="https://meet.google.com/por-udiy-etd" class="btn btn-sm btn-light <?php // date("M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) == date("l, M d, Y g:i A") ? '' : 'disabled' ?>">Join Meeting</a>
-              </div>
-            </div>
-          </div>
-        <?php
-        //}
-        ?>
-      </div>
-    </div>
-    <div>
-      <div>
-        <button type="button" class="w-100 btn btn-lg btn-outline-light mt-2">Enter Meeting</button>
-      </div>
-    </div>
-  </div>
-</div> -->
         </div>
     </section>
 
@@ -451,35 +413,7 @@ include '../includes/head.php';
                 }
             });
         });
-    </script>
 
-    <!-- JS script for haandlng -->
-    <!-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const startTimeInput = document.getElementById("startTime");
-      const endTimeInput = document.getElementById("endTime");
-
-      startTimeInput.addEventListener("change", function() {
-        const startTime = startTimeInput.value;
-        if (startTime) {
-          const [hours, minutes] = startTime.split(':').map(Number);
-          const startDate = new Date();
-          startDate.setHours(hours);
-          startDate.setMinutes(minutes);
-
-          startDate.setHours(startDate.getHours() + 1);
-
-          const endHours = String(startDate.getHours()).padStart(2, '0');
-          const endMinutes = String(startDate.getMinutes()).padStart(2, '0');
-          endTimeInput.value = `${endHours}:${endMinutes}`;
-        } else {
-          endTimeInput.value = "";
-        }
-      });
-    });
-  </script> -->
-
-    <script>
         function roundTimeToNearestHalfHour(time) {
             let [hours, minutes] = time.split(":");
             minutes = parseInt(minutes);

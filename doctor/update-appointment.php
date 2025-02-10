@@ -45,49 +45,67 @@ include '../includes/head.php';
                                     <div class="col-12">
                                         <div class="row align-items-center border p-3 mx-2 rounded bg-light">
                                             <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
-                                                <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
+                                                <img id="account_image" src="<?php if (isset($record['account_image'])) {
+                                                                                    echo "../assets/images/" . $record['account_image'];
+                                                                                } else {
+                                                                                    echo "../assets/images/default_profile.png";
+                                                                                } ?>" alt="User Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
                                             </div>
                                             <div class="col-12 col-md-7">
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email">N/A</span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Days: <span class="text-black" id="working_day">N/A</span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Time: <span class="text-black" id="working_time">N/A</span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="patient_name"><?= $record['patient_name'] ?></span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Age: <span class="text-black" id="age"><?= get_age($record['birthdate']) ?> </span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Gender: <span class="text-black" id="gender"><?= $record['gender'] ?></span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Birthdate: <span class="text-black" id="birthdate"><?= date('F j, Y', strtotime($record['birthdate'])) ?></span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email"><?= $record['email'] ?></span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact"><?= $record['contact'] ?></span> </p>
+                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Address: <span class="text-black" id="address"><?= $record['address'] ?></span> </p>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <hr class="my-3 opacity-25">
-                            <div class="row d-flex flex-wrap justify-content-center justify-content-md-start m-0">
-                                <div class="col-6 p-0 pe-4 mb-3">
-                                    <p class="fs-6 mb-0">Select Date</p>
-                                    <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" class="form-control fs-6 px-2 py-1 bg-white border border-dark rounded-1 text-black-50 w-100" required>
+                            <div class="row mb-3">
+                                <div class="col-md-6 mb-3 mb-md-0">
+                                    <label for="appointment_date" class="form-label text-black-50">Select Date</label>
+                                    <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" value="<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                                    <?php
+                                    if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Select appointment date.</p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
-                                <div class="col-6 p-0 mb-3">
-                                    <p class="fs-6 mb-0">Select Time</p>
-                                    <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" class="form-control fs-6 px-2 py-1 bg-white border border-dark rounded-1 text-black-50 w-100" required>
+                                <div class="col-md-6">
+                                    <label for="appointment_time" class="form-label text-black-50">Select Time</label>
+                                    <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" value="<?= $record['appointment_time'] ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                                    <?php
+                                    if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Select appointment time.</p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                             </div>
+
                             <div class="mb-3">
-                                <label for="eventUrl" class="form-label">Meeting URL</label>
-                                <div class="row d-flex justify-content-between">
-                                    <div class="col-auto flex-grow-1">
-                                        <input type="url" class="form-control" id="eventUrl" name="eventUrl" placeholder="Generate link for meeting." readonly>
-                                    </div>
-                                    <div class="col-auto ps-0">
-                                        <button class="btn btn-success text-light">Generate Link</button>
-                                    </div>
-                                </div>
+                                <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
+                                <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required><?= $record['reason'] ?></textarea>
+                                <?php
+                                if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                                ?>
+                                    <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
+                                <?php
+                                }
+                                ?>
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
                                 <button type="submit" class="btn btn-primary text-light">Confirm Appointment</button>
                             </div>
                         </form>
-
-
                     </div>
                 </div>
             </main>
@@ -103,7 +121,7 @@ include '../includes/head.php';
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="addEventForm">
+                    <form id="appoimtmentForm">
                         <div class="mb-3">
                             <label for="eventTitle" class="form-label">Event Title</label>
                             <input type="text" class="form-control" id="eventTitle" name="eventTitle" required>
@@ -144,87 +162,98 @@ include '../includes/head.php';
             </div>
         </div>
     </div>
-
-    <script src="../js/appointment_calendar.js"></script>
 </body>
 
 </html>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var calendarEl = document.getElementById('calendar');
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            events: <?php echo json_encode($events); ?>, // Load events from PHP array
-            eventClick: function(info) {
-                if (info.event.url) {
-                    window.open(info.event.url, "_blank");
-                    info.jsEvent.preventDefault();
-                } else {
-                    alert("This is a Face-to-Face event and does not have an online link.");
-                }
+
+        function validate_date() {
+            const minDate = new Date();
+            const maxDate = new Date(minDate);
+            maxDate.setMonth(maxDate.getMonth() + 1);
+
+            appointment_date.min = formatDate(minDate);
+            appointment_date.max = formatDate(maxDate);
+
+            // Helper function to format date as YYYY-MM-DD
+            function formatDate(date) {
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const day = String(date.getDate()).padStart(2, '0');
+                return `${year}-${month}-${day}`;
             }
-        });
-        calendar.render();
 
-        // Switch between Face-to-Face and Online Meeting
-        var meetingTypeSwitch = document.getElementById('meetingTypeSwitch');
-        var eventUrlField = document.getElementById('eventUrl');
-        var meetingTypeLabel = document.getElementById('meetingTypeLabel');
+            // Helper function to get all allowed days in a weekly cycle
+            function getAllowedDaysRange(startDay, endDay) {
+                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+                const startIdx = daysOfWeek.indexOf(startDay);
+                const endIdx = daysOfWeek.indexOf(endDay);
 
-        meetingTypeSwitch.addEventListener('change', function() {
-            if (meetingTypeSwitch.checked) {
-                eventUrlField.disabled = false;
-                eventUrlField.required = true;
-                meetingTypeLabel.innerHTML = 'Online';
+                // Create allowed days array that cycles through the week
+                const allowedDays = [];
+                for (let i = startIdx; i !== endIdx + 1; i = (i + 1) % 7) {
+                    allowedDays.push(daysOfWeek[i]);
+                }
+
+                return allowedDays;
+            }
+
+            // Get the allowed days for the specified range
+            const allowedDays = getAllowedDaysRange(startDay, endDay);
+
+            // Validate the selected date
+
+            const selectedDate = new Date(appointment_date.value);
+            const dayName = selectedDate.toLocaleDateString("en-US", {
+                weekday: 'long'
+            });
+
+
+            if (!allowedDays.includes(dayName)) {
+                // Set a custom validity message
+                appointment_date.setCustomValidity("Please select a valid day from " + startDay + " to " + endDay + ".");
             } else {
-                eventUrlField.disabled = true;
-                eventUrlField.required = false;
-                meetingTypeLabel.innerHTML = 'Face-to-Face';
+                // Clear any previous custom validity message
+                appointment_date.setCustomValidity("");
+            }
+        }
+
+        appointment_date.addEventListener("input", function(event) {
+            validate_date();
+        });
+
+        const form = document.getElementById('appointmentForm');
+        form.addEventListener("submit", function(event) {
+            if (!appointment_date.checkValidity()) {
+                event.preventDefault(); // Prevent submission if the input is invalid
+                appointment_date.reportValidity(); // Show tooltip if invalid
             }
         });
 
-        // Handle form submission
-        document.getElementById('addEventForm').addEventListener('submit', function(e) {
-            e.preventDefault();
+    });
 
-            var eventTitle = document.getElementById('eventTitle').value;
-            var eventDate = document.getElementById('eventDate').value;
-            var startTime = document.getElementById('startTime').value;
-            var endTime = document.getElementById('endTime').value;
-            var eventUrl = document.getElementById('eventUrl').value;
-            var isRepeating = document.getElementById('isRepeating').checked;
-            var meetingType = document.getElementById('meetingTypeSwitch').checked ? 'online' : 'face-to-face';
+    // Round the time to the nearest half-hour
+    function roundTimeToNearestHalfHour(time) {
+        let [hours, minutes] = time.split(":");
+        minutes = parseInt(minutes);
 
-            var event = {
-                title: eventTitle,
-                start: eventDate + 'T' + startTime,
-                end: endTime ? eventDate + 'T' + endTime : null,
-                url: meetingType === 'online' ? eventUrl : null
-            };
+        if (minutes < 15) {
+            minutes = "00";
+        } else if (minutes < 45) {
+            minutes = "30";
+        } else {
+            minutes = "00";
+            hours = (parseInt(hours) + 1).toString().padStart(2, '0');
+        }
 
-            // Handle repeating events (same day each month)
-            if (isRepeating) {
-                var groupId = 'group' + Math.floor(Math.random() * 1000);
-                event.groupId = groupId;
+        return `${hours.padStart(2, '0')}:${minutes}`;
+    }
 
-                var date = new Date(eventDate);
-                for (let i = 1; i <= 3; i++) { // Repeat for the next 3 months
-                    let newDate = new Date(date);
-                    newDate.setMonth(date.getMonth() + i);
-                    let repeatingEvent = Object.assign({}, event);
-                    repeatingEvent.start = newDate.toISOString().split('T')[0] + 'T' + startTime;
-                    repeatingEvent.end = endTime ? newDate.toISOString().split('T')[0] + 'T' + endTime : null;
-                    calendar.addEvent(repeatingEvent);
-                }
-            }
-
-            calendar.addEvent(event);
-
-            // Reset the form and close the modal
-            document.getElementById('addEventForm').reset();
-            var modal = bootstrap.Modal.getInstance(document.getElementById('addEventModal'));
-            modal.hide();
-        });
+    document.getElementById("appointment_time").addEventListener("change", function() {
+        let inputTime = this.value;
+        let roundedTime = roundTimeToNearestHalfHour(inputTime);
+        this.value = roundedTime;
     });
 </script>
