@@ -38,28 +38,26 @@ include '../includes/head.php';
                 <div class="card my-4 col-12 col-md-10 col-lg-8">
                     <div class="card-body">
                         <h4>Manage Appointment</h4>
-                        <form id="addEventForm">
+                        <form id="addEventForm" method="post" action="">
                             <hr class="my-3 opacity-25">
-                            <div class="mb-3">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="row align-items-center border p-3 mx-2 rounded bg-light">
-                                            <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
-                                                <img id="account_image" src="<?php if (isset($record['account_image'])) {
-                                                                                    echo "../assets/images/" . $record['account_image'];
-                                                                                } else {
-                                                                                    echo "../assets/images/default_profile.png";
-                                                                                } ?>" alt="User Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
-                                            </div>
-                                            <div class="col-12 col-md-7">
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="patient_name"><?= $record['patient_name'] ?></span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Age: <span class="text-black" id="age"><?= get_age($record['birthdate']) ?> </span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Gender: <span class="text-black" id="gender"><?= $record['gender'] ?></span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Birthdate: <span class="text-black" id="birthdate"><?= date('F j, Y', strtotime($record['birthdate'])) ?></span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email"><?= $record['email'] ?></span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact"><?= $record['contact'] ?></span> </p>
-                                                <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Address: <span class="text-black" id="address"><?= $record['address'] ?></span> </p>
-                                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-12">
+                                    <div class="row align-items-center border p-3 mx-2 rounded bg-light">
+                                        <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
+                                            <img id="account_image" src="<?php if (isset($record['account_image'])) {
+                                                                                echo "../assets/images/" . $record['account_image'];
+                                                                            } else {
+                                                                                echo "../assets/images/default_profile.png";
+                                                                            } ?>" alt="User Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
+                                        </div>
+                                        <div class="col-12 col-md-7">
+                                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="patient_name"><?= $record['patient_name'] ?></span> </p>
+                                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Age: <span class="text-black" id="age"><?= get_age($record['birthdate']) ?> </span> </p>
+                                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Gender: <span class="text-black" id="gender"><?= $record['gender'] ?></span> </p>
+                                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Birthdate: <span class="text-black" id="birthdate"><?= date('F j, Y', strtotime($record['birthdate'])) ?></span> </p>
+                                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email"><?= $record['email'] ?></span> </p>
+                                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact"><?= $record['contact'] ?></span> </p>
+                                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Address: <span class="text-black" id="address"><?= $record['address'] ?></span> </p>
                                         </div>
                                     </div>
                                 </div>
@@ -88,8 +86,23 @@ include '../includes/head.php';
                                     }
                                     ?>
                                 </div>
-                                <p class="text-danger m-0 ps-2">Schedule conflict.</p>
                             </div>
+                            <?php //Schedule Conflict Checker
+                            $conflict = $appointment_class->check_availability($_SESSION['doctor_id'], $record['appointment_date'], $record['appointment_time']);
+                            if (!empty($conflict)) {
+                            ?>
+                                <div class="row align-items-center border p-2 m-0 mb-3 rounded bg-light">
+                                    <div class="col-auto d-flex flex-fill align-items-center">
+                                        <p class="text-danger m-0">Date and Time is not available.</p>
+                                    </div>
+                                    <div class="col-auto p-0">
+                                        <button class="btn btn-primary text-light" onclick="">Auto Update</button>
+                                    </div>
+                                </div>
+
+                            <?php
+                            }
+                            ?>
                             <div class="mb-3">
                                 <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
                                 <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required><?= $record['reason'] ?></textarea>
@@ -103,8 +116,8 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
-                                <button type="submit" class="btn btn-secondary text-light">Update Schedule</button>
-                                <button type="submit" class="btn btn-primary text-light">Confirm Appointment</button>
+                                <a href="./appointment.php" class="btn btn-secondary text-light" name="cancel">Cancel</a>
+                                <button type="submit" class="btn btn-primary text-light" name="confirm">Confirm Appointment</button>
                             </div>
                         </form>
                     </div>
