@@ -38,7 +38,7 @@ include '../includes/head.php';
                 <div class="card my-4 col-12 col-md-10 col-lg-8">
                     <div class="card-body">
                         <h4>Manage Appointment</h4>
-                        <form id="addEventForm" method="post" action="">
+                        <form id="appointmentForm" method="post" action="">
                             <hr class="my-3 opacity-25">
                             <div class="mb-3 row">
                                 <div class="col-12">
@@ -66,7 +66,7 @@ include '../includes/head.php';
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                                    <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" value="<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                                    <input type="date" id="appointment_date" name="appointment_date" data-startday="<?= $_SESSION['start_day'] ?>" data-endday="<?= $_SESSION['end_day'] ?>" min="<?php echo date('Y-m-d'); ?>" value="<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                                     <?php
                                     if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                                     ?>
@@ -77,7 +77,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-md-6">
                                     <label for="appointment_time" class="form-label text-black-50">Select Time</label>
-                                    <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" value="<?= $record['appointment_time'] ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                                    <input type="time" id="appointment_time" name="appointment_time" step="1800" min="<?= $_SESSION['start_wt'] ?>" max="<?= $_SESSION['end_wt'] ?>" value="<?= $record['appointment_time'] ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                                     <?php
                                     if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
                                     ?>
@@ -88,7 +88,7 @@ include '../includes/head.php';
                                 </div>
                             </div>
                             <?php //Schedule Conflict Checker
-                            $conflict = $appointment_class->check_availability($_SESSION['doctor_id'], $record['appointment_date'], $record['appointment_time']);
+                            $conflict = $appointment_class->check_availability($_SESSION['doctor_id'], $record['appointment_date'], $record['appointment_time'], $record['appointment_id']);
                             if (!empty($conflict)) {
                             ?>
                                 <div class="row align-items-center border p-2 m-0 mb-3 rounded bg-light">
@@ -96,7 +96,7 @@ include '../includes/head.php';
                                         <p class="text-danger m-0">Date and Time is not available.</p>
                                     </div>
                                     <div class="col-auto p-0">
-                                        <button class="btn btn-primary text-light" onclick="">Auto Update</button>
+                                        <button type="button" class="btn btn-primary text-light" id="update" name="update" onclick="update_schedule('<?= $_SESSION['doctor_id'] ?>', '<?= $record['appointment_date'] ?>', '<?= $record['appointment_time'] ?>');">Auto Update</button>
                                     </div>
                                 </div>
 
@@ -135,7 +135,7 @@ include '../includes/head.php';
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="appoimtmentForm">
+                    <form id="">
                         <div class="mb-3">
                             <label for="eventTitle" class="form-label">Event Title</label>
                             <input type="text" class="form-control" id="eventTitle" name="eventTitle" required>
@@ -182,6 +182,10 @@ include '../includes/head.php';
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+
+        const appointment_date = document.getElementById("appointment_date");
+        var startDay = appointment_date.dataset.startday;
+        var endDay = appointment_date.dataset.endday;
 
         function validate_date() {
             const minDate = new Date();
@@ -234,7 +238,7 @@ include '../includes/head.php';
             }
         }
 
-        appointment_date.addEventListener("input", function(event) {
+        appointment_date.addEventListener("change", function(event) {
             validate_date();
         });
 
@@ -270,4 +274,26 @@ include '../includes/head.php';
         let roundedTime = roundTimeToNearestHalfHour(inputTime);
         this.value = roundedTime;
     });
+
+    // NEW TASKS: display all conflicting schedule for inputted time
+
+    function update_schedule(doctor_id, date, time) {
+        $.ajax({
+            url: '../handlers/appointment.update_schedule.php',
+            type: 'POST',
+            data: {
+                update: $('#update').val(),
+                doctor_id: doctor_id,
+                appointment_date: date,
+                appointment_time: time,
+            },
+            success: function(response) {
+                if (response) {
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error sending message:', error);
+            }
+        });
+    }
 </script>

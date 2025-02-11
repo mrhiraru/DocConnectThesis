@@ -110,18 +110,34 @@ class Appointment
         return $data;
     }
 
-    function check_availability($doctor_id, $appointment_date, $appointment_time)
+    function check_availability($doctor_id, $appointment_date, $appointment_time, $appointment_id)
     {
         $sql = "SELECT ap.* FROM appointment ap
         INNER JOIN doctor_info di ON ap.doctor_id = di.doctor_id
-        WHERE ap.doctor_id = :doctor_id AND ap.appointment_date = :appointment_date AND ap.appointment_status = 'Incoming'
-        AND (ap.appointment_time < ADDTIME(:appointment_time, '1:00:00') AND ap.estimated_end > :appointment_time)
-        AND :appointment_time >= di.start_wt AND ADDTIME(:appointment_time, '1:00:00') <= di.end_wt";
+        WHERE ap.appointment_id != :appointment_id AND ap.doctor_id = :doctor_id AND ap.appointment_date = :appointment_date AND ap.appointment_status = 'Incoming'
+        AND (ap.appointment_time < ADDTIME(:appointment_time, '00:59:00') AND ap.estimated_end > :appointment_time)
+        AND :appointment_time >= di.start_wt AND ADDTIME(:appointment_time, '00:59:00') <= di.end_wt";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);
         $query->bindParam(':appointment_date', $appointment_date);
         $query->bindParam(':appointment_time', $appointment_time);
+        $query->bindParam(':appointment_id', $appointment_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function get_appointment_schedules($doctor_id)
+    {
+        $sql = "SELECT ap.* FROM appointment ap
+        WHERE ap.doctor_id = :doctor_id AND ap.appointment_status = 'Incoming'";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':doctor_id', $doctor_id);
 
         $data = null;
         if ($query->execute()) {

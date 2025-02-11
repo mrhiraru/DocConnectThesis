@@ -17,7 +17,7 @@ if (isset($_POST['request'])) {
     $appointment_class->doctor_id = htmlentities($_POST['doctor_id']);
     $appointment_class->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
-    $appointment_class->estimated_end = date('H:i', strtotime('+1 hour', strtotime($appointment_class->appointment_time)));
+    $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
     $appointment_class->reason = htmlentities($_POST['reason']);
     $appointment_class->appointment_status = "Pending";
 
@@ -264,7 +264,6 @@ include '../includes/head.php';
             fetch('../handlers/appointment.get_doctors.php')
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
 
                     doctorSearch.addEventListener("focus", function() {
                         if (doctorSearch.value === '' && data.length > 0) {
