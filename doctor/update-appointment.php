@@ -25,7 +25,7 @@ include '../includes/head.php';
 
 ?>
 
-<body>
+<body onload="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)">
     <?php
     require_once('../includes/header-doctor.php');
     ?>
@@ -66,7 +66,7 @@ include '../includes/head.php';
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                                    <input type="date" id="appointment_date" name="appointment_date" data-startday="<?= $_SESSION['start_day'] ?>" data-endday="<?= $_SESSION['end_day'] ?>" min="<?php echo date('Y-m-d'); ?>" value="<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                                    <input type="date" id="appointment_date" name="appointment_date" data-startday="<?= $_SESSION['start_day'] ?>" data-endday="<?= $_SESSION['end_day'] ?>" min="<?php echo date('Y-m-d'); ?>" value="<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" onchange="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                                     <?php
                                     if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                                     ?>
@@ -77,7 +77,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-md-6">
                                     <label for="appointment_time" class="form-label text-black-50">Select Time</label>
-                                    <input type="time" id="appointment_time" name="appointment_time" step="1800" min="<?= $_SESSION['start_wt'] ?>" max="<?= $_SESSION['end_wt'] ?>" value="<?= $record['appointment_time'] ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                                    <input type="time" id="appointment_time" name="appointment_time" step="1800" min="<?= $_SESSION['start_wt'] ?>" max="<?= $_SESSION['end_wt'] ?>" value="<?= $record['appointment_time'] ?>" onchange="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                                     <?php
                                     if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
                                     ?>
@@ -88,21 +88,14 @@ include '../includes/head.php';
                                 </div>
                             </div>
                             <?php //Schedule Conflict Checker
-                            $conflict = $appointment_class->check_availability($_SESSION['doctor_id'], $record['appointment_date'], $record['appointment_time'], $record['appointment_id']);
-                            if (!empty($conflict)) {
+                            //$date_schedule = $appointment_class->get_appointment_schedules($_SESSION['doctor_id'], $record['appointment_time']);
+                            //$conflict = $appointment_class->check_availability($_SESSION['doctor_id'], $record['appointment_date'], $record['appointment_time'], $record['appointment_id']);
                             ?>
-                                <div class="row align-items-center border p-2 m-0 mb-3 rounded bg-light">
-                                    <div class="col-auto d-flex flex-fill align-items-center">
-                                        <p class="text-danger m-0">Date and Time is not available.</p>
-                                    </div>
-                                    <div class="col-auto p-0">
-                                        <button type="button" class="btn btn-primary text-light" id="update" name="update" onclick="update_schedule('<?= $_SESSION['doctor_id'] ?>', '<?= $record['appointment_date'] ?>', '<?= $record['appointment_time'] ?>');">Auto Update</button>
-                                    </div>
-                                </div>
+                            <div id="schedules" class="table-responsive">
+                                
 
-                            <?php
-                            }
-                            ?>
+
+                            </div>
                             <div class="mb-3">
                                 <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
                                 <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required><?= $record['reason'] ?></textarea>
@@ -269,27 +262,29 @@ include '../includes/head.php';
         return `${hours.padStart(2, '0')}:${minutes}`;
     }
 
-    document.getElementById("appointment_time").addEventListener("change", function() {
+    document.getElementById("appointment_time").addEventListener("input", function() {
         let inputTime = this.value;
         let roundedTime = roundTimeToNearestHalfHour(inputTime);
         this.value = roundedTime;
     });
 
-    // NEW TASKS: display all conflicting schedule for inputted time
-
-    function update_schedule(doctor_id, date, time) {
+    function get_date_schedule(doctor_id, appointment_id) {
         $.ajax({
-            url: '../handlers/appointment.update_schedule.php',
-            type: 'POST',
+            url: '../handlers/appointment.get_date_schedule.php',
+            type: 'GET',
             data: {
-                update: $('#update').val(),
                 doctor_id: doctor_id,
-                appointment_date: date,
-                appointment_time: time,
+                appointment_date: $('#appointment_date').val(),
+                appointment_time: $('#appointment_time').val(),
+                appointment_id: appointment_id,
+                start_day: $('#appointment_date').data('startday'),
+                end_day: $('#appointment_date').data('endday'),
+                start_wt: $('#appointment_time').attr('min'),
+                end_wt: $('#appointment_time').attr('max'),
+
             },
             success: function(response) {
-                if (response) {
-                }
+                $('#schedules').html(response);
             },
             error: function(xhr, status, error) {
                 console.error('Error sending message:', error);

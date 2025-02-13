@@ -116,7 +116,8 @@ class Appointment
         INNER JOIN doctor_info di ON ap.doctor_id = di.doctor_id
         WHERE ap.appointment_id != :appointment_id AND ap.doctor_id = :doctor_id AND ap.appointment_date = :appointment_date AND ap.appointment_status = 'Incoming'
         AND (ap.appointment_time < ADDTIME(:appointment_time, '00:59:00') AND ap.estimated_end > :appointment_time)
-        AND :appointment_time >= di.start_wt AND ADDTIME(:appointment_time, '00:59:00') <= di.end_wt";
+        AND :appointment_time >= di.start_wt AND ADDTIME(:appointment_time, '00:59:00') <= di.end_wt
+        ORDER BY ap.appointment_time ASC";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);
@@ -131,13 +132,15 @@ class Appointment
         return $data;
     }
 
-    function get_appointment_schedules($doctor_id)
+    function get_date_schedules($doctor_id, $appointment_date)
     {
         $sql = "SELECT ap.* FROM appointment ap
-        WHERE ap.doctor_id = :doctor_id AND ap.appointment_status = 'Incoming'";
+        WHERE ap.doctor_id = :doctor_id AND ap.appointment_date = :appointment_date AND ap.appointment_status = 'Incoming'
+        ORDER BY ap.appointment_time ASC";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);
+        $query->bindParam(':appointment_date', $appointment_date);
 
         $data = null;
         if ($query->execute()) {
