@@ -1,6 +1,28 @@
 <?php
 session_start();
 
+// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
+//   $email = $_POST['login-email'];
+//   $password = $_POST['login-password'];
+
+//   // palitan mo to sa actual authentication logic, hnd ko alam ano ilagay dto...
+//   if ($email == "test@example.com" && $password == "password123") {
+//     $_SESSION['user'] = $email;
+
+//     // Check kapag 'Remember Me' is selected
+//     if (isset($_POST['remember-me'])) {
+//       setcookie("email", $email, time() + (86400 * 30), "/"); // 30 days expiration
+//     } else {
+//       setcookie("email", "", time() - 3600, "/"); // Delete cookie kapag unchecked
+//     }
+
+//     header("Location: dashboard.php");
+//     exit();
+//   } else {
+//     $error = "Invalid email or password.";
+//   }
+// }
+
 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 3) {
   header('location: ../logout.php?from=3');
 } else if (isset($_SESSION['user_role'])) {
@@ -111,7 +133,7 @@ include '../includes/head.php';
   <div class="container" id="container">
     <div class="form-container sign-up-container">
       <form action="" method="post">
-        <a href="../index.php" class="d-flex align-items-center text-dark text-decoration-none">
+        <a href="./index.php" class="d-flex align-items-center text-dark text-decoration-none">
           <img src="../assets/images/logo.png" alt="Logo" height="35">
           <h1 class="fs-4 link-danger m-0 d-name">Doc<span class="fs-4 link-dark">Connect</span></h1>
         </a>
@@ -128,7 +150,7 @@ include '../includes/head.php';
             ?>
           </div>
           <div class="form-input px-1">
-            <input type="text" class="form-control" id="mname" name="middlename" placeholder="middle name">
+            <input type="text" class="form-control" id="mname" name="middlename" placeholder="middle name *">
           </div>
           <div class="form-input px-1">
             <input type="text" class="form-control" id="lname" name="lastname" placeholder="last name" required value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : '' ?>">
@@ -169,7 +191,7 @@ include '../includes/head.php';
 
         <div class="row row-cols-1 row-cols-md-2 w-100">
           <div class="form-input px-1">
-            <input type="number" class="form-control" id="phoneNo" name="contact" placeholder="+63 9xx xxx xxxx" required value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+            <input type="text" class="form-control" id="phoneNo" name="contact" pattern="\+63 \d{3} \d{3} \d{4}" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
             <?php
             if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
             ?>
@@ -227,11 +249,12 @@ include '../includes/head.php';
             }
             ?>
           </div>
-        </div>  
+        </div>
 
-        <div class="row row-cols-2 w-100">
-          <div class="form-input px-1">
+        <div class="row row-cols-2 w-100 position-relative">
+          <div class="form-input px-1 position-relative">
             <input type="password" class="form-control" id="password-signup" name="password" placeholder="Password" required value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
+            <i class='bx bx-show text-dark position-absolute toggle-password' data-target="password-signup"></i>
             <?php
             if (isset($_POST['password']) && validate_password($_POST['password']) !== "success") {
             ?>
@@ -240,8 +263,9 @@ include '../includes/head.php';
             }
             ?>
           </div>
-          <div class="form-input px-1">
+          <div class="form-input px-1 position-relative">
             <input type="password" class="form-control" id="confirmpassword-signup" name="confirm-password" placeholder="Confirm password" required value="<?= isset($_POST['confirm-password']) ? $_POST['confirm-password'] : '' ?>">
+            <i class='bx bx-show text-dark position-absolute toggle-password' data-target="confirmpassword-signup"></i>
             <?php
             if (isset($_POST['password']) && isset($_POST['confirm-password']) && !validate_cpw($_POST['password'], $_POST['confirm-password'])) {
             ?>
@@ -251,12 +275,11 @@ include '../includes/head.php';
             ?>
           </div>
         </div>
-
         <div class="d-flex justify-content-between w-100">
-          <div class="form-check p-0 mb-3 d-flex justify-content-center">
-            <input class="form-check-input m-0 me-1" type="checkbox" value="yes" id="confirm-terms" name="terms" required <?= (isset($_POST['terms']) && $_POST['terms'] == 'Agreed') ? "checked" : "" ?>>
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="yes" id="confirm-terms" name="terms" required <?= (isset($_POST['terms']) && $_POST['terms'] == 'Agreed') ? "checked" : "" ?>>
             <label class="form-check-label" for="confirm-terms">
-              I agree to the <a href="#" class="link-danger">Terms of Service</a> and <a href="#" class="link-danger">Privacy Policy</a>
+              I agree to the <a href="../public/terms-of-service" target="_blank" class="link-danger">Terms of Service</a> and <a href="../public/privacy-policy" target="_blank" class="link-danger">Privacy Policy</a>
             </label>
           </div>
         </div>
@@ -277,12 +300,17 @@ include '../includes/head.php';
           <input type="email" class="form-control border-2" id="email-login" placeholder="Email" name="login-email" required value="<?= isset($_POST['login-email']) ? $_POST['login-email'] : '' ?>">
           <label for="email-login" class="mt-2">Email</label>
         </div>
-        <div class="form-floating mb-3 w-100">
-          <input type="password" class="form-control border-2" id="password-login" placeholder="Password" name="login-password" required value="<?= isset($_POST['login-password']) ? $_POST['login-password'] : '' ?>">
+        <div class="form-floating mb-3 w-100 position-relative">
+          <input type="password" class="form-control border-2 pe-5" id="password-login" placeholder="Password" name="login-password" required value="<?= isset($_POST['login-password']) ? $_POST['login-password'] : '' ?>">
+          <i class='bx bx-show text-dark position-absolute toggle-password' data-target="password-login"></i>
           <label for="password-login" class="mt-2">Password</label>
         </div>
-        <div class="d-flex justify-content-end w-100">
-          <a href="#" class="text-end m-0 mb-3">Forgot your password?</a>
+        <div class="d-flex justify-content-between w-100">
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me" <?= isset($_COOKIE['email']) ? 'checked' : '' ?>>
+            <label class="form-check-label" for="remember-me">Remember Me</label>
+          </div>
+          <a href="../public/forgotpassword.php" class="text-end m-0 mb-3">Forgot your password?</a>
         </div>
         <?php
         if (isset($_POST['login']) && isset($error)) {
@@ -342,6 +370,7 @@ include '../includes/head.php';
   <?php
   }
   ?>
+
   <script src="../js/login.js"></script>
   <script src="../js/main.js"></script>
 </body>
