@@ -11,14 +11,15 @@ require_once('../classes/account.class.php');
 
 <!DOCTYPE html>
 <html lang="en">
-<?php 
-  $title = 'About Us';
-  $about = 'active';
-	include '../includes/head.php';
+<?php
+$title = 'About Us';
+$about = 'active';
+include '../includes/head.php';
 ?>
+
 <body>
-  <?php 
-    require_once ('../includes/header.php');
+  <?php
+  require_once('../includes/header.php');
   ?>
 
   <style>
@@ -31,7 +32,7 @@ require_once('../classes/account.class.php');
 
     .about-header h1 {
       font-size: 75px;
-    }    
+    }
 
     .icon-circle {
       width: 70px;
@@ -47,8 +48,8 @@ require_once('../classes/account.class.php');
   <section class="about-header mt-5">
     <h1>About Us</h1>
   </section>
-  
-  <section  class="about-section px-3 px-md-5 mx-md-4">
+
+  <section class="about-section px-3 px-md-5 mx-md-4">
     <div class="row my-5">
       <div class="col-12 col-md-8">
         <h2 class="text-green">Your Health, Anytime, Anywhere</h2>
@@ -120,7 +121,7 @@ require_once('../classes/account.class.php');
       <hr class="my-3 c-red rounded-5" style="height: 5px;">
       <p>Using cutting-edge telecommunication tools, we ensure secure, reliable, and seamless interactions between students and healthcare providers.</p>
     </div>
-    
+
     <div class="container mt-5">
       <div class="row text-center">
         <!-- Virtual Consultations -->
@@ -173,9 +174,10 @@ require_once('../classes/account.class.php');
       <a href="./appointment.php" class="btn btn-primary text-light px-4 py-2 mt-3">Schedule a Consultation</a>
     </div>
   </section>
-  <?php 
-    require_once ('../includes/footer.php');
+  <?php
+  require_once('../includes/footer.php');
   ?>
 
 </body>
+
 </html>
