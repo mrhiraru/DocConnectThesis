@@ -134,7 +134,9 @@ class Appointment
 
     function get_date_schedules($doctor_id, $appointment_date)
     {
-        $sql = "SELECT ap.* FROM appointment ap
+        $sql = "SELECT ap.*, a.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name FROM appointment ap
+        INNER JOIN patient_info p ON ap.patient_id = p.patient_id
+        INNER JOIN account a ON p.account_id = a.account_id
         WHERE ap.doctor_id = :doctor_id AND ap.appointment_date = :appointment_date AND ap.appointment_status = 'Incoming'
         ORDER BY ap.appointment_time ASC";
 

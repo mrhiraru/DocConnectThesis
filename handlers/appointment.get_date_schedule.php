@@ -82,9 +82,9 @@ if ($appointment_day_number < $doctor_start_day_number || $appointment_day_numbe
                 }
         ?>
                 <tr class="<?= $row_color ?>">
-                    <td>Name</td>
+                    <td><?= $schedule['patient_name'] ?></td>
                     <td><?= date("g:i A", strtotime($schedule['appointment_time'])) . " - " . date("g:i A", strtotime($schedule['estimated_end'])) ?></td>
-                    <td></td>
+                    <td class="text-end"><i class="<?= ($row_color == 'table-danger') ?  'bx bx-error-circle' : '' ?> text-primary"></i></td>
                 </tr>
         <?php
             }
