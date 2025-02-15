@@ -92,7 +92,7 @@ include '../includes/head.php';
                             //$conflict = $appointment_class->check_availability($_SESSION['doctor_id'], $record['appointment_date'], $record['appointment_time'], $record['appointment_id']);
                             ?>
                             <div id="schedules" class="table-responsive">
-                                
+
 
 
                             </div>
@@ -109,6 +109,7 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
+                                <button type="button" class="btn btn-primary text-light" onclick="handleAuthClick()">test</button>
                                 <a href="./appointment.php" class="btn btn-secondary text-light" name="cancel">Cancel</a>
                                 <button type="submit" class="btn btn-primary text-light" name="confirm">Confirm Appointment</button>
                             </div>
@@ -292,3 +293,7 @@ include '../includes/head.php';
         });
     }
 </script>
+
+<?php
+require_once('../tools/calendar.php');
+?>
