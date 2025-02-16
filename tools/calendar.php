@@ -1,5 +1,5 @@
 <script type="text/javascript">
-    const userEmail = 'mrhiraru@gmail.com';
+    const userEmail = '<?= $_SESSION['email'] ?>';
     /* exported gapiLoaded */
     /* exported gisLoaded */
     /* exported handleAuthClick */
@@ -92,7 +92,7 @@
                     credentials: 'same-origin',
                 });
 
-                await handleUserVerification(accessToken, authenticate, confirm);
+                await handleUserVerification(accessToken, authenticate, confirm, proceed);
             };
 
             tokenClient.requestAccessToken({
