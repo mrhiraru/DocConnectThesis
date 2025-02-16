@@ -14,35 +14,41 @@ $day_map = [
     'Sunday'    => 7
 ];
 
-$estimated_end = date('H:i', strtotime('+59 minutes', strtotime($_GET['appointment_time'])));
+$today = date('Y-m-d');
+$error_color = 'text-danger';
+if ($_GET['appointment_date'] < $today) {
+    $error_message = "Appointment date cannot be in the past.";
+} else {
+    $estimated_end = date('H:i', strtotime('+59 minutes', strtotime($_GET['appointment_time'])));
 
-$hasConflict = false;
-if (!empty($scheduleArray)) {
-    foreach ($scheduleArray as $schedule) {
-        if ($schedule['appointment_time'] < $estimated_end && $schedule['estimated_end'] > $_GET['appointment_time']) {
-            $hasConflict = true;
-            break;
+    $hasConflict = false;
+    if (!empty($scheduleArray)) {
+        foreach ($scheduleArray as $schedule) {
+            if ($schedule['appointment_time'] < $estimated_end && $schedule['estimated_end'] > $_GET['appointment_time']) {
+                $hasConflict = true;
+                break;
+            }
         }
     }
-}
 
-$appointment_day_number = $day_map[date('l', strtotime($_GET['appointment_date']))];
-$doctor_start_day_number = $day_map[$_GET['start_day']];
-$doctor_end_day_number = $day_map[$_GET['end_day']];
+    $appointment_day_number = $day_map[date('l', strtotime($_GET['appointment_date']))];
+    $doctor_start_day_number = $day_map[$_GET['start_day']];
+    $doctor_end_day_number = $day_map[$_GET['end_day']];
 
-$error_color = 'text-danger';
-if ($appointment_day_number < $doctor_start_day_number || $appointment_day_number > $doctor_end_day_number) {
-    $error_message = "Please select date within your working days: " . $_GET['start_day'] . " to " . $_GET['end_day'] . ".";
-} else {
-    $temp_start_wt = date('H:i', strtotime('-1 minute', strtotime($_GET['start_wt'])));
-    if ($_GET['appointment_time'] < $temp_start_wt || $estimated_end > $_GET['end_wt']) {
-        $error_message = "Please select time within your working time: " . date("g:i A", strtotime($_GET['start_wt'])) . " to " . date("g:i A", strtotime($_GET['end_wt'])) . ".";
+
+    if ($appointment_day_number < $doctor_start_day_number || $appointment_day_number > $doctor_end_day_number) {
+        $error_message = "Please select date within your working days: " . $_GET['start_day'] . " to " . $_GET['end_day'] . ".";
     } else {
-        if ($hasConflict) {
-            $error_message = "Time selected is not available due to an existing appointment.";
+        $temp_start_wt = date('H:i', strtotime('-1 minute', strtotime($_GET['start_wt'])));
+        if ($_GET['appointment_time'] < $temp_start_wt || $estimated_end > $_GET['end_wt']) {
+            $error_message = "Please select time within your working time: " . date("g:i A", strtotime($_GET['start_wt'])) . " to " . date("g:i A", strtotime($_GET['end_wt'])) . ".";
         } else {
-            $error_color = 'text-success';
-            $error_message = "Time and Date is available.";
+            if ($hasConflict) {
+                $error_message = "Time selected is not available due to an existing appointment.";
+            } else {
+                $error_color = 'text-success';
+                $error_message = "Time and Date is available.";
+            }
         }
     }
 }

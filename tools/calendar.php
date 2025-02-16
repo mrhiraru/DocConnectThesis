@@ -1,11 +1,5 @@
-<!--Add buttons to initiate auth sequence and sign out-->
-<button id="authorize_button" onclick="handleAuthClick()">Authorize</button>
-<button id="signout_button" onclick="handleSignoutClick()">Sign Out</button>
-
-<pre id="content" style="white-space: pre-wrap;"></pre>
-
 <script type="text/javascript">
-    const userEmail = '<?php echo $_SESSION['email']; ?>';
+    const userEmail = 'mrhiraru@gmail.com';
     /* exported gapiLoaded */
     /* exported gisLoaded */
     /* exported handleAuthClick */
@@ -25,9 +19,6 @@
     let tokenClient;
     let gapiInited = false;
     let gisInited = false;
-
-    document.getElementById('authorize_button').style.visibility = 'hidden';
-    document.getElementById('signout_button').style.visibility = 'hidden';
 
     /**
      * Callback after api.js is loaded.
@@ -67,46 +58,76 @@
      */
     function maybeEnableButtons() {
         if (gapiInited && gisInited) {
-            document.getElementById('authorize_button').style.visibility = 'visible';
+            //document.getElementById('authorize_button').style.visibility = 'visible';
         }
     }
 
     /**
      *  Sign in the user upon button click.
      */
-    function handleAuthClick() {
-        tokenClient.callback = async (resp) => {
-            if (resp.error !== undefined) {
-                throw (resp);
-            }
-            document.getElementById('signout_button').style.visibility = 'visible';
-            document.getElementById('authorize_button').innerText = 'Refresh';
+    async function handleAuthClick() {
+        const authenticate = document.getElementById('authenticate');
+        const confirm = document.getElementById('confirm');
+        const proceed = document.getElementById('proceed');
 
-            const userInfo = await gapi.client.oauth2.userinfo.get();
-            const authenticatedEmail = userInfo.result.email;
+        const tokenData = await fetch('../handlers/get_token.php');
+        const tokenJson = await tokenData.json();
+        let accessToken = tokenJson.access_token;
 
-            const expectedEmail = userEmail;
+        if (!accessToken) {
+            console.log("No token in session. Requesting authentication.");
 
-            if (authenticatedEmail !== expectedEmail) {
-                alert(`Unauthorized email. Expected ${expectedEmail}, but got ${authenticatedEmail}`);
-                handleSignoutClick();
-            } else {
-                console.log(`Authenticated as ${authenticatedEmail}`);
-                await listUpcomingEvents();
-            }
-        };
+            tokenClient.callback = async (resp) => {
+                if (resp.error) throw resp;
+                accessToken = resp.access_token;
 
-        if (gapi.client.getToken() === null) {
-            // Prompt the user to select a Google Account and ask for consent to share their data
-            // when establishing a new session.
+                await fetch('../handlers/store_token.php', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        access_token: accessToken
+                    }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'same-origin',
+                });
+
+                await handleUserVerification(accessToken, authenticate, confirm);
+            };
+
             tokenClient.requestAccessToken({
                 login_hint: userEmail
             });
         } else {
-            // Skip display of account chooser and consent dialog for an existing session.
-            tokenClient.requestAccessToken({
-                prompt: ''
+            console.log("Token found in session. Using it.");
+            gapi.client.setToken({
+                access_token: accessToken
             });
+            await handleUserVerification(accessToken, authenticate, confirm, proceed);
+        }
+    }
+
+    async function handleUserVerification(accessToken, authenticate, confirm, proceed) {
+        const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            },
+        });
+
+        const userInfo = await userInfoResponse.json();
+
+        if (userInfo.email !== userEmail) {
+            console.log(`Unauthorized email. Expected ${userEmail}, but got ${userInfo.email}`);
+            handleSignoutClick();
+        } else {
+            console.log(`Authenticated as ${userInfo.email}`);
+            if (authenticate) {
+                authenticate.toggleAttribute('hidden');
+            }
+            if (proceed) {
+                proceed.toggleAttribute('hidden');
+            }
+            await listUpcomingEvents();
         }
     }
 
@@ -114,14 +135,19 @@
      *  Sign out the user upon button click.
      */
     function handleSignoutClick() {
-        const token = gapi.client.getToken();
-        if (token !== null) {
-            google.accounts.oauth2.revoke(token.access_token);
-            gapi.client.setToken('');
-            document.getElementById('content').innerText = '';
-            document.getElementById('authorize_button').innerText = 'Authorize';
-            document.getElementById('signout_button').style.visibility = 'hidden';
-        }
+        fetch('../handlers/store_token.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                access_token: ''
+            }), // Clear token
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'same-origin',
+        });
+
+        gapi.client.setToken(null);
+        console.log('Signed out and session token cleared.');
     }
 
     /**
@@ -142,7 +168,7 @@
             };
             response = await gapi.client.calendar.events.list(request);
         } catch (err) {
-            document.getElementById('content').innerText = err.message;
+            //document.getElementById('content').innerText = err.message;
             return;
         }
 
@@ -155,7 +181,7 @@
         const output = events.reduce(
             (str, event) => `${str}${event.summary} (${event.start.dateTime || event.start.date})\n`,
             'Events:\n');
-        document.getElementById('content').innerText = output;
+        //document.getElementById('content').innerText = output;
     }
 </script>
 <script async defer src="https://apis.google.com/js/api.js" onload="gapiLoaded()"></script>

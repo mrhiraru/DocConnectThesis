@@ -5,6 +5,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../user/verification.php');
 } else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
     header('location: ../index.php');
+} else if (!isset($_SESSION['google_access_token'])){
+    header('location: ../doctor/authenticate.php');
 }
 
 require_once('../tools/functions.php');
@@ -109,9 +111,9 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
-                                <button type="button" class="btn btn-primary text-light" onclick="handleAuthClick()">test</button>
+
                                 <a href="./appointment.php" class="btn btn-secondary text-light" name="cancel">Cancel</a>
-                                <button type="submit" class="btn btn-primary text-light" name="confirm">Confirm Appointment</button>
+                                <button type="submit" class="btn btn-primary text-light" id="confirm" name="confirm" onclick="handleAuthClick()">Confirm Appointment</button>
                             </div>
                         </form>
                     </div>
