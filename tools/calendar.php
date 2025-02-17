@@ -1,5 +1,8 @@
 <script type="text/javascript">
-    const userEmail = '<?= $_SESSION['email'] ?>';
+    //const doctorEmail = '<?= $_SESSION['email'] ?>'; //original code,
+    const doctorEmail = 'mrhiraru@gmail.com'; // for testing
+    const patientEmail = '<?= $record['email'] ?>';
+    const appointment_id = <?= $record['appointment_id'] ?>;
     /* exported gapiLoaded */
     /* exported gisLoaded */
     /* exported handleAuthClick */
@@ -65,49 +68,73 @@
     /**
      *  Sign in the user upon button click.
      */
-    async function handleAuthClick() {
-        const authenticate = document.getElementById('authenticate');
-        const confirm = document.getElementById('confirm');
-        const proceed = document.getElementById('proceed');
+    const authentication_checkbox = document.getElementById('authenticate');
 
+    authentication_checkbox.addEventListener('click', async function(event) {
+        event.preventDefault(); // Stop the checkbox from checking immediately
+
+        try {
+            const isVerified = await handleAuthClick();
+            if (isVerified) {
+                authentication_checkbox.checked = true; // Only check if verification is successful
+            } else {
+                authentication_checkbox.checked = false; // Make sure it's unchecked if verification fails
+            }
+        } catch (error) {
+            console.error('Authentication/Verification failed:', error);
+            authentication_checkbox.checked = false; // Uncheck on error
+        }
+    });
+
+    async function handleAuthClick() {
         const tokenData = await fetch('../handlers/get_token.php');
         const tokenJson = await tokenData.json();
         let accessToken = tokenJson.access_token;
 
         if (!accessToken) {
-            console.log("No token in session. Requesting authentication.");
+            console.log('No token in session. Requesting authentication.');
 
-            tokenClient.callback = async (resp) => {
-                if (resp.error) throw resp;
-                accessToken = resp.access_token;
+            return new Promise((resolve, reject) => {
+                tokenClient.callback = async (resp) => {
+                    if (resp.error) {
+                        console.error('Token Error:', resp);
+                        reject(resp);
+                        return;
+                    }
 
-                await fetch('../handlers/store_token.php', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        access_token: accessToken
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'same-origin',
+                    accessToken = resp.access_token;
+
+                    await fetch('../handlers/store_token.php', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            access_token: accessToken,
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        credentials: 'same-origin',
+                    });
+
+                    const isVerified = await handleUserVerification(accessToken);
+                    resolve(isVerified);
+                };
+
+                tokenClient.requestAccessToken({
+                    login_hint: doctorEmail,
                 });
-
-                await handleUserVerification(accessToken, authenticate, confirm, proceed);
-            };
-
-            tokenClient.requestAccessToken({
-                login_hint: userEmail
             });
         } else {
-            console.log("Token found in session. Using it.");
+            console.log('Token found in session. Using it.');
             gapi.client.setToken({
-                access_token: accessToken
+                access_token: accessToken,
             });
-            await handleUserVerification(accessToken, authenticate, confirm, proceed);
+
+            const isVerified = await handleUserVerification(accessToken);
+            return isVerified;
         }
     }
 
-    async function handleUserVerification(accessToken, authenticate, confirm, proceed) {
+    async function handleUserVerification(accessToken) {
         const userInfoResponse = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -116,20 +143,80 @@
 
         const userInfo = await userInfoResponse.json();
 
-        if (userInfo.email !== userEmail) {
-            console.log(`Unauthorized email. Expected ${userEmail}, but got ${userInfo.email}`);
+        if (userInfo.email !== doctorEmail) {
+            console.log(`Unauthorized email. Expected ${doctorEmail}, but got ${userInfo.email}`);
             handleSignoutClick();
+            const confirm_modal = document.getElementById('confirmationFailed');
+            if (confirm_modal) {
+                var myModal = new bootstrap.Modal(confirm_modal, {});
+                myModal.show();
+            }
+
+            return false;
         } else {
             console.log(`Authenticated as ${userInfo.email}`);
-            if (authenticate) {
-                authenticate.toggleAttribute('hidden');
-            }
-            if (proceed) {
-                proceed.toggleAttribute('hidden');
-            }
-            await listUpcomingEvents();
+
+            return true;
         }
     }
+
+    function new_event() {
+        const event = {
+            'summary': 'Docconnect Consultation: ' + appointment_id, // Event Title
+            'description': reason, // Event Description
+            'start': {
+                'dateTime': appointmentDateTime, // Start Time (ISO 8601 format)
+                'timeZone': 'Asia/Manila' // Time Zone
+            },
+            'end': {
+                'dateTime': new Date(new Date(appointmentDateTime).getTime() + 59 * 60 * 1000).toISOString(), // End Time
+                'timeZone': 'Asia/Manila'
+            },
+            'conferenceData': {
+                'createRequest': {
+                    'requestId': appointment_id, // Unique request ID (random string)
+                    'conferenceSolutionKey': {
+                        'type': 'hangoutsMeet' // Specifies Google Meet
+                    }
+                }
+            },
+            'attendees': [{
+                    'email': patientEmail
+                }, // Patient's email
+                {
+                    'email': doctorEmail
+                } // Doctor's email
+            ],
+            'reminders': {
+                'useDefault': false, // Set to false to define custom reminders
+                'overrides': [{
+                        'method': 'email',
+                        'minutes': 10
+                    }, // Send an email reminder 30 mins before
+                    {
+                        'method': 'popup',
+                        'minutes': 5
+                    } // Show a popup notification 10 mins before
+                ]
+            }
+        };
+
+        const request = gapi.client.calendar.events.insert({
+            'calendarId': 'primary', // Inserts into the user's primary calendar
+            'resource': event, // Uses the event object created above
+            'conferenceDataVersion': 1 // Required to generate a Google Meet link
+        });
+
+        request.execute(function(event) {
+            if (event.hangoutLink) {
+                console.log('Google Meet Link:', event.hangoutLink);
+            } else {
+                console.log('No Google Meet link created.');
+            }
+        });
+    }
+
+
 
     /**
      *  Sign out the user upon button click.

@@ -5,8 +5,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../user/verification.php');
 } else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
     header('location: ../index.php');
-} else if (!isset($_SESSION['google_access_token'])){
-    header('location: ../doctor/authenticate.php');
 }
 
 require_once('../tools/functions.php');
@@ -109,11 +107,17 @@ include '../includes/head.php';
                                 }
                                 ?>
                             </div>
+                            <div class="form-check mb-3">
+                                <input class="form-check-input border-danger" type="checkbox" name="authenticate" id="authenticate" required>
+                                <label class="form-check-label text-danger text-decoration-line" for="authenticate">
+                                    Click to Authenticate Google Account.
+                                </label>
+                            </div>
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
 
                                 <a href="./appointment.php" class="btn btn-secondary text-light" name="cancel">Cancel</a>
-                                <button type="submit" class="btn btn-primary text-light" id="confirm" name="confirm" onclick="handleAuthClick()">Confirm Appointment</button>
+                                <button type="submit" class="btn btn-primary text-light" id="confirm" name="confirm">Confirm Appointment</button>
                             </div>
                         </form>
                     </div>
@@ -123,51 +127,20 @@ include '../includes/head.php';
     </div>
 
     <!-- Bootstrap Modal for Adding Events -->
-    <div class="modal fade" id="addEventModal" tabindex="-1" aria-labelledby="addEventModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+    <div class="modal fade" id="confirmationFailed" tabindex="-1" aria-labelledby="confirmationFailedLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addEventModalLabel">Add Appointment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h6 class="modal-title" id="myModalLabel">Authentication Failed: Use your registered email.</h6>
                 </div>
                 <div class="modal-body">
-                    <form id="">
-                        <div class="mb-3">
-                            <label for="eventTitle" class="form-label">Event Title</label>
-                            <input type="text" class="form-control" id="eventTitle" name="eventTitle" required>
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <a href="./update-appointment.php?appointment_id=<?= $_GET['appointment_id'] ?>" class="text-decoration-none text-dark">
+                                <p class="m-0 text-primary fw-bold">Try Again.</p>
+                            </a>
                         </div>
-                        <div class="mb-3">
-                            <label for="eventDate" class="form-label">Event Date</label>
-                            <input type="date" class="form-control" id="eventDate" name="eventDate" required>
-                        </div>
-                        <div class="d-flex align-items-center w-100">
-                            <div class="mb-3 w-100">
-                                <label for="startTime" class="form-label">Time Start</label>
-                                <input type="time" class="form-control" id="startTime" name="startTime" required>
-                            </div>
-                            <p class="m-0 mx-3 mt-3"> to </p>
-                            <div class="mb-3 w-100">
-                                <label for="endTime" class="form-label">Time End</label>
-                                <input type="time" class="form-control" id="endTime" name="endTime">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Meeting Type</label>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="meetingTypeSwitch" name="meetingType" value="online">
-                                <label class="form-check-label" for="meetingTypeSwitch" id="meetingTypeLabel">Face-to-Face</label>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="eventUrl" class="form-label">Event URL (for Online Meetings)</label>
-                            <input type="url" class="form-control" id="eventUrl" name="eventUrl" placeholder="http://example.com" disabled>
-                        </div>
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="isRepeating" name="isRepeating">
-                            <label class="form-check-label" for="isRepeating">Is this a repeating event?</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary text-light">Add Appointment</button>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
