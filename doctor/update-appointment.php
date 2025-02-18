@@ -145,6 +145,26 @@ include '../includes/head.php';
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="updatedModal" tabindex="-1" aria-labelledby="updatedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updatedModalLabel">The appointment has been successfully confirmed.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <a href="./appointment" class="text-decoration-none text-dark">
+                                <p class="m-0 text-primary fw-bold">Click to Continue.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

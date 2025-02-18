@@ -1,8 +1,6 @@
 <script type="text/javascript">
     //const doctorEmail = '<?= $_SESSION['email'] ?>'; //original code,
     const doctorEmail = 'mrhiraru@gmail.com'; // for testing
-    const patientEmail = '<?= $record['email'] ?>';
-    const appointment_id = <?= $record['appointment_id'] ?>;
     /* exported gapiLoaded */
     /* exported gisLoaded */
     /* exported handleAuthClick */
@@ -17,7 +15,7 @@
 
     // Authorization scopes required by the API; multiple scopes can be
     // included, separated by spaces.
-    const SCOPES = 'openid email https://www.googleapis.com/auth/calendar.readonly';
+    const SCOPES = 'openid email https://www.googleapis.com/auth/calendar.events';
 
     let tokenClient;
     let gapiInited = false;
@@ -120,6 +118,7 @@
                 };
 
                 tokenClient.requestAccessToken({
+                    prompt: 'consent',
                     login_hint: doctorEmail,
                 });
             });
@@ -151,7 +150,6 @@
                 var myModal = new bootstrap.Modal(confirm_modal, {});
                 myModal.show();
             }
-
             return false;
         } else {
             console.log(`Authenticated as ${userInfo.email}`);
@@ -160,17 +158,25 @@
         }
     }
 
-    function new_event() {
+    async function new_event(appointment_id, reason, date, time, patient_email, doctor_email) {
+
+        var title = 'Docconnect Consultation: ' + appointment_id;
+        var description = reason;
+        var appointment_date_time = `${date}T${time}`;
+
+        var start_dt = new Date(appointment_date_time);
+        var end_dt = new Date(start_dt.getTime() + 59 * 60 * 1000);
+
         const event = {
-            'summary': 'Docconnect Consultation: ' + appointment_id, // Event Title
-            'description': reason, // Event Description
+            'summary': title, // Event Title
+            'description': description, // Event Description
             'start': {
-                'dateTime': appointmentDateTime, // Start Time (ISO 8601 format)
-                'timeZone': 'Asia/Manila' // Time Zone
+                'dateTime': start_dt.toISOString(), // Start Time (ISO 8601 format)
+                'timeZone': 'UTC' // Time Zone
             },
             'end': {
-                'dateTime': new Date(new Date(appointmentDateTime).getTime() + 59 * 60 * 1000).toISOString(), // End Time
-                'timeZone': 'Asia/Manila'
+                'dateTime': end_dt.toISOString(), // End Time
+                'timeZone': 'UTC'
             },
             'conferenceData': {
                 'createRequest': {
@@ -181,10 +187,10 @@
                 }
             },
             'attendees': [{
-                    'email': patientEmail
+                    'email': patient_email
                 }, // Patient's email
                 {
-                    'email': doctorEmail
+                    'email': doctor_email
                 } // Doctor's email
             ],
             'reminders': {
@@ -207,14 +213,58 @@
             'conferenceDataVersion': 1 // Required to generate a Google Meet link
         });
 
-        request.execute(function(event) {
-            if (event.hangoutLink) {
-                console.log('Google Meet Link:', event.hangoutLink);
-            } else {
-                console.log('No Google Meet link created.');
-            }
+        return new Promise((resolve, reject) => {
+            request.execute(function(event) {
+                if (event && event.hangoutLink) {
+                    resolve(event.hangoutLink);
+                } else {
+                    reject('No Google Meet link created.');
+                }
+            });
         });
     }
+
+    $(document).ready(function() {
+
+        $('#appointmentForm').on('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                appointment_id: <?= $record['appointment_id'] ?>,
+                confirm: $('#confirm').val(),
+                appointment_date: $('#appointment_date').val(),
+                appointment_time: $('#appointment_time').val(),
+                reason: $("#reason").val(),
+                email: $('#email').text(),
+                link: null,
+            };
+
+            formData.link = await new_event(formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+
+            if (formData.link) {
+                $.ajax({
+                    url: '../handlers/doctor.update_appointment.php',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                            const updated = document.getElementById('updatedModal');
+                            if (updated) {
+                                var myModal = new bootstrap.Modal(updated, {});
+                                myModal.show();
+                            }
+                        } else {
+                            console.error('Error:', response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error sending message:', error);
+                    }
+                });
+            }
+        });
+
+    });
 
 
 
