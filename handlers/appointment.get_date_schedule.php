@@ -2,7 +2,7 @@
 require_once('../classes/appointment.class.php');
 
 $appointment = new Appointment();
-$scheduleArray = $appointment->get_date_schedules($_GET['doctor_id'], $_GET['appointment_date']);
+$scheduleArray = $appointment->get_date_schedules($_GET['doctor_id'], $_GET['appointment_date'], $_GET['appointment_id']);
 
 $day_map = [
     'Monday'    => 1,
@@ -71,7 +71,7 @@ if ($_GET['appointment_date'] < $today) {
         } else {
         ?>
             <tr>
-                <th colspan="4" class="text-center border-0">No schedule for <?= date("l, M d, Y", strtotime($_GET['appointment_date'])) ?></th>
+                <th colspan="4" class="text-center border-0">No other schedule for <?= date("l, M d, Y", strtotime($_GET['appointment_date'])) ?></th>
             </tr>
         <?php
         }

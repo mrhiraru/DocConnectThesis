@@ -215,58 +215,257 @@
 
         return new Promise((resolve, reject) => {
             request.execute(function(event) {
-                if (event && event.hangoutLink) {
-                    resolve(event.hangoutLink);
+                if (event && event.id && event.hangoutLink) {
+                    resolve({
+                        eventId: event.id,
+                        hangoutLink: event.hangoutLink
+                    });
                 } else {
-                    reject('No Google Meet link created.');
+                    reject('No Google Meet link or event ID created.');
                 }
             });
         });
     }
+
+    async function update_event(event_id, appointment_id, reason, date, time, patient_email, doctor_email) {
+        var title = 'Docconnect Consultation: ' + appointment_id;
+        var description = reason;
+        var appointment_date_time = `${date}T${time}`;
+
+        var start_dt = new Date(appointment_date_time);
+        var end_dt = new Date(start_dt.getTime() + 59 * 60 * 1000);
+
+        const event = {
+            'summary': title,
+            'description': description,
+            'start': {
+                'dateTime': start_dt.toISOString(),
+                'timeZone': 'UTC'
+            },
+            'end': {
+                'dateTime': end_dt.toISOString(),
+                'timeZone': 'UTC'
+            },
+            'attendees': [{
+                    'email': patient_email
+                },
+                {
+                    'email': doctor_email
+                }
+            ],
+            'reminders': {
+                'useDefault': false,
+                'overrides': [{
+                        'method': 'email',
+                        'minutes': 10
+                    },
+                    {
+                        'method': 'popup',
+                        'minutes': 5
+                    }
+                ]
+            }
+        };
+
+        const request = gapi.client.calendar.events.update({
+            'calendarId': 'primary', // Updates the existing event
+            'eventId': event_id, // Specify the event to update
+            'resource': event
+        });
+
+        return new Promise((resolve, reject) => {
+            request.execute(function(event) {
+                if (event && event.id) {
+                    resolve({
+                        eventId: event.id,
+                        updated: true
+                    });
+                } else {
+                    reject('Event update failed.');
+                }
+            });
+        });
+    }
+
+    async function delete_event(event_id) {
+        const request = gapi.client.calendar.events.delete({
+            'calendarId': 'primary', // Deletes from the user's primary calendar
+            'eventId': event_id // Specify the event to delete
+        });
+
+        return new Promise((resolve, reject) => {
+            request.execute(function(response) {
+                if (!response || response.error) {
+                    reject('Event deletion failed.');
+                } else {
+                    resolve({
+                        eventId: event_id,
+                        deleted: true
+                    });
+                }
+            });
+        });
+    }
+
 
     $(document).ready(function() {
 
         $('#appointmentForm').on('submit', async function(e) {
             e.preventDefault();
 
-            const formData = {
-                appointment_id: <?= $record['appointment_id'] ?>,
-                confirm: $('#confirm').val(),
-                appointment_date: $('#appointment_date').val(),
-                appointment_time: $('#appointment_time').val(),
-                reason: $("#reason").val(),
-                email: $('#email').text(),
-                link: null,
-            };
+            let submit_button = event.submitter.name;
 
-            formData.link = await new_event(formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+            if (submit_button == "confirm") {
+                const formData = {
+                    appointment_id: <?= $record['appointment_id'] ?>,
+                    confirm: $('#confirm').val(),
+                    appointment_date: $('#appointment_date').val(),
+                    appointment_time: $('#appointment_time').val(),
+                    reason: $("#reason").val(),
+                    email: $('#email').text(),
+                    link: null,
+                    event_id: null,
+                };
 
-            if (formData.link) {
-                $.ajax({
-                    url: '../handlers/doctor.update_appointment.php',
-                    type: 'POST',
-                    data: formData,
-                    success: function(response) {
-                        if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                            const updated = document.getElementById('updatedModal');
-                            if (updated) {
-                                var myModal = new bootstrap.Modal(updated, {});
-                                myModal.show();
+                var created_event = await new_event(formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+                formData.link = created_event.hangoutLink;
+                formData.event_id = created_event.eventId;
+
+                if (formData.event_id) {
+                    $.ajax({
+                        url: '../handlers/doctor.update_appointment.php',
+                        type: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                const updated = document.getElementById('updatedModal');
+                                if (updated) {
+                                    var myModal = new bootstrap.Modal(updated, {});
+                                    myModal.show();
+                                }
+                            } else {
+                                console.error('Error:', response);
                             }
-                        } else {
-                            console.error('Error:', response);
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error sending message:', error);
                         }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error sending message:', error);
-                    }
-                });
+                    });
+                }
+            } else if (submit_button == "reschedule") {
+
+                const formData = {
+                    appointment_id: <?= $record['appointment_id'] ?>,
+                    reschedule: $('#reschedule').val(),
+                    appointment_date: $('#appointment_date').val(),
+                    appointment_time: $('#appointment_time').val(),
+                    reason: $("#reason").val(),
+                    email: $('#email').text(),
+                    link: '<?= $record['appointment_link'] ?>',
+                    event_id: '<?= $record['event_id'] ?>'
+                };
+
+                var updated_event = await update_event(formData.event_id, formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+
+                if (updated_event.updated) {
+                    $.ajax({
+                        url: '../handlers/doctor.update_appointment.php',
+                        type: 'POST',
+                        data: formData,
+                        success: function(response) {
+                            if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                const updated = document.getElementById('rescheduleModal');
+                                if (updated) {
+                                    var myModal = new bootstrap.Modal(updated, {});
+                                    myModal.show();
+                                }
+                            } else {
+                                console.error('Error:', response);
+                            }
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error sending message:', error);
+                        }
+                    });
+                }
+            } else if (submit_button == "cancel") {
+                const updated = document.getElementById('cancelModal');
+                if (updated) {
+                    var myModal = new bootstrap.Modal(updated, {});
+                    myModal.show();
+
+                    document.getElementById("cancel-yes").addEventListener("click", async function() {
+                        console.log("User confirmed cancellation.");
+
+                        const formData = {
+                            appointment_id: <?= $record['appointment_id'] ?>,
+                            cancel: $('#cancel').val(),
+                            event_id: '<?= $record['event_id'] ?>'
+                        };
+
+                        var deleted_event = await delete_event(formData.event_id);
+
+                        if (deleted_event.deleted) {
+                            $.ajax({
+                                url: '../handlers/doctor.update_appointment.php',
+                                type: 'POST',
+                                data: formData,
+                                success: function(response) {
+                                    if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                        const updated = document.getElementById('cancelledModal');
+                                        if (updated) {
+                                            var myModal = new bootstrap.Modal(updated, {});
+                                            myModal.show();
+                                        }
+                                    } else {
+                                        console.error('Error:', response);
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error sending message:', error);
+                                }
+                            });
+
+                        }
+
+                        myModal.hide();
+                    });
+
+                    // Handle No button click
+                    document.getElementById("cancel-no").addEventListener("click", function() {
+                        console.log("User declined cancellation.");
+
+                        myModal.hide();
+                    });
+                }
             }
         });
-
     });
 
-
+    function decline_appointment() {
+        $.ajax({
+            url: '../handlers/doctor.update_appointment.php',
+            type: 'POST',
+            data: {
+                appointment_id: <?= $record['appointment_id'] ?>,
+                decline: 'true'
+            },
+            success: function(response) {
+                if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                    const updated = document.getElementById('declinedModal');
+                    if (updated) {
+                        var myModal = new bootstrap.Modal(updated, {});
+                        myModal.show();
+                    }
+                } else {
+                    console.error('Error:', response);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error sending message:', error);
+            }
+        })
+    }
 
     /**
      *  Sign out the user upon button click.

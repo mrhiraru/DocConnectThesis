@@ -12,6 +12,7 @@ class Appointment
     public $appointment_link;
     public $appointment_status;
     public $reason;
+    public $event_id;
 
     protected $db;
 
@@ -132,16 +133,17 @@ class Appointment
         return $data;
     }
 
-    function get_date_schedules($doctor_id, $appointment_date)
+    function get_date_schedules($doctor_id, $appointment_date, $appointment_id)
     {
         $sql = "SELECT ap.*, a.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name FROM appointment ap
         INNER JOIN patient_info p ON ap.patient_id = p.patient_id
         INNER JOIN account a ON p.account_id = a.account_id
-        WHERE ap.doctor_id = :doctor_id AND ap.appointment_date = :appointment_date AND ap.appointment_status = 'Incoming'
+        WHERE ap.doctor_id = :doctor_id AND ap.appointment_id != :appointment_id AND ap.appointment_date = :appointment_date AND ap.appointment_status = 'Incoming'
         ORDER BY ap.appointment_time ASC";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);
+        $query->bindParam(':appointment_id', $appointment_id);
         $query->bindParam(':appointment_date', $appointment_date);
 
         $data = null;
@@ -153,7 +155,7 @@ class Appointment
 
     function update_appointment()
     {
-        $sql = "UPDATE appointment SET appointment_date=:appointment_date, appointment_time=:appointment_time, reason=:reason, appointment_link=:appointment_link, appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
+        $sql = "UPDATE appointment SET appointment_date=:appointment_date, appointment_time=:appointment_time, reason=:reason, appointment_link=:appointment_link, event_id=:event_id, appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':appointment_id', $this->appointment_id);
@@ -161,6 +163,57 @@ class Appointment
         $query->bindParam(':appointment_time', $this->appointment_time);
         $query->bindParam(':reason', $this->reason);
         $query->bindParam(':appointment_link', $this->appointment_link);
+        $query->bindParam(':appointment_status', $this->appointment_status);
+        $query->bindParam(':event_id', $this->event_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function decline_appointment()
+    {
+        $sql = "UPDATE appointment SET appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':appointment_id', $this->appointment_id);
+        $query->bindParam(':appointment_status', $this->appointment_status);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function reschedule_appointment()
+    {
+        $sql = "UPDATE appointment SET appointment_date=:appointment_date, appointment_time=:appointment_time, reason=:reason, appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':appointment_date', $this->appointment_date);
+        $query->bindParam(':appointment_time', $this->appointment_time);
+        $query->bindParam(':reason', $this->reason);
+        $query->bindParam(':appointment_id', $this->appointment_id);
+        $query->bindParam(':appointment_status', $this->appointment_status);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function cancel_appointment()
+    {
+        $sql = "UPDATE appointment SET appointment_link=:appointment_link, event_id=:event_id, appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':appointment_link', $this->appointment_link);
+        $query->bindParam(':event_id', $this->event_id);
+        $query->bindParam(':appointment_id', $this->appointment_id);
         $query->bindParam(':appointment_status', $this->appointment_status);
 
         if ($query->execute()) {

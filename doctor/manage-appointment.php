@@ -37,7 +37,9 @@ include '../includes/head.php';
             <main class="col-md-9 ms-sm-auto col-lg-10 bg-light d-flex justify-content-center">
                 <div class="card my-4 col-12 col-md-10 col-lg-8">
                     <div class="card-body">
-                        <h4>Manage Appointment</h4>
+                        <h4>
+                            Manage Appointment
+                        </h4>
                         <form id="appointmentForm" method="post" action="">
                             <hr class="my-3 opacity-25">
                             <div class="mb-3 row">
@@ -63,6 +65,17 @@ include '../includes/head.php';
                                 </div>
                             </div>
                             <hr class="my-3 opacity-25">
+                            <div class="mb-3">
+                                <p class="">
+                                    Appointment Status: <span class="<?php if ($record['appointment_status'] == 'Pending') {
+                                                                            echo 'text-danger';
+                                                                        } else if ($record['appointment_status'] == 'Incoming') {
+                                                                            echo 'text-success';
+                                                                        } else if ($record['appointment_status'] == 'Cancelled') {
+                                                                            echo 'text-warning';
+                                                                        } ?>"><?= $record['appointment_status'] ?></span>
+                                </p>
+                            </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label for="appointment_date" class="form-label text-black-50">Select Date</label>
@@ -115,9 +128,32 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
-
-                                <a href="./appointment.php" class="btn btn-secondary text-light" name="cancel">Cancel</a>
-                                <button type="submit" class="btn btn-primary text-light" id="confirm" name="confirm">Confirm Appointment</button>
+                                <?php
+                                if ($record['appointment_status'] == 'Pending') {
+                                ?>
+                                    <button type="button" class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#declineModal">Decline</button>
+                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Confirm</button>
+                                <?php
+                                } else if ($record['appointment_status'] == 'Incoming') {
+                                ?>
+                                    <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
+                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
+                                <?php
+                                } else if ($record['appointment_status'] == 'Ongoing') {
+                                ?>
+                                    <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
+                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
+                                <?php
+                                } else if ($record['appointment_status'] == 'Completed') {
+                                ?>
+                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">New Appointment</button>
+                                <?php
+                                } else if ($record['appointment_status'] == 'Cancelled') {
+                                ?>
+                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Reschedule</button>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </form>
                     </div>
@@ -136,8 +172,8 @@ include '../includes/head.php';
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <a href="./update-appointment.php?appointment_id=<?= $_GET['appointment_id'] ?>" class="text-decoration-none text-dark">
-                                <p class="m-0 text-primary fw-bold">Try Again.</p>
+                            <a href="./manage-appointment.php?appointment_id=<?= $_GET['appointment_id'] ?>" class="text-decoration-none text-dark">
+                                <p class="m-0 text-primary fw-bold">Reauthenticate</p>
                             </a>
                         </div>
                     </div>
@@ -151,6 +187,102 @@ include '../includes/head.php';
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="updatedModalLabel">The appointment has been successfully confirmed.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <a href="./appointment" class="text-decoration-none text-dark">
+                                <p class="m-0 text-primary fw-bold">Click to Continue.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="rescheduleModal" tabindex="-1" aria-labelledby="rescheduleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="rescheduleModalLabel">The appointment has been successfully rescheduled.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <a href="./appointment" class="text-decoration-none text-dark">
+                                <p class="m-0 text-primary fw-bold">Click to Continue.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="declinedModal" tabindex="-1" aria-labelledby="declinedModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="declinedModalLabel">The appointment has been declined.</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <a href="./appointment" class="text-decoration-none text-dark">
+                                <p class="m-0 text-primary fw-bold">Click to Continue.</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="declineModal" tabindex="-1" aria-labelledby="declineModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="declineModalLabel">Are you sure you want to decline the appointment?</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-secondary text-light" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+                            <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" aria-label="Close" onclick="decline_appointment()">Decline</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelModalLabel">Are you sure you want to cancel the appointment?</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-secondary text-light" data-bs-dismiss="modal" id="cancel-no" aria-label="Close">No</button>
+                            <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" id="cancel-yes" aria-label="Close">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="cancelledModal" tabindex="-1" aria-labelledby="cancelledModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelledModalLabel">The appointment has been cancelled.</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

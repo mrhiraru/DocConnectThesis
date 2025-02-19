@@ -134,90 +134,11 @@ include '../includes/head.php';
     </div>
   </div>
 
-  <!-- <script src="../js/appointment_calendar.js"></script> -->
 </body>
 
 </html>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    //   var calendarEl = document.getElementById('calendar');
-    //   var calendar = new FullCalendar.Calendar(calendarEl, {
-    //     initialView: 'dayGridMonth',
-    //     events: <?php //echo json_encode($events); 
-                    ?>, // Load events from PHP array
-    //     eventClick: function(info) {
-    //       if (info.event.url) {
-    //         window.open(info.event.url, "_blank");
-    //         info.jsEvent.preventDefault();
-    //       } else {
-    //         alert("This is a Face-to-Face event and does not have an online link.");
-    //       }
-    //     }
-    //   });
-    //   calendar.render();
-
-    // Switch between Face-to-Face and Online Meeting
-    var meetingTypeSwitch = document.getElementById('meetingTypeSwitch');
-    var eventUrlField = document.getElementById('eventUrl');
-    var meetingTypeLabel = document.getElementById('meetingTypeLabel');
-
-    meetingTypeSwitch.addEventListener('change', function() {
-      if (meetingTypeSwitch.checked) {
-        eventUrlField.disabled = false;
-        eventUrlField.required = true;
-        meetingTypeLabel.innerHTML = 'Online';
-      } else {
-        eventUrlField.disabled = true;
-        eventUrlField.required = false;
-        meetingTypeLabel.innerHTML = 'Face-to-Face';
-      }
-    });
-
-    // Handle form submission
-    document.getElementById('addEventForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      var eventTitle = document.getElementById('eventTitle').value;
-      var eventDate = document.getElementById('eventDate').value;
-      var startTime = document.getElementById('startTime').value;
-      var endTime = document.getElementById('endTime').value;
-      var eventUrl = document.getElementById('eventUrl').value;
-      var isRepeating = document.getElementById('isRepeating').checked;
-      var meetingType = document.getElementById('meetingTypeSwitch').checked ? 'online' : 'face-to-face';
-
-      var event = {
-        title: eventTitle,
-        start: eventDate + 'T' + startTime,
-        end: endTime ? eventDate + 'T' + endTime : null,
-        url: meetingType === 'online' ? eventUrl : null
-      };
-
-      // Handle repeating events (same day each month)
-      if (isRepeating) {
-        var groupId = 'group' + Math.floor(Math.random() * 1000);
-        event.groupId = groupId;
-
-        var date = new Date(eventDate);
-        for (let i = 1; i <= 3; i++) { // Repeat for the next 3 months
-          let newDate = new Date(date);
-          newDate.setMonth(date.getMonth() + i);
-          let repeatingEvent = Object.assign({}, event);
-          repeatingEvent.start = newDate.toISOString().split('T')[0] + 'T' + startTime;
-          repeatingEvent.end = endTime ? newDate.toISOString().split('T')[0] + 'T' + endTime : null;
-          calendar.addEvent(repeatingEvent);
-        }
-      }
-
-      calendar.addEvent(event);
-
-      // Reset the form and close the modal
-      document.getElementById('addEventForm').reset();
-      var modal = bootstrap.Modal.getInstance(document.getElementById('addEventModal'));
-      modal.hide();
-    });
-  });
-
   function load_appointments(doctor_id, status) {
     $.ajax({
       url: "../handlers/doctor.load_appointments.php",
