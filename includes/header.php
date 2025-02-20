@@ -11,22 +11,20 @@
 			<li>
 				<p class="m-0 text-dark d-block d-lg-none text-center"><?= $_SESSION['fullname'] ?></p>
 			</li>
-
 			<hr class="dropdown-divider mx-2 mt-1">
-
 			<li><a class="dropdown-item" href="./profile_general.php">Profile</a></li>
 			<li><a class="dropdown-item" href="./chat_user.php">Chat</a></li>
 			<hr class="dropdown-divider mx-2 mt-1">
 			<li><a class="dropdown-item" href="../logout">Logout</a></li>
 		</ul>
 
-		<a class="navbar-brand d-flex align-items-center text-dark text-decoration-none" href="../index.php">
+		<a class="navbar-brand d-flex align-items-center text-dark text-decoration-none" href="./index">
 			<img src="../assets/images/logo.png" alt="Logo" height="35">
 			<h1 class="fs-4 link-primary m-0 d-name">Doc<span class="link-dark">Connect</span></h1>
 		</a>
 
-		<button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
+		<button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" style="padding: 5px 10px;">
+			<span class="navbar-toggler-icon" style="width: 1em; height: 1em;"></span>
 		</button>
 
 		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
@@ -41,15 +39,12 @@
 				<li class="nav-item dropdown d-none <?= isset($_SESSION['user_role']) ? "d-lg-flex" : 'd-none' ?> align-items-center border-start ms-2">
 					<a href="#" class="acc d-block link-dark text-decoration-none dropdown-toggle ms-2" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
 						<div class="d-flex align-items-center">
-
-							<img src="./../assets/images/default_profile.png" alt="mdo" width="32" height="32" class="ms-2 rounded-circle border border-2 border-light">
-
 							<img src="<?php if (isset($_SESSION['account_image'])) {
 											echo "../assets/images/" . $_SESSION['account_image'];
 										} else {
 											echo "../assets/images/bg-1.png";
-										} ?>" alt="mdo" width="32" height="32" class="rounded-circle border border-2 border-light me-2">
-							<h6 class="m-0 text-dark d-none d-md-block"><?= $_SESSION['fullname'] ?></h6>
+										} ?>" alt="mdo" width="32" height="32" class="ms-2 rounded-circle border border-2 border-light">
+							<!-- <h6 class="m-0 text-dark d-none d-md-block"><?= $_SESSION['fullname'] ?></h6> -->
 
 						</div>
 					</a>
@@ -57,12 +52,7 @@
 						<li>
 							<p class="m-0 mx-2 text-dark d-block text-center text-green fw-bold"><?= $_SESSION['fullname'] ?></p>
 						<li>
-
-						<hr class="dropdown-divider mx-2 mt-1">
-
-							<hr class="dropdown-divider d-block d-lg-none">
-						</li>
-
+							<hr class="dropdown-divider mx-2 mt-1">
 						<li><a class="dropdown-item" href="./profile_general.php">Profile</a></li>
 						<li><a class="dropdown-item" href="./chat_user.php">Chat</a></li>
 
@@ -77,7 +67,7 @@
 </header>
 
 <script>
-	document.addEventListener("DOMContentLoaded", function () {
+	document.addEventListener("DOMContentLoaded", function() {
 		// Function to hide all dropdowns
 		function hideDropdowns(except = null) {
 			const dropdowns = document.querySelectorAll(".dropdown-menu.show");
@@ -102,7 +92,7 @@
 			// Close all dropdowns if clicked outside
 			if (!dropdownMenu && !dropdownToggle) {
 				hideDropdowns();
-				
+
 				// Collapse the navbar if it's open
 				if (navbarCollapse.classList.contains("show")) {
 					navbarToggler.setAttribute("aria-expanded", "false");
