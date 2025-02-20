@@ -11,7 +11,9 @@
 			<li>
 				<p class="m-0 text-dark d-block d-lg-none text-center"><?= $_SESSION['fullname'] ?></p>
 			</li>
+
 			<hr class="dropdown-divider mx-2 mt-1">
+
 			<li><a class="dropdown-item" href="./profile_general.php">Profile</a></li>
 			<li><a class="dropdown-item" href="./chat_user.php">Chat</a></li>
 			<hr class="dropdown-divider mx-2 mt-1">
@@ -39,14 +41,28 @@
 				<li class="nav-item dropdown d-none <?= isset($_SESSION['user_role']) ? "d-lg-flex" : 'd-none' ?> align-items-center border-start ms-2">
 					<a href="#" class="acc d-block link-dark text-decoration-none dropdown-toggle ms-2" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
 						<div class="d-flex align-items-center">
+
 							<img src="./../assets/images/default_profile.png" alt="mdo" width="32" height="32" class="ms-2 rounded-circle border border-2 border-light">
+
+							<img src="<?php if (isset($_SESSION['account_image'])) {
+											echo "../assets/images/" . $_SESSION['account_image'];
+										} else {
+											echo "../assets/images/bg-1.png";
+										} ?>" alt="mdo" width="32" height="32" class="rounded-circle border border-2 border-light me-2">
+							<h6 class="m-0 text-dark d-none d-md-block"><?= $_SESSION['fullname'] ?></h6>
+
 						</div>
 					</a>
 					<ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="profileDropddown">
 						<li>
 							<p class="m-0 mx-2 text-dark d-block text-center text-green fw-bold"><?= $_SESSION['fullname'] ?></p>
 						<li>
+
 						<hr class="dropdown-divider mx-2 mt-1">
+
+							<hr class="dropdown-divider d-block d-lg-none">
+						</li>
+
 						<li><a class="dropdown-item" href="./profile_general.php">Profile</a></li>
 						<li><a class="dropdown-item" href="./chat_user.php">Chat</a></li>
 
