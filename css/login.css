@@ -8,6 +8,10 @@
   outline: #dc3545 !important;
 }
 
+.btn-outline-transparent {
+	border-color: #ffffff00 !important;
+}
+
 * {
 	box-sizing: border-box;
 }
@@ -97,7 +101,6 @@ form {
 input {
 	background-color: #eee;
 	border: none;
-	padding: 12px 15px;
 	margin: 8px 0;
 	width: 100%;
 }
@@ -228,6 +231,19 @@ input {
 
 .container.right-panel-active .overlay-right {
 	transform: translateX(20%);
+}
+
+/* password toggle */
+.toggle-password {
+	right: 15px; 
+	top: 50%; 
+	transform: translateY(-50%); 
+	cursor: pointer;
+	font-size: 21px;
+}
+
+.toggle-password:hover {
+	color: #dc3545 !important;
 }
 
 @media (max-width:770px) {
