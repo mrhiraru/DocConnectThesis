@@ -3,6 +3,7 @@ session_start();
 
 require_once('../vendor/autoload.php');
 require_once('../classes/account.class.php');
+require_once('../classes/appointment.class.php');
 
 use Orhanerday\OpenAi\OpenAi;
 
@@ -18,6 +19,8 @@ function chatbot_response($user_message)
     }
 
     $open_ai = new OpenAi($open_ai_key);
+
+
 
     // Doctor's Data
     $account = new Account();
@@ -47,13 +50,16 @@ function chatbot_response($user_message)
 
     $prompt = "You are an assistant bot for a clinic website. Your responsibilities are as follows:
 
-        1. Answer only simple medical questions related to the user's symptoms without giving any medical conclusions.
-        2. Provide this list of available doctors: \n" . $list_of_doctor . "
-        3. Recommend a doctor from ///list_of_doctors based on the symptoms provided by the user, provide the available date and time of the recommended doctor for the next 7 days based on the ////list_of_appointments.
-        4. Provide links to the appointment page or other related pages (if available), but no other pages.
-        
-        Only provide given data or information, don't make random information.
-        If the user asks anything outside of these responsibilities, politely inform them that you are unable to assist with that request. Additionally, if the answer to the user's query is not provided in the available data, politely inform them that there is no data available for their query.";
+            1. Answer only simple medical questions related to the user's symptoms without giving any medical conclusions.
+            2. Provide information of doctors, date, time, days, and availability from this list: \n" . $list_of_doctor . ". 
+            3. Recommend a doctor from ///list_of_doctors based on the symptoms provided by the user, provide the available date and time of the recommended doctor for the next 7 days based on the ////list_of_appointments.
+            4. Provide links to the appointment page or other related pages (if available), but no other pages.
+            
+            Only provide response based on the given data or information, don't make random information.
+            If the user asks anything outside of these responsibilities, politely inform them that you are unable to assist with that request. Additionally, if the answer to the user's query is not provided in the available data, politely inform them that there is no data available for their query.";
+
+    $message = $user_message;
+
 
     $chat = $open_ai->chat([
         'model' => 'gpt-4o-mini',
@@ -64,7 +70,7 @@ function chatbot_response($user_message)
             ],
             [
                 "role" => "user",
-                "content" => $user_message
+                "content" => $message
             ],
         ],
         'temperature' => 0.9,
@@ -73,16 +79,11 @@ function chatbot_response($user_message)
         'presence_penalty' => 0.6,
     ]);
 
-
-    var_dump($chat);
-
     $response_data = json_decode($chat, true);
     $response = $response_data["choices"][0]["message"]["content"];
 
     return $response;
 }
-
-
 
 $list_of_appointments = [];
 $list_of_links = [];

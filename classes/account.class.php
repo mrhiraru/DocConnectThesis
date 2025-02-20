@@ -303,6 +303,20 @@ class Account
         }
     }
 
+    function get_doctor_info($doctor_id)
+    {
+        $sql = "SELECT * FROM doctor_info WHERE doctor_id = :doctor_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':doctor_id', $doctor_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
     // doctor functions end
 
     // moderator functions start
