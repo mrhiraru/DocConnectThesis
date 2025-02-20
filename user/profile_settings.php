@@ -92,10 +92,18 @@ include '../includes/head.php';
 
                         <!-- Image Preview -->
                         <img id="output" class="rounded-2"
+                          src="<?php if (isset($_SESSION['account_image'])) {
+                                    echo "../assets/images/" . $_SESSION['account_image'];
+                                  } else {
+                                    echo "../assets/images/bg-1.png";
+                                  } ?>"
+                          alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;">
+
+                        <!-- <img id="output" class="rounded-2"
                           src="<?php echo isset($_SESSION['account_image'])
                                   ? "../assets/images/" . $_SESSION['account_image']
                                   : "../assets/images/default_profile.png"; ?>"
-                          alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;">
+                          alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;"> -->
 
                         <!-- Image Upload Input -->
                         <input id="file" type="file" name="account_image" accept=".jpg, .jpeg, .png" onchange="previewImage(event)">
