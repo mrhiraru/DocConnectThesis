@@ -40,4 +40,18 @@ class Patient
         }
         return $data;
     }
+
+    function fetch_patient($account_id)
+    {
+        $sql = "SELECT ";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }

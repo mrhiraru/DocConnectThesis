@@ -54,7 +54,7 @@ include '../includes/head.php';
                                         <a href="./chats.php?account_id=<?= $item['account_id']  ?>"><i class='bx bx-chat'></i> Chat</a>
                                     </div>
                                     <div>
-                                        <a href=""><i class='bx bx-calendar'></i> Set Appointment</a><span class="float-end"><a href=""><i class='bx bx-video'></i> Join Meeting:</a></span>
+                                        <a href=""><i class='bx bx-calendar'></i> Set Appointment</a>
                                     </div>
                                 </div>
                             </div>
