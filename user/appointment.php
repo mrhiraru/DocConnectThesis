@@ -17,6 +17,8 @@ if (isset($_POST['request'])) {
     $appointment_class->doctor_id = htmlentities($_POST['doctor_id']);
     $appointment_class->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
+    $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
+    $appointment_class->reason = htmlentities($_POST['reason']);
     $appointment_class->appointment_status = "Pending";
 
     if (
@@ -24,6 +26,7 @@ if (isset($_POST['request'])) {
         validate_field($appointment_class->doctor_id) &&
         validate_field($appointment_class->appointment_date) &&
         validate_field($appointment_class->appointment_time) &&
+        validate_field($appointment_class->reason) &&
         validate_field($appointment_class->appointment_status)
     ) {
         if ($appointment_class->add_appointment()) {
@@ -56,7 +59,7 @@ include '../includes/head.php';
             <div class="col-2"></div>
 
             <div class="col-sm-12 col-md-8">
-                <form action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
+                <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
                     <div class="row">
                         <div class="col-12">
                             <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
@@ -195,53 +198,14 @@ include '../includes/head.php';
                         }
                         ?>
                     </div>
-
-                    <hr>
-
+                    <p class="text-black-50 m-0"><span>Note:</span> The scheduled appointment date and time may be adjusted upon the doctor's approval.</p>
+                    <hr class="my-2">
                     <div class="w-100 d-flex justify-content-end">
-                        <button id="request" type="submit" class="w-50 w-md-25 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
+                        <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
                     </div>
                 </form>
 
             </div>
-
-            <div class="col-2"></div>
-
-            <!-- <div class="col-sm-12 col-md-4 h-100">
-  <div class="d-flex flex-column justify-content-between bg-green p-3 rounded-2 h-100 text-white">
-    <div>
-      <h4>Appointment Schedule</h4>
-      <div class="overflow-y-scroll min-vh-100">
-        <?php
-        $appointmentArray = $appointment_class->user_appointments($_SESSION['patient_id']);
-        foreach ($appointmentArray as $item) {
-        ?>
-          <div class="col-12 border border-2 border-white rounded-2 p-2 mb-1">
-            <div class="m-0 mb-1 p-0 px-2">
-              <p class="mb-2 fs-5"><?= $item['doctor_name'] ?></p>
-            </div>
-            <hr class="text-white my-1 mx-0">
-            <div class="row d-flex justify-content-between m-0 mb-1">
-              <p class="col-4 mb-2"><?= $item['appointment_status'] ?></p>
-              <p class="col-8 mb-2 text-end"><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time']))  ?></p>
-              <div class="col-12">
-                <a href="" class="btn btn-sm btn-light">Chat Doctor</a>
-                <a href="https://meet.google.com/por-udiy-etd" class="btn btn-sm btn-light <?= date("M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) == date("l, M d, Y g:i A") ? '' : 'disabled' ?>">Join Meeting</a>
-              </div>
-            </div>
-          </div>
-        <?php
-        }
-        ?>
-      </div>
-    </div>
-    <div>
-      <div>
-        <button type="button" class="w-100 btn btn-lg btn-outline-light mt-2">Enter Meeting</button>
-      </div>
-    </div>
-  </div>
-</div> -->
         </div>
     </section>
 
@@ -279,21 +243,6 @@ include '../includes/head.php';
     <script src="../js/main.js"></script>
 
     <script>
-        function formatTime(time) {
-            let [hours, minutes] = time.split(':');
-            hours = parseInt(hours);
-            let suffix = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
-
-            return `${hours}:${minutes} ${suffix}`;
-        }
-
-        function formatMySQLTimeTo24Hour(time) {
-            const [hours, minutes] = time.split(':');
-
-            return `${hours}:${minutes}`;
-        }
-
         document.addEventListener("DOMContentLoaded", function() {
             const doctorSearch = document.getElementById("doctorSearch");
             const doctorDropdown = document.getElementById("doctorDropdown");
@@ -315,7 +264,6 @@ include '../includes/head.php';
             fetch('../handlers/appointment.get_doctors.php')
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
 
                     doctorSearch.addEventListener("focus", function() {
                         if (doctorSearch.value === '' && data.length > 0) {
@@ -353,7 +301,7 @@ include '../includes/head.php';
                                 working_hours.innerHTML = formatTime(doctor.start_wt) + " to " + formatTime(doctor.end_wt);
                                 account_image.src = "../assets/images/" + doctor.account_image;
                                 appointment_time.min = formatMySQLTimeTo24Hour(doctor.start_wt);
-                                appointment_time.max = formatMySQLTimeTo24Hour(doctor.end_wt);
+                                appointment_time.max = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
                                 appointment_date.dataset.startday = doctor.start_day;
                                 appointment_date.dataset.endday = doctor.end_day;
                                 request_button.removeAttribute("disabled");
@@ -441,6 +389,7 @@ include '../includes/head.php';
                 validate_date();
             });
 
+            const form = document.getElementById('appointmentForm');
             form.addEventListener("submit", function(event) {
                 if (!appointment_date.checkValidity()) {
                     event.preventDefault(); // Prevent submission if the input is invalid
@@ -448,35 +397,7 @@ include '../includes/head.php';
                 }
             });
         });
-    </script>
 
-    <!-- JS script for haandlng -->
-    <!-- <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const startTimeInput = document.getElementById("startTime");
-      const endTimeInput = document.getElementById("endTime");
-
-      startTimeInput.addEventListener("change", function() {
-        const startTime = startTimeInput.value;
-        if (startTime) {
-          const [hours, minutes] = startTime.split(':').map(Number);
-          const startDate = new Date();
-          startDate.setHours(hours);
-          startDate.setMinutes(minutes);
-
-          startDate.setHours(startDate.getHours() + 1);
-
-          const endHours = String(startDate.getHours()).padStart(2, '0');
-          const endMinutes = String(startDate.getMinutes()).padStart(2, '0');
-          endTimeInput.value = `${endHours}:${endMinutes}`;
-        } else {
-          endTimeInput.value = "";
-        }
-      });
-    });
-  </script> -->
-
-    <script>
         function roundTimeToNearestHalfHour(time) {
             let [hours, minutes] = time.split(":");
             minutes = parseInt(minutes);
@@ -498,8 +419,31 @@ include '../includes/head.php';
             let roundedTime = roundTimeToNearestHalfHour(inputTime);
             this.value = roundedTime;
         });
-    </script>
 
+        function formatTime(time) {
+            let [hours, minutes] = time.split(':');
+            hours = parseInt(hours);
+            let suffix = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+
+            return `${hours}:${minutes} ${suffix}`;
+        }
+
+        function formatMySQLTimeTo24Hour(time) {
+            const [hours, minutes] = time.split(':');
+
+            return `${hours}:${minutes}`;
+        }
+
+        function subtractOneHour(time) {
+            let [hours, minutes] = time.split(':');
+            hours = parseInt(hours) - 1;
+            if (hours < 0) {
+                hours = 23;
+            }
+            return `${hours.toString().padStart(2, '0')}:${minutes}`;
+        }
+    </script>
 </body>
 
 </html>
