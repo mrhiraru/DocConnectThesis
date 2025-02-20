@@ -22,7 +22,7 @@ $title = 'Message';
 include '../includes/head.php';
 ?>
 
-<body class="bg-white">
+<body class="bg-white" <?= (isset($_GET['account_id']) ? "onload='loadChatBox(" . $_SESSION['account_id'] . ", " . $_GET['account_id'] . ")' " : "")  ?>>
   <!-- // input hidden account id removed from here -->
   <?php require_once('../includes/header.php'); ?>
 

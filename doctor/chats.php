@@ -23,7 +23,7 @@ $chat = 'active';
 include '../includes/head.php';
 ?>
 
-<body>
+<body <?= (isset($_GET['account_id']) ? "onload='loadChatBox(" . $_SESSION['account_id'] . ", " . $_GET['account_id'] . ")' " : "")  ?>>
     <?php require_once('../includes/header-doctor.php'); ?>
 
     <div class="container-fluid">
@@ -42,12 +42,14 @@ include '../includes/head.php';
                                 <input type="text" class="form-control border-2" id="searchChat" placeholder="Search" oninput="update_chatlist(<?= $_SESSION['account_id'] ?>)">
                             </div>
                             <ul id="chatList" class="list-unstyled mb-0">
+
                                 <?php
                                 $message = new Message();
                                 $chatArray = $message->get_chats($_SESSION['account_id'], ($_SESSION['user_role'] == 3) ? 1 : 3, "");
                                 foreach ($chatArray as $item) {
                                 ?>
                                     <!-- display chat list using php -->
+
                                     <a href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2 border-bottom" onclick="loadChatBox(<?= $_SESSION['account_id'] ?>,<?= $item['account_id'] ?>)">
                                         <img src="<?php if (isset($item['account_image'])) {
                                                         echo "../assets/images/" . $item['account_image'];
