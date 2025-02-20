@@ -53,7 +53,8 @@ class Account
                 $this->email = $accountData['email'];
                 $this->verification_status = $accountData['verification_status'];
                 $this->account_image = $accountData['account_image'];
-
+                $this->address = $accountData['address'];
+                
                 return true;
             }
         }
