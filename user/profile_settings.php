@@ -14,6 +14,15 @@ $account_class = new Account();
 if (isset($_POST['saveAccount'])) {
   $account_class->account_id = $_SESSION['account_id'];
 
+  $account_class->firstname = $_POST['first_name'] ?? '';
+  $account_class->middlename = $_POST['middle_name'] ?? '';
+  $account_class->lastname = $_POST['last_name'] ?? '';
+  $account_class->gender = $_POST['gender'] ?? '';
+  $account_class->email = $_POST['email'] ?? '';
+  $account_class->contact = $_POST['Phone_No'] ?? '';
+  $account_class->birthdate = $_POST['birthdate'] ?? '';
+  $account_class->address = $_POST['address'] ?? '';
+
   if (
     validate_field($account_class->firstname) &&
     validate_field($account_class->middlename) &&
@@ -24,19 +33,51 @@ if (isset($_POST['saveAccount'])) {
     validate_field($account_class->birthdate) &&
     validate_field($account_class->address)
   ) {
-    if ($account->update_user_info()) {
+    if ($account_class->update_user_info()) {
       $success = 'success';
 
-      $_SESSION['firstname'] = $account->firstname;
-      $_SESSION['middlename'] = $account->middlename;
-      $_SESSION['lastname'] = $account->lastname;
-      $_SESSION['gender'] = $account->gender;
-      $_SESSION['email'] = $account->email;
-      $_SESSION['address'] = $account->address;
-      $_SESSION['birthdate'] = $account->birthdate;
-      $_SESSION['contact'] = $account->contact;
+      $_SESSION['firstname'] = $account_class->firstname;
+      $_SESSION['middlename'] = $account_class->middlename;
+      $_SESSION['lastname'] = $account_class->lastname;
+      $_SESSION['gender'] = $account_class->gender;
+      $_SESSION['email'] = $account_class->email;
+      $_SESSION['address'] = $account_class->address;
+      $_SESSION['birthdate'] = $account_class->birthdate;
+      $_SESSION['contact'] = $account_class->contact;
     } else {
       echo 'An error occured while adding in the database.';
+    }
+  } else {
+    $success = 'failed';
+  }
+}
+
+if (isset($_POST['save_image'])) {
+
+  $account_class->account_id = $_SESSION['account_id'];
+
+  $uploaddir = '../assets/images/';
+  $uploadname = $_FILES[htmlentities('account_image')]['name'];
+  $uploadext = explode('.', $uploadname);
+  $uploadnewext = strtolower(end($uploadext));
+  $allowed = array('jpg', 'jpeg', 'png');
+
+  if (in_array($uploadnewext, $allowed)) {
+
+    $uploadenewname = uniqid('', true) . "." . $uploadnewext;
+    $uploadfile = $uploaddir . $uploadenewname;
+
+    if (move_uploaded_file($_FILES[htmlentities('account_image')]['tmp_name'], $uploadfile)) {
+      $account_class->account_image = $uploadenewname;
+
+      if ($account_class->save_image()) {
+        $_SESSION['account_image'] = $account_class->account_image;
+        $success = 'success';
+      } else {
+        echo 'An error occured while adding in the database.';
+      }
+    } else {
+      $success = 'failed';
     }
   } else {
     $success = 'failed';
@@ -93,10 +134,10 @@ include '../includes/head.php';
                         <!-- Image Preview -->
                         <img id="output" class="rounded-2"
                           src="<?php if (isset($_SESSION['account_image'])) {
-                                    echo "../assets/images/" . $_SESSION['account_image'];
-                                  } else {
-                                    echo "../assets/images/default_profile.png";
-                                  } ?>"
+                                  echo "../assets/images/" . $_SESSION['account_image'];
+                                } else {
+                                  echo "../assets/images/default_profile.png";
+                                } ?>"
                           alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;">
 
                         <!-- <img id="output" class="rounded-2"
@@ -152,7 +193,7 @@ include '../includes/head.php';
                     <label for="campus" class="form-label text-black-50">Campus</label>
                     <!-- WALA PA TO SA DATABASE -->
                     <select class="form-select bg-light border border-dark" id="campus" name="campus" required>
-                      <option value="chooseCampus" <?= (!isset($_SESSION['campus']) || $_SESSION['campus'] == "chooseCampus") ? 'selected' : '' ?>>Choose Campus</option>
+                      <option value="chooseCampus" <?= ($_SESSION['campus'] ?? "chooseCampus") == "chooseCampus" ? 'selected' : '' ?>>Choose Campus</option>
                       <option value="wmsuMainCampus" <?= (isset($_SESSION['campus']) && $_SESSION['campus'] == "wmsuMainCampus") ? 'selected' : '' ?>>WMSU main campus</option>
                       <option value="testCampus" <?= (isset($_SESSION['campus']) && $_SESSION['campus'] == "testCampus") ? 'selected' : '' ?>>test campus</option>
                     </select>
@@ -292,6 +333,7 @@ include '../includes/head.php';
     </div>
   </section>
   <script src="../js/user/profie_settings.js"></script>
+  <script src="../js/imageChange.js"></script>
 
   <?php
   require_once('../includes/footer.php');
