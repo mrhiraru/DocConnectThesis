@@ -43,14 +43,18 @@ class Patient
 
     function fetch_patient($account_id)
     {
-        $sql = "SELECT ";
+        $sql = "SELECT a.*, pi.*,
+        CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name
+        FROM account a
+        INNER JOIN patient_info pi ON pi.account_id = a.account_id
+        WHERE a.account_id = :account_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);
 
         $data = null;
         if ($query->execute()) {
-            $data = $query->fetchAll();
+            $data = $query->fetch();
         }
         return $data;
     }
