@@ -13,6 +13,8 @@ class Appointment
     public $appointment_status;
     public $reason;
     public $event_id;
+    public $result;
+    public $comment;
 
     protected $db;
 
@@ -76,7 +78,7 @@ class Appointment
 
     function doctor_appointments($doctor_id, $appointment_status)
     {
-        $sql = "SELECT ap.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name 
+        $sql = "SELECT a.account_id, ap.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name 
         FROM appointment ap 
         INNER JOIN patient_info p ON ap.patient_id = p.patient_id 
         INNER JOIN account a ON p.account_id = a.account_id
@@ -240,5 +242,37 @@ class Appointment
             $data = $query->fetchAll();
         }
         return $data;
+    }
+
+    function update_appointment_status()
+    {
+        $sql = "UPDATE appointment SET appointment_status=:appointment_status WHERE appointment_id = :appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':appointment_status', $this->appointment_status);
+        $query->bindParam(':appointment_id', $this->appointment_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function complete_appointment()
+    {
+        $sql = "UPDATE appointment SET result=:result, comment=:comment, appointment_status=:appointment_status WHERE appointment_id = :appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':result', $this->result);
+        $query->bindParam(':comment', $this->comment);
+        $query->bindParam(':appointment_status', $this->appointment_status);
+        $query->bindParam(':appointment_id', $this->appointment_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

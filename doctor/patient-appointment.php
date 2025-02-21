@@ -9,13 +9,13 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 
-require_once('../classes/appointment.class.php')
+require_once('../classes/appointment.class.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$title = 'Patient Meeting';
+$title = 'Appointment View';
 $patient = 'active';
 include '../includes/head.php';
 ?>
@@ -62,7 +62,7 @@ include '../includes/head.php';
                                             <?php
                                             if ($item['appointment_status'] == 'Incoming') {
                                             ?>
-                                                <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light"><i class='bx bx-play-circle me-1'></i>View</a>
+                                                <a href="./appointment-view.php?account_id=<?= $_GET['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light"><i class='bx bx-play-circle me-1'></i>View</a>
                                             <?php
                                             }
                                             ?>
