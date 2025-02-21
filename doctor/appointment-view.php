@@ -64,7 +64,7 @@ include '../includes/head.php';
                     <?php
                     }
                     ?>
-                    <div class="col-12 d-flex justify-content-center border-bottom mb-3">
+                    <div class="col-12 d-flex justify-content-center border-bottom mb-3 ">
                         <?php
                         if ($record['appointment_status'] == "Incoming") {
                         ?>
