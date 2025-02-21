@@ -15,7 +15,7 @@ $current_page = basename($_SERVER['PHP_SELF'], ".php");
                 <a href="../doctor/patient-files?account_id=<?= $_GET['account_id'] ?>" class="<?= $current_page == 'patient-files' ? 'current' : '' ?>">Files</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="../doctor/patient-meeting?account_id=<?= $_GET['account_id'] ?>" class="<?= $current_page == 'patient-meeting' ? 'current' : '' ?>">Meeting Record</a>
+                <a href="../doctor/patient-appointment?account_id=<?= $_GET['account_id'] ?>" class="<?= $current_page == 'patient-meeting' ? 'current' : '' ?>">Appointment Record</a>
             </li>
         </ol>
     </nav>
