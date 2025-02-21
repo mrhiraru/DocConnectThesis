@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2025 at 12:58 AM
+-- Generation Time: Feb 21, 2025 at 09:51 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -63,7 +63,7 @@ INSERT INTO `account` (`account_id`, `email`, `password`, `firstname`, `middlena
 (19, 'www@wmsu.edu.ph', '$2y$10$oefvsQpyW0dBtXpNOWlFjOsiNaeTV8Nj0JskhRZzrJBLiy68Y6jSa', 'Wew', 'Waw', 'Wow', 'male', '099999999999', NULL, '671d6ceab710a3.70928484.png', '', 'Verified', '2024-09-11 16:59:02', '2025-01-06 17:22:43', 0, 1, NULL, '2024-09-05 16:00:00', 'doctor'),
 (23, 'testuser@wmsu.edu.ph', '$2y$10$oefvsQpyW0dBtXpNOWlFjOsiNaeTV8Nj0JskhRZzrJBLiy68Y6jSa', 'Test', '', 'User', 'Male', '09999232232', NULL, '', '', 'Unverified', '2024-09-17 06:48:14', '2024-09-21 10:24:02', 0, 3, 1, '2000-04-11 16:00:00', 'patient'),
 (24, 'qb202100150@wmsu.edu.ph', '$2y$10$wNYeevuu4mXWBvMsxueJTecDB01lsFCL3bcKdMQlV3ZzqXUbXre1u', 'Franklin', 'Ituralde', 'Oliveros', 'Male', '1234567890', 'KCC Mall De Zamboanga, Zamboanga City', 'default_profile.png', '', 'Verified', '2024-09-21 11:24:35', '2025-02-10 07:19:38', 0, 3, 1, '2002-09-20 16:00:00', 'patient'),
-(10000, 'xt202000631@wmsu.edu.ph', '$2y$10$wNYeevuu4mXWBvMsxueJTecDB01lsFCL3bcKdMQlV3ZzqXUbXre1u', 'Test', '', 'Doctor', 'Male', '099999999999 ', ' Guiwan Zamboanga City', '671d6ceab710a3.70928484.png', '', 'Verified', '2024-10-26 22:25:04', '2024-11-23 12:04:55', 0, 1, NULL, '1991-02-27 16:00:00', 'patient');
+(10000, 'xt202000631@wmsu.edu.ph', '$2y$10$wNYeevuu4mXWBvMsxueJTecDB01lsFCL3bcKdMQlV3ZzqXUbXre1u', 'Test', '', 'Doctor', 'Male', '099999999999  ', ' Guiwan Zamboanga City ', '671d6ceab710a3.70928484.png', '', 'Verified', '2024-10-26 22:25:04', '2025-02-20 11:37:10', 0, 1, NULL, '1991-02-27 16:00:00', 'patient');
 
 -- --------------------------------------------------------
 
@@ -89,14 +89,17 @@ CREATE TABLE `allergy` (
 
 CREATE TABLE `appointment` (
   `appointment_id` int(11) NOT NULL,
+  `event_id` varchar(255) DEFAULT NULL,
   `patient_id` int(11) DEFAULT NULL,
   `doctor_id` int(11) DEFAULT NULL,
   `appointment_date` timestamp NULL DEFAULT NULL,
   `appointment_time` time DEFAULT NULL,
-  `estimated_end` time NOT NULL,
+  `estimated_end` time DEFAULT NULL,
   `reason` text DEFAULT NULL,
   `appointment_link` varchar(255) DEFAULT NULL,
   `appointment_status` varchar(32) DEFAULT NULL,
+  `result` varchar(255) DEFAULT NULL,
+  `comment` text DEFAULT NULL,
   `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
   `is_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `is_deleted` int(11) DEFAULT 0
@@ -106,13 +109,15 @@ CREATE TABLE `appointment` (
 -- Dumping data for table `appointment`
 --
 
-INSERT INTO `appointment` (`appointment_id`, `patient_id`, `doctor_id`, `appointment_date`, `appointment_time`, `estimated_end`, `reason`, `appointment_link`, `appointment_status`, `is_created`, `is_updated`, `is_deleted`) VALUES
-(8, 4, 4, '2025-02-18 16:00:00', '10:00:00', '10:59:00', 'Consultation', NULL, 'Incoming', '2025-02-10 16:38:11', '2025-02-13 20:09:52', 0),
-(9, 4, 4, '2025-02-12 16:00:00', '13:00:00', '13:59:00', 'Check up', NULL, 'Pending', '2025-02-10 16:46:10', '2025-02-11 18:18:21', 0),
-(10, 4, 4, '2025-02-18 16:00:00', '09:00:00', '09:59:00', 'Check up for Headache', NULL, 'Incoming', '2025-02-10 16:47:48', '2025-02-13 20:09:56', 0),
-(12, 4, 4, '2025-02-18 16:00:00', '11:00:00', '11:59:00', 'Test', NULL, 'Incoming', '2025-02-11 17:10:54', '2025-02-13 20:10:00', 0),
-(13, 4, 4, '2025-02-18 16:00:00', '12:30:00', '13:29:00', 'Testing 2', NULL, 'Incoming', '2025-02-11 18:27:52', '2025-02-13 20:10:04', 0),
-(14, 4, 4, '2025-02-18 16:00:00', '11:00:00', '11:59:00', 'Testing 3', NULL, 'Pending', '2025-02-11 18:40:02', '2025-02-13 20:10:09', 0);
+INSERT INTO `appointment` (`appointment_id`, `event_id`, `patient_id`, `doctor_id`, `appointment_date`, `appointment_time`, `estimated_end`, `reason`, `appointment_link`, `appointment_status`, `result`, `comment`, `is_created`, `is_updated`, `is_deleted`) VALUES
+(8, '', 4, 4, '2025-02-18 16:00:00', '10:00:00', '10:59:00', 'Consultation', NULL, 'Cancelled', NULL, NULL, '2025-02-10 16:38:11', '2025-02-19 17:47:34', 0),
+(9, '', 4, 4, '2025-02-12 16:00:00', '13:00:00', '13:59:00', 'Check up', NULL, 'Cancelled', NULL, NULL, '2025-02-10 16:46:10', '2025-02-19 17:43:55', 0),
+(10, '', 4, 4, '2025-02-18 16:00:00', '09:00:00', '09:59:00', 'Check up for Headache', NULL, 'Cancelled', NULL, NULL, '2025-02-10 16:47:48', '2025-02-19 17:47:28', 0),
+(12, '', 4, 4, '2025-02-18 16:00:00', '11:00:00', '11:59:00', 'Test', NULL, 'Cancelled', NULL, NULL, '2025-02-11 17:10:54', '2025-02-19 17:47:41', 0),
+(13, '', 4, 4, '2025-02-18 16:00:00', '12:30:00', '13:29:00', 'Testing 2', NULL, 'Cancelled', NULL, NULL, '2025-02-11 18:27:52', '2025-02-19 17:47:47', 0),
+(14, 'ql9336b93o815r7km8t7quemhc', 4, 4, '2025-03-06 16:00:00', '12:00:00', '11:59:00', 'Testttttttttttttinnggggggg', 'https://meet.google.com/fdp-topk-swk', 'Ongoing', NULL, NULL, '2025-02-11 18:40:02', '2025-02-21 17:01:50', 0),
+(15, NULL, 4, 4, '2025-02-27 16:00:00', '13:00:00', '11:59:00', 'Headache Check Up consultation', NULL, 'Completed', 'Doneeeeeee', 'Completeeeeeeeeeeeeeeeeeed', '2025-02-17 22:45:27', '2025-02-21 17:00:32', 0),
+(16, '', 4, 4, '2025-02-27 16:00:00', '11:00:00', '11:59:00', 'Testing appointment decline button ', NULL, 'Cancelled', NULL, NULL, '2025-02-19 17:45:27', '2025-02-19 17:46:43', 0);
 
 -- --------------------------------------------------------
 
@@ -138,7 +143,8 @@ CREATE TABLE `campus` (
 
 INSERT INTO `campus` (`campus_id`, `campus_profile`, `campus_name`, `campus_address`, `campus_contact`, `campus_email`, `is_created`, `is_updated`, `is_deleted`) VALUES
 (1, '66e7db42336204.60963457.jpg', 'WMSU MAIN CAMPUS', 'W376+CGQ, Normal Rd, Zamboanga, 7000 Zamboanga del Sur', '(062) 991 1040', 'wmsu@wmsu.edu.ph', '2024-09-08 13:00:26', '2024-09-16 07:18:23', 0),
-(4, '66e7db42336204.60963457.jpg', 'Test Campus', 'W376+CGQ, Normal Rd, Zamboanga, 7000 Zamboanga del Sur', '(062) 991 1040', 'test@wmsu.edu.ph', '2024-09-16 07:16:18', '2024-09-16 07:16:18', 0);
+(4, '66e7db42336204.60963457.jpg', 'Test Campus', 'W376+CGQ, Normal Rd, Zamboanga, 7000 Zamboanga del Sur', '(062) 991 1040', 'test@wmsu.edu.ph', '2024-09-16 07:16:18', '2024-09-16 07:16:18', 0),
+(5, '67b7160785d721.71157590.png', 'WMSU CAMPUS XYZ', 'ZAMBOANGA DEL NORTEEEE', '(062) 991 1040', 'test@wmsu.edu.ph', '2025-02-20 11:46:15', '2025-02-20 11:46:15', 0);
 
 -- --------------------------------------------------------
 
@@ -222,7 +228,7 @@ CREATE TABLE `doctor_info` (
   `doctor_id` int(11) NOT NULL,
   `account_id` int(11) DEFAULT NULL,
   `specialty` varchar(64) DEFAULT NULL,
-  `bio` varchar(255) DEFAULT NULL,
+  `bio` text DEFAULT NULL,
   `start_wt` time DEFAULT NULL,
   `end_wt` time DEFAULT NULL,
   `start_day` varchar(16) NOT NULL,
@@ -240,7 +246,7 @@ CREATE TABLE `doctor_info` (
 INSERT INTO `doctor_info` (`doctor_id`, `account_id`, `specialty`, `bio`, `start_wt`, `end_wt`, `start_day`, `end_day`, `appointment_limits`, `is_created`, `is_updated`, `is_deleted`) VALUES
 (1, 19, ' Physician', 'As a medical practitioner, I provide compassionate healthcare with expertise in diagnosing, treating, and preventing illnesses and injuries. My patient-centered approach emphasizes trust, communication, and personalized treatment plans.', '08:00:00', '20:30:00', 'Saturday', 'Sunday', NULL, '2024-09-24 14:59:04', '2024-10-27 04:34:06', 0),
 (3, 17, 'Dentist', 'HEHE', '20:09:46', '23:09:46', 'Monday', 'Tuesday', 3, '2024-10-02 12:10:36', '2025-01-04 04:49:19', 0),
-(4, 10000, ' Physician', '&quot;Dr. Test is a dedicated physician specializing in patient care, focusing on preventive medicine and holistic treatment approaches. With a commitment to improving community health, Dr. Test combines extensive medical knowledge with compassionate care', '09:00:00', '14:00:00', 'Wednesday', 'Friday', NULL, '2024-10-26 22:25:04', '2024-10-26 22:28:47', 0);
+(4, 10000, ' Physician ', '&quot;Dr. Test is a dedicated physician specializing in patient care, focusing on preventive medicine and holistic treatment approaches. With a commitment to improving community health, Dr. Test combines extensive medical knowledge with compassionate care hehe', '09:00:00', '14:00:00', 'Wednesday', 'Friday', NULL, '2024-10-26 22:25:04', '2025-02-20 11:37:10', 0);
 
 -- --------------------------------------------------------
 
@@ -390,7 +396,9 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `ti
 (944, 10000, 24, 'Hii\n', '2025-01-17 19:23:09', '2025-01-17 19:23:09', 'sent', 1),
 (945, 24, 10000, 'hello', '2025-01-17 19:23:16', '2025-01-17 19:23:16', 'sent', 1),
 (946, 24, 10000, 'testt chat ', '2025-01-27 18:34:32', '2025-01-27 18:34:32', 'sent', 1),
-(947, 24, 10000, 'hi', '2025-01-28 21:07:29', '2025-01-28 21:07:29', 'sent', 1);
+(947, 24, 10000, 'hi', '2025-01-28 21:07:29', '2025-01-28 21:07:29', 'sent', 1),
+(948, 24, 17, 'Hii', '2025-02-20 18:38:38', '2025-02-20 18:38:38', 'sent', 0),
+(949, 24, 17, 'hello\n', '2025-02-20 22:01:15', '2025-02-20 22:01:15', 'sent', 0);
 
 -- --------------------------------------------------------
 
@@ -401,6 +409,8 @@ INSERT INTO `messages` (`message_id`, `sender_id`, `receiver_id`, `message`, `ti
 CREATE TABLE `patient_info` (
   `patient_id` int(11) NOT NULL,
   `account_id` int(11) DEFAULT NULL,
+  `height` varchar(32) DEFAULT NULL,
+  `weight` varchar(32) DEFAULT NULL,
   `parent_name` varchar(255) DEFAULT NULL,
   `parent_contact` varchar(16) DEFAULT NULL,
   `is_created` timestamp NOT NULL DEFAULT current_timestamp(),
@@ -412,9 +422,9 @@ CREATE TABLE `patient_info` (
 -- Dumping data for table `patient_info`
 --
 
-INSERT INTO `patient_info` (`patient_id`, `account_id`, `parent_name`, `parent_contact`, `is_created`, `is_updated`, `is_deleted`) VALUES
-(3, 31, NULL, NULL, '2024-10-01 10:36:24', '2024-10-01 10:36:24', 0),
-(4, 24, NULL, NULL, '2024-10-26 22:34:19', '2024-10-26 22:34:19', 0);
+INSERT INTO `patient_info` (`patient_id`, `account_id`, `height`, `weight`, `parent_name`, `parent_contact`, `is_created`, `is_updated`, `is_deleted`) VALUES
+(3, 31, NULL, NULL, NULL, NULL, '2024-10-01 10:36:24', '2024-10-01 10:36:24', 0),
+(4, 24, NULL, NULL, NULL, NULL, '2024-10-26 22:34:19', '2024-10-26 22:34:19', 0);
 
 -- --------------------------------------------------------
 
@@ -547,13 +557,13 @@ ALTER TABLE `allergy`
 -- AUTO_INCREMENT for table `appointment`
 --
 ALTER TABLE `appointment`
-  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `campus`
 --
 ALTER TABLE `campus`
-  MODIFY `campus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `campus_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `chatbot_messages`
@@ -583,13 +593,13 @@ ALTER TABLE `medical_history`
 -- AUTO_INCREMENT for table `medication`
 --
 ALTER TABLE `medication`
-  MODIFY `medication_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `medication_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=948;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=950;
 
 --
 -- AUTO_INCREMENT for table `patient_info`
