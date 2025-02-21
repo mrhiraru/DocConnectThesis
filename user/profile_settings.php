@@ -95,7 +95,7 @@ include '../includes/head.php';
                           src="<?php if (isset($_SESSION['account_image'])) {
                                     echo "../assets/images/" . $_SESSION['account_image'];
                                   } else {
-                                    echo "../assets/images/bg-1.png";
+                                    echo "../assets/images/default_profile.png";
                                   } ?>"
                           alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;">
 
