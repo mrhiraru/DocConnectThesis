@@ -18,7 +18,7 @@ if (isset($_SESSION['fullname']) && !empty($_SESSION['fullname'])) {
         <img src="<?php if (isset($_SESSION['account_image'])) {
                     echo "../assets/images/" . $_SESSION['account_image'];
                   } else {
-                    echo "../assets/images/bg-1.png";
+                    echo "../assets/images/default_profile.png";
                   } ?>" alt="avatar" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
       <h4 class="my-3 text-green"><?= $displayName ?></h4>
