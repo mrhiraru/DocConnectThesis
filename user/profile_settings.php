@@ -297,32 +297,189 @@ include '../includes/head.php';
             <div class="card-body">
               <div class="d-flex align-items-center">
                 <i class='bx bxs-key text-primary display-6 me-2'></i>
-                <h4 class="mb-0">Password</h4>
+                <h4 class="mb-0">Other info</h4>
               </div>
               <hr class="my-2" style="height: 2.5px;">
               <form action="#.php" method="post">
-                <div class="row mb-3">
-                  <div class="col-md-8 mb-3 mb-md-0">
-                    <label for="oldPassword" class="form-label text-black-50">Old Password</label>
-                    <input type="password" class="form-control bg-light border border-dark" id="oldPassword" name="old_password" required>
+
+                <!-- Medical History -->
+                <h5 class="text-primary">Medical History</h5>
+                <div class="mb-3">
+                  <label class="form-label">Do you have any pre-existing conditions?</label>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="conditions[]" value="Diabetes">
+                    <label class="form-check-label">Diabetes</label>
                   </div>
-                  <div class="col-md-8 mb-3 mb-md-0">
-                    <label for="newPassword" class="form-label text-black-50">New Password</label>
-                    <input type="password" class="form-control bg-light border border-dark" id="newPassword" name="new_password">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="conditions[]" value="Hypertension">
+                    <label class="form-check-label">Hypertension</label>
                   </div>
-                  <div class="col-md-8">
-                    <label for="confirmNewPassword" class="form-label text-black-50">Confirm New Password</label>
-                    <input type="password" class="form-control bg-light border border-dark" id="confirmNewPassword" name="confirm_new_password" required>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="conditions[]" value="Asthma">
+                    <label class="form-check-label">Asthma</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="conditions[]" value="Heart Disease">
+                    <label class="form-check-label">Heart Disease</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="otherCondition">
+                    <label class="form-check-label">Other</label>
+                    <input type="text" class="form-control mt-2 d-none" id="otherConditionText" name="conditions[]">
                   </div>
                 </div>
 
-                <div class="form-check mb-3">
-                  <input type="checkbox" class="form-check-input" id="togglePassword">
-                  <label for="togglePassword" class="form-check-label" id="togglePasswordLabel">Show Password</label>
+                <div class="mb-3">
+                  <label class="form-label">Have you undergone any major surgeries?</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="surgery" value="Yes" id="surgeryYes">
+                    <label class="form-check-label" for="surgeryYes">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="surgery" value="No" id="surgeryNo">
+                    <label class="form-check-label" for="surgeryNo">No</label>
+                  </div>
                 </div>
 
+                <div class="mb-3 d-none" id="surgeryDetails">
+                  <label class="form-label">If yes, specify:</label>
+                  <input type="text" class="form-control" name="surgery_details">
+                </div>
+
+                <div class="mb-3">
+                  <label class="form-label">Do you have any known allergies?</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="allergies" value="Yes" id="allergyYes">
+                    <label class="form-check-label" for="allergyYes">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="allergies" value="No" id="allergyNo">
+                    <label class="form-check-label" for="allergyNo">No</label>
+                  </div>
+                </div>
+
+                <div class="mb-3 d-none" id="allergyDetails">
+                  <label class="form-label">If yes, specify:</label>
+                  <input type="text" class="form-control" name="allergy_details">
+                </div>
+
+                <hr>
+
+                <!-- Medication -->
+                <h5 class="text-primary">Medication</h5>
+                <div class="mb-3">
+                  <label class="form-label">Are you currently taking any medications?</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medications" value="Yes" id="medicationsYes">
+                    <label class="form-check-label" for="medicationsYes">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="medications" value="No" id="medicationsNo">
+                    <label class="form-check-label" for="medicationsNo">No</label>
+                  </div>
+                </div>
+
+                <div id="medicationList" class="d-none">
+                  <label class="form-label">If yes, list them:</label>
+                  <div class="medication-entry mb-2">
+                    <input type="text" class="form-control mb-2" name="medication_name[]" placeholder="Medication Name">
+                    <input type="text" class="form-control mb-2" name="medication_dosage[]" placeholder="Dosage">
+                    <input type="text" class="form-control mb-2" name="medication_frequency[]" placeholder="Frequency">
+                    <input type="text" class="form-control mb-2" name="medication_purpose[]" placeholder="Purpose">
+                  </div>
+                  <button type="button" class="btn btn-sm btn-secondary" id="addMedication">Add More</button>
+                </div>
+
+                <hr>
+
+                <!-- Immunization -->
+                <h5 class="text-primary">Immunization</h5>
+                <div class="mb-3">
+                  <label class="form-label">Have you received any vaccinations?</label>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="vaccinations" value="Yes" id="vaccinationsYes">
+                    <label class="form-check-label" for="vaccinationsYes">Yes</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="vaccinations" value="No" id="vaccinationsNo">
+                    <label class="form-check-label" for="vaccinationsNo">No</label>
+                  </div>
+                </div>
+
+                <div id="vaccinationList" class="d-none">
+                  <label class="form-label">If yes, list them:</label>
+                  <div class="vaccination-entry mb-2">
+                    <input type="text" class="form-control mb-2" name="vaccine_name[]" placeholder="Vaccine Name">
+                    <input type="date" class="form-control mb-2" name="vaccine_date[]">
+                    <select class="form-control mb-2" name="booster_required[]">
+                      <option value="Yes">Booster Required</option>
+                      <option value="No">No Booster Required</option>
+                    </select>
+                  </div>
+                  <button type="button" class="btn btn-sm btn-secondary" id="addVaccination">Add More</button>
+                </div>
+
+                <div class="text-end mt-3">
+                  <input type="submit" class="btn btn-primary text-light" name="save" value="Save Changes">
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <script>
+            document.getElementById('surgeryYes').addEventListener('change', () => document.getElementById('surgeryDetails').classList.remove('d-none'));
+            document.getElementById('surgeryNo').addEventListener('change', () => document.getElementById('surgeryDetails').classList.add('d-none'));
+
+            document.getElementById('allergyYes').addEventListener('change', () => document.getElementById('allergyDetails').classList.remove('d-none'));
+            document.getElementById('allergyNo').addEventListener('change', () => document.getElementById('allergyDetails').classList.add('d-none'));
+          </script>
+
+
+          <div class="card bg-body-tertiary mb-4">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <i class='bx bxs-key text-primary display-6 me-2'></i>
+                <h4 class="mb-0">Parent / Guardian</h4>
+              </div>
+              <hr class="my-2" style="height: 2.5px;">
+              <form action="#.php" method="post">
+                <div class="col-md-12">
+                  <!-- ---NAME--- -->
+                  <div class="row mb-3">
+                    <div class="col-12 col-md-4 mb-3 mb-md-0">
+                      <label for="firstName" class="form-label text-black-50">First Name</label>
+                      <input type="text" class="form-control bg-light border border-dark" id="firstName" name="first_name" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required>
+                    </div>
+                    <div class="col-12 col-md-4 mb-3 mb-md-0">
+                      <label for="middleName" class="form-label text-black-50">Middle Name</label>
+                      <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middle_name" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>">
+                    </div>
+                    <div class="col-12 col-md-4">
+                      <label for="lastName" class="form-label text-black-50">Last Name</label>
+                      <input type="text" class="form-control bg-light border border-dark" id="lastName" name="last_name" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <div class="col-md-7 mb-3 mb-md-0">
+                      <label for="email" class="form-label text-black-50">Email</label>
+                      <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@wmsu.edu.ph" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                    </div>
+                    <div class="col-md-5 mb-3 mb-md-0">
+                      <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
+                      <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required />
+                      <?php
+                      if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
+                      ?>
+                        <p class="text-dark m-0 ps-2">Phone number is required</p>
+                      <?php
+                      }
+                      ?>
+                    </div>
+                  </div>
+                </div>
                 <div class="text-end">
-                  <input type="submit" id="saveAccount" class="btn btn-primary text-light" name="saveAccount" value="Save Changes">
+                  <input type="submit" class="btn btn-primary text-light" name="save" value="Save Changes">
                 </div>
               </form>
 
