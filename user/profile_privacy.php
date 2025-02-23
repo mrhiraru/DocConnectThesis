@@ -153,6 +153,8 @@ include '../includes/head.php';
     </div>
   </section>
 
+  <script src="../js/user/profile_privacy.js"></script>
+
   <?php
   require_once('../includes/footer.php');
   ?>

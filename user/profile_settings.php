@@ -387,7 +387,7 @@ include '../includes/head.php';
                     <input type="text" class="form-control mb-2" name="medication_frequency[]" placeholder="Frequency">
                     <input type="text" class="form-control mb-2" name="medication_purpose[]" placeholder="Purpose">
                   </div>
-                  <button type="button" class="btn btn-sm btn-secondary" id="addMedication">Add More</button>
+                  <button type="button" class="btn btn-sm btn-secondary text-light" id="addMedication">Add More</button>
                 </div>
 
                 <hr>
@@ -416,7 +416,7 @@ include '../includes/head.php';
                       <option value="No">No Booster Required</option>
                     </select>
                   </div>
-                  <button type="button" class="btn btn-sm btn-secondary" id="addVaccination">Add More</button>
+                  <button type="button" class="btn btn-sm btn-secondary text-light" id="addVaccination">Add More</button>
                 </div>
 
                 <div class="text-end mt-3">
@@ -425,15 +425,6 @@ include '../includes/head.php';
               </form>
             </div>
           </div>
-
-          <script>
-            document.getElementById('surgeryYes').addEventListener('change', () => document.getElementById('surgeryDetails').classList.remove('d-none'));
-            document.getElementById('surgeryNo').addEventListener('change', () => document.getElementById('surgeryDetails').classList.add('d-none'));
-
-            document.getElementById('allergyYes').addEventListener('change', () => document.getElementById('allergyDetails').classList.remove('d-none'));
-            document.getElementById('allergyNo').addEventListener('change', () => document.getElementById('allergyDetails').classList.add('d-none'));
-          </script>
-
 
           <div class="card bg-body-tertiary mb-4">
             <div class="card-body">
@@ -489,7 +480,7 @@ include '../includes/head.php';
       </div>
     </div>
   </section>
-  <script src="../js/user/profie_settings.js"></script>
+  <script src="../js/user/profile_settings.js"></script>
   <script src="../js/imageChange.js"></script>
 
   <?php
