@@ -48,16 +48,14 @@ $appointment = 'active';
 include '../includes/head.php';
 ?>
 
-<body onload="<?= isset($_GET['doctor_id']) ? "autoFocusSearch()" : "" ?>">
+<body>
     <?php
     require_once('../includes/header.php');
     ?>
 
     <section id="appointment" class="page-container padding-medium p-3">
         <div class="row mb-3">
-
             <div class="col-2"></div>
-
             <div class="col-sm-12 col-md-8">
                 <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
                     <div class="row">
