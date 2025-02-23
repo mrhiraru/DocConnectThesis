@@ -59,14 +59,30 @@ include '../includes/head.php';
                                         <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
                                         <td><?= $item['appointment_status'] ?></td>
                                         <td class="text-center">
-                                            <?php
-                                            if ($item['appointment_status'] == 'Incoming') {
-                                            ?>
-                                                <a href="./appointment-view.php?account_id=<?= $_GET['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light"><i class='bx bx-play-circle me-1'></i>View</a>
-                                            <?php
-                                            }
-                                            ?>
-                                            <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light"><i class='bx bxs-edit me-1'></i>Edit</a>
+                                        <?php
+                            if ($item['appointment_status'] == 'Incoming') {
+                            ?>
+                                <a href="./appointment-view.php?account_id=<?= $_GET['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light"><i class='bx bx-play-circle me-1'></i>View</a>
+                                <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light"><i class='bx bxs-edit me-1'></i>Update</a>
+                            <?php
+                            } else if ($item['appointment_status'] == 'Ongoing') {
+                            ?>
+                                <a href="./appointment-view.php?account_id=<?= $_GET['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light"><i class='bx bx-play-circle me-1'></i>View</a>
+                            <?php
+                            } else if ($item['appointment_status'] == 'Pending') {
+                            ?>
+                                <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light"><i class='bx bxs-edit me-1'></i>Update</a>
+                            <?php
+                            } else if ($item['appointment_status'] == 'Completed') {
+                            ?>
+                                <a href="./appointment-view.php?account_id=<?= $_GET['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-info btn-sm text-light"><i class='bx bx-file-blank me-1'></i>Result</a>
+                            <?php
+                            } else if ($item['appointment_status'] == 'Cancelled') {
+                            ?>
+                                <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-danger btn-sm text-light"><i class='bx bxs-edit me-1'></i>Reschedule</a>
+                            <?php
+                            }
+                            ?>
                                         </td>
                                     </tr>
                                 <?php

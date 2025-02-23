@@ -275,4 +275,23 @@ class Appointment
             return false;
         }
     }
+
+    function get_completed_appointment($doctor_id, $account_id)
+    {
+        $sql = "SELECT ap.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name 
+        FROM appointment ap 
+        INNER JOIN patient_info p ON ap.patient_id = p.patient_id 
+        INNER JOIN account a ON p.account_id = a.account_id
+        WHERE ap.doctor_id = :doctor_id AND p.account_id = :account_id AND ap.appointment_status = 'Completed' ORDER BY appointment_date DESC, appointment_time DESC;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':doctor_id', $doctor_id);
+        $query->bindParam(':account_id', $account_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }

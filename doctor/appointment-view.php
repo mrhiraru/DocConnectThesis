@@ -41,30 +41,43 @@ include '../includes/head.php';
                         </p>
                         <p class="m-0 p-0 fs-6 text-secondary">Patient: <span class="text-dark"><?= $record['patient_name'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary">Reason: <span class="text-dark"><?= $record['reason'] ?></span></p>
-                        <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary mb">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary mb-3">Link: <a href="<?= $record['appointment_link'] ?>" class="text-primary"><?= $record['appointment_link'] ?></a></p>
                     </div>
                     <?php
                     if ($record['appointment_status'] == "Ongoing") {
-                    ?> <div class="col-12 mb-3">
+                    ?>
+                        <div class="col-12 mb-3">
                             <form action="" class="row" id="resultForm">
                                 <div class="col-12 mb-3">
                                     <label for="result" class="form-label">Consultation Result:</label>
-                                    <input type="text" class="form-control" id="result" name="result" placeholder="" required>
+                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control" required><?= $record['result'] ?></textarea>
                                 </div>
                                 <div class="col-12">
-                                    <label for="comment" class="form-label">Comment:</label>
-                                    <textarea id="comment" name="comment" rows="4" cols="50" class="form-control"></textarea>
+                                    <label for="comment" class="form-label">Note:</label>
+                                    <textarea id="comment" name="comment" rows="7" cols="50" class="form-control"></textarea>
                                 </div>
                             </form>
                         </div>
                     <?php
                     } else if ($record['appointment_status'] == "Completed") {
                     ?>
-                        Show result and Comment here
+                        <div class="col-12 mb-3">
+                            <form action="" class="row" id="resultForm">
+                                <div class="col-12 mb-3">
+                                    <label for="result" class="form-label">Consultation Result:</label>
+                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['result'] ?></textarea>
+                                </div>
+                                <div class="col-12">
+                                    <label for="comment" class="form-label">Note:</label>
+                                    <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
+                                </div>
+                            </form>
+                        </div>
                     <?php
                     }
                     ?>
-                    <div class="col-12 d-flex justify-content-center border-bottom mb-3 ">
+                    <div class="col-12 d-flex justify-content-center mb-3 ">
                         <?php
                         if ($record['appointment_status'] == "Incoming") {
                         ?>
@@ -79,6 +92,13 @@ include '../includes/head.php';
                                 <i class='bx bx-check-square align-middle fs-5'></i>
                                 Complete Meeting
                             </button>
+                        <?php
+                        } else if ($record['appointment_status'] == "Completed") {
+                        ?>
+                            <a href="" class="btn btn-danger text-white mb-3">
+                                <i class='bx bxs-edit align-middle fs-5 me-1'></i>
+                                New Appointment
+                            </a>
                         <?php
                         }
                         ?>
