@@ -47,7 +47,7 @@ $appointment_class = new Appointment();
                             <?php
                             } else if ($item['appointment_status'] == 'Cancelled') {
                             ?>
-                                <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light"><i class='bx bxs-edit me-1'></i>Edit</a>
+                                <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-danger btn-sm text-light"><i class='bx bxs-edit me-1'></i>Reschedule</a>
                             <?php
                             }
                             ?>

@@ -294,4 +294,22 @@ class Appointment
         }
         return $data;
     }
+
+    function get_patient_appointment_user($patient_id)
+    {
+        $sql = "SELECT ap.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS doctor_name 
+        FROM appointment ap 
+        INNER JOIN doctor_info di ON di.doctor_id = ap.doctor_id 
+        INNER JOIN account a ON di.account_id = a.account_id
+        WHERE ap.patient_id = :patient_id ORDER BY FIELD(ap.appointment_status, 'Ongoing', 'Incoming', 'Pending', 'Completed', 'Cancelled'), appointment_date DESC, appointment_time DESC;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':patient_id', $patient_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
