@@ -48,7 +48,7 @@ $appointment = 'active';
 include '../includes/head.php';
 ?>
 
-<body>
+<body onload="<?= isset($_GET['doctor_id']) ? "autoFocusSearch()" : "" ?>">
     <?php
     require_once('../includes/header.php');
     ?>
@@ -285,11 +285,14 @@ include '../includes/head.php';
 
                     function populateDropdown(doctors) {
                         doctorDropdown.innerHTML = '';
+
                         doctors.forEach(doctor => {
                             const li = document.createElement("li");
                             li.classList.add("list-group-item", "cursor-pointer");
                             li.textContent = doctor.doctor_name;
                             li.setAttribute("data-id", doctor.account_id);
+
+                            // add code here that if the url have doctor_id === the doctor_id doctor.account_id it will auto click tge function below
 
                             li.addEventListener("click", function() {
                                 doctor_name.innerHTML = doctor.doctor_name;
@@ -316,7 +319,25 @@ include '../includes/head.php';
                             });
 
                             doctorDropdown.appendChild(li);
+
                         });
+
+                        if (autoClickElement) {
+                            setTimeout(() => {
+                                autoClickElement.click();
+
+                                // Remove doctor_id from the URL after auto-click
+                                const newUrl = window.location.pathname + window.location.search.replace(/([?&])doctor_id=[^&]+(&|$)/, '$1');
+                                const cleanUrl = newUrl.endsWith('?') || newUrl.endsWith('&') ? newUrl.slice(0, -1) : newUrl;
+                                window.history.replaceState(null, '', cleanUrl);
+
+                                autoClickElement = null;
+                                doctorSearch.blur();
+
+                                // Hide the dropdown
+                                doctorDropdown.classList.add('d-none');
+                            }, 200); // Ensure UI updates
+                        }
 
                         if (doctors.length > 0) {
                             doctorDropdown.classList.remove('d-none');
