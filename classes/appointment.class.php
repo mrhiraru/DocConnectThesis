@@ -113,6 +113,24 @@ class Appointment
         return $data;
     }
 
+    function get_appointment_details_user($appointment_id)
+    {
+        $sql = "SELECT ap.*, di.*, a.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS doctor_name 
+        FROM appointment ap
+        INNER JOIN doctor_info di ON ap.doctor_id = di.doctor_id
+        INNER JOIN account a ON di.account_id = a.account_id
+        WHERE ap.appointment_id = :appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':appointment_id', $appointment_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
     function check_availability($doctor_id, $appointment_date, $appointment_time, $appointment_id)
     {
         $sql = "SELECT ap.* FROM appointment ap

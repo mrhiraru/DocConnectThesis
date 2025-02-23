@@ -33,9 +33,6 @@ include '../includes/head.php';
                 <?php
                 require_once('../includes/breadcrumb-patient.php');
                 ?>
-                <div class="p-0 m-0 text-end">
-                    <button class="btn btn-primary text-white mb-2">Create New Meeting</button>
-                </div>
                 <div class="table-responsive">
                     <table class="table table-striped" id="eventsTable">
                         <thead>
