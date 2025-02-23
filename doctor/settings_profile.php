@@ -62,7 +62,7 @@ if (isset($_POST['save_image'])) {
 
   $account->account_id = $_SESSION['account_id'];
 
-  $uploaddir = '../assets/images/';
+  $uploaddir = '../assets/gallery/';
   $uploadname = $_FILES[htmlentities('account_image')]['name'];
   $uploadext = explode('.', $uploadname);
   $uploadnewext = strtolower(end($uploadext));
@@ -236,7 +236,7 @@ include '../includes/head.php';
                 <!-- DAPAT TEXT INPUT WITH SUGGEWSTION -->
                 <div class="col-12 col-md-6 mb-3">
                   <label for="contact" class="form-label">Contact</label>
-                  <input type="tel" class="form-control" id="contact" name="contact" placeholder="Contact" required value="<?= (isset($_POST['contact'])) ? $_POST['contact'] : $_SESSION['contact'] ?> ">
+                  <input type="text" class="form-control" id="contact" name="contact_no" value="+63 " pattern="\+63 \d{3} \d{3} \d{4}" required value="<?= (isset($_POST['contact'])) ? $_POST['contact'] : $_SESSION['contact'] ?> ">
                   <?php
                   if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                   ?>
@@ -371,6 +371,7 @@ include '../includes/head.php';
   <?php
   }
   ?>
+  <script src="../js/doctor/settings_profile.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/imageChange.js"></script>
 </body>
