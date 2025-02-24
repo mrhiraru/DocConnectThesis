@@ -186,6 +186,21 @@ class Message
         return $data;
     }
 
+    function get_id_from_appointment($appointment_id)
+    {
+        $sql = "SELECT doctor_id, patient_id FROM appointment WHERE appointment_id = :appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindValue(':appointment_id', $appointment_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+
+        return $data;
+    }
+
     function load_messages($account_id, $chatwith_account_id, $last_message_id = 0)
     {
         $sql = "SELECT * FROM messages 

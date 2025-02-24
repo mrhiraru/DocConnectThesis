@@ -1,5 +1,6 @@
 <?php
 require_once('../classes/appointment.class.php');
+require_once('../classes/message.class.php');
 require_once('../tools/functions.php');
 
 $appointment = new Appointment();
@@ -24,7 +25,32 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->update_appointment()) {
-            $success = 'success';
+            $message = new Message();
+
+            $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
+            $date_time = $date_time->format('F j, Y \a\t h:i A');
+            $ids = $message->get_id_from_appointment($appointment->appointment_id);
+            $id = $message->get_patient_account($ids['patient_id']);
+
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = 'Your appointment has been confirmed on ' . $date_time;
+            $message->message_type = 'System';
+
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             $success = 'failed';
         }
