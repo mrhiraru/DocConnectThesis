@@ -81,13 +81,17 @@ include '../includes/head.php';
                         <?php
                         if ($record['appointment_status'] == "Incoming") {
                         ?>
-                            <button class="btn btn-success text-white mb-3" onclick="start_meeting('<?= $record['appointment_link'] ?>'); return false;">
+                            <button class="btn btn-success text-white mb-3" onclick="start_meeting()">
                                 <i class='bx bx-video me-2 align-middle fs-5'></i>
                                 Start Meeting
                             </button>
                         <?php
                         } else if ($record['appointment_status'] == "Ongoing") {
                         ?>
+                            <button class="btn btn-success text-white mb-3 me-2" onclick="join_meeting('<?= $record['appointment_link'] ?>'); return false;">
+                                <i class='bx bx-video me-2 align-middle fs-5'></i>
+                                Join
+                            </button>
                             <button class="btn btn-danger text-white mb-3" onclick="end_meeting()">
                                 <i class='bx bx-check-square align-middle fs-5'></i>
                                 Complete Meeting
@@ -134,6 +138,9 @@ include '../includes/head.php';
         });
     }
 
+    function join_meeting(url) {
+        window.open(url, '_blank', 'width=800,height=600,top=100,left=100,toolbar=no,menubar=no,scrollbars=yes,resizable=yes');
+    }
 
     function end_meeting() {
         var resultInput = $('#result').get(0);
@@ -154,7 +161,6 @@ include '../includes/head.php';
             },
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
-
                     location.reload();
                 } else {
                     console.error('Error:', response);
