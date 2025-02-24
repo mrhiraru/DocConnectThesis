@@ -1,6 +1,6 @@
 <script type="text/javascript">
     const doctorEmail = '<?= $_SESSION['email'] ?>'; //original code
-    /* hostinger auto deployment success */
+    /* hostinger auto deployment success (2) */
     /* exported gapiLoaded */
     /* exported gisLoaded */
     /* exported handleAuthClick */
