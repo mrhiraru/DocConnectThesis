@@ -1,6 +1,5 @@
 <script type="text/javascript">
-    //const doctorEmail = '<?= $_SESSION['email'] ?>'; //original code,
-    const doctorEmail = 'mrhiraru@gmail.com'; // for testing
+    const doctorEmail = '<?= $_SESSION['email'] ?>'; //original code
     /* exported gapiLoaded */
     /* exported gisLoaded */
     /* exported handleAuthClick */
