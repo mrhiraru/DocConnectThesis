@@ -28,7 +28,7 @@ while (time() - $start_time < $timeout) {
             } else if ($item['message_type'] == 'System') {
                 ?>
                 <div class="d-flex align-items-center justify-content-center mb-2 text-center" data-message-id="<?= $item['message_id'] ?>">
-                    <div class="bg-light text-dark p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
+                    <div class="bg-light text-dark opacity-75 p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
                 </div>
 <?php
             }
