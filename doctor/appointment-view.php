@@ -116,7 +116,7 @@ include '../includes/head.php';
 </html>
 
 <script>
-    function start_meeting(url) {
+    function start_meeting() {
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
