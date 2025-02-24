@@ -10,6 +10,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
+require_once('../classes/message.class.php');
 
 $appointment_class = new Appointment();
 if (isset($_POST['request'])) {
@@ -30,6 +31,12 @@ if (isset($_POST['request'])) {
         validate_field($appointment_class->appointment_status)
     ) {
         if ($appointment_class->add_appointment()) {
+            $message = new Message();
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = '';
+            $message->message = '';
+
             $success = 'success';
         } else {
             echo 'An error occured while adding in the database.';
@@ -123,41 +130,16 @@ include '../includes/head.php';
                     </div>
 
                     <!-- Address -->
-                    <!-- <div class="mb-3">
-      <label for="address" class="form-label text-black-50">Address</label>
-      <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" required>
-    </div> -->
+                    <div class="mb-3">
+                        <label for="address" class="form-label text-black-50">Address</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required>
+                    </div>
 
                     <!-- Email -->
                     <div class="mb-3">
                         <label for="email" class="form-label text-black-50">Email</label>
                         <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
                     </div>
-
-                    <!-- <div class="row mb-3">
-      Facility Question
-      <div class="col-md-6">
-        <label class="form-label text-black-50">Have you ever applied to our facility before?</label>
-        <div class="form-check">
-          <input class="form-check-input border border-dark" type="radio" name="facility_applied" id="yes" value="Yes" required>
-          <label class="form-check-label" for="yes">Yes</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input border border-dark" type="radio" name="facility_applied" id="no" value="No" required>
-          <label class="form-check-label" for="no">No</label>
-        </div>
-      </div>
-
-      Procedure
-      <div class="col-md-6">
-        <label for="procedure" class="form-label text-black-50">Which procedure do you want to make an appointment for?</label>
-        <select class="form-select bg-light border border-dark" id="procedure" name="procedure" required>
-          <option value="" disabled selected>Please Select</option>
-          <option value="General Consultation">General Consultation</option>
-          <option value="Dental Check-up">Dental Check-up</option>
-        </select>
-      </div>
-    </div> -->
 
                     <!-- Preferred Appointment Date -->
                     <div class="row mb-3">
@@ -289,8 +271,6 @@ include '../includes/head.php';
                             li.classList.add("list-group-item", "cursor-pointer");
                             li.textContent = doctor.doctor_name;
                             li.setAttribute("data-id", doctor.account_id);
-
-                            // add code here that if the url have doctor_id === the doctor_id doctor.account_id it will auto click tge function below
 
                             li.addEventListener("click", function() {
                                 doctor_name.innerHTML = doctor.doctor_name;
