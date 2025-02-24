@@ -125,8 +125,7 @@ include '../includes/head.php';
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
             },
             success: function(response) {
-                if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                    window.open(url, '_blank', 'width=800,height=600,top=100,left=100,toolbar=no,menubar=no,scrollbars=yes,resizable=yes');
+                if (response.trim() === 'success') { 
                     location.reload();
                 } else {
                     console.error('Error:', response);
