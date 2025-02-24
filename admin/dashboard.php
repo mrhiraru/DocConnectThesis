@@ -52,7 +52,7 @@ require_once('../classes/account.class.php');
             </div>
             <div class="col-6 text-end">
               <p class="fs-1 m-0">35</p>
-              <p>Total Active Users</p>
+              <p>Total Active Users.</p>
             </div>
           </div>
         </div>
