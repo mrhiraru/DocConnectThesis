@@ -41,7 +41,11 @@ if (isset($_POST['request'])) {
             $message->message = $_SESSION['fullname'] . ' has booked an appointment on ' . $date_time;
             $message->message_type = 'System';
 
-            if (validate_field($message->message && $message->sender_id && $message->receiver_id)) {
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
                 if ($message->send_message()) {
                     $success = 'success';
                 } else {
