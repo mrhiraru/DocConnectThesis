@@ -7,6 +7,7 @@ class Database
     private $database = 'u701207055_docconnect_db';
     protected $connection;
 
+    /
     function connect()
     {
         try {
