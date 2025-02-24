@@ -33,11 +33,23 @@ if (isset($_POST['request'])) {
         if ($appointment_class->add_appointment()) {
             $message = new Message();
 
-            $message->sender_id = $_SESSION['account_id'];
-            $message->receiver_id = '';
-            $message->message = '';
+            $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
+            $date_time = $date_time->format('F j, Y \a\t h:i A');
 
-            $success = 'success';
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $message->get_doctor_account($appointment_class->doctor_id);
+            $message->message = $_SESSION['fullname'] . ' has booked an appointment on ' . $date_time;
+            $message->message_type = 'System';
+
+            if (validate_field($message->message && $message->sender_id && $message->receiver_id)) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             echo 'An error occured while adding in the database.';
         }
@@ -132,7 +144,7 @@ include '../includes/head.php';
                     <!-- Address -->
                     <div class="mb-3">
                         <label for="address" class="form-label text-black-50">Address</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required>
+                        <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required readonly>
                     </div>
 
                     <!-- Email -->
@@ -323,12 +335,6 @@ include '../includes/head.php';
                             doctorDropdown.classList.add('d-none');
                         }
                     }
-
-                    document.addEventListener("click", function(event) {
-                        if (!doctorSearch.contains(event.target) && !doctorDropdown.contains(event.target)) {
-                            doctorDropdown.classList.add('d-none');
-                        }
-                    });
                 })
                 .catch(error => console.error('Error fetching doctors:', error));
 
