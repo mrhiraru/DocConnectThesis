@@ -192,7 +192,7 @@ if (isset($_POST['confirm'])) {
         if ($appointment->update_appointment_status()) {
             $message = new Message();
 
-            $ids = $message->get_id_from_appointment($appointment->appointment_id);
+            $ids = $message->get_id_from_appointment($_POST['appointment_id']);
             $id = $message->get_patient_account($ids['patient_id']);
 
             $date_time = new DateTime($ids['appointment_date'] . ' ' . $ids['appointment_time']);
