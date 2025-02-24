@@ -83,18 +83,18 @@ include '../includes/head.php';
                         ?>
                             <button class="btn btn-success text-white mb-3" onclick="start_meeting()">
                                 <i class='bx bx-video me-2 align-middle fs-5'></i>
-                                Start Meeting
+                                Start Appointment
                             </button>
                         <?php
                         } else if ($record['appointment_status'] == "Ongoing") {
                         ?>
                             <button class="btn btn-success text-white mb-3 me-2" onclick="join_meeting('<?= $record['appointment_link'] ?>'); return false;">
                                 <i class='bx bx-video me-2 align-middle fs-5'></i>
-                                Join
+                                Join Meeting
                             </button>
                             <button class="btn btn-danger text-white mb-3" onclick="end_meeting()">
                                 <i class='bx bx-check-square align-middle fs-5'></i>
-                                Complete Meeting
+                                Complete Appointment
                             </button>
                         <?php
                         } else if ($record['appointment_status'] == "Completed") {
