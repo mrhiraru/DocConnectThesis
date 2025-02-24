@@ -6,6 +6,8 @@ require_once('../tools/functions.php');
 $appointment = new Appointment();
 $message = new Message();
 
+$success = '';
+
 if (isset($_POST['confirm'])) {
 
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
