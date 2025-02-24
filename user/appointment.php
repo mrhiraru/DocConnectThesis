@@ -35,9 +35,10 @@ if (isset($_POST['request'])) {
 
             $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
             $date_time = $date_time->format('F j, Y \a\t h:i A');
+            $id = $message->get_doctor_account($appointment_class->doctor_id);
 
             $message->sender_id = $_SESSION['account_id'];
-            $message->receiver_id = $message->get_doctor_account($appointment_class->doctor_id);
+            $message->receiver_id = $id['account_id'];
             $message->message = $_SESSION['fullname'] . ' has booked an appointment on ' . $date_time;
             $message->message_type = 'System';
 
