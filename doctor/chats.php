@@ -5,7 +5,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../user/verification.php');
     exit();
 } else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
-    header('location: ../index.php');
+    header('location: ./index.php');
     exit();
 }
 
