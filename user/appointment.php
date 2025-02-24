@@ -39,7 +39,7 @@ if (isset($_POST['request'])) {
 
             $message->sender_id = $_SESSION['account_id'];
             $message->receiver_id = $id['account_id'];
-            $message->message = $_SESSION['fullname'] . ' has booked an appointment on ' . $date_time;
+            $message->message = $_SESSION['fullname'] . ' has requested an appointment on ' . $date_time . '.';
             $message->message_type = 'System';
 
             if (

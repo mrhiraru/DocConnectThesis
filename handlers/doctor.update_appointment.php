@@ -4,6 +4,7 @@ require_once('../classes/message.class.php');
 require_once('../tools/functions.php');
 
 $appointment = new Appointment();
+$message = new Message();
 
 if (isset($_POST['confirm'])) {
 
@@ -25,17 +26,74 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->update_appointment()) {
-            $message = new Message();
 
             $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
             $date_time = $date_time->format('F j, Y \a\t h:i A');
             $ids = $message->get_id_from_appointment($appointment->appointment_id);
             $id = $message->get_patient_account($ids['patient_id']);
 
-
             $message->sender_id = $_SESSION['account_id'];
             $message->receiver_id = $id['account_id'];
             $message->message = 'Your appointment has been confirmed on ' . $date_time;
+            $message->message_type = 'System';
+
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+
+                    $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
+                    $date_time = $date_time->format('F j, Y \a\t h:i A');
+                    $ids = $message->get_id_from_appointment($appointment->appointment_id);
+                    $id = $message->get_patient_account($ids['patient_id']);
+
+                    $message->sender_id = $_SESSION['account_id'];
+                    $message->receiver_id = $id['account_id'];
+                    $message->message = 'Your appointment has been confirmed on ' . $date_time . '.';
+                    $message->message_type = 'System';
+
+                    if (
+                        validate_field($message->message) &&
+                        validate_field($message->sender_id) &&
+                        validate_field($message->receiver_id)
+                    ) {
+                        if ($message->send_message()) {
+                            $success = 'success';
+                        } else {
+                            echo 'An error occured while adding in the database.';
+                        }
+                    } else {
+                        $success = 'failed';
+                    }
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['decline'])) {
+    $appointment->appointment_id = htmlentities($_POST['appointment_id']);
+    $appointment->appointment_status = "Cancelled";
+
+    if (
+        validate_field($appointment->appointment_id && $appointment->appointment_status)
+    ) {
+        if ($appointment->decline_appointment()) {
+
+            $ids = $message->get_id_from_appointment($appointment->appointment_id);
+            $id = $message->get_patient_account($ids['patient_id']);
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = 'Your appointment request has been cancelled.';
             $message->message_type = 'System';
 
             if (
@@ -57,21 +115,6 @@ if (isset($_POST['confirm'])) {
     } else {
         $success = 'failed';
     }
-} else if (isset($_POST['decline'])) {
-    $appointment->appointment_id = htmlentities($_POST['appointment_id']);
-    $appointment->appointment_status = "Cancelled";
-
-    if (
-        validate_field($appointment->appointment_id && $appointment->appointment_status)
-    ) {
-        if ($appointment->decline_appointment()) {
-            $success = 'success';
-        } else {
-            $success = 'failed';
-        }
-    } else {
-        $success = 'failed';
-    }
 } else if (isset($_POST['reschedule'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_date = htmlentities($_POST['appointment_date']);
@@ -87,7 +130,30 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->reschedule_appointment()) {
-            $success = 'success';
+
+            $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
+            $date_time = $date_time->format('F j, Y \a\t h:i A');
+            $ids = $message->get_id_from_appointment($appointment->appointment_id);
+            $id = $message->get_patient_account($ids['patient_id']);
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = 'Your appointment has been rescheduled to ' . $date_time . '.';
+            $message->message_type = 'System';
+
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             $success = 'failed';
         }
@@ -105,7 +171,27 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->cancel_appointment()) {
-            $success = 'success';
+            $ids = $message->get_id_from_appointment($appointment->appointment_id);
+            $id = $message->get_patient_account($ids['patient_id']);
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = 'Your appointment request has been cancelled.';
+            $message->message_type = 'System';
+
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             $success = 'failed';
         }
@@ -121,7 +207,31 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->update_appointment_status()) {
-            $success = 'success';
+
+            $ids = $message->get_id_from_appointment($appointment->appointment_id);
+            $id = $message->get_patient_account($ids['patient_id']);
+
+            $date_time = new DateTime($ids['appointment_date'] . ' ' . $ids['appointment_time']);
+            $date_time = $date_time->format('F j, Y \a\t h:i A');
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = 'Appointment on ' . $date_time  . ' has started.';
+            $message->message_type = 'System';
+
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             $success = 'failed';
         }
@@ -137,7 +247,27 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
-            $success = 'success';
+            $ids = $message->get_id_from_appointment($appointment->appointment_id);
+            $id = $message->get_patient_account($ids['patient_id']);
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = 'Appointment has been completed.';
+            $message->message_type = 'System';
+
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             $success = 'failed';
         }
