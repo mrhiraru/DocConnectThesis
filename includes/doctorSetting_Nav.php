@@ -8,7 +8,7 @@
         $breadcrumbs = [
           'Profile Settings' => 'settings_profile.php',
           'Appointment Settings' => 'settings_appointment.php',
-          // 'Privacy and Security' => 'settings_privacy.php',
+          'Privacy and Security' => 'settings_privacy.php',
           // 'Notification Settings' => 'settings_notification.php',
           // 'Patient Interaction Settings' => 'settings_interaction.php'
         ];

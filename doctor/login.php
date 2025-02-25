@@ -75,9 +75,9 @@ include '../includes/head.php';
               </div>
               <div class="mb-1">
                 <label for="password" class="form-label">Password</label>
-                <div class="d-flex align-items-center border border-1 rounded-1">
+                <div class="d-flex align-items-center border border-1 rounded-1 position-relative">
                   <input type="password" class="form-control border-0 " id="password" name="login-password" placeholder="Enter your password" required value="<?= isset($_POST['login-password']) ? $_POST['login-password'] : '' ?>">
-                  <i class='bx bx-show me-2' id="togglePassword" style="cursor: pointer;"></i>
+                  <i class='bx bx-show text-dark position-absolute toggle-password' data-target="password"></i>
                 </div>
               </div>
               <div class="mb-3 text-end">
@@ -105,5 +105,7 @@ include '../includes/head.php';
       </div>
     </div>
 </body>
+
+<script src="../js/viewHideTogglePassword.js"></script>
 
 </html>
