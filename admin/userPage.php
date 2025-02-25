@@ -32,9 +32,9 @@ function getCurrentPage()
     <section id="dashboard" class="page-container">
 
         <?php
-        $userManagement = 'active';
-        $aUserManagement = 'page';
-        $cUserManagement = 'text-dark';
+        $userPage = 'active';
+        $aUserPage = 'page';
+        $cUserPage = 'text-dark';
 
         include './includes/adminUserPage_nav.php';
         ?>
@@ -346,15 +346,6 @@ function getCurrentPage()
                             </div>
                             <div class="mb-3 d-flex align-items-center">
                                 <input type="text" class="form-control" value="Empowering students with tools and resources for better health management.">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="buttonText" class="form-label">Button Text</label>
-                                <input type="text" class="form-control" id="buttonText" value="Learn more">
-                            </div>
-                            <div class="mb-3">
-                                <label for="buttonLink" class="form-label">Button Link</label>
-                                <input type="text" class="form-control" id="buttonLink" value="./about_us">
                             </div>
                             <div class="mb-3">
                                 <label for="imageUpload" class="form-label">Upload Image</label>
