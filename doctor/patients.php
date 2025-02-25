@@ -6,6 +6,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 } else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
     header('location: ../index.php');
 }
+
+require_once('../classes/patient.class.php');
+
 ?>
 
 <!DOCTYPE html>
