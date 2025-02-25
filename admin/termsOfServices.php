@@ -38,7 +38,7 @@ function getCurrentPage()
     $aTermsOfServices = 'page';
     $cTermsOfServices = 'text-dark';
 
-    include 'adminSettings_nav.php';
+    include './includes/adminSettings_nav.php';
     ?>
 
     <h1 class="text-start">Terms Of Services</h1>

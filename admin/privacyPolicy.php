@@ -38,7 +38,7 @@ function getCurrentPage()
     $aPrivacyPolicy = 'page';
     $cPrivacyPolicy = 'text-dark';
 
-    include 'adminSettings_nav.php';
+    include './includes/adminSettings_nav.php';
     ?>
 
     <h1 class="text-start">Privacy Policy</h1>

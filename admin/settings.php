@@ -38,7 +38,7 @@ function getCurrentPage()
     $aUserManagement = 'page';
     $cUserManagement = 'text-dark';
 
-    include 'adminSettings_nav.php';
+    include './includes/adminSettings_nav.php';
     ?>
 
     <h1 class="text-start">User Group Management</h1>
