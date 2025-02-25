@@ -13,7 +13,7 @@ require_once('../classes/account.class.php');
 ?>
 <html lang="en">
 <?php
-$title = 'Admin | User About Us';
+$title = 'Admin | User Services';
 include './includes/admin_head.php';
 function getCurrentPage()
 {

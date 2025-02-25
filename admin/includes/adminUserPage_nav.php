@@ -5,7 +5,7 @@
         <li class="breadcrumb-item <?= $userPage ?>" aria-current="<?= $aUserPage ?>"><a href="./userPage" class="<?= $cUserPage ?>">Home</a></li>
         <li class="breadcrumb-item <?= $aboutUs ?>" aria-current="<?= $aAboutUs ?>"><a href="./userAboutUs" class="<?= $cAboutUs ?>">About Us</a></li>
         <li class="breadcrumb-item <?= $services ?>" aria-current="<?= $aServices ?>"><a href="./userServices" class="<?= $cServices ?>">Services</a></li>
-        <li class="breadcrumb-item <?= $aboutUs ?>" aria-current="<?= $aAboutUs ?>"><a href="./settingsAboutUs" class="<?= $cAboutUs ?>">Contact us</a></li>
+        <li class="breadcrumb-item <?= $contactUs ?>" aria-current="<?= $aContactUs ?>"><a href="./userContactUs" class="<?= $cContactUs ?>">Contact us</a></li>
       </ol>
     </nav>
   </div>
