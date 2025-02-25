@@ -39,7 +39,7 @@ function getCurrentPage()
         include './includes/adminUserPage_nav.php';
         ?>
 
-        <h1 class="text-start mb-3">User Home Page</h1>
+        <h1 class="text-start mb-3">User About us</h1>
         <h6 class="text-start mb-4 text-muted">Icon Class: <a href="https://boxicons.com/" target="_blank">Boxicons.com</a></h6>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
