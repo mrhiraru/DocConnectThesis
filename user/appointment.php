@@ -10,6 +10,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
+require_once('../classes/message.class.php');
 
 $appointment_class = new Appointment();
 if (isset($_POST['request'])) {
@@ -30,7 +31,30 @@ if (isset($_POST['request'])) {
         validate_field($appointment_class->appointment_status)
     ) {
         if ($appointment_class->add_appointment()) {
-            $success = 'success';
+            $message = new Message();
+
+            $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
+            $date_time = $date_time->format('F j, Y \a\t h:i A');
+            $id = $message->get_doctor_account($appointment_class->doctor_id);
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = $_SESSION['fullname'] . ' has requested an appointment on ' . $date_time . '.';
+            $message->message_type = 'System';
+
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             echo 'An error occured while adding in the database.';
         }
@@ -55,9 +79,7 @@ include '../includes/head.php';
 
     <section id="appointment" class="page-container padding-medium p-3">
         <div class="row mb-3">
-
             <div class="col-2"></div>
-
             <div class="col-sm-12 col-md-8">
                 <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
                     <div class="row">
@@ -125,41 +147,16 @@ include '../includes/head.php';
                     </div>
 
                     <!-- Address -->
-                    <!-- <div class="mb-3">
-      <label for="address" class="form-label text-black-50">Address</label>
-      <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" required>
-    </div> -->
+                    <div class="mb-3">
+                        <label for="address" class="form-label text-black-50">Address</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required readonly>
+                    </div>
 
                     <!-- Email -->
                     <div class="mb-3">
                         <label for="email" class="form-label text-black-50">Email</label>
                         <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
                     </div>
-
-                    <!-- <div class="row mb-3">
-      Facility Question
-      <div class="col-md-6">
-        <label class="form-label text-black-50">Have you ever applied to our facility before?</label>
-        <div class="form-check">
-          <input class="form-check-input border border-dark" type="radio" name="facility_applied" id="yes" value="Yes" required>
-          <label class="form-check-label" for="yes">Yes</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input border border-dark" type="radio" name="facility_applied" id="no" value="No" required>
-          <label class="form-check-label" for="no">No</label>
-        </div>
-      </div>
-
-      Procedure
-      <div class="col-md-6">
-        <label for="procedure" class="form-label text-black-50">Which procedure do you want to make an appointment for?</label>
-        <select class="form-select bg-light border border-dark" id="procedure" name="procedure" required>
-          <option value="" disabled selected>Please Select</option>
-          <option value="General Consultation">General Consultation</option>
-          <option value="Dental Check-up">Dental Check-up</option>
-        </select>
-      </div>
-    </div> -->
 
                     <!-- Preferred Appointment Date -->
                     <div class="row mb-3">
@@ -285,6 +282,7 @@ include '../includes/head.php';
 
                     function populateDropdown(doctors) {
                         doctorDropdown.innerHTML = '';
+
                         doctors.forEach(doctor => {
                             const li = document.createElement("li");
                             li.classList.add("list-group-item", "cursor-pointer");
@@ -316,7 +314,25 @@ include '../includes/head.php';
                             });
 
                             doctorDropdown.appendChild(li);
+
                         });
+
+                        if (autoClickElement) {
+                            setTimeout(() => {
+                                autoClickElement.click();
+
+                                // Remove doctor_id from the URL after auto-click
+                                const newUrl = window.location.pathname + window.location.search.replace(/([?&])doctor_id=[^&]+(&|$)/, '$1');
+                                const cleanUrl = newUrl.endsWith('?') || newUrl.endsWith('&') ? newUrl.slice(0, -1) : newUrl;
+                                window.history.replaceState(null, '', cleanUrl);
+
+                                autoClickElement = null;
+                                doctorSearch.blur();
+
+                                // Hide the dropdown
+                                doctorDropdown.classList.add('d-none');
+                            }, 200); // Ensure UI updates
+                        }
 
                         if (doctors.length > 0) {
                             doctorDropdown.classList.remove('d-none');
@@ -324,12 +340,6 @@ include '../includes/head.php';
                             doctorDropdown.classList.add('d-none');
                         }
                     }
-
-                    document.addEventListener("click", function(event) {
-                        if (!doctorSearch.contains(event.target) && !doctorDropdown.contains(event.target)) {
-                            doctorDropdown.classList.add('d-none');
-                        }
-                    });
                 })
                 .catch(error => console.error('Error fetching doctors:', error));
 

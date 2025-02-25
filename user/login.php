@@ -106,6 +106,8 @@ if (isset($_POST['signup'])) {
     $_SESSION['contact'] = $account->contact;
     $_SESSION['address'] = $account->address;
     $_SESSION['patient_id'] = $account->patient_id;
+    $_SESSION['account_image'] = $account->account_image;
+
 
     if ($_SESSION['user_role'] == 3) {
       header('location: ./index.php');

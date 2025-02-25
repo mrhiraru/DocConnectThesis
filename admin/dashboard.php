@@ -4,7 +4,7 @@ session_start();
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
   header('location: ../user/verification.php');
 } else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
-  header('location: ../index.php');
+  header('location: ./login.php');
 }
 
 require_once('../tools/functions.php');
@@ -52,7 +52,7 @@ require_once('../classes/account.class.php');
             </div>
             <div class="col-6 text-end">
               <p class="fs-1 m-0">35</p>
-              <p>Total Active Users</p>
+              <p>Total Active Users.</p>
             </div>
           </div>
         </div>

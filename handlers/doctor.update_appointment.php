@@ -24,6 +24,7 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->update_appointment()) {
+
             $success = 'success';
         } else {
             $success = 'failed';
@@ -39,6 +40,7 @@ if (isset($_POST['confirm'])) {
         validate_field($appointment->appointment_id && $appointment->appointment_status)
     ) {
         if ($appointment->decline_appointment()) {
+
             $success = 'success';
         } else {
             $success = 'failed';
@@ -61,6 +63,7 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->reschedule_appointment()) {
+
             $success = 'success';
         } else {
             $success = 'failed';
@@ -79,6 +82,43 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->cancel_appointment()) {
+
+            $success = 'success';
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['start'])) {
+    $appointment->appointment_id = htmlentities($_POST['appointment_id']);
+    $appointment->appointment_status = 'Ongoing';
+
+    if (
+        validate_field($appointment->appointment_id &&
+            $appointment->appointment_status)
+    ) {
+        if ($appointment->update_appointment_status()) {
+
+            $success = 'success';
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['end'])) {
+    $appointment->result = htmlentities($_POST['result']);
+    $appointment->comment = htmlentities($_POST['comment']);
+    $appointment->appointment_id = htmlentities($_POST['appointment_id']);
+    $appointment->appointment_status = 'Completed';
+
+    if (
+        validate_field($appointment->appointment_id && $appointment->result &&
+            $appointment->appointment_status)
+    ) {
+        if ($appointment->complete_appointment()) {
+
             $success = 'success';
         } else {
             $success = 'failed';

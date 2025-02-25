@@ -141,18 +141,64 @@ class Message
 
     function send_message()
     {
-        $sql = "INSERT INTO messages (sender_id, receiver_id, message, status, is_read) VALUES (:sender_id, :receiver_id, :message, 'sent', 0)";
+        $sql = "INSERT INTO messages (sender_id, receiver_id, message, message_type, status, is_read) VALUES (:sender_id, :receiver_id, :message, :message_type, 'sent', 0)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':sender_id', $this->sender_id);
         $query->bindParam(':receiver_id', $this->receiver_id);
         $query->bindParam(':message', $this->message);
+        $query->bindParam(':message_type', $this->message_type);
 
         if ($query->execute()) {
             return true;
         } else {
             return false;
         }
+    }
+
+    function get_doctor_account($doctor_id)
+    {
+        $sql = "SELECT account_id FROM doctor_info WHERE doctor_id = :doctor_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindValue(':doctor_id', $doctor_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+
+        return $data;
+    }
+
+    function get_patient_account($patient_id)
+    {
+        $sql = "SELECT account_id FROM patient_info WHERE patient_id = :patient_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindValue(':patient_id', $patient_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+
+        return $data;
+    }
+
+    function get_id_from_appointment($appointment_id)
+    {
+        $sql = "SELECT doctor_id, patient_id, appointment_date, appointment_time FROM appointment WHERE appointment_id = :appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindValue(':appointment_id', $appointment_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+
+        return $data;
     }
 
     function load_messages($account_id, $chatwith_account_id, $last_message_id = 0)
