@@ -31,7 +31,7 @@ include '../includes/head.php';
             <a class="btn btn-outline-light fs-5 text-capitalize me-3" href="./appointment">
               book an appointment
             </a>
-            <a class="btn btn-outline-light fs-5 text-capitalize" href="./chat_user">
+            <a class="btn btn-outline-light fs-5 text-capitalize" href="./chat_user?chatbot=true">
               chat with us
             </a>
           </div>
