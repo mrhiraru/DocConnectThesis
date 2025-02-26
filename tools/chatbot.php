@@ -6,6 +6,7 @@ require_once('../classes/account.class.php');
 require_once('../classes/appointment.class.php');
 require_once('../classes/message.class.php');
 
+use Google\Service\AdMob\App;
 use Orhanerday\OpenAi\OpenAi;
 
 $dotenv = Dotenv\Dotenv::createImmutable('../');
@@ -50,7 +51,34 @@ function chatbot_response($user_message)
         }
     }
 
-    $new_prompt = "
+    // User's Appointment Data
+    $appointment = new Appointment();
+    $appointmentArray = $appointment->get_appointment_details_user($_SESSION['account_id']);
+
+    $formattedAppointments = array();
+    foreach ($appointmentArray as $key => $item) {
+        $formattedAppointments[$key] = array(
+            "id" => $item['appointment_id'],
+            "doctor_name" => ucwords(strtolower($item['doctor_name'])),
+            "specialty" => $item['specialty'],
+            "date" => date('F d, Y', strtotime($item['appointment_date'])),
+            "time" => date('h:i A', strtotime($item['appointment_time'])),
+            "status" => ucfirst($item['status']),
+        );
+    }
+
+    if (empty($formattedAppointments)) {
+        $appointmentList = "You have no scheduled appointments.";
+    } else {
+        $appointmentList = "";
+        foreach ($formattedAppointments as $appointmentKey => $appointmentItem) {
+            $appointmentList .= ($appointmentKey + 1) . ". " . $appointmentItem['doctor_name'] . " - " .
+                $appointmentItem['specialty'] . " ( " . $appointmentItem['date'] . " at " .
+                $appointmentItem['time'] . " ) - Status: " . $appointmentItem['status'] . ".";
+        }
+    }
+
+    $prompt = "
     
     You are an assistant bot for the Telehealth website, DocConnect.
 
@@ -80,6 +108,14 @@ function chatbot_response($user_message)
         -Remind users to complete their profile settings, including medical history, allergies, medications, and immunization records.
         -Provide users with information about their appointments and a link to view them.
 
+        5. Text Reply Format
+        -Ensure that all responses follow a clear and structured format.
+        -Do not add unnecessary symbols, special characters, or formatting if not required.
+        -Maintain readability and proper spacing in replies.
+        -Preserve the intended format of medical information, doctor details, and appointment schedules.
+        -Avoid excessive line breaks, extra punctuation, or random capitalization.
+        -When providing lists, ensure consistency in bullet points or numbering.
+
     Available Data & Information:
 
         List of Doctors:
@@ -94,6 +130,8 @@ function chatbot_response($user_message)
         6. <a href='https://docconnect.xscpry.com/user/profile_settings' class='fst-italic text-decoration-underline text-light'> docconnect.xscpry.com/user/profile_settings </a> - This page is for updating user's information.
         7. <a href='https://docconnect.xscpry.com/user/services' class='fst-italic text-decoration-underline text-light'> docconnect.xscpry.com/user/services </a>
         
+        List of user's appointments:
+        " . $appointmentList . "
         ";
 
     $message = $user_message;
@@ -117,7 +155,7 @@ function chatbot_response($user_message)
         [
             [
                 "role" => "system",
-                "content" => $new_prompt
+                "content" => $prompt
             ],
             ...$chat_history,
             [
