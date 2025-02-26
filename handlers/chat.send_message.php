@@ -22,8 +22,8 @@ if (isset($_POST['send'])) {
     }
 } else if (isset($_POST['notif'])) {
     $ids = $message->get_ids_from_appointment($_POST['appointment_id']);
-    $raw_date_time = new DateTime(strtotime($ids['appointment_date']) . ' ' . strtotime($ids['appointment_time']));
-    $date_time = $raw_date_time->format('F j, Y \a\t h:i A');
+    $date_time = new DateTime(date('F j, Y',strtotime($ids['appointment_date'])) . ' ' . date('h:i A',strtotime($ids['appointment_time'])));
+
 
     if ($_POST['action'] == 'decline') {
         $mess = "Your appointment on " . $date_time . " has been declined.";
