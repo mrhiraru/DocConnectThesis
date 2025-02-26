@@ -90,8 +90,8 @@ include '../includes/head.php';
                         </div>
                         <div class="col-12 col-md-6">
                           <div class="card px-4 py-2 bg-light shadow-lg h-100">
-                            <h6 class="text-primary">Education:</h6>
-                            <p class="fw-light">Harvard Medical School, Doctor of Medicine</p>
+                            <h6 class="text-primary">Working Schedule:</h6>
+                            <p class="fw-light"><?= $item['start_day'] . ' to ' . $item['end_day'] . " " . date('h:i A', strtotime($item['start_wt'])) . ' - ' . date('h:i A', strtotime($item['end_wt'])) ?></p>
                           </div>
                         </div>
                       </div>
