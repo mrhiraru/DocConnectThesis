@@ -76,6 +76,9 @@ function chatbot_response($user_message)
         }
     }
 
+    date_default_timezone_set('Asia/Manila');
+    $today = date('l, F d, Y h:i A');
+
     $prompt = "
     
     You are an assistant bot for the Telehealth website, DocConnect. 
@@ -125,7 +128,7 @@ function chatbot_response($user_message)
         " . $appointmentList . "
 
         Current Date and Time: 
-        " . date('l, F d, Y h:i A') . "
+        " . $today . "
         ";
 
     $message = $user_message;
