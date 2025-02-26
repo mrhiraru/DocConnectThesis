@@ -188,7 +188,15 @@ class Message
 
     function get_ids_from_appointment($appointment_id)
     {
-        $sql = "SELECT doctor_id, patient_id, appointment_date, appointment_time FROM appointment WHERE appointment_id = :appointment_id";
+        $sql = "SELECT 
+            a.doctor_id, 
+            d.account_id AS doctor_account_id, 
+            a.patient_id, 
+            p.account_id AS patient_account_id
+        FROM appointment a
+        JOIN doctor_info d ON a.doctor_id = d.doctor_id
+        JOIN patient_info p ON a.patient_id = p.patient_id
+        WHERE a.appointment_id = :appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindValue(':appointment_id', $appointment_id);

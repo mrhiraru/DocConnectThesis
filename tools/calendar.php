@@ -477,8 +477,6 @@
             type: 'POST',
             data: {
                 appointment_id: '<? $record["appointment_id"] ?>',
-                sender_id: '<? $record["doctor_id"] ?>',
-                receiver_id: '<? $record["patient_id"] ?>',
                 notif: 'true',
                 action: $action
             },

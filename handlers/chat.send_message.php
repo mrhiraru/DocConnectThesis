@@ -21,19 +21,22 @@ if (isset($_POST['send'])) {
         $success = 'failed';
     }
 } else if (isset($_POST['notif'])) {
+    $ids = $message->get_ids_from_appointment($_POST['appointment_id']);
+    $raw_date_time = new DateTime($ids['appointment_date'] . ' ' . $ids['appointment_time']);
+    $date_time = $raw_date_time->format('F j, Y \a\t h:i A');
 
     if ($_POST['action'] == 'decline') {
-        $mess = "Your appointment has been declined.";
+        $mess = "Your appointment on " . $date_time . "has been declined.";
     } else if ($_POST['action'] == 'cancel') {
-        $mess = "Your appointment has been cancelled.";
+        $mess = "Your appointment on " . $date_time . "has been cancelled.";
     } else if ($_POST['action'] == 'resched') {
-        $mess = "Your appointment date and time has been rescheduled";
+        $mess = "Your appointment has been reschedule to " . $date_time . ".";
     } else if ($_POST['action'] == 'confirm') {
-        $mess = "Your appointment has been confirmed.";
+        $mess = "Your appointment has been confirmed on " . $date_time . ".";
     }
 
-    $message->sender_id = $message->get_doctor_account($_POST['sender_id']);
-    $message->receiver_id = $message->get_patient_account($_POST['receiver_id']);
+    $message->sender_id = $ids['doctor_account_id'];
+    $message->receiver_id = $ids['patient_account_id'];
     $message->message = $mess;
     $message->message_type = 'System';
 
