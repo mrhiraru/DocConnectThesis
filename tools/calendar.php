@@ -476,7 +476,7 @@
             url: '../handlers/chat.send_message.php',
             type: 'POST',
             data: {
-                appointment_id: '<? $record['appointment_id'] ?>',
+                appointment_id: '<? $record["appointment_id"] ?>',
                 notif: 'true',
                 action: $action
             },
