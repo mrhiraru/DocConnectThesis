@@ -189,6 +189,7 @@ class Message
     function get_ids_from_appointment($appointment_id)
     {
         $sql = "SELECT 
+            a.*,
             a.doctor_id, 
             d.account_id AS doctor_account_id, 
             a.patient_id, 
