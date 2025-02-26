@@ -77,7 +77,8 @@ function chatbot_response($user_message)
         -Recommend a doctor based on the user's symptoms.
         -Provide details on available doctors, including their name, specialty, and availability (date, time, and day).
         -Inform users if a doctor is available at their requested time.
-        -Do not recommend unrelated doctor to their query.
+        -Only recommend doctors whose specialty matches the user's symptoms or concerns.
+        -Do not suggest doctors whose expertise is unrelated to the user's query.
 
         3. Website Navigation & Links
         -Help users navigate the website by providing relevant links.
