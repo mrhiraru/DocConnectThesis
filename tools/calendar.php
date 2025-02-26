@@ -456,10 +456,9 @@
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                     const updated = document.getElementById('declinedModal');
-
+                    message_notifcation('decline');
                     if (updated) {
                         var myModal = new bootstrap.Modal(updated, {});
-                        message_notifcation('decline');
                         myModal.show();
                     }
                 } else {
@@ -472,14 +471,14 @@
         })
     }
 
-    function message_notifcation($action) {
+    function message_notifcation(action) {
         $.ajax({
             url: '../handlers/chat.send_message.php',
             type: 'POST',
             data: {
-                appointment_id: '<? $record["appointment_id"] ?>',
+                appointment_id: '<?= $record["appointment_id"] ?>',
                 notif: 'true',
-                action: $action
+                action: action
             },
             success: function(response) {
                 console.log('Message notifcation sent.');

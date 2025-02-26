@@ -26,9 +26,9 @@ if (isset($_POST['send'])) {
     $date_time = $raw_date_time->format('F j, Y \a\t h:i A');
 
     if ($_POST['action'] == 'decline') {
-        $mess = "Your appointment on " . $date_time . "has been declined.";
+        $mess = "Your appointment on " . $date_time . " has been declined.";
     } else if ($_POST['action'] == 'cancel') {
-        $mess = "Your appointment on " . $date_time . "has been cancelled.";
+        $mess = "Your appointment on " . $date_time . " has been cancelled.";
     } else if ($_POST['action'] == 'resched') {
         $mess = "Your appointment has been reschedule to " . $date_time . ".";
     } else if ($_POST['action'] == 'confirm') {
