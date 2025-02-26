@@ -102,8 +102,8 @@ include '../includes/head.php';
                         </p>
                       </div>
                       <div class="d-flex justify-content-end">
-                        <a href="./appointment.php" class="btn btn-primary text-light">Book an Appointment</a>
-                        <a href="./chat_user?account_id=<?= $item['account_id'] ?>" class="btn btn-secondary">Chat Me</a>
+                        <a href="./appointment.php" class="btn btn-primary text-light me-2">Book an Appointment</a>
+                        <a href="./chat_user?account_id=<?= $item['account_id'] ?>" class="btn btn-success text-light">Chat Me</a>
                       </div>
                     </div>
                   </div>
