@@ -21,18 +21,15 @@ if (isset($_POST['send'])) {
         $success = 'failed';
     }
 } else if (isset($_POST['notif'])) {
-    $ids = $message->get_ids_from_appointment($_POST['appointment_id']);
-    $raw_date_time = new DateTime($ids['appointment_date'] . ' ' . $ids['appointment_time']);
-    $date_time = $raw_date_time->format('F j, Y \a\t h:i A');
 
     if ($_POST['action'] == 'decline') {
-        $mess = "Your appointment on " . $date_time . "has been declined.";
+        $mess = "Your appointment has been declined.";
     } else if ($_POST['action'] == 'cancel') {
-        $mess = "Your appointment on " . $date_time . "has been cancelled.";
+        $mess = "Your appointment has been cancelled.";
     } else if ($_POST['action'] == 'resched') {
-        $mess = "Your appointment has been reschedule to " . $date_time . ".";
+        $mess = "Your appointment date and time has been rescheduled";
     } else if ($_POST['action'] == 'confirm') {
-        $mess = "Your appointment has been confirmed on " . $date_time . ".";
+        $mess = "Your appointment has been confirmed.";
     }
 
     $message->sender_id = $message->get_doctor_account($_POST['sender_id']);

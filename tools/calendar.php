@@ -482,7 +482,7 @@
                 notif: 'true',
                 action: $action
             },
-            success: function(respose) {
+            success: function(response) {
                 console.log('Message notifcation sent.');
             },
             error: function(xhr, status, error) {
