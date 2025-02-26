@@ -59,151 +59,71 @@ include '../includes/head.php';
       </div>
       <div class="carousel-inner">
         <!-- Doctor 1 -->
-        <div class="carousel-item active" data-bs-interval="5000">
-          <div class="row mx-5 mb-4 align-items-stretch">
-            <div class="col-12 col-lg-5 mb-3 mb-lg-0">
-              <div class="profile-card h-100 me-4">
-                <div class="profile-image">
-                  <img src="../assets/gallery/66e7db42336204.60963457.jpg" alt="Profile Image of Dr. Emily Parker">
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-lg-7">
-              <div class="details h-100">
-                <h4 class="text-green mb-3 fs-2 text-center text-lg-start">Dr. Emily Parker</h4>
-                <div class="d-flex flex-column">
-                  <div class="row mb-3 align-items-stretch">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
-                      <div class="card px-4 py-2 bg-light shadow-lg h-100">
-                        <h6 class="text-primary">Specialty:</h6>
-                        <p class="fw-light">Family Medicine</p>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <div class="card px-4 py-2 bg-light shadow-lg h-100">
-                        <h6 class="text-primary">Education:</h6>
-                        <p class="fw-light">Harvard Medical School, Doctor of Medicine</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card px-4 py-2 bg-light shadow-lg mb-3">
-                    <h6 class="text-primary">About:</h6>
-                    <p class="fw-light fs-6">
-                      Dr. Parker focuses on preventive care and patient education. She empowers patients to
-                      take charge of their health. When not consulting, she enjoys hiking and volunteering at
-                      local community health clinics.
-                    </p>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <a href="./appointment.php" class="btn btn-primary text-light">Book an Appointment</a>
-                    <a href="../doctor-profile/dr-emily-parker.php" class="btn btn-outline-secondary">Learn More</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <!-- Doctor 2 -->
-        <div class="carousel-item" data-bs-interval="5000">
-          <div class="row mx-5 mb-4 align-items-stretch">
-            <div class="col-12 col-lg-5 mb-3 mb-lg-0">
-              <div class="profile-card h-100 me-4">
-                <div class="profile-image">
-                  <img src="../assets/gallery/66dda1130b5b75.78313827.png" alt="Profile Image of Dr. John Smith">
+        <?php
+        if (!empty($doctorArray)) {
+          foreach ($doctorArray as $item) {
+        ?>
+            <div class="carousel-item active" data-bs-interval="5000">
+              <div class="row mx-5 mb-4 align-items-stretch">
+                <div class="col-12 col-lg-5 mb-3 mb-lg-0">
+                  <div class="profile-card h-100 me-4">
+                    <div class="profile-image">
+                      <img src="<?php if (isset($item['account_image'])) {
+                                  echo "../assets/images/" . $item['account_image'];
+                                } else {
+                                  echo "../assets/images/default_profile.png";
+                                } ?>" alt="...">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 col-lg-7">
+                  <div class="details h-100">
+                    <h4 class="text-green mb-3 fs-2 text-center text-lg-start"><?= (isset($item['middlename'])) ? ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname'])) : ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])); ?></h4>
+                    <div class="d-flex flex-column">
+                      <div class="row mb-3 align-items-stretch">
+                        <div class="col-12 col-md-6 mb-3 mb-md-0">
+                          <div class="card px-4 py-2 bg-light shadow-lg h-100">
+                            <h6 class="text-primary">Medical Specialty:</h6>
+                            <p class="fw-light"><?= $item['specialty'] ?></p>
+                          </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                          <div class="card px-4 py-2 bg-light shadow-lg h-100">
+                            <h6 class="text-primary">Education:</h6>
+                            <p class="fw-light">Harvard Medical School, Doctor of Medicine</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="card px-4 py-2 bg-light shadow-lg mb-3">
+                        <h6 class="text-primary">About:</h6>
+                        <p class="fw-light fs-6">
+                          <?= $item['bio'] ?>
+                        </p>
+                      </div>
+                      <div class="d-flex justify-content-between">
+                        <a href="./appointment.php" class="btn btn-primary text-light">Book an Appointment</a>
+                        <a href="../doctor-profile/dr-emily-parker.php" class="btn btn-outline-secondary">Learn More</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="col-12 col-lg-7">
-              <div class="details h-100">
-                <h4 class="text-green mb-3 fs-2 text-center text-lg-start">Dr. John Smith</h4>
-                <div class="d-flex flex-column">
-                  <div class="row mb-3 align-items-stretch">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
-                      <div class="card px-4 py-2 bg-light shadow-lg h-100">
-                        <h6 class="text-primary">Specialty:</h6>
-                        <p class="fw-light">Cardiology</p>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <div class="card px-4 py-2 bg-light shadow-lg h-100">
-                        <h6 class="text-primary">Education:</h6>
-                        <p class="fw-light">Stanford University, Doctor of Medicine</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card px-4 py-2 bg-light shadow-lg mb-3">
-                    <h6 class="text-primary">About:</h6>
-                    <p class="fw-light fs-6">
-                      Dr. Smith specializes in heart health, focusing on advanced diagnostics and patient-centered care.
-                      He enjoys cycling and participating in medical research conferences.
-                    </p>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <a href="./appointment.php" class="btn btn-primary text-light">Book an Appointment</a>
-                    <a href="../doctor-profile/dr-john-smith.php" class="btn btn-outline-secondary">Learn More</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <?php
+          }
+        }
+        ?>
 
-        <!-- Doctor 3 -->
-        <div class="carousel-item" data-bs-interval="5000">
-          <div class="row mx-5 mb-4 align-items-stretch">
-            <div class="col-12 col-lg-5 mb-3 mb-lg-0">
-              <div class="profile-card h-100 me-4">
-                <div class="profile-image">
-                  <img src="../assets/gallery/66dd9f4f08e0e3.48649594.png" alt="Profile Image of Dr. Sophia Williams">
-                </div>
-              </div>
-            </div>
-            <div class="col-12 col-lg-7">
-              <div class="details h-100">
-                <h4 class="text-green mb-3 fs-2 text-center text-lg-start">Dr. Sophia Williams</h4>
-                <div class="d-flex flex-column">
-                  <div class="row mb-3 align-items-stretch">
-                    <div class="col-12 col-md-6 mb-3 mb-md-0">
-                      <div class="card px-4 py-2 bg-light shadow-lg h-100">
-                        <h6 class="text-primary">Specialty:</h6>
-                        <p class="fw-light">Pediatrics</p>
-                      </div>
-                    </div>
-                    <div class="col-12 col-md-6">
-                      <div class="card px-4 py-2 bg-light shadow-lg h-100">
-                        <h6 class="text-primary">Education:</h6>
-                        <p class="fw-light">Johns Hopkins University, Doctor of Medicine</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="card px-4 py-2 bg-light shadow-lg mb-3">
-                    <h6 class="text-primary">About:</h6>
-                    <p class="fw-light fs-6">
-                      Dr. Williams provides specialized care for children and adolescents.
-                      She is passionate about developmental health and enjoys painting in her free time.
-                    </p>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <a href="./appointment.php" class="btn btn-primary text-light">Book an Appointment</a>
-                    <a href="../doctor-profile/dr-sophia-williams.php" class="btn btn-outline-secondary">Learn More</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#doctorsCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#doctorsCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-
-      <button class="carousel-control-prev" type="button" data-bs-target="#doctorsCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#doctorsCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
-      </button>
-    </div>
   </section>
 
   <section class="specializations padding-medium py-3 text-center bg-light">
