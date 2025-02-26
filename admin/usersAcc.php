@@ -88,7 +88,7 @@ function getCurrentPage()
             <td><?= "No Data" //$item['no.ofApp'] ?></td>
 
             <td class="d-flex justify-content-around align-items-center text-center">
-              <a href="./viewuserAcc?account_id=<?= $item['account_id'] ?>" title="View Details">
+              <a href="./viewUserAcc?account_id=<?= $item['account_id'] ?>" title="View Details">
                 <i class='bx bx-show'></i>
               </a>
               <button class="delete-btn bg-none" data-subject-id="<?= $item['account_id'] ?>">
