@@ -22,8 +22,6 @@ function chatbot_response($user_message)
 
     $open_ai = new OpenAi($open_ai_key);
 
-
-
     // Doctor's Data
     $account = new Account();
     $accountArray = $account->show_doc();
@@ -80,7 +78,7 @@ function chatbot_response($user_message)
 
     $prompt = "
     
-    You are an assistant bot for the Telehealth website, DocConnect.
+    You are an assistant bot for the Telehealth website, DocConnect. 
 
         Your role is to assist users within the scope of your defined responsibilities. Follow these guidelines strictly:
 
@@ -107,7 +105,7 @@ function chatbot_response($user_message)
         4. Profile & Appointment Management
         -Remind users to complete their profile settings, including medical history, allergies, medications, and immunization records.
         -Provide users with information about their appointments together with profile appointment link to view them.
-        -Always check the appointment status when a user inquires about their appointments.
+        -Always check the appointment status (Such as: Pending, Incoming, Ongoing, Completed, Cancelled) when a user inquires about their appointments.
 
     Available Data & Information:
 
@@ -125,6 +123,9 @@ function chatbot_response($user_message)
         
         List of user's appointments:
         " . $appointmentList . "
+
+        Current Date and Time: 
+        " . date('l, F d, Y h:i A') . "
         ";
 
     $message = $user_message;
