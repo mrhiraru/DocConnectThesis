@@ -4,6 +4,7 @@ session_start();
 require_once('../vendor/autoload.php');
 require_once('../classes/account.class.php');
 require_once('../classes/appointment.class.php');
+require_once('../classes/message.class.php');
 
 use Orhanerday\OpenAi\OpenAi;
 
@@ -58,21 +59,64 @@ function chatbot_response($user_message)
             Only provide response based on the given data or information, don't make random information.
             If the user asks anything outside of these responsibilities, politely inform them that you are unable to assist with that request. Additionally, if the answer to the user's query is not provided in the available data, politely inform them that there is no data available for their query.";
 
+    $new_prompt = "
+    
+    You are an assitant bot for Telehealth website Docconnect. 
+    
+    Your responsibilities are as follows:
+
+        Responsibility 1:
+        -Inform users about your responsibilities you can do to help them.
+        -Answer only simple medical related questions related to user's symptoms.
+        -Do not give any medical conclusions.
+        -Do not answer queries that is not related to your responsibilities.
+        -Politely inform them that you are unable to assist with the request outside your responsibilities.
+        -Do not make random answer that is not provided for this role.
+
+        Responsibility 2:
+        -Recommend a doctor that might be able to help the user.
+        -Provide information about the available doctors.
+        -Provide the date, time, and day which doctors is available.
+        -Provide the name and specialty of the doctor that is related to user's symptoms.
+        -Inform users about the availability of doctor that they possibly need.
+        -Inform user if the date and time they ask has available doctor.
+        -Suggest other possible doctor that can help them if there is no exact doctor for their symptoms.
+
+        Responsibility 3:
+        -Assist user navigate through the website by providing links related to their queries.
+        
+        
+        
+        ";
+
     $message = $user_message;
 
+    $message_class = new Message();
+    $messageArray = $message_class->load_chatbot_messages($_SESSION['account_id'], 0);
+
+    if (!empty($messageArray)) {
+        foreach ($messageArray as $item) {
+            $role = ($item['message_type'] == 'user') ? 'user' : 'assistant';
+            $chat_history[] = [
+                "role" => $role,
+                "content" => $item['message']
+            ];
+        }
+    }
 
     $chat = $open_ai->chat([
         'model' => 'gpt-4o-mini',
-        'messages' => [
+        'messages' => array_merge([
             [
                 "role" => "system",
                 "content" => $prompt
             ],
+            $chat_history,
             [
                 "role" => "user",
                 "content" => $message
             ],
-        ],
+        ]),
         'temperature' => 0.9,
         'max_tokens' => 150,
         'frequency_penalty' => 0,

@@ -32,7 +32,7 @@ if (isset($_POST['send'])) {
     } else if ($_POST['action'] == 'cancel') {
         $mess = "Appointment on " . $date_time . " has been cancelled.";
     } else if ($_POST['action'] == 'resched') {
-        $mess = "Appointment has been reschedule to " . $date_time . ".";
+        $mess = "Appointment has been rescheduled to " . $date_time . ".";
     } else if ($_POST['action'] == 'confirm') {
         $mess = "Appointment has been confirmed on " . $date_time . ".";
     } else if ($_POST['action'] == 'start') {
