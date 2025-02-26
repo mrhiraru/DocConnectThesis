@@ -24,6 +24,8 @@ include '../includes/head.php';
 
 <body class="bg-white" <?php if (isset($_GET['account_id'])) {
                           echo "onload='loadChatBox(" . $_SESSION['account_id'] . ", " . $_GET['account_id'] . ")' ";
+                        } else if (isset($_GET['chatbot'])) {
+                          echo "onload='loadBotChatBox(" . $_SESSION['account_id'] . ")' ";
                         } ?>>
   <!-- // input hidden account id removed from here -->
   <?php require_once('../includes/header.php'); ?>

@@ -1,6 +1,5 @@
 <?php
 require_once("../classes/message.class.php");
-require_once("../tools/markdown.php");
 
 $message = new Message();
 
