@@ -50,7 +50,7 @@ include '../includes/head.php';
                                 ?>
                                     <!-- display chat list using php -->
 
-                                    <a href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2 border-bottom" onclick="loadChatBox(<?= $_SESSION['account_id'] ?>,<?= $item['account_id'] ?>)">
+                                    <a id="chatItem" href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2 border-bottom" onclick="loadChatBox(<?= $_SESSION['account_id'] ?>,<?= $item['account_id'] ?>)">
                                         <img src="<?php if (isset($item['account_image'])) {
                                                         echo "../assets/images/" . $item['account_image'];
                                                     } else {

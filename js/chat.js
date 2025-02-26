@@ -184,3 +184,44 @@ function loadBotMessages(account_id) {
     },
   });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  const chatList = document.querySelectorAll("#chatList a"); // All chat list items
+  const chatSidePanel = document.getElementById("chat_sidepanel");
+  const chatBox = document.getElementById("chat_box");
+
+  // console.log("Script Loaded");
+
+  // if (!chatSidePanel || !chatBox) {
+  //   console.error("Error: Required elements not found");
+  //   return;
+  // }
+
+  // When clicking a chat item
+  chatList.forEach(account => {
+    account.addEventListener("click", function () {
+      // console.log("Chat item clicked");
+
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        // console.log("Mobile view detected. Showing chat_box and hiding chat_sidepanel");
+
+        chatSidePanel.style.setProperty("display", "none", "important");
+        chatBox.style.setProperty("display", "block", "important");
+      }
+    });
+  });
+
+  // Use Event Delegation to handle the Back button when it appears
+  document.body.addEventListener("click", function (event) {
+    if (event.target.closest("#backToChatList")) {
+      // console.log("Back button clicked");
+
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        // console.log("Returning to chat list");
+
+        chatSidePanel.style.setProperty("display", "block", "important");
+        chatBox.style.setProperty("display", "none", "important");
+      }
+    }
+  });
+});
