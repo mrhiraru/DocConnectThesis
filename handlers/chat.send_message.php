@@ -22,25 +22,8 @@ if (isset($_POST['send'])) {
     }
 } else if (isset($_POST['notif'])) {
     $ids = $message->get_ids_from_appointment($_POST['appointment_id']);
-
-    $appointment_date = new DateTime($ids['appointment_date'], new DateTimeZone('UTC')); // Assume it's stored in UTC
-
-    // Convert time string separately
-    $appointment_time = DateTime::createFromFormat('H:i:s', $ids['appointment_time'], new DateTimeZone('UTC'));
-
-    // Merge date & time manually
-    $appointment_date->setTime(
-        (int) $appointment_time->format('H'),
-        (int) $appointment_time->format('i'),
-        (int) $appointment_time->format('s')
-    );
-
-    // Convert to Manila timezone
-    $appointment_date->setTimezone(new DateTimeZone('Asia/Manila'));
-
-    // Format final output
-    $date_time = $appointment_date->format('F j, Y \a\t h:i A');
-
+    $raw_date_time = new DateTime(strtotime($ids['appointment_date']) . ' ' . strtotime($ids['appointment_time']));
+    $date_time = $raw_date_time->format('F j, Y \a\t h:i A');
 
     if ($_POST['action'] == 'decline') {
         $mess = "Your appointment on " . $date_time . " has been declined.";
