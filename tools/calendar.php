@@ -453,6 +453,7 @@
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                     const updated = document.getElementById('declinedModal');
+                    message_notifcation('decline');
                     if (updated) {
                         var myModal = new bootstrap.Modal(updated, {});
                         myModal.show();
@@ -460,6 +461,24 @@
                 } else {
                     console.error('Error:', response);
                 }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error sending message:', error);
+            }
+        })
+    }
+
+    function message_notifcation($action) {
+        $.ajax({
+            url: '../handlers/chat.send_message.php',
+            type: 'POST',
+            data: {
+                appointment_id: <? $record['appointment_id'] ?>,
+                notif: 'true',
+                action: $action
+            },
+            success: function(respose) {
+                console.log('Message notifcation sent.')
             },
             error: function(xhr, status, error) {
                 console.error('Error sending message:', error);

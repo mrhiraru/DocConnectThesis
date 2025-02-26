@@ -20,4 +20,28 @@ if (isset($_POST['send'])) {
     } else {
         $success = 'failed';
     }
+} else if (isset($_POST['notif'])) {
+    $ids = $message->get_ids_from_appointment($_POST['appointment_id']);
+    $receiver_id = $message->get_patient_account($ids['patient_id']);
+    $sender_id = $message->get_doctor_account($ids['doctor_id']);
+
+    if ($_POST['action'] = 'decline') {
+        $date_time = date('F j, Y \a\t h:i A', strtotime($ids['appointment_date'] . ' ' . $ids['appointment_time']));
+        $mess = "Your appointment on" . $date_time . "has been declined";
+    }
+
+    $message->sender_id = $sender_id['account_id'];
+    $message->receiver_id = $receiver_id['account_id'];
+    $message->message = $mess;
+    $message->message_type = 'System';
+
+    if (validate_field($message->message)) {
+        if ($message->send_message()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
 }

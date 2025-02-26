@@ -186,7 +186,7 @@ class Message
         return $data;
     }
 
-    function get_id_from_appointment($appointment_id)
+    function get_ids_from_appointment($appointment_id)
     {
         $sql = "SELECT doctor_id, patient_id, appointment_date, appointment_time FROM appointment WHERE appointment_id = :appointment_id";
 
