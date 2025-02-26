@@ -25,9 +25,7 @@ if (isset($_POST['send'])) {
     $formatted_date = date('Y-m-d', strtotime($ids['appointment_date'])); // HTML date format
     $formatted_time = date('H:i', strtotime($ids['appointment_time']));  // HTML time format
 
-    $raw_date_time = new DateTime("$formatted_date $formatted_time");
-    $date_time = $raw_date_time->format('F j, Y \a\t h:i A');
-
+    $date_time = date('F j, Y \a\t h:i A', strtotime("$formatted_date $formatted_time"));
 
     if ($_POST['action'] == 'decline') {
         $mess = "Your appointment on " . $date_time . " has been declined.";
