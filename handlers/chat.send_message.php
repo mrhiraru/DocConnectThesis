@@ -28,13 +28,17 @@ if (isset($_POST['send'])) {
     $date_time = date('F j, Y \a\t h:i A', strtotime("$formatted_date $formatted_time"));
 
     if ($_POST['action'] == 'decline') {
-        $mess = "Your appointment on " . $date_time . " has been declined.";
+        $mess = "Appointment on " . $date_time . " has been declined.";
     } else if ($_POST['action'] == 'cancel') {
-        $mess = "Your appointment on " . $date_time . " has been cancelled.";
+        $mess = "Appointment on " . $date_time . " has been cancelled.";
     } else if ($_POST['action'] == 'resched') {
-        $mess = "Your appointment has been reschedule to " . $date_time . ".";
+        $mess = "Appointment has been reschedule to " . $date_time . ".";
     } else if ($_POST['action'] == 'confirm') {
-        $mess = "Your appointment has been confirmed on " . $date_time . ".";
+        $mess = "Appointment has been confirmed on " . $date_time . ".";
+    } else if ($_POST['action'] == 'start') {
+        $mess = "Appointment has started, You can now join the Meeting.";
+    } else if ($_POST['action'] == 'end') {
+        $mess = "Appointment has been completed.";
     }
 
     $message->sender_id = $ids['doctor_account_id'];

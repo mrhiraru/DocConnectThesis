@@ -125,7 +125,8 @@ include '../includes/head.php';
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
             },
             success: function(response) {
-                if (response.trim() === 'success') { 
+                if (response.trim() === 'success') {
+                    message_notifcation('start');
                     location.reload();
                 } else {
                     console.error('Error:', response);
@@ -160,6 +161,7 @@ include '../includes/head.php';
             },
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                    message_notifcation('end');
                     location.reload();
                 } else {
                     console.error('Error:', response);
@@ -169,5 +171,23 @@ include '../includes/head.php';
                 console.error('Error starting meeting:', error);
             }
         });
+    }
+
+    function message_notifcation(action) {
+        $.ajax({
+            url: '../handlers/chat.send_message.php',
+            type: 'POST',
+            data: {
+                appointment_id: '<?= $record["appointment_id"] ?>',
+                notif: 'true',
+                action: action
+            },
+            success: function(response) {
+                console.log('Message notifcation sent.');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error sending message:', error);
+            }
+        })
     }
 </script>
