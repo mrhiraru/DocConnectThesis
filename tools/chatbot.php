@@ -128,7 +128,7 @@ function chatbot_response($user_message)
         'messages' => array_merge([
             [
                 "role" => "system",
-                "content" => $new_prompt
+                "content" => $prompt
             ],
             $chat_history,
             [
