@@ -91,7 +91,7 @@ include '../includes/head.php';
                         <div class="col-12 col-md-6">
                           <div class="card px-4 py-2 bg-light shadow-lg h-100">
                             <h6 class="text-primary">Working Schedule:</h6>
-                            <p class="fw-light"><?= $item['start_day'] . ' to ' . $item['end_day'] . " " . date('h:i A', strtotime($item['start_wt'])) . ' - ' . date('h:i A', strtotime($item['end_wt'])) ?></p>
+                            <p class="fw-light"><?= $item['start_day'] . ' to ' . $item['end_day'] . ", " . date('h:i A', strtotime($item['start_wt'])) . ' - ' . date('h:i A', strtotime($item['end_wt'])) ?></p>
                           </div>
                         </div>
                       </div>
@@ -103,7 +103,7 @@ include '../includes/head.php';
                       </div>
                       <div class="d-flex justify-content-between">
                         <a href="./appointment.php" class="btn btn-primary text-light">Book an Appointment</a>
-                        <a href="../doctor-profile/dr-emily-parker.php" class="btn btn-outline-secondary">Learn More</a>
+                        <a href="./chat_user?account_id=<?= $item['account_id'] ?>" class="btn btn-outline-secondary">Learn More</a>
                       </div>
                     </div>
                   </div>
