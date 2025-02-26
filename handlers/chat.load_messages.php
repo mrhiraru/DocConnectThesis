@@ -15,20 +15,20 @@ while (time() - $start_time < $timeout) {
                 if ($item['sender_id'] == $_GET['account_id'] && $item['receiver_id'] == $_GET['chatwith_account_id']) {
 ?>
                     <div class="d-flex align-items-center justify-content-end mb-2" data-message-id="<?= $item['message_id'] ?>">
-                        <div class="bg-secondary text-light p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
+                        <div class="bg-secondary text-light p-2 rounded-3" style="max-width: 70%; white-space: pre-wrap;"><?= $item['message'] ?></div>
                     </div>
                 <?php
                 } else if ($item['sender_id'] == $_GET['chatwith_account_id'] && $item['receiver_id'] == $_GET['account_id']) {
                 ?>
                     <div class="d-flex align-items-center mb-2" data-message-id="<?= $item['message_id'] ?>">
-                        <div class="bg-primary text-light p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
+                        <div class="bg-primary text-light p-2 rounded-3" style="max-width: 70%; white-space: pre-wrap;"><?= $item['message'] ?></div>
                     </div>
                 <?php
                 }
             } else if ($item['message_type'] == 'System') {
                 ?>
                 <div class="d-flex align-items-center justify-content-center mb-2 text-center" data-message-id="<?= $item['message_id'] ?>">
-                    <div class="bg-light text-secondary p-2 rounded-3" style="max-width: 52%; white-space: pre-wrap;"><?= $item['message'] ?></div>
+                    <div class="bg-light text-secondary p-2 rounded-3" style="max-width: 70%; white-space: pre-wrap;"><?= $item['message'] ?></div>
                 </div>
 <?php
             }
