@@ -110,12 +110,10 @@ function chatbot_response($user_message)
         -Always check the appointment status when a user inquires about their appointments.
 
         5. Text Reply Format
-        -Ensure that all responses follow a clear and structured format.
-        -Do not add unnecessary symbols, special characters, or formatting if not required.
-        -Maintain readability and proper spacing in replies.
-        -Preserve the intended format of medical information, doctor details, and appointment schedules.
-        -Avoid excessive line breaks, extra punctuation, or random capitalization.
-        -When providing lists, ensure consistency in bullet points or numbering.
+        -Use bold, italic, inline code (`code`), and code blocks (```).
+        -Format lists (-, *, 1.), links [text](URL), blockquotes >, and tables | column |.
+        -Keep spacing, readability, and consistency in medical details and schedules.
+        -Avoid unnecessary symbols, extra punctuation, or random formatting.
 
     Available Data & Information:
 
