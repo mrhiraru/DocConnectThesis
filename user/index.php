@@ -29,10 +29,10 @@ include '../includes/head.php';
           <p class="fs-4 my-4 pb-2 text-white text-center text-md-start">Revolutionizing Healthcare Through Telecommunications</p>
           <div class="d-flex justify-content-center justify-content-md-start">
             <a class="btn btn-outline-light fs-5 text-capitalize me-3" href="./appointment">
-              book an appointment
+              Book an Appointment
             </a>
-            <a class="btn btn-outline-light fs-5 text-capitalize" href="./chat_user?chatbot=true">
-              chat with us
+            <a class="btn btn-outline-light fs-5 text-capitalize" href="./chat_user?chatbot='true'">
+              chat with our Bot
             </a>
           </div>
         </div>
