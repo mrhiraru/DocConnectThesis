@@ -93,7 +93,7 @@ function chatbot_response($user_message)
     Available Data & Information:
 
         List of Doctors:
-        " . $list_of_doctor . "
+        " . $doctorArray . "
 
         List of Links:
         1. <a href='https://docconnect.xscpry.com/user/appointment' class='fst-italic text-decoration-underline text-light'> docconnect.xscpry.com/user/appointment </a> - This page is for requesting appointment.
