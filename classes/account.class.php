@@ -507,5 +507,20 @@ class Account
         }
     }
 
+    function fetchUserData($account_id) {
+        $sql = "SELECT account_id, email, firstname, middlename, lastname, gender, contact, address, verification_status, birthdate, is_created,
+                CONCAT(firstname, IF(middlename IS NOT NULL AND middlename != '', CONCAT(' ', middlename), ''), ' ', lastname) AS fullname 
+                FROM account WHERE account_id = :account_id";
+        
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+
+        if ($query->execute()) {
+            return $query->fetch(); // Return user data as an associative array
+        }
+        
+        return null; // No user found or query failed
+    }
+
     // user functions end
 }
