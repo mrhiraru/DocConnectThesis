@@ -22,7 +22,10 @@ if (isset($_POST['send'])) {
     }
 } else if (isset($_POST['notif'])) {
     $ids = $message->get_ids_from_appointment($_POST['appointment_id']);
-    $raw_date_time = new DateTime("{$ids['appointment_date']} {$ids['appointment_time']}");
+    $formatted_date = date('Y-m-d', strtotime($ids['appointment_date'])); // HTML date format
+    $formatted_time = date('H:i', strtotime($ids['appointment_time']));  // HTML time format
+
+    $raw_date_time = new DateTime("$formatted_date $formatted_time");
     $date_time = $raw_date_time->format('F j, Y \a\t h:i A');
 
 
