@@ -26,6 +26,7 @@ class Account
     public $appointment_limits;
     public $patient_id;
     public $doctor_id;
+    public $campus_name;
 
 
     protected $db;
@@ -54,7 +55,7 @@ class Account
                 $this->verification_status = $accountData['verification_status'];
                 $this->account_image = $accountData['account_image'];
                 $this->address = $accountData['address'];
-                
+
                 return true;
             }
         }
@@ -479,7 +480,7 @@ class Account
 
     function sign_in_user()
     {
-        $sql = "SELECT a.*, p.* FROM account a INNER JOIN patient_info p ON a.account_id = p.account_id WHERE email = :email LIMIT 1;";
+        $sql = "SELECT a.*, p.*, c.campus_name FROM account a INNER JOIN patient_info p ON a.account_id = p.account_id INNER JOIN campus c ON c.campus_id = a.campus_id WHERE email = :email LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
 
@@ -500,6 +501,7 @@ class Account
                 $this->verification_status = $accountData['verification_status'];
                 $this->account_image = $accountData['account_image'];
                 $this->patient_id = $accountData['patient_id'];
+                $this->campus_name = $accountData['campus_name'];
                 //add more data if needed for users
 
                 return true;

@@ -107,6 +107,7 @@ if (isset($_POST['signup'])) {
     $_SESSION['address'] = $account->address;
     $_SESSION['patient_id'] = $account->patient_id;
     $_SESSION['account_image'] = $account->account_image;
+    $_SESSION['campus_name'] = $account->campus_name;
 
 
     if ($_SESSION['user_role'] == 3) {
