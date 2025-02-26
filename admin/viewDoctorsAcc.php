@@ -11,7 +11,7 @@ include_once './helpers/data_masking.php';
 require_once '../classes/account.class.php';
 
 $account = new Account();
-$record = $account->fetchUserData($_GET['account_id']);
+$record = $account->fetchDoctorData($_GET['account_id']);
 
 ?>
 
@@ -57,18 +57,28 @@ function getCurrentPage()
               </div>
 
               <div class="col d-flex ">
-                <strong class="me-2">Email:</strong>
-                <p><?= maskEmail($record['email']) ?></p>
+                <strong class="me-2">specialty:</strong>
+                <p><?= $record['specialty'] ?></p>
               </div>
 
               <div class="col d-flex ">
-                <strong class="me-2">Phone:</strong>
-                <p><?= maskPhone($record['contact']) ?></p>
+                <strong class="me-2">Start time:</strong>
+                <p><?= $record['start_wt'] ?></p>
               </div>
 
               <div class="col d-flex ">
-                <strong class="me-2">Date of Birth:</strong>
-                <p><?= $record['birthdate'] ?></p>
+                <strong class="me-2">End time:</strong>
+                <p><?= $record['end_wt'] ?></p>
+              </div>
+
+              <div class="col d-flex ">
+                <strong class="me-2">Start day:</strong>
+                <p><?= $record['start_day'] ?></p>
+              </div>
+
+              <div class="col d-flex ">
+                <strong class="me-2">End day:</strong>
+                <p><?= $record['end_day'] ?></p>
               </div>
 
               <div class="col d-flex ">

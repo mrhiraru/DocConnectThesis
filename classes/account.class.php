@@ -509,5 +509,42 @@ class Account
         }
     }
 
+    function fetchUserData($account_id)
+    {
+        $sql = "SELECT account_id, email, firstname, middlename, lastname, gender, contact, address, account_image, verification_status, birthdate, is_created,
+                CONCAT(firstname, IF(middlename IS NOT NULL AND middlename != '', CONCAT(' ', middlename), ''), ' ', lastname) AS fullname 
+                FROM account WHERE account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
+
+        if ($query->execute()) {
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return null;
+    }
+
+    function fetchDoctorData($account_id)
+    {
+        $sql = "SELECT a.account_id, a.email, a.firstname, a.middlename, a.lastname, a.gender, a.contact, a.address, 
+                       a.account_image, a.verification_status, a.birthdate, a.is_created, 
+                       CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS fullname,
+                       d.doctor_id, d.specialty, d.bio, d.start_wt, d.end_wt, d.start_day, d.end_day, d.appointment_limits
+                FROM account a
+                INNER JOIN doctor_info d ON a.account_id = d.account_id
+                WHERE a.account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id, PDO::PARAM_INT);
+
+        if ($query->execute()) {
+            return $query->fetch(PDO::FETCH_ASSOC);
+        }
+
+        return null;
+    }
+
+
     // user functions end
 }
