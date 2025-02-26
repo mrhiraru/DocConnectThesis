@@ -54,6 +54,11 @@ include '../includes/head.php';
                 </div>
               </div>
 
+              <div class="form-check mb-3">
+                  <input type="checkbox" class="form-check-input" id="togglePassword">
+                  <label for="togglePassword" class="form-check-label" id="togglePasswordLabel">Show Password</label>
+                </div>
+
               <!-- Controls for data sharing and patient data visibility -->
               <!-- <div class="row">
                 <div class="col-12 mb-3">
@@ -72,4 +77,6 @@ include '../includes/head.php';
       </main>
     </div>
   </div>
+
+  <script src="../js/doctor/settings_privacy.js"></script>
 </body>

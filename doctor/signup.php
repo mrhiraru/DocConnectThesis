@@ -62,7 +62,7 @@ include '../includes/head.php';
 <body class="bg-green d-flex align-items-center min-vh-100">
   <div class="container">
     <div class="row justify-content-center">
-      <div class="col-12 col-md-6">
+      <div class="col-12 col-md-8">
         <div class="card shadow-lg">
           <div class="card-header text-center">
             <h4>Doctors Signup</h4>
@@ -130,7 +130,7 @@ include '../includes/head.php';
                 </div>
                 <div class="col-12 col-md-4 mb-3">
                   <label for="contact">Contact</label>
-                  <input type="number" class="form-control" name="contact" id="contact" placeholder="+63 9xx xxx xxxx" value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+                  <input type="text" class="form-control" id="contact" name="contact" pattern="\+63 \d{3} \d{3} \d{4}" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
                   <?php
                   if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                   ?>
@@ -167,9 +167,10 @@ include '../includes/head.php';
                 }
                 ?>
               </div>
-              <div class="mb-3">
+              <div class="mb-3 position-relative">
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required placeholder="Enter your password" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
+                <i class='bx bx-show text-dark position-absolute toggle-password' data-target="password" style="transform: translateY(25%);"></i>
                 <?php
                 if (isset($_POST['password']) && validate_password($_POST['password']) !== "success") {
                 ?>
@@ -178,9 +179,10 @@ include '../includes/head.php';
                 }
                 ?>
               </div>
-              <div class="mb-3">
+              <div class="mb-3 position-relative">
                 <label for="confirm-password" class="form-label">Confirm Password</label>
                 <input type="password" class="form-control" id="confirm-password" name="confirm-password" required placeholder="Confirm your password" value="<?= isset($_POST['confirm-password']) ? $_POST['confirm-password'] : '' ?>">
+                <i class='bx bx-show text-dark position-absolute toggle-password' data-target="confirm-password" style="transform: translateY(25%);"></i>
                 <?php
                 if (isset($_POST['password']) && isset($_POST['confirm-password']) && !validate_cpw($_POST['password'], $_POST['confirm-password'])) {
                 ?>
@@ -226,6 +228,7 @@ include '../includes/head.php';
   }
   ?>
   <script src="../js/main.js"></script>
+  <script src="../js/viewHideTogglePassword.js"></script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ./index.php');
 }
 
-
+include_once './helpers/data_masking.php';
 require_once '../classes/account.class.php';
 $account = new Account();
 ?>
@@ -82,9 +82,9 @@ $account = new Account();
             <tr>
               <td><?= $counter ?></td>
               <td> <?= (isset($item['middlename'])) ? ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname'])) : ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) ?></td>
-              <td><?= $item['email'] ?></td>
+              <td><?= maskEmail($item['email']) ?></td>
               <td><?= $item['gender'] ?></td>
-              <td><?= $item['contact'] ?></td>
+              <td><?= maskPhone($item['contact']) ?></td>
               <td><?= date('F j Y', strtotime($item['birthdate'])) ?></td>
               <td><?= "no data"//$item['specialties'] ?></td>
               <td><?= "no data"//$item['work-hour'] ?></td>

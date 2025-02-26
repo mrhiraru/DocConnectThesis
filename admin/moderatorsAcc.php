@@ -7,6 +7,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ./index.php');
 }
 
+include_once './helpers/data_masking.php';
 require_once '../classes/account.class.php';
 $account = new Account();
 ?>
@@ -73,8 +74,8 @@ function getCurrentPage()
             <td><?= (isset($item['middlename'])) ? ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname'])) : ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) ?> </td>
             <td><?= $item['campus_name'] ?></td>
             <td><?= $item['gender'] ?></td>
-            <td><?= $item['contact'] ?></td>
-            <td><?= $item['email'] ?></td>
+            <td><?= maskPhone($item['contact']) ?></td>
+            <td><?= maskEmail($item['email']) ?></td>
             <td class="text-dark"><?= $item['verification_status'] ?></td>
             <td class="d-flex justify-content-around align-items-center text-center">
               <a href="./add_staffAcc?= $item['acc-id'] ?>" title="View Details">
