@@ -125,17 +125,18 @@ function chatbot_response($user_message)
 
     $chat = $open_ai->chat([
         'model' => 'gpt-4o-mini',
-        'messages' => array_merge([
+        'messages' =>
+        [
             [
                 "role" => "system",
-                "content" => $prompt
+                "content" => $new_prompt
             ],
-            $chat_history,
+            ...$chat_history,
             [
                 "role" => "user",
                 "content" => $message
             ],
-        ]),
+        ],
         'temperature' => 0.9,
         'max_tokens' => 150,
         'frequency_penalty' => 0,
