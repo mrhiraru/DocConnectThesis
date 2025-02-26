@@ -53,7 +53,7 @@ function chatbot_response($user_message)
 
     // User's Appointment Data
     $appointment = new Appointment();
-    $appointmentArray = $appointment->get_appointment_details_user($_SESSION['account_id']);
+    $appointmentArray = $appointment->get_patient_appointment_user($_SESSION['patient_id']);
 
     $formattedAppointments = array();
     foreach ($appointmentArray as $key => $item) {

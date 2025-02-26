@@ -315,7 +315,7 @@ class Appointment
 
     function get_patient_appointment_user($patient_id)
     {
-        $sql = "SELECT ap.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS doctor_name 
+        $sql = "SELECT ap.*, di.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS doctor_name 
         FROM appointment ap 
         INNER JOIN doctor_info di ON di.doctor_id = ap.doctor_id 
         INNER JOIN account a ON di.account_id = a.account_id
