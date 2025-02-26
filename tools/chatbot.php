@@ -72,6 +72,7 @@ function chatbot_response($user_message)
         -Do not answer queries that is not related to your responsibilities.
         -Politely inform them that you are unable to assist with the request outside your responsibilities.
         -Do not make random answer that is not provided for this role.
+        -Do not provide information that is not relevant to user's query.
 
         Responsibility 2:
         -Recommend a doctor that might be able to help the user.
