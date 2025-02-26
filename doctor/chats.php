@@ -36,7 +36,7 @@ include '../includes/head.php';
                         <!-- Left Sidebar (Chats List) -->
                         <div id="chat_sidepanel" class="d-flex flex-column bg-light border-end p-3 m-0" style="min-width: 25%;">
                             <div class="d-flex justify-content-between align-items-center mb-4">
-                                <span class="fs-5 fw-bold">Chats</span>
+                                <span class="fs-5 fw-bold">Chts</span>
                             </div>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control border-2" id="searchChat" placeholder="Search" oninput="update_chatlist(<?= $_SESSION['account_id'] ?>)">
@@ -50,7 +50,7 @@ include '../includes/head.php';
                                 ?>
                                     <!-- display chat list using php -->
 
-                                    <a href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2 border-bottom" onclick="loadChatBox(<?= $_SESSION['account_id'] ?>,<?= $item['account_id'] ?>)">
+                                    <a id="chatItem" href="javascript:void(0);" class="d-flex align-items-center text-dark text-decoration-none p-2 border-bottom" onclick="loadChatBox(<?= $_SESSION['account_id'] ?>,<?= $item['account_id'] ?>)">
                                         <img src="<?php if (isset($item['account_image'])) {
                                                         echo "../assets/images/" . $item['account_image'];
                                                     } else {
@@ -89,6 +89,35 @@ include '../includes/head.php';
             </main>
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const chatList = document.querySelectorAll("#chatList a"); // Select all chat list items
+            const chatSidePanel = document.getElementById("chat_sidepanel");
+            const chatBox = document.getElementById("chat_box");
+
+            console.log("Script Loaded"); // Debugging log
+
+            if (!chatSidePanel || !chatBox || chatList.length === 0) {
+                console.error("Error: Required elements not found");
+                return;
+            }
+
+            chatList.forEach(account => {
+                account.addEventListener("click", function() {
+                    console.log("Chat item clicked"); // Debugging log
+
+                    if (window.matchMedia("(max-width: 768px)").matches) {
+                        console.log("Mobile view detected. Hiding chat_sidepanel and showing chat_box");
+
+                        chatSidePanel.style.display = "none !important";
+                        chatBox.style.display = "block";
+                    } else {
+                        console.log("Desktop view detected. No style changes applied.");
+                    }
+                });
+            });
+        });
+    </script>
     <script src="../js/chat.js"></script>
 </body>
 
