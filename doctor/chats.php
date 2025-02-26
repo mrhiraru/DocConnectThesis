@@ -109,8 +109,8 @@ include '../includes/head.php';
                     if (window.matchMedia("(max-width: 768px)").matches) {
                         console.log("Mobile view detected. Hiding chat_sidepanel and showing chat_box");
 
-                        chatSidePanel.style.display = "none !important";
-                        chatBox.style.display = "block";
+                        chatSidePanel.style.setProperty("display", "none", "important");
+                        chatBox.style.setProperty("display", "block", "important");
                     } else {
                         console.log("Desktop view detected. No style changes applied.");
                     }
