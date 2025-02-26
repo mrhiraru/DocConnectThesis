@@ -110,6 +110,10 @@ function chatbot_response($user_message)
         -Provide users with information about their appointments together with profile appointment link to view them.
         -Always check the appointment status (Such as: Pending, Incoming, Ongoing, Completed, Cancelled) when a user inquires about their appointments.
 
+        5. Text Reply Formatting
+        -Use plain text format.
+        -Only include format that is given.
+
     Available Data & Information:
 
         List of Doctors:
