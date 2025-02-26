@@ -521,6 +521,25 @@ class Account
         
         return null; // No user found or query failed
     }
+
+    function fetchDoctorData($account_id) {
+        $sql = "SELECT d.doctor_id, d.specialty, d.bio, d.start_wt, d.end_wt, d.start_day, d.end_day, d.appointment_limits,
+                a.account_id, a.email, a.gender, a.contact, a.address,
+                CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS fullname
+                FROM doctor_info d
+                INNER JOIN account a ON d.account_id = a.account_id
+                WHERE d.doctor_id = :doctor_id";
+        
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':doctor_id', $doctor_id, PDO::PARAM_INT);
+
+        if ($query->execute()) {
+            return $query->fetch();
+        }
+        
+        return null;
+    }
+
     
     // user functions end
 }
