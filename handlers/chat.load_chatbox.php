@@ -24,7 +24,7 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
                 } else {
                   echo "../assets/images/default_profile.png";
                 } ?>" alt="Profile" class="rounded-circle me-3" height="40" width="40">
-      <span><?= (isset($record['middlename'])) ? ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname'])) : ucwords(strtolower($item['firstname'] . ' ' . $record['lastname'])) ?></span>
+      <span><?= (isset($record['middlename'])) ? ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname'])) : ucwords(strtolower($record['firstname'] . ' ' . $record['lastname'])) ?></span>
     </div>
     <div>
       <i class='bx bx-dots-horizontal-rounded fs-4'></i>
