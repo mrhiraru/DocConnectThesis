@@ -98,13 +98,13 @@ function chatbot_response($user_message)
         " . $list_of_doctor . "
 
         List of Links:
-        1. <a href='https://docconnect.xscpry.com/user/appointment' class='font-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/appointment </a> - This page is for requesting appointment.
-        2. <a href='https://docconnect.xscpry.com/user/doctors' class='font-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/doctors </a> - This page provide information about the doctors.
-        3. <a href='https://docconnect.xscpry.com/user/about_us' class='font-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/about_us </a> - This page provide information about the website.
-        4. <a href='https://docconnect.xscpry.com/user/services' class='font-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/services </a> - This page provide information about the services we offer.
-        5. <a href='https://docconnect.xscpry.com/user/profile_appointment' class='font-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/profile_appointment </a> - This page is for viewing user's appointment list.
-        6. <a href='https://docconnect.xscpry.com/user/profile_settings' class='font-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/profile_settings </a> - This page is for updating user's information.
-        7. <a href='https://docconnect.xscpry.com/user/services' class='font-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/services </a>
+        1. <a href='https://docconnect.xscpry.com/user/appointment' class='fst-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/appointment </a> - This page is for requesting appointment.
+        2. <a href='https://docconnect.xscpry.com/user/doctors' class='fst-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/doctors </a> - This page provide information about the doctors.
+        3. <a href='https://docconnect.xscpry.com/user/about_us' class='fst-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/about_us </a> - This page provide information about the website.
+        4. <a href='https://docconnect.xscpry.com/user/services' class='fst-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/services </a> - This page provide information about the services we offer.
+        5. <a href='https://docconnect.xscpry.com/user/profile_appointment' class='fst-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/profile_appointment </a> - This page is for viewing user's appointment list.
+        6. <a href='https://docconnect.xscpry.com/user/profile_settings' class='fst-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/profile_settings </a> - This page is for updating user's information.
+        7. <a href='https://docconnect.xscpry.com/user/services' class='fst-italic text-decoration-underline text-light text-truncate'> https://docconnect.xscpry.com/user/services </a>
         
         ";
 
