@@ -456,9 +456,10 @@
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                     const updated = document.getElementById('declinedModal');
-                    message_notifcation('decline');
+
                     if (updated) {
                         var myModal = new bootstrap.Modal(updated, {});
+                        message_notifcation('decline');
                         myModal.show();
                     }
                 } else {
