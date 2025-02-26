@@ -11,35 +11,51 @@ require_once('../classes/account.class.php');
 
 <!DOCTYPE html>
 <html lang="en">
-<?php 
-  $title = 'Our Doctors';
-  $doctors = 'active';
-  include '../includes/head.php';
+<?php
+$title = 'Our Doctors';
+$doctors = 'active';
+include '../includes/head.php';
 ?>
+
 <body>
-  <?php require_once ('../includes/header.php'); ?>
+  <?php require_once('../includes/header.php'); ?>
 
   <!-- Introduction Section -->
   <section class="page-container padding-medium pt-3 p-3">
     <div class="border-primary border-bottom text-center mx-4 mb-3">
       <h1 class="text-green">Our Doctors</h1>
       <p class="fs-5 fw-light">
-        At Western Mindanao State University, our telehealth platform combines cutting-edge technology 
-        with compassionate care. Our team of dedicated doctors is here to serve not just our university 
-        community but also the broader Zamboanga Peninsula, fostering a culture of wellness and health 
-        awareness. Whether you need routine care, specialized advice, or preventive consultation, 
+        At Western Mindanao State University, our telehealth platform combines cutting-edge technology
+        with compassionate care. Our team of dedicated doctors is here to serve not just our university
+        community but also the broader Zamboanga Peninsula, fostering a culture of wellness and health
+        awareness. Whether you need routine care, specialized advice, or preventive consultation,
         we are committed to delivering accessible and high-quality healthcare tailored to your needs.
       </p>
     </div>
   </section>
 
   <!-- Doctors Carousel -->
+  <?php
+  $doctor = new Account();
+  $doctorArray = $doctor->show_doc();
+
+  ?>
   <section id="carousel">
     <div id="doctorsCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-touch="true">
       <div class="carousel-indicators">
-        <button type="button" data-bs-target="#doctorsCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#doctorsCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#doctorsCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        <?php
+
+        if (!empty($doctorArray)) {
+          foreach ($doctorArray as $item) {
+        ?>
+            <button type="button" data-bs-target="#doctorsCarousel" data-bs-slide-to="<?= $item['account_id'] ?>" class="active" aria-current="true" aria-label="Slide <?= $item['account_id'] ?>"></button>
+        <?php
+          }
+        }
+        ?>
+
+
+
       </div>
       <div class="carousel-inner">
         <!-- Doctor 1 -->
@@ -73,8 +89,8 @@ require_once('../classes/account.class.php');
                   <div class="card px-4 py-2 bg-light shadow-lg mb-3">
                     <h6 class="text-primary">About:</h6>
                     <p class="fw-light fs-6">
-                      Dr. Parker focuses on preventive care and patient education. She empowers patients to 
-                      take charge of their health. When not consulting, she enjoys hiking and volunteering at 
+                      Dr. Parker focuses on preventive care and patient education. She empowers patients to
+                      take charge of their health. When not consulting, she enjoys hiking and volunteering at
                       local community health clinics.
                     </p>
                   </div>
@@ -87,7 +103,7 @@ require_once('../classes/account.class.php');
             </div>
           </div>
         </div>
-        
+
         <!-- Doctor 2 -->
         <div class="carousel-item" data-bs-interval="5000">
           <div class="row mx-5 mb-4 align-items-stretch">
@@ -119,7 +135,7 @@ require_once('../classes/account.class.php');
                   <div class="card px-4 py-2 bg-light shadow-lg mb-3">
                     <h6 class="text-primary">About:</h6>
                     <p class="fw-light fs-6">
-                      Dr. Smith specializes in heart health, focusing on advanced diagnostics and patient-centered care. 
+                      Dr. Smith specializes in heart health, focusing on advanced diagnostics and patient-centered care.
                       He enjoys cycling and participating in medical research conferences.
                     </p>
                   </div>
@@ -132,7 +148,7 @@ require_once('../classes/account.class.php');
             </div>
           </div>
         </div>
-        
+
         <!-- Doctor 3 -->
         <div class="carousel-item" data-bs-interval="5000">
           <div class="row mx-5 mb-4 align-items-stretch">
@@ -164,7 +180,7 @@ require_once('../classes/account.class.php');
                   <div class="card px-4 py-2 bg-light shadow-lg mb-3">
                     <h6 class="text-primary">About:</h6>
                     <p class="fw-light fs-6">
-                      Dr. Williams provides specialized care for children and adolescents. 
+                      Dr. Williams provides specialized care for children and adolescents.
                       She is passionate about developmental health and enjoys painting in her free time.
                     </p>
                   </div>
@@ -250,7 +266,7 @@ require_once('../classes/account.class.php');
       </div>
     </div>
   </section>
-  
+
   <!-- Community Impact -->
   <section class="community-impact padding-medium py-5 text-center bg-light">
     <div class="container">
@@ -267,7 +283,7 @@ require_once('../classes/account.class.php');
       </div>
     </div>
   </section>
-  
+
   <!-- Accessibility Note -->
   <section class="accessibility padding-medium py-5 text-center">
     <div class="container">
@@ -279,26 +295,27 @@ require_once('../classes/account.class.php');
     </div>
   </section>
 
-  <?php require_once ('../includes/footer.php'); ?>
+  <?php require_once('../includes/footer.php'); ?>
 
   <script>
-  const carousel = document.querySelector('#doctorsCarousel');
-  let startX = 0;
+    const carousel = document.querySelector('#doctorsCarousel');
+    let startX = 0;
 
-  carousel.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-  });
+    carousel.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+    });
 
-  carousel.addEventListener('touchend', (e) => {
-    const endX = e.changedTouches[0].clientX;
-    if (endX < startX - 50) {
-      const nextButton = carousel.querySelector('.carousel-control-next');
-      nextButton.click();
-    } else if (endX > startX + 50) {
-      const prevButton = carousel.querySelector('.carousel-control-prev');
-      prevButton.click();
-    }
-  });
-</script>
+    carousel.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      if (endX < startX - 50) {
+        const nextButton = carousel.querySelector('.carousel-control-next');
+        nextButton.click();
+      } else if (endX > startX + 50) {
+        const prevButton = carousel.querySelector('.carousel-control-prev');
+        prevButton.click();
+      }
+    });
+  </script>
 </body>
+
 </html>
