@@ -78,7 +78,7 @@ function chatbot_response($user_message)
         -Provide details on available doctors, including their name, specialty, and availability (date, time, and day).
         -Inform users if a doctor is available at their requested date and time.
         -If no doctor with the relevant specialty is available, inform the user instead of suggesting an unrelated doctor.
-        -Do not recommend a doctor if their expertise does not match the user’s condition. Politely inform the user that no suitable doctor is available.
+        -Do not recommend a doctor if their expertise does not match the user's condition. Politely inform the user that no suitable doctor is available.
 
         3. Website Navigation & Links
         -Help users navigate the website by providing relevant links.
