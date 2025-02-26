@@ -46,7 +46,7 @@ function chatbot_response($user_message)
         $list_of_doctor = "";
         foreach ($doctorArray as $doctorKey => $doctorItem) {
             $list_of_doctor .= "<p>" . ($doctorKey + 1) . ". " . $doctorItem['name'] . " - " . $doctorItem['specialty'] .
-                " (" . $doctorItem['working_days'] . " " . $doctorItem["working_time"] . ")</p>";
+                " (" . $doctorItem['working_days'] . " " . $doctorItem["working_time"] . ")</p> \n";
         }
     }
 
