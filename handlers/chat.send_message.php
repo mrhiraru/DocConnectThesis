@@ -24,10 +24,16 @@ if (isset($_POST['send'])) {
     $ids = $message->get_ids_from_appointment($_POST['appointment_id']);
     $receiver_id = $message->get_patient_account($ids['patient_id']);
     $sender_id = $message->get_doctor_account($ids['doctor_id']);
+    $date_time = date('F j, Y \a\t h:i A', strtotime($ids['appointment_date'] . ' ' . $ids['appointment_time']));
 
-    if ($_POST['action'] = 'decline') {
-        $date_time = date('F j, Y \a\t h:i A', strtotime($ids['appointment_date'] . ' ' . $ids['appointment_time']));
-        $mess = "Your appointment on" . $date_time . "has been declined";
+    if ($_POST['action'] == 'decline') {
+        $mess = "Your appointment on" . $date_time . "has been declined.";
+    } else if ($_POST['action'] == 'cancel') {
+        $mess = "Your appointment on" . $date_time . "has been cancelled.";
+    } else if ($_POST['action'] == 'resched') {
+        $mess = "Your appointment has been reschedule to." . $date_time . ".";
+    } else if ($_POST['action'] == 'confirm') {
+        $mess = "Your appointment has been confirmed on." . $date_time . ".";
     }
 
     $message->sender_id = $sender_id['account_id'];

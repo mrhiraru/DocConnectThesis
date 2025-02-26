@@ -339,6 +339,7 @@
                         success: function(response) {
                             if (response.trim() === 'success') { // Trim to avoid whitespace issues
                                 const updated = document.getElementById('updatedModal');
+                                message_notifcation('confirm');
                                 if (updated) {
                                     var myModal = new bootstrap.Modal(updated, {});
                                     myModal.show();
@@ -375,6 +376,7 @@
                         success: function(response) {
                             if (response.trim() === 'success') { // Trim to avoid whitespace issues
                                 const updated = document.getElementById('rescheduleModal');
+                                message_notifcation('resched');
                                 if (updated) {
                                     var myModal = new bootstrap.Modal(updated, {});
                                     myModal.show();
@@ -413,6 +415,7 @@
                                 success: function(response) {
                                     if (response.trim() === 'success') { // Trim to avoid whitespace issues
                                         const updated = document.getElementById('cancelledModal');
+                                        message_notifcation('cancel');
                                         if (updated) {
                                             var myModal = new bootstrap.Modal(updated, {});
                                             myModal.show();
