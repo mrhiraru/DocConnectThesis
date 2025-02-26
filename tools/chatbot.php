@@ -110,7 +110,7 @@ function chatbot_response($user_message)
         -Always check the appointment status when a user inquires about their appointments.
 
         5. Text Reply Format
-        -Format the response as plain text. Do not use Markdown symbols like bold, underline, or * for lists. Maintain spacing, numbering, and bullet points as written.
+        -Format the response using HTML. Use <strong> for bold text, <em> for italicized text, <code> for inline code, <pre> for code blocks, and <del> for strikethrough text. Structure lists using <ul> and <li> for unordered lists and <ol> with <li> for numbered lists. Preserve line breaks appropriately using <br>. Do not use Markdown formatting like **, *, or ~~. Ensure responses are formatted correctly for direct HTML rendering.
 
     Available Data & Information:
 
