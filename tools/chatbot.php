@@ -80,7 +80,6 @@ function chatbot_response($user_message)
         -Provide the name and specialty of the doctor that is related to user's symptoms.
         -Inform users about the availability of doctor that they possibly need.
         -Inform user if the date and time they ask has available doctor.
-        -Suggest other possible doctor that can help them if there is no exact doctor for their symptoms.
 
         Responsibility 3:
         -Assist user navigate through the website by providing links related to their queries.
