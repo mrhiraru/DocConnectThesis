@@ -62,7 +62,7 @@ function getCurrentPage()
               </div>
 
               <div class="col d-flex ">
-                <strong class="me-2">phone:</strong>
+                <strong class="me-2">Phone:</strong>
                 <p><?= maskPhone($record['contact']) ?></p>
               </div>
 
@@ -77,7 +77,7 @@ function getCurrentPage()
               </div>
 
               <div class="col d-flex ">
-                <strong class="me-2">verification Status:</strong>
+                <strong class="me-2">Verification Status:</strong>
                 <p><?= $record['verification_status'] ?></p>
               </div>
 
@@ -93,6 +93,12 @@ function getCurrentPage()
             </div>
 
             <hr class="mb-3">
+
+            <div class="col d-flex align-items-center">
+              <strong class="me-3">Profile photo:</strong>
+              <img src="<?= $record['account_image'] ?>" alt="Profile Photo" class="rounded-2" width="100" height="100">
+            </div>
+
             <!-- <div class="row">
               <div class="col d-flex ">
                 <strong class="me-2">Allergies:</strong>
