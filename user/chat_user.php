@@ -22,7 +22,11 @@ $title = 'Message';
 include '../includes/head.php';
 ?>
 
-<body class="bg-white" <?= (isset($_GET['account_id']) ? "onload='loadChatBox(" . $_SESSION['account_id'] . ", " . $_GET['account_id'] . ")' " : "")  ?>>
+<body class="bg-white" <?php if (isset($_GET['account_id']) && $_GET['account_id'] != "chatbot") {
+                          echo "onload='loadChatBox(" . $_SESSION['account_id'] . ", " . $_GET['account_id'] . ")' ";
+                        } else if (isset($_GET['account_id']) && $_GET['account_id'] == "chatbot") {
+                          echo "onload='loadChatBotBox(" . $_GET['account_id'] . ")' ";
+                        } ?>>
   <!-- // input hidden account id removed from here -->
   <?php require_once('../includes/header.php'); ?>
 
