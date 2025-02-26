@@ -84,8 +84,27 @@ function chatbot_response($user_message)
 
         Responsibility 3:
         -Assist user navigate through the website by providing links related to their queries.
+        -Make sure to provide link how it is formatted.
+        -Do not include the text outside the <a> </a> tag.
+
+        Responsibility 4:
+        -Inform user to provide and fill up his/her relevant information on profile settings.
+        -Ask user to provide his medical history, allergies, medications, immunization on profile settings.
+        -Provide user information about his/her appointments and the link where he/she can view it.
         
-        
+    These are data and informations that you can provide:
+
+        List of Doctors:
+        " . $list_of_doctor . "
+
+        List of Links:
+        1. <a href='https://docconnect.xscpry.com/user/appointment' class='font-italic text-decoration-underline'> https://docconnect.xscpry.com/user/appointment </a> - This page is for requesting appointment.
+        2. <a href='https://docconnect.xscpry.com/user/doctors' class='font-italic text-decoration-underline'> https://docconnect.xscpry.com/user/doctors </a> - This page provide information about the doctors.
+        3. <a href='https://docconnect.xscpry.com/user/about_us' class='font-italic text-decoration-underline'> https://docconnect.xscpry.com/user/about_us </a> - This page provide information about the website.
+        4. <a href='https://docconnect.xscpry.com/user/services' class='font-italic text-decoration-underline'> https://docconnect.xscpry.com/user/services </a> - This page provide information about the services we offer.
+        5. <a href='https://docconnect.xscpry.com/user/profile_appointment' class='font-italic text-decoration-underline'> https://docconnect.xscpry.com/user/profile_appointment </a> - This page is for viewing user's appointment list.
+        6. <a href='https://docconnect.xscpry.com/user/profile_settings' class='font-italic text-decoration-underline'> https://docconnect.xscpry.com/user/profile_settings </a> - This page is for updating user's information.
+        7. <a href='https://docconnect.xscpry.com/user/services' class='font-italic text-decoration-underline'> https://docconnect.xscpry.com/user/services </a>
         
         ";
 
@@ -109,7 +128,7 @@ function chatbot_response($user_message)
         'messages' => array_merge([
             [
                 "role" => "system",
-                "content" => $prompt
+                "content" => $new_prompt
             ],
             $chat_history,
             [
