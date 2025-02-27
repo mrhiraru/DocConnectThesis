@@ -213,7 +213,7 @@ include '../includes/head.php';
                       } else {
                         ?>
                         <tr>
-                          <td colspan='5' class="text-center">No Allergy Record</td>
+                          <td colspan='3' class="text-center">No Allergy Record</td>
                         </tr>
                       <?php
                       }
@@ -232,16 +232,9 @@ include '../includes/head.php';
                   <h5 class="text-green mb-3">Immunization <span class="float-end fs-6"><a href="./add_immunization.php" class="btn btn-primary btn-sm text-light">Add Immunization</a></span></h5>
                   <hr>
                   <?php
-                  $usedDrugs_array = array(
-                    array(
-                      'brandName' => 'Amoxicillin',
-                      'genericName' => 'Amoxicillin',
-                      'strenght' => '250mg',
-                      'pack' => '100',
-                      'from' => 'Tab',
-                      'manufacturer' => 'Apotex Industries',
-                    ),
-                  );
+                  $immu = new Immunization();
+                  $immuArray = $immu->get_immunization($_SESSION['patient_id']);
+
                   ?>
 
                   <table id="profileGeneral_table" class="table table-striped" style="width:100%">
@@ -254,14 +247,22 @@ include '../includes/head.php';
                     <tbody>
                       <?php
                       $counter = 1;
-                      foreach ($usedDrugs_array as $item) {
+                      if (!empty($immuArray)) {
+                        foreach ($immuArray as $item) {
                       ?>
+                          <tr>
+                            <td><?= $counter ?></td>
+                            <td><?= $item['immunization_name'] ?></td>
+                          </tr>
+                        <?php
+                          $counter++;
+                        }
+                      } else {
+                        ?>
                         <tr>
-                          <td><?= $counter ?></td>
-                          <td><?= $item['brandName'] ?></td>
+                          <td colspan='2' class="text-center">No Allergy Record</td>
                         </tr>
                       <?php
-                        $counter++;
                       }
                       ?>
                     </tbody>
