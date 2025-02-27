@@ -312,8 +312,6 @@ include '../includes/head.php';
     </div>
   </section>
 
-  <script src="../js/profileGeneral-dataTables.js"></script>
-
   <?php
   require_once('../includes/footer.php');
   ?>
