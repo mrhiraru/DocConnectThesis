@@ -12,6 +12,10 @@ $birthdate = isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['
 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
+require_once('../classes/medical_history.class.php');
+require_once('../classes/allergy.class.php');
+require_once('../classes/immunization.class.php');
+require_once('../classes/medication.class.php');
 
 $account_class = new Account();
 if (isset($_POST['saveAccount'])) {
@@ -169,7 +173,8 @@ include '../includes/head.php';
                 </div>
               </div>
             </div>
-          </div><div class="row mb-2">
+          </div>
+          <div class="row mb-2">
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
@@ -215,7 +220,8 @@ include '../includes/head.php';
                 </div>
               </div>
             </div>
-          </div><div class="row mb-2">
+          </div>
+          <div class="row mb-2">
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
@@ -267,16 +273,9 @@ include '../includes/head.php';
                   <h5 class="text-green mb-3">Medical History <span class="float-end fs-6"><a href="./add_medhis.php" class="btn btn-primary btn-sm text-light">Add Condition</a></span></h5>
                   <hr>
                   <?php
-                  $usedDrugs_array = array(
-                    array(
-                      'brandName' => 'Amoxicillin',
-                      'genericName' => 'Amoxicillin',
-                      'strenght' => '250mg',
-                      'pack' => '100',
-                      'from' => 'Tab',
-                      'manufacturer' => 'Apotex Industries',
-                    ),
-                  );
+                  $medhis = new MedHis();
+                  $medhisArray = $medhis->get_medical_history($_SESSION['patient_id']);
+
                   ?>
 
                   <table id="profileGeneral_table" class="table table-striped" style="width:100%">
@@ -290,15 +289,17 @@ include '../includes/head.php';
                     <tbody>
                       <?php
                       $counter = 1;
-                      foreach ($usedDrugs_array as $item) {
+                      if (!empty($medhisArray)) {
+                        foreach ($medhisArray as $item) {
                       ?>
-                        <tr>
-                          <td><?= $counter ?></td>
-                          <td><?= $item['brandName'] ?></td>
-                          <td><?= $item['genericName'] ?></td>
-                        </tr>
+                          <tr>
+                            <td><?= $counter ?></td>
+                            <td><?= $item['his_condition'] ?></td>
+                            <td><?= $item['diagnosis_date'] ?></td>
+                          </tr>
                       <?php
-                        $counter++;
+                          $counter++;
+                        }
                       }
                       ?>
                     </tbody>

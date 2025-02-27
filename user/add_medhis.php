@@ -122,7 +122,7 @@ include '../includes/head.php';
                         <div class="row d-flex">
                             <div class="col-12 text-center">
                                 <a href="./add_medhis.php" class="text-decoration-none text-dark">
-                                    <p class="m-0 text-primary fw-bold">LClick to Continue.</p>
+                                    <p class="m-0 text-primary fw-bold">Click to Continue.</p>
                                 </a>
                             </div>
                         </div>
