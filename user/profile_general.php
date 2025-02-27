@@ -303,7 +303,7 @@ include '../includes/head.php';
                       } else { 
                         ?>
                         <tr>
-                          <td colspan='1'>No Medical History</td>
+                          <td colspan='4'>No Medical History</td>
                         </tr>
                       <?php
                       }

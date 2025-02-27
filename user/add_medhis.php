@@ -16,6 +16,7 @@ if (isset($_POST['save'])) {
 
     $medhis->his_condition = htmlentities($_POST['condition']);
     $medhis->diagnosis_date = htmlentities($_POST['year']);
+    $medhis->patient_id = htmlentities($_SESSION['patient_id']);
 
     if (validate_field($medhis->his_condition) && validate_field($medhis->diagnosis_date)) {
         if ($medhis->add_medhis()) {
