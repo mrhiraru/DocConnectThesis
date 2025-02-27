@@ -260,7 +260,7 @@ include '../includes/head.php';
                       } else {
                         ?>
                         <tr>
-                          <td colspan='2' class="text-center">No Allergy Record</td>
+                          <td colspan='2' class="text-center">No Immunization Record</td>
                         </tr>
                       <?php
                       }
