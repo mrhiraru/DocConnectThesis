@@ -283,7 +283,7 @@ include '../includes/head.php';
                       <tr>
                         <th scope="col" width="3%">#</th>
                         <th scope="col">Condition</th>
-                        <th scope="col">Date Diagnose</th>
+                        <th scope="col">Year Diagnosed</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -297,9 +297,15 @@ include '../includes/head.php';
                             <td><?= $item['his_condition'] ?></td>
                             <td><?= $item['diagnosis_date'] ?></td>
                           </tr>
-                      <?php
+                        <?php
                           $counter++;
                         }
+                      } else { 
+                        ?>
+                        <tr>
+                          <td colspan='1'>No Medical History</td>
+                        </tr>
+                      <?php
                       }
                       ?>
                     </tbody>
