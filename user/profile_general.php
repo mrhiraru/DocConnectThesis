@@ -125,7 +125,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h5 class="text-green mb-3">Medications</h5>
+                  <h5 class="text-green mb-3">Medications <span class="float-end fs-6"><a href="./add_medication.php" class="btn btn-primary btn-sm text-light">Add Medication</a></span></h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
@@ -173,7 +173,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h5 class="text-green mb-3">Allergies</h5>
+                  <h5 class="text-green mb-3">Allergies <span class="float-end fs-6"><a href="./add_allergy.php" class="btn btn-primary btn-sm text-light">Add Allergy</a></span></h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
@@ -219,7 +219,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h5 class="text-green mb-3">Immunization</h5>
+                  <h5 class="text-green mb-3">Immunization <span class="float-end fs-6"><a href="./add_immunization.php" class="btn btn-primary btn-sm text-light">Add Immunization</a></span></h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
@@ -264,7 +264,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h5 class="text-green mb-3">Medical History <span class="float-end fs-6"><a href="./add_allergy.php" class="btn btn-primary btn-sm text-light">Add Allergy</a></span></h5>
+                  <h5 class="text-green mb-3">Medical History <span class="float-end fs-6"><a href="./add_medhis.php" class="btn btn-primary btn-sm text-light">Add Condition</a></span></h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
