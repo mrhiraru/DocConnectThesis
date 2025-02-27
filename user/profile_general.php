@@ -133,7 +133,7 @@ include '../includes/head.php';
                   <hr>
                   <?php
                   $med = new Medication();
-                  $medArray = $medhis->get_medication($_SESSION['patient_id']);
+                  $medArray = $med->get_medication($_SESSION['patient_id']);
 
                   ?>
 
