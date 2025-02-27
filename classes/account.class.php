@@ -547,6 +547,44 @@ class Account
 
     // user functions end
 
+    // ---APPOINMENTS FUNCTIONS START---
+    function get_appointments_with_doctors_and_patients()
+    {
+        $sql = "SELECT 
+            a1.account_id AS doctor_id,
+            CONCAT(a1.firstname, ' ', a1.lastname) AS doctor_name,
+            d.specialty,
+            a1.contact AS doctor_contact,
+            a2.account_id AS patient_id,
+            CONCAT(a2.firstname, ' ', a2.lastname) AS patient_name,
+            a2.contact AS patient_contact,
+            ap.appointment_id,
+            ap.appointment_date,
+            ap.appointment_time,
+            ap.appointment_status
+            FROM appointment ap
+            LEFT JOIN doctor_info d ON ap.doctor_id = d.account_id
+            LEFT JOIN account a1 ON d.account_id = a1.account_id
+            LEFT JOIN account a2 ON ap.patient_id = a2.account_id
+            ORDER BY ap.appointment_date DESC, ap.appointment_time ASC;
+            ";
+
+        try {
+            $query = $this->db->connect()->prepare($sql);
+            if ($query->execute()) {
+                $result = $query->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+            } else {
+                echo "SQL Execution Error.";
+                return [];
+            }
+        } catch (PDOException $e) {
+            echo "Database Error: " . $e->getMessage();
+            return [];
+        }
+    }
+
+
     // ---ANALYTICS FUNCTIONS START---
     function fetch_user_statistics()
     {
@@ -583,6 +621,4 @@ class Account
             'newSignups' => $newSignups
         ];
     }
-
-    
 }
