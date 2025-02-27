@@ -27,6 +27,10 @@ class Account
     public $patient_id;
     public $doctor_id;
     public $campus_name;
+    public $school_id;
+    public $height;
+    public $weight;
+
 
 
     protected $db;
@@ -502,6 +506,9 @@ class Account
                 $this->account_image = $accountData['account_image'];
                 $this->patient_id = $accountData['patient_id'];
                 $this->campus_name = $accountData['campus_name'];
+                $this->school_id = $accountData['school_id'];
+                $this->height = $accountData['height'];
+                $this->weight = $accountData['weight'];
                 //add more data if needed for users
 
                 return true;

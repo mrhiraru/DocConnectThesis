@@ -53,7 +53,7 @@ include '../includes/head.php';
                 <div class="col">
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Full Name</p>
+                      <p class="mb-0">Name:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
@@ -64,7 +64,7 @@ include '../includes/head.php';
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Email</p>
+                      <p class="mb-0">Email:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
@@ -75,7 +75,7 @@ include '../includes/head.php';
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Phone</p>
+                      <p class="mb-0">Contact:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
@@ -90,25 +90,25 @@ include '../includes/head.php';
                   <!-- PADAAGDAG ito sa display -->
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Campus</p>
+                      <p class="mb-0">Campus:</p>
                     </div>
                     <div class="col-sm-8">
-                      <p class="text-muted mb-0">WMSU MAIN</p>
+                      <p class="text-muted mb-0"><?= $_SESSION['campus_name'] ?></p>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">School Id</p>
+                      <p class="mb-0">School Id:</p>
                     </div>
                     <div class="col-sm-8">
-                      <p class="text-muted mb-0">2021-00890</p>
+                      <p class="text-muted mb-0"><?= $_SESSION['schoold_id'] ?></p>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Address</p>
+                      <p class="mb-0">Address:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
@@ -125,7 +125,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h4 class="text-green mb-3">Used Drugs</h4>
+                  <h4 class="text-green mb-3">Medications</h4>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
@@ -137,45 +137,168 @@ include '../includes/head.php';
                       'from' => 'Tab',
                       'manufacturer' => 'Apotex Industries',
                     ),
+                  );
+                  ?>
+
+                  <table id="profileGeneral_table" class="table table-striped" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="3%">#</th>
+                        <th scope="col">Brand Name</th>
+                        <th scope="col">Generic Name</th>
+                        <th scope="col">Strenght</th>
+                        <th scope="col">Pack</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Manufacturer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $counter = 1;
+                      foreach ($usedDrugs_array as $item) {
+                      ?>
+                        <tr>
+                          <td><?= $counter ?></td>
+                          <td><?= $item['brandName'] ?></td>
+                          <td><?= $item['genericName'] ?></td>
+                          <td><?= $item['strenght'] ?></td>
+                          <td><?= $item['pack'] ?></td>
+                          <td><?= $item['from'] ?></td>
+                          <td><?= $item['manufacturer'] ?></td>
+                        </tr>
+                      <?php
+                        $counter++;
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div><div class="row">
+            <div class="col-md-12">
+              <div class="card bg-body-tertiary mb-4 mb-md-0">
+                <div class="card-body">
+                  <h4 class="text-green mb-3">Allergies</h4>
+                  <hr>
+                  <?php
+                  $usedDrugs_array = array(
                     array(
-                      'brandName' => 'Ibuprofen',
-                      'genericName' => 'Ibuprofen',
-                      'strenght' => '200mg',
-                      'pack' => '50',
-                      'from' => 'Caplet',
-                      'manufacturer' => 'Pfizer',
-                    ),
-                    array(
-                      'brandName' => 'Paracetamol',
-                      'genericName' => 'Acetaminophen',
-                      'strenght' => '500mg',
-                      'pack' => '30',
-                      'from' => 'Tablet',
-                      'manufacturer' => 'GlaxoSmithKline',
-                    ),
-                    array(
-                      'brandName' => 'Ciprofloxacin',
-                      'genericName' => 'Ciprofloxacin',
-                      'strenght' => '500mg',
-                      'pack' => '20',
-                      'from' => 'Tab',
-                      'manufacturer' => 'Bayer Pharmaceuticals',
-                    ),
-                    array(
-                      'brandName' => 'Lisinopril',
-                      'genericName' => 'Lisinopril',
-                      'strenght' => '10mg',
-                      'pack' => '60',
-                      'from' => 'Tablet',
-                      'manufacturer' => 'Merck',
-                    ),
-                    array(
-                      'brandName' => 'Metformin',
-                      'genericName' => 'Metformin',
-                      'strenght' => '850mg',
+                      'brandName' => 'Amoxicillin',
+                      'genericName' => 'Amoxicillin',
+                      'strenght' => '250mg',
                       'pack' => '100',
                       'from' => 'Tab',
-                      'manufacturer' => 'Teva Pharmaceuticals',
+                      'manufacturer' => 'Apotex Industries',
+                    ),
+                  );
+                  ?>
+
+                  <table id="profileGeneral_table" class="table table-striped" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="3%">#</th>
+                        <th scope="col">Brand Name</th>
+                        <th scope="col">Generic Name</th>
+                        <th scope="col">Strenght</th>
+                        <th scope="col">Pack</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Manufacturer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $counter = 1;
+                      foreach ($usedDrugs_array as $item) {
+                      ?>
+                        <tr>
+                          <td><?= $counter ?></td>
+                          <td><?= $item['brandName'] ?></td>
+                          <td><?= $item['genericName'] ?></td>
+                          <td><?= $item['strenght'] ?></td>
+                          <td><?= $item['pack'] ?></td>
+                          <td><?= $item['from'] ?></td>
+                          <td><?= $item['manufacturer'] ?></td>
+                        </tr>
+                      <?php
+                        $counter++;
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div><div class="row">
+            <div class="col-md-12">
+              <div class="card bg-body-tertiary mb-4 mb-md-0">
+                <div class="card-body">
+                  <h4 class="text-green mb-3">Immunization</h4>
+                  <hr>
+                  <?php
+                  $usedDrugs_array = array(
+                    array(
+                      'brandName' => 'Amoxicillin',
+                      'genericName' => 'Amoxicillin',
+                      'strenght' => '250mg',
+                      'pack' => '100',
+                      'from' => 'Tab',
+                      'manufacturer' => 'Apotex Industries',
+                    ),
+                  );
+                  ?>
+
+                  <table id="profileGeneral_table" class="table table-striped" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="3%">#</th>
+                        <th scope="col">Brand Name</th>
+                        <th scope="col">Generic Name</th>
+                        <th scope="col">Strenght</th>
+                        <th scope="col">Pack</th>
+                        <th scope="col">From</th>
+                        <th scope="col">Manufacturer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $counter = 1;
+                      foreach ($usedDrugs_array as $item) {
+                      ?>
+                        <tr>
+                          <td><?= $counter ?></td>
+                          <td><?= $item['brandName'] ?></td>
+                          <td><?= $item['genericName'] ?></td>
+                          <td><?= $item['strenght'] ?></td>
+                          <td><?= $item['pack'] ?></td>
+                          <td><?= $item['from'] ?></td>
+                          <td><?= $item['manufacturer'] ?></td>
+                        </tr>
+                      <?php
+                        $counter++;
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card bg-body-tertiary mb-4 mb-md-0">
+                <div class="card-body">
+                  <h4 class="text-green mb-3">Medical History</h4>
+                  <hr>
+                  <?php
+                  $usedDrugs_array = array(
+                    array(
+                      'brandName' => 'Amoxicillin',
+                      'genericName' => 'Amoxicillin',
+                      'strenght' => '250mg',
+                      'pack' => '100',
+                      'from' => 'Tab',
+                      'manufacturer' => 'Apotex Industries',
                     ),
                   );
                   ?>
