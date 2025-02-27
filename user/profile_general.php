@@ -125,7 +125,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h4 class="text-green mb-3">Medications</h4>
+                  <h5 class="text-green mb-3">Medications</h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
@@ -173,7 +173,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h4 class="text-green mb-3">Allergies</h4>
+                  <h5 class="text-green mb-3">Allergies</h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
@@ -219,7 +219,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h4 class="text-green mb-3">Immunization</h4>
+                  <h5 class="text-green mb-3">Immunization</h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
@@ -264,7 +264,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h4 class="text-green mb-3">Medical History</h4>
+                  <h5 class="text-green mb-3">Medical History</h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
