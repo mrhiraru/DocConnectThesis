@@ -144,12 +144,9 @@ include '../includes/head.php';
                     <thead>
                       <tr>
                         <th scope="col" width="3%">#</th>
-                        <th scope="col">Brand Name</th>
-                        <th scope="col">Generic Name</th>
-                        <th scope="col">Strenght</th>
-                        <th scope="col">Pack</th>
-                        <th scope="col">From</th>
-                        <th scope="col">Manufacturer</th>
+                        <th scope="col">Medicine Name</th>
+                        <th scope="col">Dosage</th>
+                        <th scope="col">Frequency</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -162,9 +159,6 @@ include '../includes/head.php';
                           <td><?= $item['brandName'] ?></td>
                           <td><?= $item['genericName'] ?></td>
                           <td><?= $item['strenght'] ?></td>
-                          <td><?= $item['pack'] ?></td>
-                          <td><?= $item['from'] ?></td>
-                          <td><?= $item['manufacturer'] ?></td>
                         </tr>
                       <?php
                         $counter++;
@@ -198,12 +192,8 @@ include '../includes/head.php';
                     <thead>
                       <tr>
                         <th scope="col" width="3%">#</th>
-                        <th scope="col">Brand Name</th>
-                        <th scope="col">Generic Name</th>
-                        <th scope="col">Strenght</th>
-                        <th scope="col">Pack</th>
-                        <th scope="col">From</th>
-                        <th scope="col">Manufacturer</th>
+                        <th scope="col">Allergy Name</th>
+                        <th scope="col">Description</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -215,10 +205,6 @@ include '../includes/head.php';
                           <td><?= $counter ?></td>
                           <td><?= $item['brandName'] ?></td>
                           <td><?= $item['genericName'] ?></td>
-                          <td><?= $item['strenght'] ?></td>
-                          <td><?= $item['pack'] ?></td>
-                          <td><?= $item['from'] ?></td>
-                          <td><?= $item['manufacturer'] ?></td>
                         </tr>
                       <?php
                         $counter++;
@@ -252,12 +238,7 @@ include '../includes/head.php';
                     <thead>
                       <tr>
                         <th scope="col" width="3%">#</th>
-                        <th scope="col">Brand Name</th>
-                        <th scope="col">Generic Name</th>
-                        <th scope="col">Strenght</th>
-                        <th scope="col">Pack</th>
-                        <th scope="col">From</th>
-                        <th scope="col">Manufacturer</th>
+                        <th scope="col">Immunization Name</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -268,11 +249,6 @@ include '../includes/head.php';
                         <tr>
                           <td><?= $counter ?></td>
                           <td><?= $item['brandName'] ?></td>
-                          <td><?= $item['genericName'] ?></td>
-                          <td><?= $item['strenght'] ?></td>
-                          <td><?= $item['pack'] ?></td>
-                          <td><?= $item['from'] ?></td>
-                          <td><?= $item['manufacturer'] ?></td>
                         </tr>
                       <?php
                         $counter++;
@@ -307,12 +283,8 @@ include '../includes/head.php';
                     <thead>
                       <tr>
                         <th scope="col" width="3%">#</th>
-                        <th scope="col">Brand Name</th>
-                        <th scope="col">Generic Name</th>
-                        <th scope="col">Strenght</th>
-                        <th scope="col">Pack</th>
-                        <th scope="col">From</th>
-                        <th scope="col">Manufacturer</th>
+                        <th scope="col">Condition</th>
+                        <th scope="col">Date Diagnose</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -324,10 +296,6 @@ include '../includes/head.php';
                           <td><?= $counter ?></td>
                           <td><?= $item['brandName'] ?></td>
                           <td><?= $item['genericName'] ?></td>
-                          <td><?= $item['strenght'] ?></td>
-                          <td><?= $item['pack'] ?></td>
-                          <td><?= $item['from'] ?></td>
-                          <td><?= $item['manufacturer'] ?></td>
                         </tr>
                       <?php
                         $counter++;
