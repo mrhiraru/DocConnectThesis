@@ -295,7 +295,7 @@ include '../includes/head.php';
                           <tr>
                             <td><?= $counter ?></td>
                             <td><?= $item['his_condition'] ?></td>
-                            <td><?= $item['diagnosis_date'] ?></td>
+                            <td><?= date('Y', strtotime($item['diagnosis_date'])) ?></td>
                           </tr>
                         <?php
                           $counter++;
