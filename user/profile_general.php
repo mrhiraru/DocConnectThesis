@@ -183,16 +183,9 @@ include '../includes/head.php';
                   <h5 class="text-green mb-3">Allergies <span class="float-end fs-6"><a href="./add_allergy.php" class="btn btn-primary btn-sm text-light">Add Allergy</a></span></h5>
                   <hr>
                   <?php
-                  $usedDrugs_array = array(
-                    array(
-                      'brandName' => 'Amoxicillin',
-                      'genericName' => 'Amoxicillin',
-                      'strenght' => '250mg',
-                      'pack' => '100',
-                      'from' => 'Tab',
-                      'manufacturer' => 'Apotex Industries',
-                    ),
-                  );
+                  $allergy = new Allergy();
+                  $allergyArray = $allergy->get_allergy($_SESSION['patient_id']);
+
                   ?>
 
                   <table id="profileGeneral_table" class="table table-striped" style="width:100%">
@@ -206,16 +199,25 @@ include '../includes/head.php';
                     <tbody>
                       <?php
                       $counter = 1;
-                      foreach ($usedDrugs_array as $item) {
+                      if (!empty($allergyArray)) {
+                        foreach ($allergyArray as $item) {
                       ?>
+                          <tr>
+                            <td><?= $counter ?></td>
+                            <td><?= $item['allergy_name'] ?></td>
+                            <td><?= $item['description'] ?></td>
+                          </tr>
+                        <?php
+                          $counter++;
+                        }
+                      } else {
+                        ?>
                         <tr>
-                          <td><?= $counter ?></td>
-                          <td><?= $item['brandName'] ?></td>
-                          <td><?= $item['genericName'] ?></td>
+                          <td colspan='5' class="text-center">No Allergy Record</td>
                         </tr>
                       <?php
-                        $counter++;
                       }
+
                       ?>
                     </tbody>
                   </table>
