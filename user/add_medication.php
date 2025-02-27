@@ -20,7 +20,7 @@ if (isset($_POST['save'])) {
     $med->patient_id = htmlentities($_SESSION['patient_id']);
 
     if (validate_field($med->medication_name) && validate_field($med->dosage) && $med->med_usage) {
-        if ($medhis->add_med()) {
+        if ($med->add_med()) {
             $success = "success";
         } else {
             $success = "failed";
