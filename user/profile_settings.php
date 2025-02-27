@@ -123,9 +123,9 @@ include '../includes/head.php';
                 <h4 class="mb-0">Account</h4>
               </div>
               <hr class="mt-2 mb-3" style="height: 2.5px;">
-              <form id="profileForm" action="" method="post" enctype="multipart/form-data">
+              
                 <div class="row">
-                  <div class="col-md-4">
+                  <form action="" method="post" class="col-md-4" enctype="multipart/form-data">
                     <!-- Image Upload Section -->
                     <div class="d-flex flex-column align-items-center mx-4 mb-4">
                       <!-- Profile Picture -->
@@ -156,8 +156,9 @@ include '../includes/head.php';
                       <!-- Upload Button -->
                       <button class="btn btn-primary text-light" id="uploadProfileImage" type="submit" name="save_image">Upload Image</button>
                     </div>
-                  </div>
-                  <div class="col-md-8">
+                  </form>
+
+                  <form action="" method="" class="col-md-8">
                     <!-- ---NAME--- -->
                     <div class="row mb-3">
                       <div class="col-12 mb-3 mb-md-0">
@@ -187,7 +188,7 @@ include '../includes/head.php';
                         ?>
                       </div>
                     </div>
-                  </div>
+                  </form>
                 </div>
 
                 <!-- ---2nd ROW--- -->
