@@ -264,7 +264,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h5 class="text-green mb-3">Medical History</h5>
+                  <h5 class="text-green mb-3">Medical History <span class="text-end"><a href="./add_allergy.php">Add Allergy</a></span></h5>
                   <hr>
                   <?php
                   $usedDrugs_array = array(
