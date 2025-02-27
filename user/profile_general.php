@@ -132,16 +132,9 @@ include '../includes/head.php';
                   <h5 class="text-green mb-3">Medications <span class="float-end fs-6"><a href="./add_medication.php" class="btn btn-primary btn-sm text-light">Add Medication</a></span></h5>
                   <hr>
                   <?php
-                  $usedDrugs_array = array(
-                    array(
-                      'brandName' => 'Amoxicillin',
-                      'genericName' => 'Amoxicillin',
-                      'strenght' => '250mg',
-                      'pack' => '100',
-                      'from' => 'Tab',
-                      'manufacturer' => 'Apotex Industries',
-                    ),
-                  );
+                  $med = new Medication();
+                  $medArray = $medhis->get_medication($_SESSION['patient_id']);
+
                   ?>
 
                   <table id="profileGeneral_table" class="table table-striped" style="width:100%">
@@ -156,17 +149,26 @@ include '../includes/head.php';
                     <tbody>
                       <?php
                       $counter = 1;
-                      foreach ($usedDrugs_array as $item) {
+                      if (!empty($medArray)) {
+                        foreach ($medArray as $item) {
                       ?>
+                          <tr>
+                            <td><?= $counter ?></td>
+                            <td><?= $item['medication_name'] ?></td>
+                            <td><?= $item['dosage'] ?></td>
+                            <td><?= $item['med_usage'] ?></td>
+                          </tr>
+                        <?php
+                          $counter++;
+                        }
+                      } else {
+                        ?>
                         <tr>
-                          <td><?= $counter ?></td>
-                          <td><?= $item['brandName'] ?></td>
-                          <td><?= $item['genericName'] ?></td>
-                          <td><?= $item['strenght'] ?></td>
+                          <td colspan='5'>No Medication Record</td>
                         </tr>
                       <?php
-                        $counter++;
                       }
+
                       ?>
                     </tbody>
                   </table>
@@ -300,7 +302,7 @@ include '../includes/head.php';
                         <?php
                           $counter++;
                         }
-                      } else { 
+                      } else {
                         ?>
                         <tr>
                           <td colspan='4'>No Medical History</td>
