@@ -83,7 +83,7 @@ include '../includes/head.php';
                                             </div>
                                             <div class="col-12">
                                                 <label for="year" class="form-label text-black-50">Year Diagnosed</label>
-                                                <input type="year" class="form-control bg-light border border-dark" id="year" name="year" value="<?= isset($_POST['year']) ? $_POST['year'] : '' ?>" required>
+                                                <input type="number" class="form-control bg-light border border-dark" id="year" name="year" min="1900" max="2100" value="<?= isset($_POST['year']) ? $_POST['year'] : '' ?>" required>
                                                 <?php
                                                 if (isset($_POST['year']) && !validate_field($_POST['year'])) {
                                                 ?>
