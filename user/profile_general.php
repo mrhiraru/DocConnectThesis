@@ -164,7 +164,7 @@ include '../includes/head.php';
                       } else {
                         ?>
                         <tr>
-                          <td colspan='5'>No Medication Record</td>
+                          <td colspan='5' class="text-center">No Medication Record</td>
                         </tr>
                       <?php
                       }
@@ -305,7 +305,7 @@ include '../includes/head.php';
                       } else {
                         ?>
                         <tr>
-                          <td colspan='4'>No Medical History</td>
+                          <td colspan='4' class="text-center">No Medical History</td>
                         </tr>
                       <?php
                       }

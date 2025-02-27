@@ -34,11 +34,12 @@ class MedHis
     }
 
     function add_medhis(){
-        $sql = "INSERT INTO medical_history (his_condition, diagnosis_date) VALUES (:his_condition, :diagnosis_date)";
+        $sql = "INSERT INTO medical_history (patient_id, his_condition, diagnosis_date) VALUES (:patient_id, :his_condition, :diagnosis_date)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':his_condition', $this->his_condition);
         $query->bindParam(':diagnosis_date', $this->diagnosis_date);
+        $query->bindParam(':patient_id', $this->patient_id);
 
         if ($query->execute()) {
             return true;

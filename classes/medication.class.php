@@ -36,12 +36,14 @@ class Medication
 
     function add_med()
     {
-        $sql = "INSERT INTO medication (medication_name, dosage, med_usage) VALUES (:medication_name, :dosage, :med_usage)";
+        $sql = "INSERT INTO medication (patient_id, medication_name, dosage, med_usage) VALUES (:patient_id, :medication_name, :dosage, :med_usage)";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':medication_name', $this->medication_name);
         $query->bindParam(':dosage', $this->dosage);
         $query->bindParam(':med_usage', $this->med_usage);
+        
+        $query->bindParam(':patient_id', $this->patient_id);
 
         if ($query->execute()) {
             return true;
