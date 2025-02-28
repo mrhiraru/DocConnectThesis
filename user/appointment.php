@@ -123,7 +123,7 @@ include '../includes/head.php';
                     </div>
                     <div class="col-md-6">
 
-                        <label for=" phoneNo" class="form-label text-black-50">Phone No.</label>
+                        <label for=" phoneNo" class="form-label text-black-50">Contact No.</label>
                         <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
                     </div>
                 </div>
@@ -132,6 +132,17 @@ include '../includes/head.php';
                 <div class="mb-3">
                     <label for="address" class="form-label text-black-50">Address</label>
                     <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required readonly>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="campus_name" class="form-label text-black-50">Campus</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="campus_name" name="campus_name" value="<?= isset($_SESSION['campus_name']) ? $_SESSION['campus_name'] : "" ?>" required readonly>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="role" class="form-label text-black-50">Role</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="role" name="role" value="<?= isset($_SESSION['role']) ? $_SESSION['role'] : "" ?>" required readonly />
+                    </div>
                 </div>
 
                 <!-- Email -->
