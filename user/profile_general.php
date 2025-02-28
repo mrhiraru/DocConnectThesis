@@ -103,10 +103,10 @@ include '../includes/head.php';
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">School Id:</p>
+                      <p class="mb-0">Role:</p>
                     </div>
                     <div class="col-sm-8">
-                      <p class="text-muted mb-0"><?= $_SESSION['schoold_id'] ?></p>
+                      <p class="text-muted mb-0"><?= $_SESSION['role'] ?></p>
                     </div>
                   </div>
                   <hr>

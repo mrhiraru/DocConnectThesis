@@ -512,6 +512,7 @@ class Account
                 $this->school_id = $accountData['school_id'];
                 $this->height = $accountData['height'];
                 $this->weight = $accountData['weight'];
+                $this->role = $accountData['role'];
                 //add more data if needed for users
 
                 return true;
