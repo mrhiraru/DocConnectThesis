@@ -195,7 +195,6 @@ include '../includes/head.php';
           }
           ?>
         </div>
-
         <div class="row row-cols-1 row-cols-md-2 w-100">
           <div class="form-input px-1">
             <input type="text" class="form-control" id="phoneNo" name="contact" pattern="\+63 \d{3} \d{3} \d{4}" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
@@ -207,6 +206,18 @@ include '../includes/head.php';
             }
             ?>
           </div>
+          <div class="form-input px-1">
+            <input type="text" class="form-control" id="address" name="address" required placeholder="House No. Street, City, Country" value="<?= isset($_POST['address']) ? $_POST['address'] : '' ?>">
+            <?php
+            if (isset($_POST['address']) && !validate_field($_POST['address'])) {
+            ?>
+              <p class="text-dark m-0 ps-2">Address is required.</p>
+            <?php
+            }
+            ?>
+          </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 w-100">
           <div class="form-input px-1">
             <select class="form-select my-2" aria-label="Campus" name="campus_id" required>
               <option selected>Campus</option>
@@ -224,6 +235,24 @@ include '../includes/head.php';
             if (isset($_POST['campus_id']) && !validate_field($_POST['campus_id'])) {
             ?>
               <p class="text-dark m-0 ps-2">Campus is required.</p>
+            <?php
+            }
+            ?>
+          </div>
+          <div class="form-input px-1">
+            <select class="form-select my-2" aria-label="role" name="role" required>
+              <option selected>Role</option>
+
+              <option value="Student" <?= (isset($_POST['role']) && $_POST['role'] == 'Student') ? 'selected' : '' ?>>Student</option>
+              <option value="Employee" <?= (isset($_POST['role']) && $_POST['role'] == 'Employee') ? 'selected' : '' ?>>Employee</option>
+              <option value="Faculty" <?= (isset($_POST['role']) && $_POST['role'] == 'Faculty') ? 'selected' : '' ?>>Faculty</option>
+              <option value="Alumni" <?= (isset($_POST['role']) && $_POST['role'] == 'Alumni') ? 'selected' : '' ?>>Alumni</option>
+
+            </select>
+            <?php
+            if (isset($_POST['role']) && !validate_field($_POST['role'])) {
+            ?>
+              <p class="text-dark m-0 ps-2">Role is required.</p>
             <?php
             }
             ?>
