@@ -140,7 +140,7 @@ include '../includes/head.php';
                     </p>
                   </div>
                 </div>
-                <hr class='m-2'>
+                <hr class=''>
                 <div class="row col-6">
                   <div class="col-sm-4">
                     <p class="mb-0">Email:</p>
