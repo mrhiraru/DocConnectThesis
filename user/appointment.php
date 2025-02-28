@@ -151,7 +151,17 @@ include '../includes/head.php';
         <section id="appointment" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
 
             <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
-                <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Details</p>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Details</p>
+                    </div>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Launch demo modal
+                        </button>
+                    </div>
+                </div>
+
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
