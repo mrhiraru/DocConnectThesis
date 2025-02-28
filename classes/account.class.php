@@ -292,7 +292,6 @@ class Account
                         email = :email, 
                         address = :address,
                         role = :role,
-                        gender = :gender,
                         campus_id = :campus_id
                     WHERE account_id = :account_id";
 
