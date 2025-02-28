@@ -252,12 +252,12 @@ include '../includes/head.php';
                     <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@wmsu.edu.ph" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
                   </div>
                   <div class="col-md-5 mb-3 mb-md-0">
-                    <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
-                    <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required />
+                    <label for="phoneNo" class="form-label text-black-50">Contact No.</label>
+                    <input type="text" class="form-control bg-light border border-dark" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" oninput="formatPhoneNumber(this)" required />
                     <?php
                     if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                     ?>
-                      <p class="text-dark m-0 ps-2">Phone number is required</p>
+                      <p class="text-dark m-0 ps-2">Contact number is required</p>
                     <?php
                     }
                     ?>
@@ -280,16 +280,30 @@ include '../includes/head.php';
                   <div class="col-md-4 mb-3 mb-md-0">
                     <label for="height" class="form-label text-black-50">Height <span class="text-small">(cm)</span></label>
                     <div class="input-group">
-                      <input type="number" class="form-control bg-light border border-dark" id="height" name="height" placeholder="Enter height" required />
+                      <input type="number" class="form-control bg-light border border-dark" id="height" name="height" value="<?= isset($_SESSION['height']) ? $_SESSION['height'] : "" ?>" placeholder="Enter height" required />
                       <span class="input-group-text bg-light border border-dark">cm</span>
                     </div>
+                    <?php
+                    if (isset($_POST['height']) && !validate_field($_POST['height'])) {
+                    ?>
+                      <p class="text-dark m-0 ps-2">Height is required.</p>
+                    <?php
+                    }
+                    ?>
                   </div>
                   <div class="col-md-4">
                     <label for="weight" class="form-label text-black-50">Weight <span class="text-small">(kg)</span></label>
                     <div class="input-group">
-                      <input type="number" class="form-control bg-light border border-dark" id="weight" name="weight" placeholder="Enter weight" required />
+                      <input type="number" class="form-control bg-light border border-dark" id="weight" name="weight" value="<?= isset($_SESSION['weight']) ? $_SESSION['weight'] : "" ?>" placeholder="Enter weight" required />
                       <span class="input-group-text bg-light border border-dark">kg</span>
                     </div>
+                    <?php
+                    if (isset($_POST['weight']) && !validate_field($_POST['weight'])) {
+                    ?>
+                      <p class="text-dark m-0 ps-2">Weight is required.</p>
+                    <?php
+                    }
+                    ?>
                   </div>
                 </div>
                 <!-- ---4th ROW--- -->
@@ -370,7 +384,22 @@ include '../includes/head.php';
   </section>
   <script src="../js/user/profile_settings.js"></script>
   <script src="../js/imageChange.js"></script>
-
+  <script>
+    function formatPhoneNumber(input) {
+      let value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
+      if (value.startsWith("09")) {
+        if (value.length > 4) {
+          value = value.slice(0, 4) + " " + value.slice(4);
+        }
+        if (value.length > 8) {
+          value = value.slice(0, 8) + " " + value.slice(8);
+        }
+      } else {
+        value = "09"; // Force it to start with 09
+      }
+      input.value = value.slice(0, 13); // Limit to 11 characters
+    }
+  </script>
   <?php
   require_once('../includes/footer.php');
   ?>
