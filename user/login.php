@@ -47,6 +47,7 @@ if (isset($_POST['signup'])) {
   }
   $account->lastname = ucfirst(strtolower(htmlentities($_POST['lastname'])));
   $account->contact = htmlentities($_POST['contact']);
+  $account->address = htmlentities($_POST['address']);
   $account->birthdate = htmlentities($_POST['birthdate']);
   if (isset($_POST['gender'])) {
     $account->gender = htmlentities($_POST['gender']);
@@ -57,6 +58,10 @@ if (isset($_POST['signup'])) {
     $account->campus_id = htmlentities($_POST['campus_id']);
   } else {
     $account->campus_id = '';
+  }if (isset($_POST['role'])) {
+    $account->role = htmlentities($_POST['role']);
+  } else {
+    $account->role = '';
   }
   $account->user_role = 3; // user_role (0 = admin, 1 = doc, 2 = mod, 3 = user)
 
@@ -68,10 +73,12 @@ if (isset($_POST['signup'])) {
     validate_field($account->gender) &&
     validate_field($account->campus_id) &&
     validate_field($account->contact) &&
+    validate_field($account->address) &&
+    validate_field($account->role) &&
     validate_password($account->password) &&
     validate_cpw($account->password, $_POST['confirm-password']) &&
     validate_email($account->email) == 'success' && !$account->is_email_exist() &&
-    validate_wmsu_email($account->email) &&
+    //validate_wmsu_email($account->email) &&
     isset($_POST['terms'])
   ) {
     if ($account->add_user()) {
@@ -188,16 +195,18 @@ include '../includes/head.php';
           ?>
             <p class="text-dark m-0 ps-2">Email you've entered already exist.</p>
           <?php
-          } else if (isset($_POST['email']) && !validate_wmsu_email($_POST['email'])) {
+          } // else if (isset($_POST['email']) && !validate_wmsu_email($_POST['email'])) {
+          // 
           ?>
-            <p class="text-dark m-0 ps-2">You must use wmsu email.</p>
+          <!-- <p class="text-dark m-0 ps-2">You must use wmsu email.</p> -->
           <?php
-          }
+          // }
+          // 
           ?>
         </div>
         <div class="row row-cols-1 row-cols-md-2 w-100">
           <div class="form-input px-1">
-            <input type="text" class="form-control" id="phoneNo" name="contact" pattern="\+63 \d{3} \d{3} \d{4}" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+            <input type="text" class="form-control" id="contact" name="contact" pattern="09\d{2} \d{3} \d{4}" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
             <?php
             if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
             ?>

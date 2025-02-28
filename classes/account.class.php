@@ -30,6 +30,7 @@ class Account
     public $school_id;
     public $height;
     public $weight;
+    public $role;
 
 
 
@@ -411,7 +412,7 @@ class Account
         $connect = $this->db->connect();
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO account (email, password, firstname, middlename, lastname, user_role, contact, gender, birthdate, campus_id) VALUES (:email, :password, :firstname, :middlename, :lastname, :user_role, :contact, :gender, :birthdate, :campus_id);";
+        $sql = "INSERT INTO account (email, password, firstname, middlename, lastname, user_role, contact, gender, birthdate, campus_id, address, role) VALUES (:email, :password, :firstname, :middlename, :lastname, :user_role, :contact, :gender, :birthdate, :campus_id, address, role);";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':email', $this->email);
@@ -425,6 +426,8 @@ class Account
         $query->bindParam(':gender', $this->gender);
         $query->bindParam(':birthdate', $this->birthdate);
         $query->bindParam(':campus_id', $this->campus_id);
+        $query->bindParam(':address', $this->address);
+        $query->bindParam(':role', $this->role);
 
         if ($query->execute()) {
             $last_product_id = $connect->lastInsertId();
