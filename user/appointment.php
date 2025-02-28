@@ -156,7 +156,7 @@ include '../includes/head.php';
                         <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Details</p>
                     </div>
                     <div class="col-6 text-end">
-                        <button type="button" class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-sm btn-primary text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             View Patient Details
                         </button>
                     </div>
