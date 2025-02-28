@@ -27,6 +27,7 @@ if (isset($_POST['save'])) {
   $account_class->birthdate = htmlentities($_POST['birthdate']);
   $account_class->height = htmlentities($_POST['height']);
   $account_class->weight = htmlentities($_POST['weight']);
+  $account_class->email = htmlentities($_POST['email']);
 
   if (isset($_POST['gender'])) {
     $account_class->gender = htmlentities($_POST['gender']);
@@ -44,7 +45,6 @@ if (isset($_POST['save'])) {
     $account_class->role = '';
   }
 
-  echo "<script>console.log('hehe')</script>";
   if (
     validate_field($account_class->firstname) &&
     validate_field($account_class->lastname) &&
@@ -75,7 +75,6 @@ if (isset($_POST['save'])) {
       $_SESSION['weight'] = $account_class->weight;
     } else {
       echo 'An error occured while adding in the database.';
-      echo "<script>console.log('hehe errorr')</script>";
     }
   } else {
     $success = 'failed';
