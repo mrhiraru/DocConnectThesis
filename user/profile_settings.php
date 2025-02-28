@@ -208,16 +208,7 @@ include '../includes/head.php';
                   </div>
                   <div class="col-md-4 mb-3 mb-md-0">
                     <label for="role" class="form-label text-black-50">Role</label>
-                    <select name="role" id="role">
-                      <option value="Student" <?= (isset($_POST['role']) && $_POST['role'] == 'Student') ? 'selected' : '' ?>>Student</option>
-                      <option value="Employee" <?= (isset($_POST['role']) && $_POST['role'] == 'Employee') ? 'selected' : '' ?>>Employee</option>
-                      <option value="Faculty" <?= (isset($_POST['role']) && $_POST['role'] == 'Faculty') ? 'selected' : '' ?>>Faculty</option>
-                      <option value="Alumni" <?= (isset($_POST['role']) && $_POST['role'] == 'Alumni') ? 'selected' : '' ?>>Alumni</option>
-                    </select>
-                  </div>
-                  <div class="col-md-4 mb-3 mb-md-0">
-                    <label for="gender" class="form-label text-black-50">Gender</label>
-                    <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
+                    <select class="form-select bg-light border border-dark" name="role" id="role">
                       <option value="Student" <?php if ((isset($_POST['role']) && $_POST['role'] == "Student") || (isset($_SESSION['role']) && $_SESSION['role'] == "Student")) {
                                                 echo 'selected';
                                               } ?>>Student</option>
@@ -230,6 +221,26 @@ include '../includes/head.php';
                       <option value="Alumni" <?php if ((isset($_POST['role']) && $_POST['role'] == "Alumni") || (isset($_SESSION['role']) && $_SESSION['role'] == "Alumni")) {
                                                 echo 'selected';
                                               } ?>>Alumni</option>
+                    </select>
+                  </div>
+                  <div class="col-md-4 mb-3 mb-md-0">
+                    <label for="gender" class="form-label text-black-50">Gender</label>
+                    <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
+                      <option value="Male" <?php if ((isset($_POST['gender']) && $_POST['gender'] == "Male")) {
+                                              echo 'selected';
+                                            } else if ($_SESSION['gender'] == "Male") {
+                                              echo "selected";
+                                            } ?>>Male</option>
+                      <option value="Female" <?php if ((isset($_POST['gender']) && $_POST['gender'] == "Female")) {
+                                                echo 'selected';
+                                              } else if ($_SESSION['gender'] == "Female") {
+                                                echo "selected";
+                                              } ?>>Female</option>
+                      <option value="Other" <?php if ((isset($_POST['gender']) && $_POST['gender'] == "Other")) {
+                                              echo 'selected';
+                                            } else if ($_SESSION['gender'] == "Other") {
+                                              echo "selected";
+                                            } ?>>Other</option>
                     </select>
                   </div>
                 </div>
