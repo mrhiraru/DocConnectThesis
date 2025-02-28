@@ -1,35 +1,12 @@
-var validateFile = function(event) {
-  var fileInput = event.target;
-  var filePath = fileInput.value;
-  var allowedExtensions = /(\.png|\.jpeg|\.jpg)$/i;
+function previewImage(event) {
+  const file = event.target.files[0]; // Get the selected file
+  const output = document.getElementById('output'); // Get the image preview element
 
-  if (!allowedExtensions.exec(filePath)) {
-    alert('Invalid file type. Only PNG and JPEG files are allowed.');
-    fileInput.value = '';
-    return false;
+  if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          output.src = e.target.result; // Set image source to the uploaded file
+      };
+      reader.readAsDataURL(file); // Read the file as a data URL
   }
-
-  var image = document.getElementById("output");
-  image.src = URL.createObjectURL(event.target.files[0]);
-};
-
-$(document).ready(function() {
-  $('#upload_profile').click(function() {
-    var formData = new FormData($('#profileForm')[0]);
-    
-    $.ajax({
-      url: '#',
-      type: 'POST',
-      data: formData,
-      contentType: false,
-      processData: false,
-      success: function(response) {
-        alert(response);
-      },
-      error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-        alert('Error occurred while uploading image: ' + error);
-      }
-    });
-  });
-});
+}
