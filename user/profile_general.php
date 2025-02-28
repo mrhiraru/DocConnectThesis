@@ -131,7 +131,7 @@ include '../includes/head.php';
               <div class="row row-cols-1 row-cols-md-2 d-flex align-items-stretch">
                 <div class="col">
                   <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-12">
                       <p class="mb-0">Name:</p>
                     </div>
                     <div class="col-sm-8">
@@ -142,7 +142,7 @@ include '../includes/head.php';
                   </div>
                   <hr>
                   <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-6">
                       <p class="mb-0">Email:</p>
                     </div>
                     <div class="col-sm-8">
@@ -152,39 +152,16 @@ include '../includes/head.php';
                     </div>
                   </div>
                   <hr>
-                </div>
-
-                <div class="col">
-                  <!-- PADAAGDAG ito sa display -->
                   <div class="row">
-                    <div class="col-sm-4">
-                      <p class="mb-0">Campus:</p>
-                    </div>
-                    <div class="col-sm-8">
-                      <p class="text-muted mb-0"><?= $_SESSION['campus_name'] ?></p>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <p class="mb-0">Role:</p>
-                    </div>
-                    <div class="col-sm-8">
-                      <p class="text-muted mb-0"><?= $_SESSION['role'] ?></p>
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-4">
-                      <p class="mb-0">Address:</p>
+                    <div class="col-6">
+                      <p class="mb-0">Contact:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
-                        <?= $_SESSION['address'] ?>
+                        <?= $_SESSION['email'] ?>
                       </p>
                     </div>
                   </div>
-                  <hr>
                 </div>
               </div>
             </div>
