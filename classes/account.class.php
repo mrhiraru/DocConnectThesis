@@ -291,7 +291,8 @@ class Account
                         contact = :contact, 
                         email = :email, 
                         address = :address,
-                        role = :role
+                        role = :role,
+                        gender = :gender
                     WHERE account_id = :account_id";
 
         $query = $connect->prepare($sql);
@@ -304,6 +305,7 @@ class Account
         $query->bindParam(':email', $this->email);
         $query->bindParam(':address', $this->address);
         $query->bindParam(':role', $this->role);
+        $query->bindParam(':gender', $this->gender);
 
         if ($query->execute()) {
             $sec_sql = "UPDATE patient_info 
