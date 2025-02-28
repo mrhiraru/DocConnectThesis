@@ -117,7 +117,7 @@ if (isset($_POST['save_image'])) {
 if (isset($_POST['save_parent'])) {
   $parent = new Patient();
 
-  $parent->parent_name = ucwords(strtolower(htmlentities($_POST['lastname'])));
+  $parent->parent_name = ucwords(strtolower(htmlentities($_POST['parent_name'])));
   $parent->parent_email = htmlentities($_POST['parent_email']);
   $parent->parent_contact = htmlentities($_POST['parent_contact']);
   $parent->account_id = $_SESSION['account_id'];
