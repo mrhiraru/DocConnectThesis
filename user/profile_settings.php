@@ -46,7 +46,6 @@ if (isset($_POST['save'])) {
 
   if (
     validate_field($account_class->firstname) &&
-    validate_field($account_class->middlename) &&
     validate_field($account_class->lastname) &&
     validate_field($account_class->gender) &&
     validate_field($account_class->email) &&
