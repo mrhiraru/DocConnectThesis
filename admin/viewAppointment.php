@@ -52,13 +52,14 @@ function getCurrentPage()
                 <i class='bx bx-chevron-left-circle fs-3 link'></i>
               </button>
               <?php
-              $appointment_status = "completed";
+              $appointment_status = strtolower($appointment['appointment_status']);
               $statusClass = "";
-              switch (strtolower($appointment_status)) {
+
+              switch ($appointment_status) {
                 case "completed":
                   $statusClass = "text-success";
                   break;
-                case "in progress":
+                case "ongoing":
                   $statusClass = "text-info";
                   break;
                 case "cancelled":
