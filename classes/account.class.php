@@ -412,7 +412,7 @@ class Account
         $connect = $this->db->connect();
         $connect->beginTransaction();
 
-        $sql = "INSERT INTO account (email, password, firstname, middlename, lastname, user_role, contact, gender, birthdate, campus_id, address, role) VALUES (:email, :password, :firstname, :middlename, :lastname, :user_role, :contact, :gender, :birthdate, :campus_id, address, role);";
+        $sql = "INSERT INTO account (email, password, firstname, middlename, lastname, user_role, contact, gender, birthdate, campus_id, address, role) VALUES (:email, :password, :firstname, :middlename, :lastname, :user_role, :contact, :gender, :birthdate, :campus_id, :address, :role);";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':email', $this->email);
