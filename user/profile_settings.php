@@ -120,44 +120,46 @@ include '../includes/head.php';
                 <h4 class="mb-0">Account</h4>
               </div>
               <hr class="mt-2 mb-3" style="height: 2.5px;">
+              <form action="">
+                <div class="col-md-12">
+                  <!-- Image Upload Section -->
+                  <div class="d-flex flex-column align-items-center mx-4 mb-4">
+                    <!-- Profile Picture -->
+                    <div class="campus-pic align-items-end">
+                      <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important; border-radius: 5px !important;">
+                        <span>Change Image</span>
+                      </label>
+  
+                      <!-- Image Preview -->
+                      <img id="output" class="rounded-2"
+                        src="<?php if (isset($_SESSION['account_image'])) {
+                                echo "../assets/images/" . $_SESSION['account_image'];
+                              } else {
+                                echo "../assets/images/default_profile.png";
+                              } ?>"
+                        alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;">
+  
+                      <!-- <img id="output" class="rounded-2"
+                        src="<?php echo isset($_SESSION['account_image'])
+                                ? "../assets/images/" . $_SESSION['account_image']
+                                : "../assets/images/default_profile.png"; ?>"
+                        alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;"> -->
+  
+                      <!-- Image Upload Input -->
+                      <input id="file" type="file" name="account_image" accept=".jpg, .jpeg, .png" onchange="previewImage(event)">
+                    </div>
+  
+                    <!-- Upload Button -->
+                    <button class="btn btn-primary text-light" id="uploadProfileImage" type="submit" name="save_image">Upload Image</button>
+                  </div>
+                </div>
+              </form>
               <form id="profileForm" action="" method="post" enctype="multipart/form-data">
                 <div class="row">
-                  <div class="col-md-4">
-                    <!-- Image Upload Section -->
-                    <div class="d-flex flex-column align-items-center mx-4 mb-4">
-                      <!-- Profile Picture -->
-                      <div class="campus-pic align-items-end">
-                        <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important; border-radius: 5px !important;">
-                          <span>Change Image</span>
-                        </label>
-
-                        <!-- Image Preview -->
-                        <img id="output" class="rounded-2"
-                          src="<?php if (isset($_SESSION['account_image'])) {
-                                  echo "../assets/images/" . $_SESSION['account_image'];
-                                } else {
-                                  echo "../assets/images/default_profile.png";
-                                } ?>"
-                          alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;">
-
-                        <!-- <img id="output" class="rounded-2"
-                          src="<?php echo isset($_SESSION['account_image'])
-                                  ? "../assets/images/" . $_SESSION['account_image']
-                                  : "../assets/images/default_profile.png"; ?>"
-                          alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;"> -->
-
-                        <!-- Image Upload Input -->
-                        <input id="file" type="file" name="account_image" accept=".jpg, .jpeg, .png" onchange="previewImage(event)">
-                      </div>
-
-                      <!-- Upload Button -->
-                      <button class="btn btn-primary text-light" id="uploadProfileImage" type="submit" name="save_image">Upload Image</button>
-                    </div>
-                  </div>
-                  <div class="col-md-8">
+                  <div class="col-md-12">
                     <!-- ---NAME--- -->
-                    <div class="row mb-3">
-                      <div class="col-12 mb-3 mb-md-0">
+                    <div class="row row-cols-1 row-cols-md-3 mb-3">
+                      <div class="col mb-3 mb-md-0">
                         <label for="firstName" class="form-label text-black-50">First Name</label>
                         <input type="text" class="form-control bg-light border border-dark" id="firstName" name="first_name" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required>
                         <?php
@@ -168,11 +170,11 @@ include '../includes/head.php';
                         }
                         ?>
                       </div>
-                      <div class="col-12 mb-3 mb-md-0">
+                      <div class="col mb-3 mb-md-0">
                         <label for="middleName" class="form-label text-black-50">Middle Name</label>
                         <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middle_name" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>">
                       </div>
-                      <div class="col-12">
+                      <div class="col">
                         <label for="lastName" class="form-label text-black-50">Last Name</label>
                         <input type="text" class="form-control bg-light border border-dark" id="lastName" name="last_name" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required>
                         <?php
