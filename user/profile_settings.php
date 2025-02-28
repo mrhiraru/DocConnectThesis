@@ -414,6 +414,33 @@ include '../includes/head.php';
       </div>
     </div>
   </section>
+
+  <?php
+  if ((isset($_POST['save']) || isset($_POST['save_image'])) && $success == 'success') {
+  ?>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Account is successfully updated!</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row d-flex">
+              <div class="col-12 text-center">
+                <a href="./profile_general" class="text-decoration-none text-dark">
+                  <p class="m-0 text-primary fw-bold">Login to verify your account.</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php
+  }
+  ?>
+
   <script src="../js/user/profile_settings.js"></script>
   <script src="../js/imageChange.js"></script>
   <script>
