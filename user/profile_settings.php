@@ -9,6 +9,7 @@ $birthdate = isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['
 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
+require_once('../classes/campus.class.php');
 
 $account_class = new Account();
 if (isset($_POST['saveAccount'])) {
@@ -138,7 +139,7 @@ include '../includes/head.php';
                               } ?>"
                         alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;">
 
-  
+
                       <!-- <img id="output" class="rounded-2"
                         src="<?php echo isset($_SESSION['account_image'])
                                 ? "../assets/images/" . $_SESSION['account_image']
@@ -147,7 +148,7 @@ include '../includes/head.php';
                       <!-- Image Upload Input -->
                       <input id="file" type="file" name="account_image" accept=".jpg, .jpeg, .png" onchange="previewImage(event)">
                     </div>
-  
+
                     <!-- Upload Button -->
                     <button class="btn btn-primary text-light" id="uploadProfileImage" type="submit" name="save_image">Upload Image</button>
                   </div>
@@ -194,33 +195,41 @@ include '../includes/head.php';
                     <label for="campus" class="form-label text-black-50">Campus</label>
                     <!-- WALA PA TO SA DATABASE -->
                     <select class="form-select bg-light border border-dark" id="campus" name="campus" required>
-                      <option value="chooseCampus" <?= ($_SESSION['campus'] ?? "chooseCampus") == "chooseCampus" ? 'selected' : '' ?>>Choose Campus</option>
-                      <option value="wmsuMainCampus" <?= (isset($_SESSION['campus']) && $_SESSION['campus'] == "wmsuMainCampus") ? 'selected' : '' ?>>WMSU main campus</option>
-                      <option value="testCampus" <?= (isset($_SESSION['campus']) && $_SESSION['campus'] == "testCampus") ? 'selected' : '' ?>>test campus</option>
+                      <?php
+                      $campus = new Campus();
+                      $campusArray = $campus->show_campus();
+                      foreach ($campusArray as $item) {
+                      ?>
+                        <option value="<?= $item['campus_id'] ?>" <?= (isset($_POST['campus_id']) && $_POST['campus_id'] == $item['campus_id']) ? 'selected' : '' ?>><?= $item['campus_name'] ?></option>
+                      <?php
+                      }
+                      ?>
                     </select>
                   </div>
                   <div class="col-md-4 mb-3 mb-md-0">
-                    <label for="schoolID" class="form-label text-black-50">School ID</label>
-                    <input type="text" class="form-control bg-light border border-dark" id="schoolID" name="school_id" required>
+                    <label for="role" class="form-label text-black-50">Role</label>
+                    <select name="role" id="role">
+                      <option value="Student" <?= (isset($_POST['role']) && $_POST['role'] == 'Student') ? 'selected' : '' ?>>Student</option>
+                      <option value="Employee" <?= (isset($_POST['role']) && $_POST['role'] == 'Employee') ? 'selected' : '' ?>>Employee</option>
+                      <option value="Faculty" <?= (isset($_POST['role']) && $_POST['role'] == 'Faculty') ? 'selected' : '' ?>>Faculty</option>
+                      <option value="Alumni" <?= (isset($_POST['role']) && $_POST['role'] == 'Alumni') ? 'selected' : '' ?>>Alumni</option>
+                    </select>
                   </div>
                   <div class="col-md-4 mb-3 mb-md-0">
                     <label for="gender" class="form-label text-black-50">Gender</label>
                     <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
-                      <option value="Male" <?php if ((isset($_POST['gender']) && $_POST['gender'] == "Male")) {
-                                              echo 'selected';
-                                            } else if ($_SESSION['gender'] == "Male") {
-                                              echo "selected";
-                                            } ?>>Male</option>
-                      <option value="Female" <?php if ((isset($_POST['gender']) && $_POST['gender'] == "Female")) {
+                      <option value="Student" <?php if ((isset($_POST['role']) && $_POST['role'] == "Student") || (isset($_SESSION['role']) && $_SESSION['role'] == "Student")) {
                                                 echo 'selected';
-                                              } else if ($_SESSION['gender'] == "Female") {
-                                                echo "selected";
-                                              } ?>>Female</option>
-                      <option value="Other" <?php if ((isset($_POST['gender']) && $_POST['gender'] == "Other")) {
-                                              echo 'selected';
-                                            } else if ($_SESSION['gender'] == "Other") {
-                                              echo "selected";
-                                            } ?>>Other</option>
+                                              } ?>>Student</option>
+                      <option value="Employee" <?php if ((isset($_POST['role']) && $_POST['role'] == "Employee") || (isset($_SESSION['role']) && $_SESSION['role'] == "Employee")) {
+                                                  echo 'selected';
+                                                } ?>>Employee</option>
+                      <option value="Faculty" <?php if ((isset($_POST['role']) && $_POST['role'] == "Faculty") || (isset($_SESSION['role']) && $_SESSION['role'] == "Faculty")) {
+                                                echo 'selected';
+                                              } ?>>Faculty</option>
+                      <option value="Alumni" <?php if ((isset($_POST['role']) && $_POST['role'] == "Alumni") || (isset($_SESSION['role']) && $_SESSION['role'] == "Alumni")) {
+                                                echo 'selected';
+                                              } ?>>Alumni</option>
                     </select>
                   </div>
                 </div>
