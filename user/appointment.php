@@ -168,6 +168,7 @@ include '../includes/head.php';
                         <p class="form-label text-black-50 fw-bold fs-5 m-0">Patient Details</p>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    <hr>
                     <div class="row mb-3">
                         <div class="col-md-4 mb-3 mb-md-0">
                             <label for="firstname" class="form-label text-black-50">First Name</label>
