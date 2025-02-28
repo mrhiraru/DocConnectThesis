@@ -58,7 +58,8 @@ if (isset($_POST['signup'])) {
     $account->campus_id = htmlentities($_POST['campus_id']);
   } else {
     $account->campus_id = '';
-  }if (isset($_POST['role'])) {
+  }
+  if (isset($_POST['role'])) {
     $account->role = htmlentities($_POST['role']);
   } else {
     $account->role = '';
@@ -206,7 +207,7 @@ include '../includes/head.php';
         </div>
         <div class="row row-cols-1 row-cols-md-2 w-100">
           <div class="form-input px-1">
-            <input type="text" class="form-control" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="11" pattern="09\d{2} \d{3} \d{4}" placeholder="09" required value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+            <input type="text" class="form-control" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" placeholder="09" oninput="formatPhoneNumber(input)" required value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
             <?php
             if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
             ?>
@@ -418,6 +419,24 @@ include '../includes/head.php';
 
   <script src="../js/login.js"></script>
   <script src="../js/main.js"></script>
+
+  <script>
+    function formatPhoneNumber(input) {
+      let value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
+      if (value.startsWith("09")) {
+        if (value.length > 4) {
+          value = value.slice(0, 4) + " " + value.slice(4);
+        }
+        if (value.length > 8) {
+          value = value.slice(0, 8) + " " + value.slice(8);
+        }
+      } else {
+        value = "09"; // Force it to start with 09
+      }
+      input.value = value.slice(0, 11); // Limit to 11 characters
+    }
+  </script>
+
 </body>
 
 </html>
