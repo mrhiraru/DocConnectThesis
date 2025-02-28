@@ -12,17 +12,35 @@ require_once('../classes/account.class.php');
 require_once('../classes/campus.class.php');
 
 $account_class = new Account();
-if (isset($_POST['saveAccount'])) {
+if (isset($_POST['save'])) {
   $account_class->account_id = $_SESSION['account_id'];
 
-  $account_class->firstname = $_POST['first_name'] ?? '';
-  $account_class->middlename = $_POST['middle_name'] ?? '';
-  $account_class->lastname = $_POST['last_name'] ?? '';
-  $account_class->gender = $_POST['gender'] ?? '';
-  $account_class->email = $_POST['email'] ?? '';
-  $account_class->contact = $_POST['Phone_No'] ?? '';
-  $account_class->birthdate = $_POST['birthdate'] ?? '';
-  $account_class->address = $_POST['address'] ?? '';
+  $account->firstname = ucfirst(strtolower(htmlentities($_POST['firstname'])));
+  if (isset($_POST['middlename'])) {
+    $account->middlename = ucfirst(strtolower(htmlentities($_POST['middlename'])));
+  } else {
+    $account->middlename = '';
+  }
+  $account->lastname = ucfirst(strtolower(htmlentities($_POST['lastname'])));
+  $account->contact = htmlentities($_POST['contact']);
+  $account->address = htmlentities($_POST['address']);
+  $account->birthdate = htmlentities($_POST['birthdate']);
+
+  if (isset($_POST['gender'])) {
+    $account->gender = htmlentities($_POST['gender']);
+  } else {
+    $account->gender = '';
+  }
+  if (isset($_POST['campus_id'])) {
+    $account->campus_id = htmlentities($_POST['campus_id']);
+  } else {
+    $account->campus_id = '';
+  }
+  if (isset($_POST['role'])) {
+    $account->role = htmlentities($_POST['role']);
+  } else {
+    $account->role = '';
+  }
 
   if (
     validate_field($account_class->firstname) &&
@@ -161,7 +179,7 @@ include '../includes/head.php';
                     <div class="row row-cols-1 row-cols-md-3 mb-3">
                       <div class="col mb-3 mb-md-0">
                         <label for="firstName" class="form-label text-black-50">First Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="firstName" name="first_name" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required>
+                        <input type="text" class="form-control bg-light border border-dark" id="firstName" name="firstname" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required>
                         <?php
                         if (isset($_POST['firstname']) && !validate_field($_POST['firstname'])) {
                         ?>
@@ -172,11 +190,11 @@ include '../includes/head.php';
                       </div>
                       <div class="col mb-3 mb-md-0">
                         <label for="middleName" class="form-label text-black-50">Middle Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middle_name" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>">
+                        <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middlename" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>">
                       </div>
                       <div class="col">
                         <label for="lastName" class="form-label text-black-50">Last Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="lastName" name="last_name" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required>
+                        <input type="text" class="form-control bg-light border border-dark" id="lastName" name="lastname" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required>
                         <?php
                         if (isset($_POST['lastname']) && !validate_field($_POST['lastname'])) {
                         ?>
@@ -194,7 +212,7 @@ include '../includes/head.php';
                   <div class="col-md-4 mb-3 mb-md-0">
                     <label for="campus" class="form-label text-black-50">Campus</label>
                     <!-- WALA PA TO SA DATABASE -->
-                    <select class="form-select bg-light border border-dark" id="campus" name="campus" required>
+                    <select class="form-select bg-light border border-dark" id="campus_id" name="campus_id" required>
                       <?php
                       $campus = new Campus();
                       $campusArray = $campus->show_campus();
