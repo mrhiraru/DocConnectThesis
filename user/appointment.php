@@ -77,7 +77,7 @@ include '../includes/head.php';
     require_once('../includes/header.php');
     ?>
 
-    <div class="row gx-2 p-3">
+    <div class="container-fluid row g2-2 p-3">
         <section id="appointment" class="col-6 page-container padding-medium">
             <div class="row mb-3">
                 <div class="col-12 p-0">
