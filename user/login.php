@@ -433,7 +433,7 @@ include '../includes/head.php';
       } else {
         value = "09"; // Force it to start with 09
       }
-      input.value = value.slice(0, 11); // Limit to 11 characters
+      input.value = value.slice(0, 13); // Limit to 11 characters
     }
   </script>
 
