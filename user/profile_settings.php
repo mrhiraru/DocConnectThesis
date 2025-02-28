@@ -10,6 +10,7 @@ $birthdate = isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 require_once('../classes/campus.class.php');
+require_once('../classes/patient.class.php');
 
 $account_class = new Account();
 if (isset($_POST['save'])) {
@@ -113,6 +114,24 @@ if (isset($_POST['save_image'])) {
   }
 }
 
+if (isset($_POST['save_parent'])) {
+  $parent = new Patient();
+
+  $parent->parent_name = ucwords(strtolower(htmlentities($_POST['lastname'])));
+  $parent->parent_email = htmlentities($_POST['parent_email']);
+  $parent->parent_contact = htmlentities($_POST['parent_contact']);
+  $parent->account_id = $_SESSION['account_id'];
+
+  if (
+    validate_field($parent->parent_name) && validate_field($parent->parent_email) && validate_field($parent->parent_contact)
+  ) {
+    if ($parent->update_parent_guardian()) {
+      $success = 'success';
+    } else {
+      $success = 'failed';
+    }
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -368,36 +387,46 @@ include '../includes/head.php';
                 <h4 class="mb-0">Parent / Guardian</h4>
               </div>
               <hr class="my-2" style="height: 2.5px;">
-              <form action="#.php" method="post">
+              <form action="" method="post">
+                <?php
+                $parent = new Patient();
+                $parent_record = $parent->fetch_parent_guardian($_SESSION['account_id']);
+                ?>
                 <div class="col-md-12">
                   <!-- ---NAME--- -->
                   <div class="row mb-3">
                     <div class="col-12 col-md-4 mb-3 mb-md-0">
-                      <label for="firstName" class="form-label text-black-50">First Name</label>
-                      <input type="text" class="form-control bg-light border border-dark" id="firstName" name="first_name" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required>
-                    </div>
-                    <div class="col-12 col-md-4 mb-3 mb-md-0">
-                      <label for="middleName" class="form-label text-black-50">Middle Name</label>
-                      <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middle_name" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>">
-                    </div>
-                    <div class="col-12 col-md-4">
-                      <label for="lastName" class="form-label text-black-50">Last Name</label>
-                      <input type="text" class="form-control bg-light border border-dark" id="lastName" name="last_name" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required>
+                      <label for="firstName" class="form-label text-black-50">Full Name</label>
+                      <input type="text" class="form-control bg-light border border-dark" id="parent_name" name="parent_name" placeholder="Last, First, Middle" value="<?= isset($_POST['parent_name']) ? $_POST['parent_name'] : (isset($parent_record['parent_name']) ? $parent_record['parent_name'] : '') ?>" required>
+                      <?php
+                      if (isset($_POST['parent_name']) && !validate_field($_POST['parent_name'])) {
+                      ?>
+                        <p class="text-dark m-0 ps-2">Parent/Guardian name is required</p>
+                      <?php
+                      }
+                      ?>
                     </div>
                   </div>
 
                   <div class="row mb-3">
                     <div class="col-md-7 mb-3 mb-md-0">
                       <label for="email" class="form-label text-black-50">Email</label>
-                      <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@wmsu.edu.ph" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                      <input type="email" class="form-control bg-light border border-dark" id="parent_email" name="parent_email" placeholder="example@wmsu.edu.ph" value="<?= isset($_POST['parent_email']) ? $_POST['parent_email'] : (isset($parent_record['parent_email']) ? $parent_record['parent_email'] : '') ?>" required>
+                      <?php
+                      if (isset($_POST['parent_email']) && !validate_field($_POST['parent_email'])) {
+                      ?>
+                        <p class="text-dark m-0 ps-2">Email is required</p>
+                      <?php
+                      }
+                      ?>
                     </div>
                     <div class="col-md-5 mb-3 mb-md-0">
                       <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
-                      <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="contact" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required />
+                      <input type="text" class="form-control bg-light border border-dark" id="parent_contact" name="parent_contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" value="<?= isset($_POST['parent_contact']) ? $_POST['parent_contact'] : (isset($parent_record['parent_contact']) ? $parent_record['parent_contact'] : '') ?>" oninput="formatPhoneNumber(this)" required />
                       <?php
-                      if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
+                      if (isset($_POST['parent_contact']) && !validate_field($_POST['parent_contact'])) {
                       ?>
-                        <p class="text-dark m-0 ps-2">Phone number is required</p>
+                        <p class="text-dark m-0 ps-2">Contact number is required</p>
                       <?php
                       }
                       ?>
@@ -405,7 +434,7 @@ include '../includes/head.php';
                   </div>
                 </div>
                 <div class="text-end">
-                  <input type="submit" class="btn btn-primary text-light" name="save" value="Save Changes">
+                  <input type="submit" class="btn btn-primary text-light" name="save_parent" value="Save Changes">
                 </div>
               </form>
 
@@ -424,13 +453,33 @@ include '../includes/head.php';
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="myModalLabel">Account is successfully updated!</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
             <div class="row d-flex">
               <div class="col-12 text-center">
                 <a href="./profile_general" class="text-decoration-none text-dark">
-                  <p class="m-0 text-primary fw-bold">Login to verify your account.</p>
+                  <p class="m-0 text-primary fw-bold">Click to Continue.</p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php
+  } else if (isset($_POST['save_parent']) && $success == 'success') {
+  ?>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Parent/Guardian Information is successfully updated!</h5>
+          </div>
+          <div class="modal-body">
+            <div class="row d-flex">
+              <div class="col-12 text-center">
+                <a href="./profile_general" class="text-decoration-none text-dark">
+                  <p class="m-0 text-primary fw-bold">Click to Continue.</p>
                 </a>
               </div>
             </div>
