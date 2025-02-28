@@ -163,12 +163,11 @@ include '../includes/head.php';
     <div class="modal fade" id="patientDetails" tabindex="-1" aria-labelledby="patientDetailsLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-
-                </div>
                 <div class="modal-body">
-                    <p class="form-label text-black-50 fw-bold fs-5 m-0">Patient Details</p>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <p class="form-label text-black-50 fw-bold fs-5 m-0">Patient Details</p>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
                     <div class="row mb-3">
                         <div class="col-md-4 mb-3 mb-md-0">
                             <label for="firstname" class="form-label text-black-50">First Name</label>
