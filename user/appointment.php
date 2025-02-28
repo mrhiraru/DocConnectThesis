@@ -152,10 +152,10 @@ include '../includes/head.php';
 
             <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
                 <div class="row d-flex justify-content-between align-items-center">
-                    <div class="col-6">
+                    <div class="col-6 text-start">
                         <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Details</p>
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 text-end">
                         <button type="button" class="btn btn-primary text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
                             View Patient Details
                         </button>
