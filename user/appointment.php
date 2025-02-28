@@ -81,7 +81,7 @@ include '../includes/head.php';
         <section id="patient_info" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
 
             <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
-                <p class="form-label text-black-50 fw-bold fs-5 m-0"> Patient Information</p>
+                <p class="form-label text-black-50 fw-bold fs-5 m-0"> Patient Details</p>
                 <hr>
                 <!-- Name -->
                 <div class="row mb-3">
@@ -144,8 +144,6 @@ include '../includes/head.php';
                         <input type="text" class="form-control bg-light border border-dark" id="role" name="role" value="<?= isset($_SESSION['role']) ? $_SESSION['role'] : "" ?>" required readonly />
                     </div>
                 </div>
-
-                <!-- Email -->
             </div>
         </section>
         <section id="appointment" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
@@ -153,10 +151,10 @@ include '../includes/head.php';
             <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
                 <div class="row d-flex justify-content-between align-items-center">
                     <div class="col-6 text-start">
-                        <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Details</p>
+                        <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Form</p>
                     </div>
                     <div class="col-6 text-end">
-                        <button type="button" class="btn btn-sm btn-primary text-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <button type="button" class="btn btn-sm btn-primary text-light" data-bs-toggle="modal" data-bs-target="#patientDetails">
                             View Patient Details
                         </button>
                     </div>
@@ -231,7 +229,80 @@ include '../includes/head.php';
         </section>
     </form>
 
+    <div class="modal fade" id="patientDetails" tabindex="-1" aria-labelledby="patientDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="form-label text-black-50 fw-bold fs-5 m-0"> Patient Details</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
+                        <div class="row mb-3">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <label for="firstname" class="form-label text-black-50">First Name</label>
+                                <input type="text" class="form-control bg-light border border-dark" id="firstname" name="firstname" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="middlename" class="form-label text-black-50">Middle Name</label>
+                                <input type="text" class="form-control bg-light border border-dark" id="middlename" name="middlename" name="firstname" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>" readonly>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lastname" class="form-label text-black-50">Last Name</label>
+                                <input type="text" class="form-control bg-light border border-dark" id="lastname" name="lastname" name="firstname" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required readonly>
+                            </div>
+                        </div>
 
+                        <!-- Birthdate, Gender -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label text-black-50">Date of Birth</label>
+                                <input type="date" class="form-control bg-light border border-dark" id="birthdate" name="birthdate" placeholder="MM/DD/YYYY" required value="<?= isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : '' ?>" readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="gender" class="form-label text-black-50">Gender</label>
+                                <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
+                                    <option value="Male" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Male") ? 'selected' : 'hidden' ?>>Male</option>
+                                    <option value="Female" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Female") ? 'selected' : 'hidden' ?>>Female</option>
+                                    <option value="Other" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Other") ? 'selected' : 'hidden' ?>>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Phone Number -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label text-black-50">Email</label>
+                                <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                            </div>
+                            <div class="col-md-6">
+
+                                <label for=" phoneNo" class="form-label text-black-50">Contact No.</label>
+                                <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
+                            </div>
+                        </div>
+
+                        <!-- Address -->
+                        <div class="mb-3">
+                            <label for="address" class="form-label text-black-50">Address</label>
+                            <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required readonly>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="campus_name" class="form-label text-black-50">Campus</label>
+                                <input type="text" class="form-control bg-light border border-dark" id="campus_name" name="campus_name" value="<?= isset($_SESSION['campus_name']) ? $_SESSION['campus_name'] : "" ?>" required readonly>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="role" class="form-label text-black-50">Role</label>
+                                <input type="text" class="form-control bg-light border border-dark" id="role" name="role" value="<?= isset($_SESSION['role']) ? $_SESSION['role'] : "" ?>" required readonly />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php
     require_once('../includes/footer.php');
