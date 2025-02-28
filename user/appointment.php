@@ -77,11 +77,11 @@ include '../includes/head.php';
     require_once('../includes/header.php');
     ?>
 
-    <div class="container-fluid row g-2 p-3 d-flex justify-content-center">
-        <section id="appointment" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
+    <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
+        <section id="patient_info" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
             <div class="col-12 p-0">
-                <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
-                    <div class="row">
+                <h4>Patient Information</h4>
+                <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
                         <div class="col-12">
                             <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
                             <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
@@ -103,7 +103,6 @@ include '../includes/head.php';
                                 </div>
                             </div>
                         </div>
-                    </div>
 
                     <hr>
 
@@ -199,13 +198,13 @@ include '../includes/head.php';
                     <div class="w-100 d-flex justify-content-end">
                         <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
                     </div>
-                </form>
+                </div>
 
             </div>
         </section>
         <section id="appointment" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
             <div class="col-12 p-0">
-                <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
+                <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
                     <div class="row">
                         <div class="col-12">
                             <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
@@ -324,11 +323,11 @@ include '../includes/head.php';
                     <div class="w-100 d-flex justify-content-end">
                         <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
                     </div>
-                </form>
+                </div>
 
             </div>
         </section>
-    </div>
+    </form>
 
 
 
