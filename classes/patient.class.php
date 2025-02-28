@@ -62,7 +62,7 @@ class Patient
 
     function fetch_parent_guardian($account_id)
     {
-        $sql = "SELECT *, CONCAT(firstname, IF(middlename IS NOT NULL AND middlename != '', CONCAT(' ', middlename), ''), ' ', lastname) AS parent_name FROM patient_info WHERE account_id = :account_id";
+        $sql = "SELECT * FROM patient_info WHERE account_id = :account_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);
