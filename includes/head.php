@@ -41,4 +41,5 @@
   <link rel="stylesheet" href="../css/style.css">
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
