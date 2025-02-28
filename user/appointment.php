@@ -116,9 +116,16 @@ include '../includes/head.php';
                 </div>
 
                 <!-- Phone Number -->
-                <div class="mb-3">
-                    <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
-                    <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label for="email" class="form-label text-black-50">Email</label>
+                        <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                    </div>
+                    <div class="col-md-6">
+
+                        <label for=" phoneNo" class="form-label text-black-50">Phone No.</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
+                    </div>
                 </div>
 
                 <!-- Address -->
@@ -128,10 +135,6 @@ include '../includes/head.php';
                 </div>
 
                 <!-- Email -->
-                <div class="mb-3">
-                    <label for="email" class="form-label text-black-50">Email</label>
-                    <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
-                </div>
             </div>
         </section>
         <section id="appointment" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
