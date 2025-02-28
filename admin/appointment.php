@@ -1,10 +1,28 @@
+<?php
+session_start();
+
+if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
+  header('location: ../user/verification.php');
+} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
+  header('location: ./index.php');
+}
+
+require_once '../classes/account.class.php';
+$account = new Account(); // Create an instance of the class
+$appointment_array = $account->get_appointments_with_doctors_and_patients();
+
+
+
+?>
+
 <html lang="en">
-<?php 
-  $title = 'Admin | Appointment';
-	include './includes/admin_head.php';
-  function getCurrentPage() {
-    return basename($_SERVER['PHP_SELF']);
-  }
+<?php
+$title = 'Campuses | View User';
+include './includes/admin_head.php';
+function getCurrentPage()
+{
+  return basename($_SERVER['PHP_SELF']);
+}
 ?>
 <body>
   <?php 
@@ -39,44 +57,9 @@
       </div>
     </div>
 
-    <?php
-      $appointment_array = array(
-        array(
-          'Code' => '0001',
-          'Type' => 'F-2-F',
-          'Patient Name' => 'Wally West',
-          'Doctor Name' => 'Dr. Olive Oil',
-          'Appointment date' => 'Monday, 9:00 - 10:00 am',
-          'Status' => 'Completed',
-        ),
-        array(
-          'Code' => '0002',
-          'Type' => 'Online',
-          'Patient Name' => 'Jon Kent',
-          'Doctor Name' => 'Dr. James Jamison',
-          'Appointment date' => 'Tuesday, 11:00 - 12:00 am',
-          'Status' => 'In Progress',
-        ),
-        array(
-          'Code' => '0003',
-          'Type' => 'Online',
-          'Patient Name' => 'Allen Barry',
-          'Doctor Name' => 'Dr. Knot Rildoktor',
-          'Appointment date' => 'Wednesday, 01:30 - 02:00 pm',
-          'Status' => 'Canceled',
-        ),
-        array(
-          'Code' => '0004',
-          'Type' => 'F-2-F',
-          'Patient Name' => 'Jason Todd',
-          'Doctor Name' => 'Dr. Thomas Wayne',
-          'Appointment date' => 'Friday, 08:30 - 10:00 am',
-          'Status' => 'Waiting',
-        ),
-      );
-      
-      function getStatusClass($status) {
-        switch ($status) {
+    <?php  
+      function getStatusClass($appointment_status) {
+        switch ($appointment_status) {
           case 'Completed':
             return 'bg-success';
           case 'In Progress':
@@ -95,8 +78,7 @@
         <thead>
           <tr>
             <th scope="col" width="3%">#</th>
-            <th scope="col">Code</th>
-            <th scope="col">Type</th>
+            <th scope="col">Appointment_id</th>
             <th scope="col">Patient Name</th>
             <th scope="col">Doctor Name</th>
             <th scope="col">Appointment date</th>
@@ -108,18 +90,17 @@
           <?php
           $counter = 1;
           foreach ($appointment_array as $item) {
-            $statusClass = getStatusClass($item['Status']);
+            $statusClass = getStatusClass($item['appointment_status']);
           ?>
             <tr>
               <td><?= $counter ?></td>
-              <td><?= $item['Code'] ?></td>
-              <td><?= $item['Type'] ?></td>
-              <td><?= $item['Patient Name'] ?></td>
-              <td><?= $item['Doctor Name'] ?></td>
-              <td><?= $item['Appointment date'] ?></td>
-              <td class="<?= $statusClass ?> text-light text-center"><?= $item['Status'] ?></td>
+              <td><?= $item['appointment_id'] ?></td>
+              <td><?= $item['patient_name'] ?></td>
+              <td><?= $item['doctor_name'] ?></td>
+              <td><?= $item['appointment_date'] ?></td>
+              <td class="<?= $statusClass ?> text-light text-center"><?= $item['appointment_status'] ?></td>
               <td class="text-center">
-                <a href="./viewAppointment?= $item['Code'] ?>" title="View Details">
+                <a href="./viewAppointment?i=<?= $counter-1 ?>" title="View Details">
                   <i class='bx bx-show'></i>
                 </a>
               </td>
