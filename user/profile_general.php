@@ -151,7 +151,6 @@ include '../includes/head.php';
                     </p>
                   </div>
                 </div>
-                <hr>
                 <div class="row col-6">
                   <div class="col-sm-4">
                     <p class="mb-0">Contact:</p>
