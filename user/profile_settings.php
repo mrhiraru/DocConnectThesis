@@ -120,7 +120,7 @@ include '../includes/head.php';
                 <h4 class="mb-0">Account</h4>
               </div>
               <hr class="mt-2 mb-3" style="height: 2.5px;">
-              <form action="">
+              <form action="" method="post" enctype="multipart/form-data">
                 <div class="col-md-12">
                   <!-- Image Upload Section -->
                   <div class="d-flex flex-column align-items-center mx-4 mb-4">
