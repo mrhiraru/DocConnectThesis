@@ -552,6 +552,92 @@ class Account
         return null;
     }
 
-
     // user functions end
+
+    // ---APPOINMENTS FUNCTIONS START---
+    function get_appointments_with_doctors_and_patients()
+    {
+        $sql = "SELECT d.doctor_id,
+                       a1.account_id AS doctor_account_id,
+                       CONCAT(a1.firstname, ' ', a1.lastname) AS doctor_name,
+                       d.specialty,
+                       a1.contact AS doctor_contact,
+                       a1.email AS doctor_email,
+                       a1.address AS doctor_address,
+                       a1.campus_id AS doctor_campus_id,
+                       
+                       p.patient_id,
+                       a2.account_id AS patient_account_id,
+                       CONCAT(a2.firstname, ' ', a2.lastname) AS patient_name,
+                       a2.contact AS patient_contact,
+                       a2.email AS patient_email,
+                       a2.address AS patient_address,
+                       a2.campus_id AS patient_campus_id,
+                       
+                       ap.appointment_id,
+                       ap.appointment_date,
+                       ap.appointment_time,
+                       ap.appointment_status,
+                       ap.reason,
+                       ap.result
+                FROM appointment ap
+                LEFT JOIN doctor_info d ON ap.doctor_id = d.doctor_id
+                LEFT JOIN account a1 ON d.account_id = a1.account_id
+                LEFT JOIN patient_info p ON ap.patient_id = p.patient_id
+                LEFT JOIN account a2 ON p.account_id = a2.account_id
+                ORDER BY ap.appointment_date DESC, ap.appointment_time ASC;";
+
+        try {
+            $query = $this->db->connect()->prepare($sql);
+            if ($query->execute()) {
+                $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+                return $result;
+            } else {
+                echo "SQL Execution Error.";
+                return [];
+            }
+        } catch (PDOException $e) {
+            echo "Database Error: " . $e->getMessage();
+            return [];
+        }
+    }
+
+
+    // ---ANALYTICS FUNCTIONS START---
+    function fetch_user_statistics()
+    {
+        $db = $this->db->connect();
+
+        // Fetch user roles and their counts
+        $sqlRoles = "SELECT user_role, COUNT(*) as count FROM account GROUP BY user_role";
+        $queryRoles = $db->prepare($sqlRoles);
+        $queryRoles->execute();
+        $roleData = $queryRoles->fetchAll(PDO::FETCH_ASSOC);
+
+        // Fetch total number of users
+        $sqlTotal = "SELECT COUNT(*) as total FROM account";
+        $queryTotal = $db->prepare($sqlTotal);
+        $queryTotal->execute();
+        $totalUsers = $queryTotal->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Fetch active users (based on last login in the last 30 days)
+        $sqlActive = "SELECT COUNT(*) as active FROM account WHERE last_login >= NOW() - INTERVAL 30 DAY";
+        $queryActive = $db->prepare($sqlActive);
+        $queryActive->execute();
+        $activeUsers = $queryActive->fetch(PDO::FETCH_ASSOC)['active'];
+
+        // Fetch new signups (assuming 'created_at' column and counting users registered in the last 30 days)
+        $sqlNew = "SELECT COUNT(*) as new_signups FROM account WHERE is_created >= NOW() - INTERVAL 30 DAY";
+        $queryNew = $db->prepare($sqlNew);
+        $queryNew->execute();
+        $newSignups = $queryNew->fetch(PDO::FETCH_ASSOC)['new_signups'];
+
+        return [
+            'roles' => $roleData,
+            'totalUsers' => $totalUsers,
+            'activeUsers' => $activeUsers,
+            'newSignups' => $newSignups
+        ];
+    }
 }

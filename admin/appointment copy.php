@@ -7,12 +7,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ./index.php');
 }
 
-require_once '../classes/account.class.php';
-$account = new Account(); // Create an instance of the class
-$appointment_array = $account->get_appointments_with_doctors_and_patients();
-
-
-
 ?>
 
 <html lang="en">
@@ -57,16 +51,51 @@ function getCurrentPage()
       </div>
     </div>
 
-    <?php  
-      function getStatusClass($appointment_status) {
-        switch ($appointment_status) {
+    <?php
+      $appointment_array = array(
+        array(
+          'Code' => '0001',
+          'Type' => 'F-2-F',
+          'Patient Name' => 'Wally West',
+          'Doctor Name' => 'Dr. Olive Oil',
+          'Appointment date' => 'Monday, 9:00 - 10:00 am',
+          'Status' => 'Completed',
+        ),
+        array(
+          'Code' => '0002',
+          'Type' => 'Online',
+          'Patient Name' => 'Jon Kent',
+          'Doctor Name' => 'Dr. James Jamison',
+          'Appointment date' => 'Tuesday, 11:00 - 12:00 am',
+          'Status' => 'In Progress',
+        ),
+        array(
+          'Code' => '0003',
+          'Type' => 'Online',
+          'Patient Name' => 'Allen Barry',
+          'Doctor Name' => 'Dr. Knot Rildoktor',
+          'Appointment date' => 'Wednesday, 01:30 - 02:00 pm',
+          'Status' => 'Canceled',
+        ),
+        array(
+          'Code' => '0004',
+          'Type' => 'F-2-F',
+          'Patient Name' => 'Jason Todd',
+          'Doctor Name' => 'Dr. Thomas Wayne',
+          'Appointment date' => 'Friday, 08:30 - 10:00 am',
+          'Status' => 'Waiting',
+        ),
+      );
+      
+      function getStatusClass($status) {
+        switch ($status) {
           case 'Completed':
             return 'bg-success';
-          case 'Ongoing':
+          case 'In Progress':
             return 'bg-info';
-          case 'Cancelled':
+          case 'Canceled':
             return 'bg-danger';
-          case 'Pending':
+          case 'Waiting':
             return 'bg-warning';
           default:
             return 'bg-secondary';
@@ -78,7 +107,8 @@ function getCurrentPage()
         <thead>
           <tr>
             <th scope="col" width="3%">#</th>
-            <th scope="col">Appointment_id</th>
+            <th scope="col">Code</th>
+            <th scope="col">Type</th>
             <th scope="col">Patient Name</th>
             <th scope="col">Doctor Name</th>
             <th scope="col">Appointment date</th>
@@ -90,17 +120,18 @@ function getCurrentPage()
           <?php
           $counter = 1;
           foreach ($appointment_array as $item) {
-            $statusClass = getStatusClass($item['appointment_status']);
+            $statusClass = getStatusClass($item['Status']);
           ?>
             <tr>
               <td><?= $counter ?></td>
-              <td><?= $item['appointment_id'] ?></td>
-              <td><?= $item['patient_name'] ?></td>
-              <td><?= $item['doctor_name'] ?></td>
-              <td><?= $item['appointment_date'] ?></td>
-              <td class="<?= $statusClass ?> text-light text-center"><?= $item['appointment_status'] ?></td>
+              <td><?= $item['Code'] ?></td>
+              <td><?= $item['Type'] ?></td>
+              <td><?= $item['Patient Name'] ?></td>
+              <td><?= $item['Doctor Name'] ?></td>
+              <td><?= $item['Appointment date'] ?></td>
+              <td class="<?= $statusClass ?> text-light text-center"><?= $item['Status'] ?></td>
               <td class="text-center">
-                <a href="./viewAppointment?i=<?= $counter-1 ?>" title="View Details">
+                <a href="./viewAppointment?= $item['Code'] ?>" title="View Details">
                   <i class='bx bx-show'></i>
                 </a>
               </td>

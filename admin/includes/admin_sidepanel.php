@@ -30,12 +30,12 @@
         Analytics & Reports
       </a>
     </li>
-    <li>
+    <!-- <li>
       <a href="./userPage" class="nav-link <?php echo getCurrentPage() == 'userPage.php' ? 'active' : 'link-dark'; ?>">
         <i class='bx bx-user-circle me-2'></i>
         User Page
       </a>
-    </li>
+    </li> -->
     <!-- <li>
       <a href="./staffs" class="nav-link <?php echo getCurrentPage() == 'staffs.php' ? 'active' : 'link-dark'; ?>">
         <i class='bx bx-group me-2' ></i>

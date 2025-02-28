@@ -1,17 +1,42 @@
+<?php
+session_start();
+
+if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
+  header('location: ../user/verification.php');
+} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
+  header('location: ./index.php');
+}
+
+require_once '../classes/account.class.php';
+$account = new Account();
+$appointment_array = $account->get_appointments_with_doctors_and_patients();
+
+$index = isset($_GET['i']) ? intval($_GET['i']) : 0;
+
+if (!isset($appointment_array[$index])) {
+  die("Invalid appointment ID.");
+}
+
+$appointment = $appointment_array[$index];
+?>
+
 <html lang="en">
 <?php
-  $title = 'Campuses | View Appointment';
-  include './includes/admin_head.php';
-  function getCurrentPage() {
-    return basename($_SERVER['PHP_SELF']);
-  }
+$title = 'Campuses | View User';
+include './includes/admin_head.php';
+function getCurrentPage()
+{
+  return basename($_SERVER['PHP_SELF']);
+}
+
 ?>
+
 <body>
   <?php
-    require_once ('./includes/admin_header.php');
+  require_once('./includes/admin_header.php');
   ?>
   <?php
-    require_once ('./includes/admin_sidepanel.php');
+  require_once('./includes/admin_sidepanel.php');
   ?>
 
   <section id="add_campus" class="page-container">
@@ -27,87 +52,87 @@
                 <i class='bx bx-chevron-left-circle fs-3 link'></i>
               </button>
               <?php
-                $status = "completed";
-                $statusClass = "";
-                switch (strtolower($status)) {
-                  case "completed":
-                    $statusClass = "text-success";
-                    break;
-                  case "in progress":
-                    $statusClass = "text-info";
-                    break;
-                  case "cancelled":
-                    $statusClass = "text-danger";
-                    break;
-                  case "waiting":
-                    $statusClass = "text-warning";
-                    break;
-                  default:
-                    $statusClass = "text-secondary";
-                    break;
-                }
+              $appointment_status = "completed";
+              $statusClass = "";
+              switch (strtolower($appointment_status)) {
+                case "completed":
+                  $statusClass = "text-success";
+                  break;
+                case "in progress":
+                  $statusClass = "text-info";
+                  break;
+                case "cancelled":
+                  $statusClass = "text-danger";
+                  break;
+                case "waiting":
+                  $statusClass = "text-warning";
+                  break;
+                default:
+                  $statusClass = "text-secondary";
+                  break;
+              }
               ?>
-              <h5 class="text-center w-100 mb-0">Status: <span class="<?php echo $statusClass; ?>"><?php echo ucfirst($status); ?></span></h5>
+              <h5 class="text-center w-100 mb-0">Status: <span class="<?php echo $statusClass; ?>"><?php echo htmlspecialchars($appointment['appointment_status']); ?></span></h5>
             </div>
 
             <hr class="mx-3 my-4">
 
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+            <div class="row row-cols-1 row-cols-md-2">
               <div class="col d-flex ">
-                <strong class="me-2">Code:</strong>
-                <p>0001</p>
+                <strong class="me-2">Appointment ID:</strong>
+                <p><?php echo htmlspecialchars($appointment['appointment_id']); ?></p>
               </div>
 
               <div class="col d-flex ">
-                <strong class="me-2">Type:</strong>
-                <p>Face to face</p>
+                <strong class="me-2">Time:</strong>
+                <p><?php echo date("h:i A", strtotime($appointment['appointment_time'])); ?></p>
               </div>
 
               <div class="col d-flex ">
                 <strong class="me-2">Date:</strong>
-                <p>Monday, 9:00am - 10:00pm</p>
+                <p><?php echo date("l, F j, Y", strtotime($appointment['appointment_date'])); ?></p>
               </div>
 
               <div class="col d-flex ">
                 <strong class="me-2">Campus:</strong>
-                <p>Campus B</p>
+                <p><?php echo htmlspecialchars($appointment['patient_campus_id']); ?></p>
               </div>
 
               <div class="col d-flex ">
                 <strong class="me-2">Address:</strong>
-                <p>Zambnonaga City</p>
+                <p><?php echo htmlspecialchars($appointment['patient_address']); ?></p>
               </div>
 
               <div class="col d-flex ">
                 <strong class="me-2">Patient:</strong>
-                <p>Allen Barry</p>
+                <p><?php echo htmlspecialchars($appointment['patient_name']); ?></p>
               </div>
 
               <div class="col d-flex ">
                 <strong class="me-2">Email:</strong>
-                <p>username123@email.com</p>
+                <p><?php echo htmlspecialchars($appointment['patient_email']); ?></p>
               </div>
 
               <div class="col d-flex ">
-                <strong class="me-2">phone:</strong>
-                <p>+63 9xx xxx xxxx</p>
+                <strong class="me-2">Patient Contact:</strong>
+                <p><?php echo htmlspecialchars($appointment['patient_contact']); ?></p>
               </div>
             </div>
 
             <div class="d-flex flex-column justify-content-end mb-3">
-              <label for="reasons" class="form-label"><strong>Reason of Visit/Appointment</strong></label>
-              <textarea class="form-control" id="reason" rows="3" disabled readonly>Masakit ulo</textarea>
+              <label for="reasons" class="form-label"><strong>Reason of Visit/Appointment:</strong></label>
+              <textarea class="form-control" id="reason" rows="3" disabled readonly><?php echo htmlspecialchars($appointment['reason']); ?></textarea>
             </div>
 
             <div class="col d-flex ">
-                <strong class="me-2">Doctor:</strong>
-                <p class="mb-0">Dr. Thomas Wayne</p>
-              </div>
+              <strong class="me-2">Doctor:</strong>
+              <p><?php echo htmlspecialchars($appointment['doctor_name']); ?></p>
+            </div>
 
             <div class="d-flex flex-column justify-content-end">
-              <label for="notes" class="form-label"><strong>Notes</strong></label>
-              <textarea class="form-control" id="notes" rows="3" disabled readonly>Masakit ulo</textarea>
-            </div>            
+              <label for="notes" class="form-label"><strong>Notes:</strong></label>
+              <textarea class="form-control" id="notes" rows="3" disabled readonly><?php echo htmlspecialchars($appointment['result']); ?></textarea>
+            </div>
 
           </div>
         </form>
@@ -116,7 +141,8 @@
 
       <div class="col-2"></div>
 
-    </div>    
+    </div>
   </section>
 </body>
+
 </html>
