@@ -128,39 +128,38 @@ include '../includes/head.php';
           <div class="card bg-body-tertiary mb-4">
             <div class="card-body">
               <h4 class="text-green mb-3">Parent/Guardian Information</h4>
-              <div class="row row-cols-1 row-cols-md-2 d-flex align-items-stretch">
-                <div class="col">
-                  <div class="row">
-                    <div class="col-12">
-                      <p class="mb-0">Name:</p>
-                    </div>
-                    <div class="col-sm-8">
-                      <p class="text-muted mb-0">
-                        <?= $_SESSION['fullname'] ?>
-                      </p>
-                    </div>
+
+              <div class="col">
+                <div class="row">
+                  <div class="col-12">
+                    <p class="mb-0">Name:</p>
                   </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-6">
-                      <p class="mb-0">Email:</p>
-                    </div>
-                    <div class="col-sm-8">
-                      <p class="text-muted mb-0">
-                        <?= $_SESSION['email'] ?>
-                      </p>
-                    </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= $_SESSION['fullname'] ?>
+                    </p>
                   </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-6">
-                      <p class="mb-0">Contact:</p>
-                    </div>
-                    <div class="col-sm-8">
-                      <p class="text-muted mb-0">
-                        <?= $_SESSION['email'] ?>
-                      </p>
-                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-6">
+                    <p class="mb-0">Email:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= $_SESSION['email'] ?>
+                    </p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-6">
+                    <p class="mb-0">Contact:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= $_SESSION['email'] ?>
+                    </p>
                   </div>
                 </div>
               </div>
