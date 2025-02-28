@@ -478,8 +478,14 @@ include '../includes/head.php';
         }
 
 
+        let flatpickrInstance;
+
         function initFlatpickr() {
-            flatpickr("#appointment_date", {
+            if (flatpickrInstance) {
+                flatpickrInstance.destroy(); // Destroy existing Flatpickr instance
+            }
+
+            flatpickrInstance = flatpickr("#appointment_date", {
                 inline: true,
                 enable: [
                     function(date) {
