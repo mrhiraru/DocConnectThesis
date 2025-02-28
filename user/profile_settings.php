@@ -25,6 +25,8 @@ if (isset($_POST['save'])) {
   $account->contact = htmlentities($_POST['contact']);
   $account->address = htmlentities($_POST['address']);
   $account->birthdate = htmlentities($_POST['birthdate']);
+  $account->height = htmlentities($_POST['height']);
+  $account->weight = htmlentities($_POST['weight']);
 
   if (isset($_POST['gender'])) {
     $account->gender = htmlentities($_POST['gender']);
@@ -51,7 +53,9 @@ if (isset($_POST['save'])) {
     validate_field($account_class->contact) &&
     validate_field($account_class->birthdate) &&
     validate_field($account_class->address) &&
-    validate_field($account_class->role)
+    validate_field($account_class->role) &&
+    validate_field($account_class->height) &&
+    validate_field($account_class->weight)
   ) {
     if ($account_class->update_user_info()) {
       $success = 'success';
@@ -65,6 +69,9 @@ if (isset($_POST['save'])) {
       $_SESSION['birthdate'] = $account_class->birthdate;
       $_SESSION['contact'] = $account_class->contact;
       $_SESSION['role'] = $account_class->role;
+
+      $_SESSION['height'] = $account_class->height;
+      $_SESSION['weight'] = $account_class->height;
     } else {
       echo 'An error occured while adding in the database.';
     }
