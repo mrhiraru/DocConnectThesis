@@ -476,13 +476,37 @@ include '../includes/head.php';
             return `${hours.toString().padStart(2, '0')}:${minutes}`;
         }
 
+
         flatpickr("#appointment_date", {
-        disable: [
-            function(date) {
-                return (date.getDay() === 5); // 5 represents Friday
-            }
-        ]
-    });
+            inline: true,
+            enable: [
+                function(date) {
+                    // Convert startDay and endDay to indexes
+                    const daysMap = {
+                        "Sunday": 0,
+                        "Monday": 1,
+                        "Tuesday": 2,
+                        "Wednesday": 3,
+                        "Thursday": 4,
+                        "Friday": 5,
+                        "Saturday": 6
+                    };
+
+                    if (!startDay || !endDay) return false; // Ensure start and end days exist
+
+                    const startIndex = daysMap[startDay];
+                    const endIndex = daysMap[endDay];
+
+                    // Generate allowed days dynamically
+                    let allowedDays = [];
+                    for (let i = startIndex; i !== (endIndex + 1) % 7; i = (i + 1) % 7) {
+                        allowedDays.push(i);
+                    }
+
+                    return allowedDays.includes(date.getDay()); // Enable only valid days
+                }
+            ]
+        });
     </script>
 </body>
 
