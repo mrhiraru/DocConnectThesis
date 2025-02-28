@@ -443,6 +443,7 @@ include '../includes/head.php';
 
   <script src="../js/user/profile_settings.js"></script>
   <script src="../js/imageChange.js"></script>
+  <script src="../js/main.js"></script>
   <script>
     function formatPhoneNumber(input) {
       let value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
