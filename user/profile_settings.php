@@ -129,7 +129,6 @@ include '../includes/head.php';
                       <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important; border-radius: 5px !important;">
                         <span>Change Image</span>
                       </label>
-
                       <!-- Image Preview -->
                       <img id="output" class="rounded-2"
                         src="<?php if (isset($_SESSION['account_image'])) {
@@ -139,14 +138,52 @@ include '../includes/head.php';
                               } ?>"
                         alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;">
 
+  
                       <!-- <img id="output" class="rounded-2"
                         src="<?php echo isset($_SESSION['account_image'])
                                 ? "../assets/images/" . $_SESSION['account_image']
                                 : "../assets/images/default_profile.png"; ?>"
                         alt="User Avatar" style="max-width: 150px; max-height: 150px; object-fit: cover;"> -->
-
                       <!-- Image Upload Input -->
                       <input id="file" type="file" name="account_image" accept=".jpg, .jpeg, .png" onchange="previewImage(event)">
+                    </div>
+  
+                    <!-- Upload Button -->
+                    <button class="btn btn-primary text-light" id="uploadProfileImage" type="submit" name="save_image">Upload Image</button>
+                  </div>
+                </div>
+              </form>
+              <form id="profileForm" action="" method="post" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="col-md-12">
+                    <!-- ---NAME--- -->
+                    <div class="row row-cols-1 row-cols-md-3 mb-3">
+                      <div class="col mb-3 mb-md-0">
+                        <label for="firstName" class="form-label text-black-50">First Name</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="firstName" name="first_name" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required>
+                        <?php
+                        if (isset($_POST['firstname']) && !validate_field($_POST['firstname'])) {
+                        ?>
+                          <p class="text-dark m-0 ps-2">First name is required.</p>
+                        <?php
+                        }
+                        ?>
+                      </div>
+                      <div class="col mb-3 mb-md-0">
+                        <label for="middleName" class="form-label text-black-50">Middle Name</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middle_name" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>">
+                      </div>
+                      <div class="col">
+                        <label for="lastName" class="form-label text-black-50">Last Name</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="lastName" name="last_name" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required>
+                        <?php
+                        if (isset($_POST['lastname']) && !validate_field($_POST['lastname'])) {
+                        ?>
+                          <p class="text-dark m-0 ps-2">Last name is required.</p>
+                        <?php
+                        }
+                        ?>
+                      </div>
                     </div>
 
                     <!-- Upload Button -->

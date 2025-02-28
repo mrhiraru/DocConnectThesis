@@ -5,7 +5,7 @@ $(document).ready(function() {
     pageLength: 10,
     columnDefs: [
       {
-        targets: [0, 1, 7], // Columns without sorting
+        targets: [0, 1, 6], // Columns without sorting
         orderable: false
       }
     ]
@@ -25,8 +25,8 @@ $(document).ready(function() {
 
   $.fn.dataTable.ext.search.push(function(settings, searchData, index, rowData, counter) {
     var searchVal = input.val().toLowerCase();
-    var patientName = searchData[3].toLowerCase();
-    var doctorName = searchData[4].toLowerCase();
+    var patientName = searchData[2].toLowerCase();
+    var doctorName = searchData[3].toLowerCase();
 
     if (patientName.indexOf(searchVal) !== -1 || doctorName.indexOf(searchVal) !== -1) {
       return true;
