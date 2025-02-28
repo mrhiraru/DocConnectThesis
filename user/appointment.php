@@ -191,12 +191,8 @@ include '../includes/head.php';
                             <input type="date" class="form-control bg-light border border-dark" id="birthdate" name="birthdate" placeholder="MM/DD/YYYY" required value="<?= isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : '' ?>" readonly>
                         </div>
                         <div class="col-md-6">
-                            <label for="gender" class="form-label text-black-50">Gender</label>
-                            <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
-                                <option value="Male" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Male") ? 'selected' : 'hidden' ?>>Male</option>
-                                <option value="Female" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Female") ? 'selected' : 'hidden' ?>>Female</option>
-                                <option value="Other" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Other") ? 'selected' : 'hidden' ?>>Other</option>
-                            </select>
+                            <label for="role" class="form-label text-black-50">Gender</label>
+                            <input type="text" class="form-control bg-light border border-dark" id="gender" name="gender" value="<?= isset($_SESSION['gender']) ? $_SESSION['gender'] : "" ?>" required readonly />
                         </div>
                     </div>
 
