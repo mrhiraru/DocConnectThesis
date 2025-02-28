@@ -38,6 +38,13 @@ $totalUsers = $userStats['totalUsers'];
 $activeUsers = $userStats['activeUsers'];
 $newSignups = $userStats['newSignups'];
 
+
+$appointmentStats = $account->fetch_appointment_statistics();
+
+$totalAppointments = $appointmentStats['totalAppointments'];
+$completedAppointments = $appointmentStats['completedAppointments'];
+$canceledAppointments = $appointmentStats['canceledAppointments'];
+$pendingAppointments = $appointmentStats['pendingAppointments'];
 ?>
 
 <html lang="en">
@@ -187,12 +194,23 @@ function getCurrentPage()
       });
 
       // Appointment Insights Chart
+      var totalAppointments = <?php echo json_encode($totalAppointments); ?>;
+      var completedAppointments = <?php echo json_encode($completedAppointments); ?>;
+      var canceledAppointments = <?php echo json_encode($canceledAppointments); ?>;
+      var pendingAppointments = <?php echo json_encode($pendingAppointments); ?>;
+
+      // Update text content with real data
+      document.getElementById("totalAppointments").textContent = totalAppointments;
+      document.getElementById("avgDuration").textContent = noShowRate; // Example placeholder
+      document.getElementById("noShowRate").textContent = avgDuration; // Example placeholder
+
+      // Appointment Insights Chart
       new Chart(document.getElementById("appointmentChart"), {
         type: "pie",
         data: {
           labels: ["Completed", "Canceled", "Pending"],
           datasets: [{
-            data: [300, 50, 100],
+            data: [completedAppointments, canceledAppointments, pendingAppointments],
             backgroundColor: ["#8BC34A", "#F44336", "#FFEB3B"]
           }]
         }

@@ -643,4 +643,51 @@ class Account
             'newSignups' => $newSignups
         ];
     }
+
+    function fetch_appointment_statistics()
+    {
+        $db = $this->db->connect();
+    
+        // Fetch total appointments count
+        $sqlTotal = "SELECT COUNT(*) as total FROM appointment";
+        $queryTotal = $db->prepare($sqlTotal);
+        $queryTotal->execute();
+        $totalAppointments = $queryTotal->fetch(PDO::FETCH_ASSOC)['total'];
+    
+        // Fetch completed appointments
+        $sqlCompleted = "SELECT COUNT(*) as completed FROM appointment WHERE appointment_status = 'Completed'";
+        $queryCompleted = $db->prepare($sqlCompleted);
+        $queryCompleted->execute();
+        $completedAppointments = $queryCompleted->fetch(PDO::FETCH_ASSOC)['completed'];
+    
+        // Fetch canceled appointments (also used for noShowRate)
+        $sqlCanceled = "SELECT COUNT(*) as canceled FROM appointment WHERE appointment_status = 'Canceled'";
+        $queryCanceled = $db->prepare($sqlCanceled);
+        $queryCanceled->execute();
+        $canceledAppointments = $queryCanceled->fetch(PDO::FETCH_ASSOC)['canceled'];
+    
+        // Fetch pending appointments
+        $sqlPending = "SELECT COUNT(*) as pending FROM appointment WHERE appointment_status = 'Pending'";
+        $queryPending = $db->prepare($sqlPending);
+        $queryPending->execute();
+        $pendingAppointments = $queryPending->fetch(PDO::FETCH_ASSOC)['pending'];
+    
+        // Calculate no-show rate (as the count of canceled appointments)
+        $noShowRate = ($totalAppointments > 0) ? ($canceledAppointments / $totalAppointments) * 100 : 0;
+    
+        // Calculate average meeting duration (from appointment_time to estimated_end)
+        $sqlAvgDuration = "SELECT AVG(TIMESTAMPDIFF(MINUTE, appointment_time, estimated_end)) as avgDuration FROM appointment WHERE estimated_end IS NOT NULL";
+        $queryAvgDuration = $db->prepare($sqlAvgDuration);
+        $queryAvgDuration->execute();
+        $avgDuration = $queryAvgDuration->fetch(PDO::FETCH_ASSOC)['avgDuration'] ?? 0;
+    
+        return [
+            'totalAppointments' => $totalAppointments,
+            'completedAppointments' => $completedAppointments,
+            'canceledAppointments' => $canceledAppointments,
+            'pendingAppointments' => $pendingAppointments,
+            'noShowRate' => round($noShowRate, 2) . '%',  // Formatting as a percentage
+            'avgDuration' => round($avgDuration, 2) . ' min' // Formatting as minutes
+        ];
+    }
 }
