@@ -139,9 +139,8 @@ include '../includes/head.php';
             <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
             <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Details</p>
                 <div class="col-12">
-                    <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Search" aria-label="Doctor search" value="">
+                        <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Select Doctor" aria-label="Doctor search" value="">
                         <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
                         <input type="hidden" id="doctor_id" name="doctor_id" value="">
                     </div>
