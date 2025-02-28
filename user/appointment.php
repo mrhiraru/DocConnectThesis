@@ -230,7 +230,7 @@ include '../includes/head.php';
     </form>
 
     <div class="modal fade" id="patientDetails" tabindex="-1" aria-labelledby="patientDetailsLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <p class="form-label text-black-50 fw-bold fs-5 m-0"> Patient Details</p>
