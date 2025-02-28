@@ -331,6 +331,7 @@ include '../includes/head.php';
                                 startDay = appointment_date.dataset.startday;
                                 endDay = appointment_date.dataset.endday;
 
+                                initFlatpickr();
                                 validate_date();
 
                             });
