@@ -308,6 +308,7 @@ class Account
         $query->bindParam(':role', $this->role);
         $query->bindParam(':gender', $this->gender);
         $query->bindParam(':campus_id', $this->campus_id);
+        $query->bindParam(':account_id', $this->account_id);
 
         if ($query->execute()) {
             $sec_sql = "UPDATE patient_info 
