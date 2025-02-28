@@ -78,10 +78,10 @@ include '../includes/head.php';
     ?>
 
     <div class="row">
-        <section id="appointment" class="col-6 page-container padding-medium p-3">
+        <section id="appointment" class="col-6 page-container padding-medium">
             <div class="row mb-3">
                 <div class="col-12">
-                    <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 mb-4 mb-md-0">
+                    <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
                         <div class="row">
                             <div class="col-12">
                                 <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
@@ -205,10 +205,10 @@ include '../includes/head.php';
                 </div>
             </div>
         </section>
-        <section id="appointment" class="col-6 page-container padding-medium p-3">
+        <section id="appointment" class="col-6 page-container padding-medium">
             <div class="row mb-3">
                 <div class="col-12">
-                    <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 mb-4 mb-md-0">
+                    <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 mb-4 mb-md-0">
                         <div class="row">
                             <div class="col-12">
                                 <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
