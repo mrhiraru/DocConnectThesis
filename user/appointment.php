@@ -137,7 +137,8 @@ include '../includes/head.php';
         <section id="appointment" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
 
             <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
-            <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Details</p>
+                <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Details</p>
+                <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
                         <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Select Doctor" aria-label="Doctor search" value="">
