@@ -263,6 +263,8 @@ include '../includes/head.php';
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+
+            let autoClickElement = null;
             const doctorSearch = document.getElementById("doctorSearch");
             const doctorDropdown = document.getElementById("doctorDropdown");
             const doctorIdInput = document.getElementById("doctor_id");
