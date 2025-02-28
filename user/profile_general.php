@@ -130,31 +130,37 @@ include '../includes/head.php';
               <h4 class="text-green mb-3">Parent/Guardian Information</h4>
 
               <div class="row">
-                <div class="col-12">
-                  <p class="mb-0">Name:</p>
-                </div>
-                <div class="col-sm-8">
-                  <p class="text-muted mb-0">
-                    <?= $_SESSION['fullname'] ?>
-                  </p>
-                </div>
-                <hr>
-                <div class="col-6">
-                  <p class="mb-0">Email:</p>
-                </div>
-                <div class="col-sm-8">
-                  <p class="text-muted mb-0">
-                    <?= $_SESSION['email'] ?>
-                  </p>
+                <div class="row col-12">
+                  <div class="col-sm-4">
+                    <p class="mb-0">Name:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= $_SESSION['fullname'] ?>
+                    </p>
+                  </div>
                 </div>
                 <hr>
-                <div class="col-6">
-                  <p class="mb-0">Contact:</p>
+                <div class="row col-6">
+                  <div class="col-sm-4">
+                    <p class="mb-0">Email:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= $_SESSION['email'] ?>
+                    </p>
+                  </div>
                 </div>
-                <div class="col-sm-8">
-                  <p class="text-muted mb-0">
-                    <?= $_SESSION['email'] ?>
-                  </p>
+                <hr>
+                <div class="row col-6">
+                  <div class="col-sm-4">
+                    <p class="mb-0">Contact:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= $_SESSION['email'] ?>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
