@@ -15,33 +15,33 @@ $account_class = new Account();
 if (isset($_POST['save'])) {
   $account_class->account_id = $_SESSION['account_id'];
 
-  $account->firstname = ucfirst(strtolower(htmlentities($_POST['firstname'])));
+  $account_class->firstname = ucfirst(strtolower(htmlentities($_POST['firstname'])));
   if (isset($_POST['middlename'])) {
-    $account->middlename = ucfirst(strtolower(htmlentities($_POST['middlename'])));
+    $account_class->middlename = ucfirst(strtolower(htmlentities($_POST['middlename'])));
   } else {
-    $account->middlename = '';
+    $account_class->middlename = '';
   }
-  $account->lastname = ucfirst(strtolower(htmlentities($_POST['lastname'])));
-  $account->contact = htmlentities($_POST['contact']);
-  $account->address = htmlentities($_POST['address']);
-  $account->birthdate = htmlentities($_POST['birthdate']);
-  $account->height = htmlentities($_POST['height']);
-  $account->weight = htmlentities($_POST['weight']);
+  $account_class->lastname = ucfirst(strtolower(htmlentities($_POST['lastname'])));
+  $account_class->contact = htmlentities($_POST['contact']);
+  $account_class->address = htmlentities($_POST['address']);
+  $account_class->birthdate = htmlentities($_POST['birthdate']);
+  $account_class->height = htmlentities($_POST['height']);
+  $account_class->weight = htmlentities($_POST['weight']);
 
   if (isset($_POST['gender'])) {
-    $account->gender = htmlentities($_POST['gender']);
+    $account_class->gender = htmlentities($_POST['gender']);
   } else {
-    $account->gender = '';
+    $account_class->gender = '';
   }
   if (isset($_POST['campus_id'])) {
-    $account->campus_id = htmlentities($_POST['campus_id']);
+    $account_class->campus_id = htmlentities($_POST['campus_id']);
   } else {
-    $account->campus_id = '';
+    $account_class->campus_id = '';
   }
   if (isset($_POST['role'])) {
-    $account->role = htmlentities($_POST['role']);
+    $account_class->role = htmlentities($_POST['role']);
   } else {
-    $account->role = '';
+    $account_class->role = '';
   }
 
   if (
