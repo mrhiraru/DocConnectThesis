@@ -550,27 +550,35 @@ class Account
     // ---APPOINMENTS FUNCTIONS START---
     function get_appointments_with_doctors_and_patients()
     {
-        $sql = "SELECT 
-    d.doctor_id,
-    a1.account_id AS doctor_account_id,
-    CONCAT(a1.firstname, ' ', a1.lastname) AS doctor_name,
-    d.specialty,
-    a1.contact AS doctor_contact,
-    p.patient_id,
-    a2.account_id AS patient_account_id,
-    CONCAT(a2.firstname, ' ', a2.lastname) AS patient_name,
-    a2.contact AS patient_contact,
-    ap.appointment_id,
-    ap.appointment_date,
-    ap.appointment_time,
-    ap.appointment_status
-FROM appointment ap
-LEFT JOIN doctor_info d ON ap.doctor_id = d.doctor_id
-LEFT JOIN account a1 ON d.account_id = a1.account_id
-LEFT JOIN patient_info p ON ap.patient_id = p.patient_id
-LEFT JOIN account a2 ON p.account_id = a2.account_id
-ORDER BY ap.appointment_date DESC, ap.appointment_time ASC;
-";
+        $sql = "SELECT d.doctor_id,
+                       a1.account_id AS doctor_account_id,
+                       CONCAT(a1.firstname, ' ', a1.lastname) AS doctor_name,
+                       d.specialty,
+                       a1.contact AS doctor_contact,
+                       a1.email AS doctor_email,
+                       a1.address AS doctor_address,
+                       a1.campus_id AS doctor_campus_id,
+                       
+                       p.patient_id,
+                       a2.account_id AS patient_account_id,
+                       CONCAT(a2.firstname, ' ', a2.lastname) AS patient_name,
+                       a2.contact AS patient_contact,
+                       a2.email AS patient_email,
+                       a2.address AS patient_address,
+                       a2.campus_id AS patient_campus_id,
+                       
+                       ap.appointment_id,
+                       ap.appointment_date,
+                       ap.appointment_time,
+                       ap.appointment_status,
+                       ap.reason,
+                       ap.result
+                FROM appointment ap
+                LEFT JOIN doctor_info d ON ap.doctor_id = d.doctor_id
+                LEFT JOIN account a1 ON d.account_id = a1.account_id
+                LEFT JOIN patient_info p ON ap.patient_id = p.patient_id
+                LEFT JOIN account a2 ON p.account_id = a2.account_id
+                ORDER BY ap.appointment_date DESC, ap.appointment_time ASC;";
 
         try {
             $query = $this->db->connect()->prepare($sql);

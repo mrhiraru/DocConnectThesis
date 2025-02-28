@@ -62,11 +62,11 @@ function getCurrentPage()
         switch ($appointment_status) {
           case 'Completed':
             return 'bg-success';
-          case 'In Progress':
+          case 'Ongoing':
             return 'bg-info';
-          case 'Canceled':
+          case 'Cancelled':
             return 'bg-danger';
-          case 'Waiting':
+          case 'Pending':
             return 'bg-warning';
           default:
             return 'bg-secondary';
