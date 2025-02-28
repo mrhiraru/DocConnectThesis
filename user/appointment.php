@@ -263,8 +263,6 @@ include '../includes/head.php';
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-
-            let autoClickElement = null;
             const doctorSearch = document.getElementById("doctorSearch");
             const doctorDropdown = document.getElementById("doctorDropdown");
             const doctorIdInput = document.getElementById("doctor_id");
@@ -334,11 +332,7 @@ include '../includes/head.php';
                                 endDay = appointment_date.dataset.endday;
 
                                 validate_date();
-                                if (startDay && endDay) {
-                                    initFlatpickr();
-                                } else {
-                                    console.warn("❌ startDay or endDay is missing, skipping Flatpickr update!");
-                                }
+
                             });
 
                             doctorDropdown.appendChild(li);
@@ -483,66 +477,18 @@ include '../includes/head.php';
         }
 
 
-        let flatpickrInstance;
-
-        function initFlatpickr() {
-            if (flatpickrInstance) {
-                flatpickrInstance.destroy(); // Destroy existing Flatpickr instance
-            }
-
-            // Mapping weekdays to numbers
-            const daysMap = {
-                "Sunday": 0,
-                "Monday": 1,
-                "Tuesday": 2,
-                "Wednesday": 3,
-                "Thursday": 4,
-                "Friday": 5,
-                "Saturday": 6
-            };
-
-            if (!startDay || !endDay) {
-                console.warn("startDay or endDay is not set properly!");
-                return;
-            }
-
-            const startIndex = daysMap[startDay];
-            const endIndex = daysMap[endDay];
-
-            // Get all enabled days between startDay and endDay
-            let allowedDays = [];
-            for (let i = startIndex;; i = (i + 1) % 7) {
-                allowedDays.push(i);
-                if (i === endIndex) break; // Stop when endDay is reached
-            }
-
-            // Initialize Flatpickr with only allowed days enabled
-            flatpickrInstance = flatpickr("#appointment_date", {
-                inline: true,
-                disable: [
-                    function(date) {
-                        return !allowedDays.includes(date.getDay()); // Disable all other days
-                    }
-                ]
-            });
-
-            console.log("Flatpickr initialized with allowed days:", allowedDays);
-        }
-
-        // Call this function when a doctor is selected
-        document.addEventListener("DOMContentLoaded", function() {
-            document.getElementById("doctorDropdown").addEventListener("click", function(event) {
-                const doctor = event.target.dataset;
-
-                if (doctor.start_day && doctor.end_day) {
-                    startDay = doctor.start_day;
-                    endDay = doctor.end_day;
-
-                    console.log("Selected Doctor's working days:", startDay, "to", endDay);
-
-                    initFlatpickr(); // Update Flatpickr
+        flatpickr("#appointment_date", {
+            inline: true,
+            disable: [
+                function(date) {
+                    return (date.getDay() === 5); // 5 represents Friday
                 }
-            });
+            ],
+            enable: [
+                function(date) {
+                    return (date.getDay() === 5); // 5 represents Friday
+                }
+            ]
         });
     </script>
 </body>
