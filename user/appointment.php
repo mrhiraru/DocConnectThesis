@@ -478,36 +478,37 @@ include '../includes/head.php';
         }
 
 
-        flatpickr("#appointment_date", {
-            inline: true,
-            enable: [
-                function(date) {
-                    // Convert startDay and endDay to indexes
-                    const daysMap = {
-                        "Sunday": 0,
-                        "Monday": 1,
-                        "Tuesday": 2,
-                        "Wednesday": 3,
-                        "Thursday": 4,
-                        "Friday": 5,
-                        "Saturday": 6
-                    };
+        function initFlatpickr() {
+            flatpickr("#appointment_date", {
+                inline: true,
+                enable: [
+                    function(date) {
+                        if (!startDay || !endDay) return false; // Ensure days are set
 
-                    if (!startDay || !endDay) return false; // Ensure start and end days exist
+                        const daysMap = {
+                            "Sunday": 0,
+                            "Monday": 1,
+                            "Tuesday": 2,
+                            "Wednesday": 3,
+                            "Thursday": 4,
+                            "Friday": 5,
+                            "Saturday": 6
+                        };
 
-                    const startIndex = daysMap[startDay];
-                    const endIndex = daysMap[endDay];
+                        const startIndex = daysMap[startDay];
+                        const endIndex = daysMap[endDay];
 
-                    // Generate allowed days dynamically
-                    let allowedDays = [];
-                    for (let i = startIndex; i !== (endIndex + 1) % 7; i = (i + 1) % 7) {
-                        allowedDays.push(i);
+                        let allowedDays = [];
+                        for (let i = startIndex;; i = (i + 1) % 7) {
+                            allowedDays.push(i);
+                            if (i === endIndex) break; // Stop at end day
+                        }
+
+                        return allowedDays.includes(date.getDay()); // Enable only valid days
                     }
-
-                    return allowedDays.includes(date.getDay()); // Enable only valid days
-                }
-            ]
-        });
+                ]
+            });
+        }
     </script>
 </body>
 
