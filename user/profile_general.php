@@ -12,6 +12,10 @@ $birthdate = isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['
 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
+require_once('../classes/medical_history.class.php');
+require_once('../classes/allergy.class.php');
+require_once('../classes/immunization.class.php');
+require_once('../classes/medication.class.php');
 
 $account_class = new Account();
 if (isset($_POST['saveAccount'])) {
@@ -53,7 +57,7 @@ include '../includes/head.php';
                 <div class="col">
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Full Name</p>
+                      <p class="mb-0">Name:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
@@ -64,7 +68,7 @@ include '../includes/head.php';
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Email</p>
+                      <p class="mb-0">Email:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
@@ -75,7 +79,7 @@ include '../includes/head.php';
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Phone</p>
+                      <p class="mb-0">Contact:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
@@ -90,25 +94,25 @@ include '../includes/head.php';
                   <!-- PADAAGDAG ito sa display -->
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Campus</p>
+                      <p class="mb-0">Campus:</p>
                     </div>
                     <div class="col-sm-8">
-                      <p class="text-muted mb-0">WMSU MAIN</p>
+                      <p class="text-muted mb-0"><?= $_SESSION['campus_name'] ?></p>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">School Id</p>
+                      <p class="mb-0">School Id:</p>
                     </div>
                     <div class="col-sm-8">
-                      <p class="text-muted mb-0">2021-00890</p>
+                      <p class="text-muted mb-0"><?= $_SESSION['schoold_id'] ?></p>
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">Address</p>
+                      <p class="mb-0">Address:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0">
@@ -121,93 +125,192 @@ include '../includes/head.php';
               </div>
             </div>
           </div>
-          <div class="row">
+          <div class="row mb-2">
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h4 class="text-green mb-3">Used Drugs</h4>
+                  <h5 class="text-green mb-3">Medications <span class="float-end fs-6"><a href="./add_medication.php" class="btn btn-primary btn-sm text-light">Add Medication</a></span></h5>
                   <hr>
                   <?php
-                  $usedDrugs_array = array(
-                    array(
-                      'brandName' => 'Amoxicillin',
-                      'genericName' => 'Amoxicillin',
-                      'strenght' => '250mg',
-                      'pack' => '100',
-                      'from' => 'Tab',
-                      'manufacturer' => 'Apotex Industries',
-                    ),
-                    array(
-                      'brandName' => 'Ibuprofen',
-                      'genericName' => 'Ibuprofen',
-                      'strenght' => '200mg',
-                      'pack' => '50',
-                      'from' => 'Caplet',
-                      'manufacturer' => 'Pfizer',
-                    ),
-                    array(
-                      'brandName' => 'Paracetamol',
-                      'genericName' => 'Acetaminophen',
-                      'strenght' => '500mg',
-                      'pack' => '30',
-                      'from' => 'Tablet',
-                      'manufacturer' => 'GlaxoSmithKline',
-                    ),
-                    array(
-                      'brandName' => 'Ciprofloxacin',
-                      'genericName' => 'Ciprofloxacin',
-                      'strenght' => '500mg',
-                      'pack' => '20',
-                      'from' => 'Tab',
-                      'manufacturer' => 'Bayer Pharmaceuticals',
-                    ),
-                    array(
-                      'brandName' => 'Lisinopril',
-                      'genericName' => 'Lisinopril',
-                      'strenght' => '10mg',
-                      'pack' => '60',
-                      'from' => 'Tablet',
-                      'manufacturer' => 'Merck',
-                    ),
-                    array(
-                      'brandName' => 'Metformin',
-                      'genericName' => 'Metformin',
-                      'strenght' => '850mg',
-                      'pack' => '100',
-                      'from' => 'Tab',
-                      'manufacturer' => 'Teva Pharmaceuticals',
-                    ),
-                  );
+                  $med = new Medication();
+                  $medArray = $med->get_medication($_SESSION['patient_id']);
+
                   ?>
 
                   <table id="profileGeneral_table" class="table table-striped" style="width:100%">
                     <thead>
                       <tr>
                         <th scope="col" width="3%">#</th>
-                        <th scope="col">Brand Name</th>
-                        <th scope="col">Generic Name</th>
-                        <th scope="col">Strenght</th>
-                        <th scope="col">Pack</th>
-                        <th scope="col">From</th>
-                        <th scope="col">Manufacturer</th>
+                        <th scope="col">Medicine Name</th>
+                        <th scope="col">Dosage</th>
+                        <th scope="col">Frequency</th>
                       </tr>
                     </thead>
                     <tbody>
                       <?php
                       $counter = 1;
-                      foreach ($usedDrugs_array as $item) {
+                      if (!empty($medArray)) {
+                        foreach ($medArray as $item) {
                       ?>
+                          <tr>
+                            <td><?= $counter ?></td>
+                            <td><?= $item['medication_name'] ?></td>
+                            <td><?= $item['dosage'] ?></td>
+                            <td><?= $item['med_usage'] ?></td>
+                          </tr>
+                        <?php
+                          $counter++;
+                        }
+                      } else {
+                        ?>
                         <tr>
-                          <td><?= $counter ?></td>
-                          <td><?= $item['brandName'] ?></td>
-                          <td><?= $item['genericName'] ?></td>
-                          <td><?= $item['strenght'] ?></td>
-                          <td><?= $item['pack'] ?></td>
-                          <td><?= $item['from'] ?></td>
-                          <td><?= $item['manufacturer'] ?></td>
+                          <td colspan='5' class="text-center">No Medication Record</td>
                         </tr>
                       <?php
-                        $counter++;
+                      }
+
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-12">
+              <div class="card bg-body-tertiary mb-4 mb-md-0">
+                <div class="card-body">
+                  <h5 class="text-green mb-3">Allergies <span class="float-end fs-6"><a href="./add_allergy.php" class="btn btn-primary btn-sm text-light">Add Allergy</a></span></h5>
+                  <hr>
+                  <?php
+                  $allergy = new Allergy();
+                  $allergyArray = $allergy->get_allergy($_SESSION['patient_id']);
+
+                  ?>
+
+                  <table id="profileGeneral_table" class="table table-striped" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="3%">#</th>
+                        <th scope="col">Allergy Name</th>
+                        <th scope="col">Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $counter = 1;
+                      if (!empty($allergyArray)) {
+                        foreach ($allergyArray as $item) {
+                      ?>
+                          <tr>
+                            <td><?= $counter ?></td>
+                            <td><?= $item['allergy_name'] ?></td>
+                            <td><?= $item['description'] ?></td>
+                          </tr>
+                        <?php
+                          $counter++;
+                        }
+                      } else {
+                        ?>
+                        <tr>
+                          <td colspan='3' class="text-center">No Allergy Record</td>
+                        </tr>
+                      <?php
+                      }
+
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mb-2">
+            <div class="col-md-12">
+              <div class="card bg-body-tertiary mb-4 mb-md-0">
+                <div class="card-body">
+                  <h5 class="text-green mb-3">Immunization <span class="float-end fs-6"><a href="./add_immunization.php" class="btn btn-primary btn-sm text-light">Add Immunization</a></span></h5>
+                  <hr>
+                  <?php
+                  $immu = new Immunization();
+                  $immuArray = $immu->get_immunization($_SESSION['patient_id']);
+
+                  ?>
+
+                  <table id="profileGeneral_table" class="table table-striped" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="3%">#</th>
+                        <th scope="col">Immunization Name</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $counter = 1;
+                      if (!empty($immuArray)) {
+                        foreach ($immuArray as $item) {
+                      ?>
+                          <tr>
+                            <td><?= $counter ?></td>
+                            <td><?= $item['immunization_name'] ?></td>
+                          </tr>
+                        <?php
+                          $counter++;
+                        }
+                      } else {
+                        ?>
+                        <tr>
+                          <td colspan='2' class="text-center">No Immunization Record</td>
+                        </tr>
+                      <?php
+                      }
+                      ?>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card bg-body-tertiary mb-4 mb-md-0">
+                <div class="card-body">
+                  <h5 class="text-green mb-3">Medical History <span class="float-end fs-6"><a href="./add_medhis.php" class="btn btn-primary btn-sm text-light">Add Condition</a></span></h5>
+                  <hr>
+                  <?php
+                  $medhis = new MedHis();
+                  $medhisArray = $medhis->get_medical_history($_SESSION['patient_id']);
+
+                  ?>
+
+                  <table id="profileGeneral_table" class="table table-striped" style="width:100%">
+                    <thead>
+                      <tr>
+                        <th scope="col" width="3%">#</th>
+                        <th scope="col">Condition</th>
+                        <th scope="col">Year Diagnosed</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      $counter = 1;
+                      if (!empty($medhisArray)) {
+                        foreach ($medhisArray as $item) {
+                      ?>
+                          <tr>
+                            <td><?= $counter ?></td>
+                            <td><?= $item['his_condition'] ?></td>
+                            <td><?= $item['diagnosis_date'] ?></td>
+                          </tr>
+                        <?php
+                          $counter++;
+                        }
+                      } else {
+                        ?>
+                        <tr>
+                          <td colspan='4' class="text-center">No Medical History</td>
+                        </tr>
+                      <?php
                       }
                       ?>
                     </tbody>
@@ -220,8 +323,6 @@ include '../includes/head.php';
       </div>
     </div>
   </section>
-
-  <script src="../js/profileGeneral-dataTables.js"></script>
 
   <?php
   require_once('../includes/footer.php');

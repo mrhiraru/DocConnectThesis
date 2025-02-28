@@ -5,6 +5,9 @@ class Medication
 {
     public $patient_id;
     public $medication_id;
+    public $medication_name;
+    public $dosage;
+    public $med_usage;
     public $is_created;
     public $is_updated;
     public $is_deleted;
@@ -29,5 +32,23 @@ class Medication
             $data = $query->fetchAll();
         }
         return $data;
+    }
+
+    function add_med()
+    {
+        $sql = "INSERT INTO medication (patient_id, medication_name, dosage, med_usage) VALUES (:patient_id, :medication_name, :dosage, :med_usage)";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':medication_name', $this->medication_name);
+        $query->bindParam(':dosage', $this->dosage);
+        $query->bindParam(':med_usage', $this->med_usage);
+        
+        $query->bindParam(':patient_id', $this->patient_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

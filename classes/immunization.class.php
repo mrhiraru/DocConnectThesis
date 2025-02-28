@@ -5,6 +5,7 @@ class Immunization
 {
     public $patient_id;
     public $immu_id;
+    public $immunization_name;
     public $is_created;
     public $is_updated;
     public $is_deleted;
@@ -29,5 +30,20 @@ class Immunization
             $data = $query->fetchAll();
         }
         return $data;
+    }
+
+    function add_immu()
+    {
+        $sql = "INSERT INTO immunization (patient_id, immunization_name) VALUES (:patient_id, :immunization_name)";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':immunization_name', $this->immunization_name);
+        $query->bindParam(':patient_id', $this->patient_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
