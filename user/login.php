@@ -164,7 +164,7 @@ include '../includes/head.php';
             ?>
           </div>
           <div class="form-input px-1">
-            <input type="text" class="form-control" id="mname" name="middlename" placeholder="middle name *">
+            <input type="text" class="form-control" id="mname" name="middlename" placeholder="middle name">
           </div>
           <div class="form-input px-1">
             <input type="text" class="form-control" id="lname" name="lastname" placeholder="last name" required value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : '' ?>">
@@ -206,7 +206,7 @@ include '../includes/head.php';
         </div>
         <div class="row row-cols-1 row-cols-md-2 w-100">
           <div class="form-input px-1">
-            <input type="text" class="form-control" id="contact" name="contact" pattern="09\d{2} \d{3} \d{4}" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+            <input type="text" class="form-control" id="contact" name="contact" pattern="09\d{2} \d{3} \d{4}" placeholder="09" required value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
             <?php
             if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
             ?>
