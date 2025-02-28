@@ -185,44 +185,6 @@ include '../includes/head.php';
                         ?>
                       </div>
                     </div>
-
-                    <!-- Upload Button -->
-                    <button class="btn btn-primary text-light" id="uploadProfileImage" type="submit" name="save_image">Upload Image</button>
-                  </div>
-                </div>
-              </form>
-              <form id="profileForm" action="" method="post" enctype="multipart/form-data">
-                <div class="row">
-                  <div class="col-md-12">
-                    <!-- ---NAME--- -->
-                    <div class="row row-cols-1 row-cols-md-3 mb-3">
-                      <div class="col mb-3 mb-md-0">
-                        <label for="firstName" class="form-label text-black-50">First Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="firstName" name="first_name" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required>
-                        <?php
-                        if (isset($_POST['firstname']) && !validate_field($_POST['firstname'])) {
-                        ?>
-                          <p class="text-dark m-0 ps-2">First name is required.</p>
-                        <?php
-                        }
-                        ?>
-                      </div>
-                      <div class="col mb-3 mb-md-0">
-                        <label for="middleName" class="form-label text-black-50">Middle Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middle_name" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>">
-                      </div>
-                      <div class="col">
-                        <label for="lastName" class="form-label text-black-50">Last Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="lastName" name="last_name" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required>
-                        <?php
-                        if (isset($_POST['lastname']) && !validate_field($_POST['lastname'])) {
-                        ?>
-                          <p class="text-dark m-0 ps-2">Last name is required.</p>
-                        <?php
-                        }
-                        ?>
-                      </div>
-                    </div>
                   </div>
                 </div>
 
