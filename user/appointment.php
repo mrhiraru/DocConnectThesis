@@ -475,6 +475,14 @@ include '../includes/head.php';
             }
             return `${hours.toString().padStart(2, '0')}:${minutes}`;
         }
+
+        flatpickr("#appointment_date", {
+        disable: [
+            function(date) {
+                return (date.getDay() === 5); // 5 represents Friday
+            }
+        ]
+    });
     </script>
 </body>
 

@@ -39,4 +39,6 @@
   <!-- Custom Styles -->
   <link rel="stylesheet" href="../css/custom.min.css">
   <link rel="stylesheet" href="../css/style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
