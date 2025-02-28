@@ -395,7 +395,7 @@ include '../includes/head.php';
                 <div class="col-md-12">
                   <!-- ---NAME--- -->
                   <div class="row mb-3">
-                    <div class="col-12 col-md-4 mb-3 mb-md-0">
+                    <div class="col-12">
                       <label for="firstName" class="form-label text-black-50">Full Name</label>
                       <input type="text" class="form-control bg-light border border-dark" id="parent_name" name="parent_name" placeholder="Last, First, Middle" value="<?= isset($_POST['parent_name']) ? $_POST['parent_name'] : (isset($parent_record['parent_name']) ? $parent_record['parent_name'] : '') ?>" required>
                       <?php
