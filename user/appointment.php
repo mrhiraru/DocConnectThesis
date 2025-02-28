@@ -78,7 +78,7 @@ include '../includes/head.php';
     ?>
 
     <div class="container-fluid row g-2 p-3 d-flex justify-content-center">
-        <section id="appointment" class="col-10 col-md-8 col-lg-12 page-container padding-medium">
+        <section id="appointment" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
             <div class="col-12 p-0">
                 <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
                     <div class="row">
@@ -203,7 +203,7 @@ include '../includes/head.php';
 
             </div>
         </section>
-        <section id="appointment" class="col-10 col-md-8 col-lg-12 page-container padding-medium">
+        <section id="appointment" class="col-12 col-md-10 col-lg-6 page-container padding-medium">
             <div class="col-12 p-0">
                 <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
                     <div class="row">
