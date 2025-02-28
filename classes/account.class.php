@@ -295,6 +295,8 @@ class Account
                         campus_id = :campus_id
                     WHERE account_id = :account_id";
 
+        echo "<script>console.log('hehe query 1')</script>";
+
         $query = $connect->prepare($sql);
         $query->bindParam(':firstname', $this->firstname);
         $query->bindParam(':middlename', $this->middlename);
@@ -310,6 +312,8 @@ class Account
         $query->bindParam(':account_id', $this->account_id);
 
         if ($query->execute()) {
+
+            echo "<script>console.log('hehe query 2')</script>";
             $sec_sql = "UPDATE patient_info 
             SET height = :height, weight = :weight
             WHERE account_id = :account_id";
