@@ -279,11 +279,10 @@ class Account
 
     function update_user_info()
     {
-        try {
-            $connect = $this->db->connect();
-            $connect->beginTransaction();
+        $connect = $this->db->connect();
+        $connect->beginTransaction();
 
-            $sql = "UPDATE account
+        $sql = "UPDATE account
                     SET firstname = :firstname, 
                         middlename = :middlename, 
                         lastname = :lastname, 
@@ -291,28 +290,39 @@ class Account
                         birthdate = :birthdate, 
                         contact = :contact, 
                         email = :email, 
-                        address = :address
+                        address = :address,
+                        role = :role
                     WHERE account_id = :account_id";
 
-            $stmt = $connect->prepare($sql);
-            $stmt->bindParam(':firstname', $this->firstname);
-            $stmt->bindParam(':middlename', $this->middlename);
-            $stmt->bindParam(':lastname', $this->lastname);
-            $stmt->bindParam(':gender', $this->gender);
-            $stmt->bindParam(':birthdate', $this->birthdate);
-            $stmt->bindParam(':contact', $this->contact);
-            $stmt->bindParam(':email', $this->email);
-            $stmt->bindParam(':address', $this->address);
-            $stmt->bindParam(':account_id', $this->account_id);
+        $query = $connect->prepare($sql);
+        $query->bindParam(':firstname', $this->firstname);
+        $query->bindParam(':middlename', $this->middlename);
+        $query->bindParam(':lastname', $this->lastname);
+        $query->bindParam(':gender', $this->gender);
+        $query->bindParam(':birthdate', $this->birthdate);
+        $query->bindParam(':contact', $this->contact);
+        $query->bindParam(':email', $this->email);
+        $query->bindParam(':address', $this->address);
+        $query->bindParam(':role', $this->role);
 
-            if ($stmt->execute()) {
+        if ($query->execute()) {
+            $sec_sql = "UPDATE patient_info 
+            SET height = :height, weight = :weight
+            WHERE account_id = :account_id";
+
+            $sec_query = $connect->prepare($sec_sql);
+            $sec_query->bindParam(':account_id', $this->account_id);
+            $sec_query->bindParam(':height', $this->height);
+            $sec_query->bindParam(':weight', $this->weight);
+
+            if ($sec_query->execute()) {
                 $connect->commit();
                 return true;
             } else {
                 $connect->rollBack();
                 return false;
             }
-        } catch (PDOException $e) {
+        } else {
             $connect->rollBack();
             return false;
         }
@@ -648,40 +658,40 @@ class Account
     function fetch_appointment_statistics()
     {
         $db = $this->db->connect();
-    
+
         // Fetch total appointments count
         $sqlTotal = "SELECT COUNT(*) as total FROM appointment";
         $queryTotal = $db->prepare($sqlTotal);
         $queryTotal->execute();
         $totalAppointments = $queryTotal->fetch(PDO::FETCH_ASSOC)['total'];
-    
+
         // Fetch completed appointments
         $sqlCompleted = "SELECT COUNT(*) as completed FROM appointment WHERE appointment_status = 'Completed'";
         $queryCompleted = $db->prepare($sqlCompleted);
         $queryCompleted->execute();
         $completedAppointments = $queryCompleted->fetch(PDO::FETCH_ASSOC)['completed'];
-    
+
         // Fetch canceled appointments (also used for noShowRate)
         $sqlCanceled = "SELECT COUNT(*) as canceled FROM appointment WHERE appointment_status = 'Canceled'";
         $queryCanceled = $db->prepare($sqlCanceled);
         $queryCanceled->execute();
         $canceledAppointments = $queryCanceled->fetch(PDO::FETCH_ASSOC)['canceled'];
-    
+
         // Fetch pending appointments
         $sqlPending = "SELECT COUNT(*) as pending FROM appointment WHERE appointment_status = 'Pending'";
         $queryPending = $db->prepare($sqlPending);
         $queryPending->execute();
         $pendingAppointments = $queryPending->fetch(PDO::FETCH_ASSOC)['pending'];
-    
+
         // Calculate no-show rate (as the count of canceled appointments)
         $noShowRate = ($totalAppointments > 0) ? ($canceledAppointments / $totalAppointments) * 100 : 0;
-    
+
         // Calculate average meeting duration (from appointment_time to estimated_end)
         $sqlAvgDuration = "SELECT AVG(TIMESTAMPDIFF(MINUTE, appointment_time, estimated_end)) as avgDuration FROM appointment WHERE estimated_end IS NOT NULL";
         $queryAvgDuration = $db->prepare($sqlAvgDuration);
         $queryAvgDuration->execute();
         $avgDuration = $queryAvgDuration->fetch(PDO::FETCH_ASSOC)['avgDuration'] ?? 0;
-    
+
         return [
             'totalAppointments' => $totalAppointments,
             'completedAppointments' => $completedAppointments,
