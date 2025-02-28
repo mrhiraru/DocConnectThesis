@@ -207,7 +207,7 @@ include '../includes/head.php';
         </div>
         <div class="row row-cols-1 row-cols-md-2 w-100">
           <div class="form-input px-1">
-            <input type="text" class="form-control" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" placeholder="09" oninput="formatPhoneNumber(input)" required value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+            <input type="text" class="form-control" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" placeholder="09" oninput="formatPhoneNumber(this)" required value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
             <?php
             if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
             ?>
