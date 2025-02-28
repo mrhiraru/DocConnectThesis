@@ -130,6 +130,8 @@ if (isset($_POST['save_parent'])) {
     } else {
       $success = 'failed';
     }
+  } else {
+    $success = 'failed';
   }
 }
 ?>
@@ -421,7 +423,7 @@ include '../includes/head.php';
                       ?>
                     </div>
                     <div class="col-md-5 mb-3 mb-md-0">
-                      <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
+                      <label for="phoneNo" class="form-label text-black-50">Contact No.</label>
                       <input type="text" class="form-control bg-light border border-dark" id="parent_contact" name="parent_contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" value="<?= isset($_POST['parent_contact']) ? $_POST['parent_contact'] : (isset($parent_record['parent_contact']) ? $parent_record['parent_contact'] : '') ?>" oninput="formatPhoneNumber(this)" required />
                       <?php
                       if (isset($_POST['parent_contact']) && !validate_field($_POST['parent_contact'])) {

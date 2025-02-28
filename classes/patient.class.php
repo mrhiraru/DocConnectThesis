@@ -81,10 +81,10 @@ class Patient
             WHERE account_id = :account_id";
 
         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':parent_name', $parent_name);
-        $query->bindParam(':parent_email', $parent_email);
-        $query->bindParam(':parent_contact', $parent_contact);
-        $query->bindParam(':account_id', $account_id);
+        $query->bindParam(':parent_name', $this->parent_name);
+        $query->bindParam(':parent_email', $this->parent_email);
+        $query->bindParam(':parent_contact', $this->parent_contact);
+        $query->bindParam(':account_id', $this->account_id);
 
         if ($query->execute()) {
             return true;
