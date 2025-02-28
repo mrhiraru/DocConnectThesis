@@ -93,7 +93,7 @@ include '../includes/head.php';
                                 <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
                                     <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
                                 </div>
-                                <div class="col-12 col-md-7">
+                                <div class="col-12 col-md-auto">
                                     <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
                                     <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
                                     <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
@@ -215,7 +215,7 @@ include '../includes/head.php';
                                 <input type="hidden" id="doctor_id" name="doctor_id" value="">
                             </div>
                             <div class="row align-items-center border p-3 mx-2 rounded bg-light">
-                                <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
+                                <div class="d-flex justify-content-center col-12 col-md-auto mb-3 mb-md-0">
                                     <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
                                 </div>
                                 <div class="col-12 col-md-7">
