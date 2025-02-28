@@ -69,7 +69,8 @@ if (isset($_POST['save'])) {
       $_SESSION['birthdate'] = $account_class->birthdate;
       $_SESSION['contact'] = $account_class->contact;
       $_SESSION['role'] = $account_class->role;
-
+      $_SESSION['campus_id'] = $account_class->campus_id;
+ 
       $_SESSION['height'] = $account_class->height;
       $_SESSION['weight'] = $account_class->height;
     } else {
