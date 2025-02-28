@@ -54,7 +54,7 @@ if (isset($_SESSION['fullname']) && !empty($_SESSION['fullname'])) {
         <div class="d-flex mx-5 mx-md-4">
           <p class="text-muted text-start w-75">Weight</p>
           <div class="text-start w-50">
-            <p class="text-black"><?= isset($_SESSION['weight']) ? $_SESSION['weight'] . "kg" : "N/A" ?></p>
+            <p class="text-black"><?= isset($_SESSION['weight']) ? $_SESSION['weight'] . " kg" : "N/A" ?></p>
           </div>
         </div>
       </div>

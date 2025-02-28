@@ -125,6 +125,70 @@ include '../includes/head.php';
               </div>
             </div>
           </div>
+          <div class="card bg-body-tertiary mb-4">
+            <div class="card-body">
+              <h4 class="text-green mb-3">Parent/Guardian Information</h4>
+              <div class="row row-cols-1 row-cols-md-2 d-flex align-items-stretch">
+                <div class="col">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <p class="mb-0">Name:</p>
+                    </div>
+                    <div class="col-sm-8">
+                      <p class="text-muted mb-0">
+                        <?= $_SESSION['fullname'] ?>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <p class="mb-0">Email:</p>
+                    </div>
+                    <div class="col-sm-8">
+                      <p class="text-muted mb-0">
+                        <?= $_SESSION['email'] ?>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+
+                <div class="col">
+                  <!-- PADAAGDAG ito sa display -->
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <p class="mb-0">Campus:</p>
+                    </div>
+                    <div class="col-sm-8">
+                      <p class="text-muted mb-0"><?= $_SESSION['campus_name'] ?></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <p class="mb-0">Role:</p>
+                    </div>
+                    <div class="col-sm-8">
+                      <p class="text-muted mb-0"><?= $_SESSION['role'] ?></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <p class="mb-0">Address:</p>
+                    </div>
+                    <div class="col-sm-8">
+                      <p class="text-muted mb-0">
+                        <?= $_SESSION['address'] ?>
+                      </p>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="row mb-2">
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
