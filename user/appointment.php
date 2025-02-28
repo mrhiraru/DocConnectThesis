@@ -79,257 +79,253 @@ include '../includes/head.php';
 
     <div class="container-fluid row g-2 p-3">
         <section id="appointment" class="col-6 page-container padding-medium">
-            <div class="row mb-3">
-                <div class="col-12 p-0">
-                    <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
-                                <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                                    <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Search" aria-label="Doctor search" value="">
-                                    <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
-                                    <input type="hidden" id="doctor_id" name="doctor_id" value="">
+            <div class="col-12 p-0">
+                <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
+                            <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
+                                <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Search" aria-label="Doctor search" value="">
+                                <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
+                                <input type="hidden" id="doctor_id" name="doctor_id" value="">
+                            </div>
+                            <div class="row align-items-center border p-3 mx-2 rounded bg-light">
+                                <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
+                                    <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
                                 </div>
-                                <div class="row align-items-center border p-3 mx-2 rounded bg-light">
-                                    <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
-                                        <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
-                                    </div>
-                                    <div class="col-12 col-md-7">
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email">N/A</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Days: <span class="text-black" id="working_day">N/A</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Time: <span class="text-black" id="working_time">N/A</span> </p>
-                                    </div>
+                                <div class="col-12 col-md-7">
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email">N/A</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Days: <span class="text-black" id="working_day">N/A</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Time: <span class="text-black" id="working_time">N/A</span> </p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <hr>
+                    <hr>
 
-                        <!-- Name -->
-                        <div class="row mb-3">
-                            <div class="col-md-4 mb-3 mb-md-0">
-                                <label for="firstname" class="form-label text-black-50">First Name</label>
-                                <input type="text" class="form-control bg-light border border-dark" id="firstname" name="firstname" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required readonly>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="middlename" class="form-label text-black-50">Middle Name</label>
-                                <input type="text" class="form-control bg-light border border-dark" id="middlename" name="middlename" name="firstname" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>" readonly>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="lastname" class="form-label text-black-50">Last Name</label>
-                                <input type="text" class="form-control bg-light border border-dark" id="lastname" name="lastname" name="firstname" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required readonly>
-                            </div>
+                    <!-- Name -->
+                    <div class="row mb-3">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <label for="firstname" class="form-label text-black-50">First Name</label>
+                            <input type="text" class="form-control bg-light border border-dark" id="firstname" name="firstname" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required readonly>
                         </div>
-
-                        <!-- Birthdate, Gender -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label text-black-50">Date of Birth</label>
-                                <input type="date" class="form-control bg-light border border-dark" id="birthdate" name="birthdate" placeholder="MM/DD/YYYY" required value="<?= isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : '' ?>" readonly>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="gender" class="form-label text-black-50">Gender</label>
-                                <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
-                                    <option value="Male" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Male") ? 'selected' : 'hidden' ?>>Male</option>
-                                    <option value="Female" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Female") ? 'selected' : 'hidden' ?>>Female</option>
-                                    <option value="Other" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Other") ? 'selected' : 'hidden' ?>>Other</option>
-                                </select>
-                            </div>
+                        <div class="col-md-4">
+                            <label for="middlename" class="form-label text-black-50">Middle Name</label>
+                            <input type="text" class="form-control bg-light border border-dark" id="middlename" name="middlename" name="firstname" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>" readonly>
                         </div>
-
-                        <!-- Phone Number -->
-                        <div class="mb-3">
-                            <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
-                            <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
+                        <div class="col-md-4">
+                            <label for="lastname" class="form-label text-black-50">Last Name</label>
+                            <input type="text" class="form-control bg-light border border-dark" id="lastname" name="lastname" name="firstname" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required readonly>
                         </div>
+                    </div>
 
-                        <!-- Address -->
-                        <div class="mb-3">
-                            <label for="address" class="form-label text-black-50">Address</label>
-                            <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required readonly>
+                    <!-- Birthdate, Gender -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-black-50">Date of Birth</label>
+                            <input type="date" class="form-control bg-light border border-dark" id="birthdate" name="birthdate" placeholder="MM/DD/YYYY" required value="<?= isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : '' ?>" readonly>
                         </div>
-
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label text-black-50">Email</label>
-                            <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                        <div class="col-md-6">
+                            <label for="gender" class="form-label text-black-50">Gender</label>
+                            <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
+                                <option value="Male" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Male") ? 'selected' : 'hidden' ?>>Male</option>
+                                <option value="Female" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Female") ? 'selected' : 'hidden' ?>>Female</option>
+                                <option value="Other" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Other") ? 'selected' : 'hidden' ?>>Other</option>
+                            </select>
                         </div>
+                    </div>
 
-                        <!-- Preferred Appointment Date -->
-                        <div class="row mb-3">
-                            <div class="col-md-6 mb-3 mb-md-0">
-                                <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                                <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                                <?php
-                                if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
-                                ?>
-                                    <p class="text-dark m-0 ps-2">Select appointment date.</p>
-                                <?php
-                                }
-                                ?>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="appointment_time" class="form-label text-black-50">Select Time</label>
-                                <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                                <?php
-                                if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
-                                ?>
-                                    <p class="text-dark m-0 ps-2">Select appointment time.</p>
-                                <?php
-                                }
-                                ?>
-                            </div>
-                        </div>
+                    <!-- Phone Number -->
+                    <div class="mb-3">
+                        <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
-                            <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required></textarea>
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <label for="address" class="form-label text-black-50">Address</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required readonly>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label text-black-50">Email</label>
+                        <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                    </div>
+
+                    <!-- Preferred Appointment Date -->
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label for="appointment_date" class="form-label text-black-50">Select Date</label>
+                            <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                             <?php
-                            if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                            if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                             ?>
-                                <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
+                                <p class="text-dark m-0 ps-2">Select appointment date.</p>
                             <?php
                             }
                             ?>
                         </div>
-                        <p class="text-black-50 m-0"><span>Note:</span> The scheduled appointment date and time may be adjusted upon the doctor's approval.</p>
-                        <hr class="my-2">
-                        <div class="w-100 d-flex justify-content-end">
-                            <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
+                        <div class="col-md-6">
+                            <label for="appointment_time" class="form-label text-black-50">Select Time</label>
+                            <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                            <?php
+                            if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
+                            ?>
+                                <p class="text-dark m-0 ps-2">Select appointment time.</p>
+                            <?php
+                            }
+                            ?>
                         </div>
-                    </form>
+                    </div>
 
-                </div>
+                    <div class="mb-3">
+                        <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
+                        <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required></textarea>
+                        <?php
+                        if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                        ?>
+                            <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <p class="text-black-50 m-0"><span>Note:</span> The scheduled appointment date and time may be adjusted upon the doctor's approval.</p>
+                    <hr class="my-2">
+                    <div class="w-100 d-flex justify-content-end">
+                        <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
+                    </div>
+                </form>
+
             </div>
         </section>
         <section id="appointment" class="col-6 page-container padding-medium">
-            <div class="row mb-3">
-                <div class="col-12 p-0">
-                    <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
-                                <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                                    <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Search" aria-label="Doctor search" value="">
-                                    <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
-                                    <input type="hidden" id="doctor_id" name="doctor_id" value="">
+            <div class="col-12 p-0">
+                <form id="appointmentForm" action="" method="post" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="doctorSearch" class="form-label text-black-50 fw-bold fs-5">Select Doctor</label>
+                            <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
+                                <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Search" aria-label="Doctor search" value="">
+                                <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
+                                <input type="hidden" id="doctor_id" name="doctor_id" value="">
+                            </div>
+                            <div class="row align-items-center border p-3 mx-2 rounded bg-light">
+                                <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
+                                    <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
                                 </div>
-                                <div class="row align-items-center border p-3 mx-2 rounded bg-light">
-                                    <div class="d-flex justify-content-center col-12 col-md-3 mb-3 mb-md-0">
-                                        <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
-                                    </div>
-                                    <div class="col-12 col-md-7">
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email">N/A</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Days: <span class="text-black" id="working_day">N/A</span> </p>
-                                        <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Time: <span class="text-black" id="working_time">N/A</span> </p>
-                                    </div>
+                                <div class="col-12 col-md-7">
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email">N/A</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Days: <span class="text-black" id="working_day">N/A</span> </p>
+                                    <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Time: <span class="text-black" id="working_time">N/A</span> </p>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <hr>
+                    <hr>
 
-                        <!-- Name -->
-                        <div class="row mb-3">
-                            <div class="col-md-4 mb-3 mb-md-0">
-                                <label for="firstname" class="form-label text-black-50">First Name</label>
-                                <input type="text" class="form-control bg-light border border-dark" id="firstname" name="firstname" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required readonly>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="middlename" class="form-label text-black-50">Middle Name</label>
-                                <input type="text" class="form-control bg-light border border-dark" id="middlename" name="middlename" name="firstname" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>" readonly>
-                            </div>
-                            <div class="col-md-4">
-                                <label for="lastname" class="form-label text-black-50">Last Name</label>
-                                <input type="text" class="form-control bg-light border border-dark" id="lastname" name="lastname" name="firstname" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required readonly>
-                            </div>
+                    <!-- Name -->
+                    <div class="row mb-3">
+                        <div class="col-md-4 mb-3 mb-md-0">
+                            <label for="firstname" class="form-label text-black-50">First Name</label>
+                            <input type="text" class="form-control bg-light border border-dark" id="firstname" name="firstname" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required readonly>
                         </div>
-
-                        <!-- Birthdate, Gender -->
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label text-black-50">Date of Birth</label>
-                                <input type="date" class="form-control bg-light border border-dark" id="birthdate" name="birthdate" placeholder="MM/DD/YYYY" required value="<?= isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : '' ?>" readonly>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="gender" class="form-label text-black-50">Gender</label>
-                                <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
-                                    <option value="Male" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Male") ? 'selected' : 'hidden' ?>>Male</option>
-                                    <option value="Female" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Female") ? 'selected' : 'hidden' ?>>Female</option>
-                                    <option value="Other" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Other") ? 'selected' : 'hidden' ?>>Other</option>
-                                </select>
-                            </div>
+                        <div class="col-md-4">
+                            <label for="middlename" class="form-label text-black-50">Middle Name</label>
+                            <input type="text" class="form-control bg-light border border-dark" id="middlename" name="middlename" name="firstname" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>" readonly>
                         </div>
-
-                        <!-- Phone Number -->
-                        <div class="mb-3">
-                            <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
-                            <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
+                        <div class="col-md-4">
+                            <label for="lastname" class="form-label text-black-50">Last Name</label>
+                            <input type="text" class="form-control bg-light border border-dark" id="lastname" name="lastname" name="firstname" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required readonly>
                         </div>
+                    </div>
 
-                        <!-- Address -->
-                        <div class="mb-3">
-                            <label for="address" class="form-label text-black-50">Address</label>
-                            <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required readonly>
+                    <!-- Birthdate, Gender -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label text-black-50">Date of Birth</label>
+                            <input type="date" class="form-control bg-light border border-dark" id="birthdate" name="birthdate" placeholder="MM/DD/YYYY" required value="<?= isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : '' ?>" readonly>
                         </div>
-
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label for="email" class="form-label text-black-50">Email</label>
-                            <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                        <div class="col-md-6">
+                            <label for="gender" class="form-label text-black-50">Gender</label>
+                            <select class="form-select bg-light border border-dark" id="gender" name="gender" required>
+                                <option value="Male" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Male") ? 'selected' : 'hidden' ?>>Male</option>
+                                <option value="Female" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Female") ? 'selected' : 'hidden' ?>>Female</option>
+                                <option value="Other" <?= (isset($_SESSION['gender']) && $_SESSION['gender'] == "Other") ? 'selected' : 'hidden' ?>>Other</option>
+                            </select>
                         </div>
+                    </div>
 
-                        <!-- Preferred Appointment Date -->
-                        <div class="row mb-3">
-                            <div class="col-md-6 mb-3 mb-md-0">
-                                <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                                <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                                <?php
-                                if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
-                                ?>
-                                    <p class="text-dark m-0 ps-2">Select appointment date.</p>
-                                <?php
-                                }
-                                ?>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="appointment_time" class="form-label text-black-50">Select Time</label>
-                                <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                                <?php
-                                if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
-                                ?>
-                                    <p class="text-dark m-0 ps-2">Select appointment time.</p>
-                                <?php
-                                }
-                                ?>
-                            </div>
-                        </div>
+                    <!-- Phone Number -->
+                    <div class="mb-3">
+                        <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required readonly />
+                    </div>
 
-                        <div class="mb-3">
-                            <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
-                            <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required></textarea>
+                    <!-- Address -->
+                    <div class="mb-3">
+                        <label for="address" class="form-label text-black-50">Address</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="address" name="address" placeholder="Street, City, State, Postal Code" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>" required readonly>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label text-black-50">Email</label>
+                        <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@example.com" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                    </div>
+
+                    <!-- Preferred Appointment Date -->
+                    <div class="row mb-3">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label for="appointment_date" class="form-label text-black-50">Select Date</label>
+                            <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                             <?php
-                            if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                            if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                             ?>
-                                <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
+                                <p class="text-dark m-0 ps-2">Select appointment date.</p>
                             <?php
                             }
                             ?>
                         </div>
-                        <p class="text-black-50 m-0"><span>Note:</span> The scheduled appointment date and time may be adjusted upon the doctor's approval.</p>
-                        <hr class="my-2">
-                        <div class="w-100 d-flex justify-content-end">
-                            <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
+                        <div class="col-md-6">
+                            <label for="appointment_time" class="form-label text-black-50">Select Time</label>
+                            <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                            <?php
+                            if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
+                            ?>
+                                <p class="text-dark m-0 ps-2">Select appointment time.</p>
+                            <?php
+                            }
+                            ?>
                         </div>
-                    </form>
+                    </div>
 
-                </div>
+                    <div class="mb-3">
+                        <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
+                        <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required></textarea>
+                        <?php
+                        if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                        ?>
+                            <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <p class="text-black-50 m-0"><span>Note:</span> The scheduled appointment date and time may be adjusted upon the doctor's approval.</p>
+                    <hr class="my-2">
+                    <div class="w-100 d-flex justify-content-end">
+                        <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
+                    </div>
+                </form>
+
             </div>
         </section>
     </div>
