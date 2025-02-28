@@ -50,7 +50,8 @@ if (isset($_POST['save'])) {
     validate_field($account_class->email) &&
     validate_field($account_class->contact) &&
     validate_field($account_class->birthdate) &&
-    validate_field($account_class->address)
+    validate_field($account_class->address) &&
+    validate_field($account_class->role)
   ) {
     if ($account_class->update_user_info()) {
       $success = 'success';
@@ -63,6 +64,7 @@ if (isset($_POST['save'])) {
       $_SESSION['address'] = $account_class->address;
       $_SESSION['birthdate'] = $account_class->birthdate;
       $_SESSION['contact'] = $account_class->contact;
+      $_SESSION['role'] = $account_class->role;
     } else {
       echo 'An error occured while adding in the database.';
     }
