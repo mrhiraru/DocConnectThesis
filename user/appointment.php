@@ -331,9 +331,12 @@ include '../includes/head.php';
                                 startDay = appointment_date.dataset.startday;
                                 endDay = appointment_date.dataset.endday;
 
-                                initFlatpickr();
                                 validate_date();
-
+                                if (startDay && endDay) {
+                                    initFlatpickr();
+                                } else {
+                                    console.warn("❌ startDay or endDay is missing, skipping Flatpickr update!");
+                                }
                             });
 
                             doctorDropdown.appendChild(li);
