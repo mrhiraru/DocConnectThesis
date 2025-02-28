@@ -69,9 +69,9 @@ if (isset($_POST['save'])) {
       $_SESSION['contact'] = $account_class->contact;
       $_SESSION['role'] = $account_class->role;
       $_SESSION['campus_id'] = $account_class->campus_id;
- 
+
       $_SESSION['height'] = $account_class->height;
-      $_SESSION['weight'] = $account_class->height;
+      $_SESSION['weight'] = $account_class->weight;
     } else {
       echo 'An error occured while adding in the database.';
     }
@@ -188,7 +188,7 @@ include '../includes/head.php';
                     <div class="row row-cols-1 row-cols-md-3 mb-3">
                       <div class="col mb-3 mb-md-0">
                         <label for="firstName" class="form-label text-black-50">First Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="firstName" name="firstname" value="<?= isset($_SESSION['firstname']) ? $_SESSION['firstname'] : "" ?>" required>
+                        <input type="text" class="form-control bg-light border border-dark" id="firstName" name="firstname" value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : $_SESSION['firstname'] ?>" required>
                         <?php
                         if (isset($_POST['firstname']) && !validate_field($_POST['firstname'])) {
                         ?>
@@ -199,11 +199,11 @@ include '../includes/head.php';
                       </div>
                       <div class="col mb-3 mb-md-0">
                         <label for="middleName" class="form-label text-black-50">Middle Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middlename" value="<?= isset($_SESSION['middlename']) ? $_SESSION['middlename'] : "" ?>">
+                        <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middlename" value="<?= isset($_POST['middlename']) ? $_POST['middlename'] : $_SESSION['middlename'] ?>">
                       </div>
                       <div class="col">
                         <label for="lastName" class="form-label text-black-50">Last Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="lastName" name="lastname" value="<?= isset($_SESSION['lastname']) ? $_SESSION['lastname'] : "" ?>" required>
+                        <input type="text" class="form-control bg-light border border-dark" id="lastName" name="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : $_SESSION['lastname'] ?>" required>
                         <?php
                         if (isset($_POST['lastname']) && !validate_field($_POST['lastname'])) {
                         ?>
@@ -227,7 +227,12 @@ include '../includes/head.php';
                       $campusArray = $campus->show_campus();
                       foreach ($campusArray as $item) {
                       ?>
-                        <option value="<?= $item['campus_id'] ?>" <?= (isset($_POST['campus_id']) && $_POST['campus_id'] == $item['campus_id']) ? 'selected' : '' ?>><?= $item['campus_name'] ?></option>
+                        <option value="<?= $item['campus_id'] ?>"
+                          <?= (isset($_POST['campus_id']) && $_POST['campus_id'] == $item['campus_id'])
+                            || (isset($_SESSION['campus_id']) && $_SESSION['campus_id'] == $item['campus_id'])
+                            ? 'selected' : '' ?>>
+                          <?= $item['campus_name'] ?>
+                        </option>
                       <?php
                       }
                       ?>
@@ -276,11 +281,11 @@ include '../includes/head.php';
                 <div class="row mb-3">
                   <div class="col-md-7 mb-3 mb-md-0">
                     <label for="email" class="form-label text-black-50">Email</label>
-                    <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@wmsu.edu.ph" value="<?= isset($_SESSION['email']) ? $_SESSION['email'] : "" ?>" required readonly>
+                    <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@wmsu.edu.ph" value="<?= isset($_POST['email']) ? $_POST['email'] : $_SESSION['email'] ?>" required readonly>
                   </div>
                   <div class="col-md-5 mb-3 mb-md-0">
                     <label for="phoneNo" class="form-label text-black-50">Contact No.</label>
-                    <input type="text" class="form-control bg-light border border-dark" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" oninput="formatPhoneNumber(this)" required />
+                    <input type="text" class="form-control bg-light border border-dark" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" value="<?= isset($_POST['contact']) ? $_POST['contact'] : $_SESSION['contact'] ?>" oninput="formatPhoneNumber(this)" required />
                     <?php
                     if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                     ?>
@@ -295,7 +300,7 @@ include '../includes/head.php';
                 <div class="row mb-3">
                   <div class="col-md-4 mb-3 mb-md-0">
                     <label for="birthdate" class="form-label text-black-50">Birthdate</label>
-                    <input type="date" class="form-control bg-light border border-dark" id="birthdate" name="birthdate" value="<?= $birthdate ?>" required>
+                    <input type="date" class="form-control bg-light border border-dark" id="birthdate" name="birthdate" value="<?= isset($_POST['birthdate']) ? $_POST['birthdate'] : $birthdate ?>" required>
                     <?php
                     if (isset($_POST['birthdate']) && !validate_field($_POST['birthdate'])) {
                     ?>
@@ -307,7 +312,7 @@ include '../includes/head.php';
                   <div class="col-md-4 mb-3 mb-md-0">
                     <label for="height" class="form-label text-black-50">Height <span class="text-small">(cm)</span></label>
                     <div class="input-group">
-                      <input type="number" class="form-control bg-light border border-dark" id="height" name="height" value="<?= isset($_SESSION['height']) ? $_SESSION['height'] : "" ?>" placeholder="Enter height" required />
+                      <input type="number" class="form-control bg-light border border-dark" id="height" name="height" value="<?= isset($_POST['height']) ? $_POST['height'] : $_SESSION['height'] ?>" placeholder="Enter height" required />
                       <span class="input-group-text bg-light border border-dark">cm</span>
                     </div>
                     <?php
@@ -321,7 +326,7 @@ include '../includes/head.php';
                   <div class="col-md-4">
                     <label for="weight" class="form-label text-black-50">Weight <span class="text-small">(kg)</span></label>
                     <div class="input-group">
-                      <input type="number" class="form-control bg-light border border-dark" id="weight" name="weight" value="<?= isset($_SESSION['weight']) ? $_SESSION['weight'] : "" ?>" placeholder="Enter weight" required />
+                      <input type="number" class="form-control bg-light border border-dark" id="weight" name="weight" value="<?= isset($_POST['weight']) ? $_POST['weight'] : $_SESSION['weight'] ?>" placeholder="Enter weight" required />
                       <span class="input-group-text bg-light border border-dark">kg</span>
                     </div>
                     <?php
@@ -337,7 +342,7 @@ include '../includes/head.php';
                 <div class="row mb-3">
                   <div class="col-md-12 mb-3 mb-md-0">
                     <label for="address" class="form-label text-black-50">Address</label>
-                    <input type="text" class="form-control bg-light border border-dark" id="address" name="address" value="<?= isset($_SESSION['address']) ? $_SESSION['address'] : "" ?>">
+                    <input type="text" class="form-control bg-light border border-dark" id="address" name="address" value="<?= isset($_POST['address']) ? $_POST['address'] : $_SESSION['address'] ?>">
                     <?php
                     if (isset($_POST['address']) && !validate_field($_POST['address'])) {
                     ?>
@@ -387,7 +392,7 @@ include '../includes/head.php';
                     </div>
                     <div class="col-md-5 mb-3 mb-md-0">
                       <label for="phoneNo" class="form-label text-black-50">Phone No.</label>
-                      <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="Phone_No" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required />
+                      <input type="text" class="form-control bg-light border border-dark" id="phoneNo" name="contact" value="<?= isset($_SESSION['contact']) ? $_SESSION['contact'] : "" ?>" pattern="\+63 \d{3} \d{3} \d{4}" required />
                       <?php
                       if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                       ?>
