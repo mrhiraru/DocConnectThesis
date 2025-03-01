@@ -120,19 +120,19 @@ include '../includes/head.php';
                                 }
                                 ?>
                             </div>
-                            <!-- <div class="form-check mb-3">
+                            <div class="form-check mb-3">
                                 <input class="form-check-input border-danger" type="checkbox" name="authenticate" id="authenticate" required>
                                 <label class="form-check-label text-danger text-decoration-line" for="authenticate">
                                     Click to Authenticate Google Account.
                                 </label>
-                            </div> -->
+                            </div>
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
                                 <?php
                                 if ($record['appointment_status'] == 'Pending') {
                                 ?>
                                     <button type="button" class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#declineModal">Decline</button>
-                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm" data-bs-toggle="modal" data-bs-target="#generateLink">Confirm</button>
+                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Confirm</button>
                                 <?php
                                 } else if ($record['appointment_status'] == 'Incoming') {
                                 ?>
@@ -175,23 +175,6 @@ include '../includes/head.php';
                             <a href="./manage-appointment.php?appointment_id=<?= $_GET['appointment_id'] ?>" class="text-decoration-none text-dark">
                                 <p class="m-0 text-primary fw-bold">Reauthenticate</p>
                             </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="generateLink" tabindex="-1" aria-labelledby="generateLinkLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="myModalLabel">Generate Google Meet Link</h6>
-                </div>
-                <div class="modal-body">
-                    <div class="row d-flex">
-                        <div class="col-12 text-center">
-                            <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" id="generate-link" aria-label="Close">Generate</button>
                         </div>
                     </div>
                 </div>
