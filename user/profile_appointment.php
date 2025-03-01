@@ -73,7 +73,7 @@ include '../includes/head.php';
                             if ($item['appointment_status'] == 'Incoming') {
                             ?>
                               <a href="./appointment-view.php?account_id=<?= $_SESSION['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light"><i class='bx bx-play-circle me-1'></i>View</a>
-                              <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light"><i class='bx bxs-edit me-1'></i>Gawin to cancel</a>
+
                             <?php
                             } else if ($item['appointment_status'] == 'Ongoing') {
                             ?>
@@ -81,7 +81,7 @@ include '../includes/head.php';
                             <?php
                             } else if ($item['appointment_status'] == 'Pending') {
                             ?>
-                              <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light"><i class='bx bxs-edit me-1'></i>Gawin mo cancel button</a>
+                              
                             <?php
                             } else if ($item['appointment_status'] == 'Completed') {
                             ?>
@@ -89,7 +89,7 @@ include '../includes/head.php';
                             <?php
                             } else if ($item['appointment_status'] == 'Cancelled') {
                             ?>
-                              
+
                             <?php
                             }
                             ?>
