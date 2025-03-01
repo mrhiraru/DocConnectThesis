@@ -92,6 +92,17 @@ include '../includes/head.php';
                 </div>
 
                 <hr>
+                <div class="mb-3">
+                    <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
+                    <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required></textarea>
+                    <?php
+                    if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                    ?>
+                        <p class="text-dark m-0 ps-2">Select purpose for appointment.</p>
+                    <?php
+                    }
+                    ?>
+                </div>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
                         <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Select Doctor" aria-label="Doctor search" value="">
@@ -119,7 +130,7 @@ include '../includes/head.php';
                 <div class="row mb-3">
                     <div class="col-md-6 mb-3 mb-md-0">
                         <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                        <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                        <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                         <?php
                         if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                         ?>
@@ -141,17 +152,7 @@ include '../includes/head.php';
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
-                    <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required></textarea>
-                    <?php
-                    if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
-                    ?>
-                        <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
-                    <?php
-                    }
-                    ?>
-                </div>
+
                 <hr class="my-2">
                 <div class="w-100 d-flex justify-content-end">
                     <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-outline-dark mt-2" disabled>Request Appointment</button>
