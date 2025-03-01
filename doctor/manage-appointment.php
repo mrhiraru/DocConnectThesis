@@ -132,7 +132,7 @@ include '../includes/head.php';
                                 if ($record['appointment_status'] == 'Pending') {
                                 ?>
                                     <button type="button" class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#declineModal">Decline</button>
-                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Confirm</button>
+                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm" data-bs-toggle="modal" data-bs-target="#generateLink">Confirm</button>
                                 <?php
                                 } else if ($record['appointment_status'] == 'Incoming') {
                                 ?>
