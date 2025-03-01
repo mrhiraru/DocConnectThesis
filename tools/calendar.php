@@ -73,14 +73,14 @@
 
         try {
             const isVerified = await handleAuthClick();
-            if (isVerified) {
-                authentication_checkbox.checked = true; // Only check if verification is successful
-            } else {
-                authentication_checkbox.checked = false; // Make sure it's unchecked if verification fails
-            }
+            // if (isVerified) {
+            //     authentication_checkbox.checked = true; // Only check if verification is successful
+            // } else {
+            //     authentication_checkbox.checked = false; // Make sure it's unchecked if verification fails
+            // }
         } catch (error) {
             console.error('Authentication/Verification failed:', error);
-            authentication_checkbox.checked = false; // Uncheck on error
+            // authentication_checkbox.checked = false; // Uncheck on error
         }
     });
 
