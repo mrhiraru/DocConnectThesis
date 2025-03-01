@@ -66,8 +66,8 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="mb-3">
-                                <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
-                                <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required readonly><?= $record['reason'] ?></textarea>
+                                <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
+                                <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required readonly><?= $record['reason'] ?></textarea>
                                 <?php
                                 if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
                                 ?>
