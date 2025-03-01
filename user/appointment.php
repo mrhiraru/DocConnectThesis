@@ -349,7 +349,7 @@ include '../includes/head.php';
 
                                 validate_date();
                                 initFlatpickr(startDay, endDay);
-                                initTimePicker(formatMySQLTimeTo24Hour(doctor.start_wt), formatMySQLTimeTo24Hour(doctor.end_wt));
+                                initTimePicker(doctor.start_wt, doctor.end_wt);
                             });
 
                             doctorDropdown.appendChild(li);
@@ -522,30 +522,38 @@ include '../includes/head.php';
         });
 
         function initTimePicker(startTime, endTime) {
-            // Convert time string "HH:MM:SS" to minutes
-            function timeToMinutes(timeStr) {
-                const [hours, minutes] = timeStr.split(":").map(Number);
-                return hours * 60 + minutes;
+            if (!startTime || !endTime) {
+                console.error("Invalid start or end time:", startTime, endTime);
+                return;
             }
 
-            const startMinutes = timeToMinutes(startTime);
-            const endMinutes = timeToMinutes(endTime) - 60; // Ensure last selectable time is 1 hour before end time
+            // Convert MySQL time format "HH:MM:SS" to "HH:MM"
+            function formatTimeToHHMM(timeStr) {
+                const [hours, minutes] = timeStr.split(":").map(Number);
+                return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+            }
+
+            const start = formatTimeToHHMM(startTime);
+            const end = formatTimeToHHMM(endTime);
 
             // Generate allowed time slots (every 1 hour)
-            const allowedTimes = [];
-            for (let minutes = startMinutes; minutes <= endMinutes; minutes += 60) {
-                let hours = Math.floor(minutes / 60);
-                let mins = minutes % 60;
-                allowedTimes.push(`${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`);
+            let allowedTimes = [];
+            let currentHour = parseInt(start.split(":")[0]);
+
+            while (currentHour < parseInt(end.split(":")[0])) {
+                allowedTimes.push(`${String(currentHour).padStart(2, "0")}:00`);
+                currentHour++;
             }
 
-            // Update the Flatpickr time instance
-            flatpickrTimeInstance.set({
+            console.log("Allowed time slots:", allowedTimes); // Debugging output
+
+            // Apply the Flatpickr time picker
+            flatpickr("#appointment_time", {
                 enableTime: true,
                 noCalendar: true,
                 dateFormat: "H:i",
                 inline: true,
-                enable: allowedTimes
+                enable: allowedTimes // Only show allowed 1-hour slots
             });
         }
     </script>
