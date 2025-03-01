@@ -87,7 +87,7 @@ include '../includes/head.php';
                             $disable_button = ($appointment_datetime != $current_datetime) ? 'disabled' : '';
                         ?>
 
-                            <button class="btn btn-success text-white mb-3" id="start" onclick="start_meeting()">
+                            <button class="btn btn-success text-white mb-3" id="start" onclick="start_meeting()" <?= $disable_button ?>>
                                 <i class='bx bx-video me-2 align-middle fs-5'></i>
                                 Start Appointment
                             </button>
