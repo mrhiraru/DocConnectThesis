@@ -136,12 +136,14 @@ include '../includes/head.php';
                         <option value="" disabled <?= !isset($_POST['reason']) ? 'selected' : '' ?>>Select a purpose</option>
                         <option value="Check-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
                         <option value="Follow-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
-                        <option value="Second Opinion" <?= (isset($_POST['reason']) && $_POST['reason'] == "Second Opinion") ? 'selected' : '' ?>>Second Opinion</option>
-                        <option value="Medical Clearance" <?= (isset($_POST['reason']) && $_POST['reason'] == "Medical Clearance") ? 'selected' : '' ?>>Medical Clearance</option>
                         <option value="Prescription Refill" <?= (isset($_POST['reason']) && $_POST['reason'] == "Prescription Refill") ? 'selected' : '' ?>>Prescription Refill</option>
-                        <option value="Vaccination" <?= (isset($_POST['reason']) && $_POST['reason'] == "Vaccination") ? 'selected' : '' ?>>Vaccination</option>
+                        <option value="Medical Advice" <?= (isset($_POST['reason']) && $_POST['reason'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
+                        <option value="Chronic Condition Management" <?= (isset($_POST['reason']) && $_POST['reason'] == "Chronic Condition Management") ? 'selected' : '' ?>>Chronic Condition Management</option>
+                        <option value="Mental Health Consultation" <?= (isset($_POST['reason']) && $_POST['reason'] == "Mental Health Consultation") ? 'selected' : '' ?>>Mental Health Consultation</option>
                         <option value="Lab Test Review" <?= (isset($_POST['reason']) && $_POST['reason'] == "Lab Test Review") ? 'selected' : '' ?>>Lab Test Review</option>
-                        <option value="Other" <?= (isset($_POST['reason']) && $_POST['reason'] == "Other") ? 'selected' : '' ?>>Other</option>
+                        <option value="Skin and Allergy Concerns" <?= (isset($_POST['reason']) && $_POST['reason'] == "Skin and Allergy Concerns") ? 'selected' : '' ?>>Skin and Allergy Concerns</option>
+                        <option value="Cold, Flu, and Minor Ailments" <?= (isset($_POST['reason']) && $_POST['reason'] == "Cold, Flu, and Minor Ailments") ? 'selected' : '' ?>>Cold, Flu, and Minor Ailments</option>
+                        <option value="Dietary and Nutrition Advice" <?= (isset($_POST['reason']) && $_POST['reason'] == "Dietary and Nutrition Advice") ? 'selected' : '' ?>>Dietary and Nutrition Advice</option>
                     </select>
                     <?php
                     if (isset($_POST['reason']) && empty($_POST['reason'])) {
