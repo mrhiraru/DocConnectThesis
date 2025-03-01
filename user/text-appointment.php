@@ -136,8 +136,14 @@ include '../includes/head.php';
                         <option value="" disabled <?= !isset($_POST['reason']) ? 'selected' : '' ?>>Select a purpose</option>
                         <option value="Check-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
                         <option value="Follow-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
+                        <option value="Prescription Refill" <?= (isset($_POST['reason']) && $_POST['reason'] == "Prescription Refill") ? 'selected' : '' ?>>Prescription Refill</option>
                         <option value="Medical Advice" <?= (isset($_POST['reason']) && $_POST['reason'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
+                        <option value="Chronic Condition Management" <?= (isset($_POST['reason']) && $_POST['reason'] == "Chronic Condition Management") ? 'selected' : '' ?>>Chronic Condition Management</option>
                         <option value="Mental Health Consultation" <?= (isset($_POST['reason']) && $_POST['reason'] == "Mental Health Consultation") ? 'selected' : '' ?>>Mental Health Consultation</option>
+                        <option value="Lab Test Review" <?= (isset($_POST['reason']) && $_POST['reason'] == "Lab Test Review") ? 'selected' : '' ?>>Lab Test Review</option>
+                        <option value="Skin and Allergy Concerns" <?= (isset($_POST['reason']) && $_POST['reason'] == "Skin and Allergy Concerns") ? 'selected' : '' ?>>Skin and Allergy Concerns</option>
+                        <option value="Cold, Flu, and Minor Ailments" <?= (isset($_POST['reason']) && $_POST['reason'] == "Cold, Flu, and Minor Ailments") ? 'selected' : '' ?>>Cold, Flu, and Minor Ailments</option>
+                        <option value="Dietary and Nutrition Advice" <?= (isset($_POST['reason']) && $_POST['reason'] == "Dietary and Nutrition Advice") ? 'selected' : '' ?>>Dietary and Nutrition Advice</option>
                     </select>
                     <?php
                     if (isset($_POST['reason']) && empty($_POST['reason'])) {
@@ -352,8 +358,6 @@ include '../includes/head.php';
 
                                 startDay = appointment_date.dataset.startday;
                                 endDay = appointment_date.dataset.endday;
-
-                                validate_date();
                             });
 
                             doctorDropdown.appendChild(li);
@@ -368,117 +372,7 @@ include '../includes/head.php';
                     }
                 })
                 .catch(error => console.error('Error fetching doctors:', error));
-
-            // Check if the selected day is within the allowed range
-            function validate_date() {
-                const minDate = new Date();
-                const maxDate = new Date(minDate);
-                maxDate.setMonth(maxDate.getMonth() + 1);
-
-                appointment_date.min = formatDate(minDate);
-                appointment_date.max = formatDate(maxDate);
-
-                // Helper function to format date as YYYY-MM-DD
-                function formatDate(date) {
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    return `${year}-${month}-${day}`;
-                }
-
-                // Helper function to get all allowed days in a weekly cycle
-                function getAllowedDaysRange(startDay, endDay) {
-                    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                    const startIdx = daysOfWeek.indexOf(startDay);
-                    const endIdx = daysOfWeek.indexOf(endDay);
-
-                    // Create allowed days array that cycles through the week
-                    const allowedDays = [];
-                    for (let i = startIdx; i !== endIdx + 1; i = (i + 1) % 7) {
-                        allowedDays.push(daysOfWeek[i]);
-                    }
-
-                    return allowedDays;
-                }
-
-                // Get the allowed days for the specified range
-                const allowedDays = getAllowedDaysRange(startDay, endDay);
-
-                // Validate the selected date
-
-                const selectedDate = new Date(appointment_date.value);
-                const dayName = selectedDate.toLocaleDateString("en-US", {
-                    weekday: 'long'
-                });
-
-
-                if (!allowedDays.includes(dayName)) {
-                    // Set a custom validity message
-                    appointment_date.setCustomValidity("Please select a valid day from " + startDay + " to " + endDay + ".");
-                } else {
-                    // Clear any previous custom validity message
-                    appointment_date.setCustomValidity("");
-                }
-            }
-
-            appointment_date.addEventListener("input", function(event) {
-                validate_date();
-            });
-
-            const form = document.getElementById('appointmentForm');
-            form.addEventListener("submit", function(event) {
-                if (!appointment_date.checkValidity()) {
-                    event.preventDefault(); // Prevent submission if the input is invalid
-                    appointment_date.reportValidity(); // Show tooltip if invalid
-                }
-            });
         });
-
-        function roundTimeToNearestHalfHour(time) {
-            let [hours, minutes] = time.split(":");
-            minutes = parseInt(minutes);
-
-            if (minutes < 15) {
-                minutes = "00";
-            } else if (minutes < 45) {
-                minutes = "30";
-            } else {
-                minutes = "00";
-                hours = (parseInt(hours) + 1).toString().padStart(2, '0');
-            }
-
-            return `${hours.padStart(2, '0')}:${minutes}`;
-        }
-
-        document.getElementById("appointment_time").addEventListener("change", function() {
-            let inputTime = this.value;
-            let roundedTime = roundTimeToNearestHalfHour(inputTime);
-            this.value = roundedTime;
-        });
-
-        function formatTime(time) {
-            let [hours, minutes] = time.split(':');
-            hours = parseInt(hours);
-            let suffix = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
-
-            return `${hours}:${minutes} ${suffix}`;
-        }
-
-        function formatMySQLTimeTo24Hour(time) {
-            const [hours, minutes] = time.split(':');
-
-            return `${hours}:${minutes}`;
-        }
-
-        function subtractOneHour(time) {
-            let [hours, minutes] = time.split(':');
-            hours = parseInt(hours) - 1;
-            if (hours < 0) {
-                hours = 23;
-            }
-            return `${hours.toString().padStart(2, '0')}:${minutes}`;
-        }
     </script>
 </body>
 
