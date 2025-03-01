@@ -332,7 +332,7 @@ include '../includes/head.php';
                                 endDay = appointment_date.dataset.endday;
 
                                 validate_date();
-
+                                initFlatpickr();
                             });
 
                             doctorDropdown.appendChild(li);
@@ -477,19 +477,33 @@ include '../includes/head.php';
         }
 
 
-        flatpickr("#appointment_date", {
-            inline: true,
-            disable: [
-                function(date) {
-                    return (date.getDay() === 5); // 5 represents Friday
-                }
-            ],
-            enable: [
-                function(date) {
-                    return (date.getDay() === 5); // 5 represents Friday
-                }
-            ]
-        });
+        function initFlatpickr() {
+            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+
+            // Convert startDay and endDay to their respective day indexes
+            const startIdx = daysOfWeek.indexOf(startDay);
+            const endIdx = daysOfWeek.indexOf(endDay);
+
+            if (startIdx === -1 || endIdx === -1) {
+                console.error("❌ Invalid startDay or endDay:", startDay, endDay);
+                return;
+            }
+
+            // Get all allowed days in the range
+            const allowedDays = [];
+            for (let i = startIdx; i !== (endIdx + 1) % 7; i = (i + 1) % 7) {
+                allowedDays.push(i);
+            }
+
+            flatpickr("#appointment_date", {
+                inline: true,
+                enable: [
+                    function(date) {
+                        return allowedDays.includes(date.getDay()); // Enable only allowed days
+                    }
+                ]
+            });
+        }
     </script>
 </body>
 
