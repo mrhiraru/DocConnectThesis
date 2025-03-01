@@ -446,11 +446,7 @@ include '../includes/head.php';
             return `${hours.padStart(2, '0')}:${minutes}`;
         }
 
-        document.getElementById("appointment_time").addEventListener("change", function() {
-            let inputTime = this.value;
-            let roundedTime = roundTimeToNearestHalfHour(inputTime);
-            this.value = roundedTime;
-        });
+        
 
         function formatTime(time) {
             let [hours, minutes] = time.split(':');
