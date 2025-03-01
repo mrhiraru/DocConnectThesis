@@ -120,12 +120,12 @@ include '../includes/head.php';
                                 }
                                 ?>
                             </div>
-                            <div class="form-check mb-3">
+                            <!-- <div class="form-check mb-3">
                                 <input class="form-check-input border-danger" type="checkbox" name="authenticate" id="authenticate" required>
                                 <label class="form-check-label text-danger text-decoration-line" for="authenticate">
                                     Click to Authenticate Google Account.
                                 </label>
-                            </div>
+                            </div> -->
                             <hr class="my-3 opacity-25">
                             <div class="m-0 p-0 text-end">
                                 <?php

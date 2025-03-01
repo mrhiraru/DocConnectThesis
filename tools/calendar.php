@@ -68,7 +68,7 @@
      */
     const authentication_checkbox = document.getElementById('authenticate');
 
-    authentication_checkbox.addEventListener('click', async function(event) {
+    confirm.addEventListener('click', async function(event) {
         event.preventDefault(); // Stop the checkbox from checking immediately
 
         try {
