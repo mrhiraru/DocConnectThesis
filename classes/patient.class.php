@@ -7,6 +7,7 @@ class Patient
     public $account_id;
     public $parent_name;
     public $parent_contact;
+    public $parent_email;
     public $is_created;
     public $is_updated;
     public $is_deleted;
@@ -57,5 +58,38 @@ class Patient
             $data = $query->fetch();
         }
         return $data;
+    }
+
+    function fetch_parent_guardian($account_id)
+    {
+        $sql = "SELECT * FROM patient_info WHERE account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
+    function update_parent_guardian()
+    {
+        $sql = "UPDATE patient_info 
+            SET parent_name = :parent_name, parent_email = :parent_email, parent_contact = :parent_contact
+            WHERE account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':parent_name', $this->parent_name);
+        $query->bindParam(':parent_email', $this->parent_email);
+        $query->bindParam(':parent_contact', $this->parent_contact);
+        $query->bindParam(':account_id', $this->account_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

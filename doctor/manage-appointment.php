@@ -66,6 +66,17 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="mb-3">
+                                <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
+                                <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required readonly><?= $record['reason'] ?></textarea>
+                                <?php
+                                if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                                ?>
+                                    <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="mb-3">
                                 <p class="">
                                     Appointment Status: <span class="<?php if ($record['appointment_status'] == 'Pending') {
                                                                             echo 'text-danger';
@@ -109,17 +120,7 @@ include '../includes/head.php';
 
 
                             </div>
-                            <div class="mb-3">
-                                <label for="reason" class="form-label text-black-50">Reason for appointment?</label>
-                                <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required><?= $record['reason'] ?></textarea>
-                                <?php
-                                if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
-                                ?>
-                                    <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
-                                <?php
-                                }
-                                ?>
-                            </div>
+
                             <div class="form-check mb-3">
                                 <input class="form-check-input border-danger" type="checkbox" name="authenticate" id="authenticate" required>
                                 <label class="form-check-label text-danger text-decoration-line" for="authenticate">

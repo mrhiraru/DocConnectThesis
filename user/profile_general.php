@@ -16,6 +16,7 @@ require_once('../classes/medical_history.class.php');
 require_once('../classes/allergy.class.php');
 require_once('../classes/immunization.class.php');
 require_once('../classes/medication.class.php');
+require_once('../classes/patient.class.php');
 
 $account_class = new Account();
 if (isset($_POST['saveAccount'])) {
@@ -103,10 +104,10 @@ include '../includes/head.php';
                   <hr>
                   <div class="row">
                     <div class="col-sm-4">
-                      <p class="mb-0">School Id:</p>
+                      <p class="mb-0">Role:</p>
                     </div>
                     <div class="col-sm-8">
-                      <p class="text-muted mb-0"><?= $_SESSION['schoold_id'] ?></p>
+                      <p class="text-muted mb-0"><?= $_SESSION['role'] ?></p>
                     </div>
                   </div>
                   <hr>
@@ -121,6 +122,48 @@ include '../includes/head.php';
                     </div>
                   </div>
                   <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card bg-body-tertiary mb-4">
+            <div class="card-body">
+              <h4 class="text-green mb-3">Parent/Guardian Information</h4>
+              <?php
+              $parent = new Patient();
+              $parent_record = $parent->fetch_parent_guardian($_SESSION['account_id']);
+              ?>
+              <div class="row">
+                <div class="row col-12">
+                  <div class="col-sm-4">
+                    <p class="mb-0">Name:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= isset($parent_record['parent_name']) ? $parent_record['parent_name'] : "N/A" ?>
+                    </p>
+                  </div>
+                </div>
+                <hr class=''>
+                <div class="row col-6">
+                  <div class="col-sm-4">
+                    <p class="mb-0">Email:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= isset($parent_record['parent_email']) ? $parent_record['parent_email'] : "N/A" ?>
+                    </p>
+                  </div>
+                </div>
+                <div class="row col-6">
+                  <div class="col-sm-4">
+                    <p class="mb-0">Contact:</p>
+                  </div>
+                  <div class="col-sm-8">
+                    <p class="text-muted mb-0">
+                      <?= isset($parent_record['parent_contact']) ? $parent_record['parent_contact'] : "N/A" ?>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>

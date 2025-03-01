@@ -53,7 +53,7 @@ if (!isset($_SESSION['code'])) {
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$title = 'Admin | Verify';
+$title = 'Email Verification';
 include '../admin/includes/admin_head.php';
 function getCurrentPage()
 {

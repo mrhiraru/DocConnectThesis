@@ -47,6 +47,7 @@ if (isset($_POST['signup'])) {
   }
   $account->lastname = ucfirst(strtolower(htmlentities($_POST['lastname'])));
   $account->contact = htmlentities($_POST['contact']);
+  $account->address = htmlentities($_POST['address']);
   $account->birthdate = htmlentities($_POST['birthdate']);
   if (isset($_POST['gender'])) {
     $account->gender = htmlentities($_POST['gender']);
@@ -58,6 +59,11 @@ if (isset($_POST['signup'])) {
   } else {
     $account->campus_id = '';
   }
+  if (isset($_POST['role'])) {
+    $account->role = htmlentities($_POST['role']);
+  } else {
+    $account->role = '';
+  }
   $account->user_role = 3; // user_role (0 = admin, 1 = doc, 2 = mod, 3 = user)
 
   if (
@@ -68,10 +74,12 @@ if (isset($_POST['signup'])) {
     validate_field($account->gender) &&
     validate_field($account->campus_id) &&
     validate_field($account->contact) &&
+    validate_field($account->address) &&
+    validate_field($account->role) &&
     validate_password($account->password) &&
     validate_cpw($account->password, $_POST['confirm-password']) &&
     validate_email($account->email) == 'success' && !$account->is_email_exist() &&
-    validate_wmsu_email($account->email) &&
+    //validate_wmsu_email($account->email) &&
     isset($_POST['terms'])
   ) {
     if ($account->add_user()) {
@@ -108,9 +116,9 @@ if (isset($_POST['signup'])) {
     $_SESSION['patient_id'] = $account->patient_id;
     $_SESSION['account_image'] = $account->account_image;
     $_SESSION['campus_name'] = $account->campus_name;
-    $_SESSION['school_id'] = $account->school_id;
     $_SESSION['height'] = $account->height;
     $_SESSION['weight'] = $account->weight;
+    $_SESSION['role'] = $account->role;
 
 
     if ($_SESSION['user_role'] == 3) {
@@ -157,7 +165,7 @@ include '../includes/head.php';
             ?>
           </div>
           <div class="form-input px-1">
-            <input type="text" class="form-control" id="mname" name="middlename" placeholder="middle name *">
+            <input type="text" class="form-control" id="mname" name="middlename" placeholder="middle name">
           </div>
           <div class="form-input px-1">
             <input type="text" class="form-control" id="lname" name="lastname" placeholder="last name" required value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : '' ?>">
@@ -188,16 +196,18 @@ include '../includes/head.php';
           ?>
             <p class="text-dark m-0 ps-2">Email you've entered already exist.</p>
           <?php
-          } else if (isset($_POST['email']) && !validate_wmsu_email($_POST['email'])) {
+          } // else if (isset($_POST['email']) && !validate_wmsu_email($_POST['email'])) {
+          // 
           ?>
-            <p class="text-dark m-0 ps-2">You must use wmsu email.</p>
+          <!-- <p class="text-dark m-0 ps-2">You must use wmsu email.</p> -->
           <?php
-          }
+          // }
+          // 
           ?>
         </div>
         <div class="row row-cols-1 row-cols-md-2 w-100">
           <div class="form-input px-1">
-            <input type="text" class="form-control" id="phoneNo" name="contact" pattern="\+63 \d{3} \d{3} \d{4}" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+            <input type="text" class="form-control" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" placeholder="Contact No." maxlength="13" pattern="09\d{2} \d{3} \d{4}" oninput="formatPhoneNumber(this)" required value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
             <?php
             if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
             ?>
@@ -409,6 +419,24 @@ include '../includes/head.php';
 
   <script src="../js/login.js"></script>
   <script src="../js/main.js"></script>
+
+  <script>
+    function formatPhoneNumber(input) {
+      let value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
+      if (value.startsWith("09")) {
+        if (value.length > 4) {
+          value = value.slice(0, 4) + " " + value.slice(4);
+        }
+        if (value.length > 8) {
+          value = value.slice(0, 8) + " " + value.slice(8);
+        }
+      } else {
+        value = "09"; // Force it to start with 09
+      }
+      input.value = value.slice(0, 13); // Limit to 11 characters
+    }
+  </script>
+
 </body>
 
 </html>

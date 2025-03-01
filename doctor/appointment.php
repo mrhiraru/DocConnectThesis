@@ -73,12 +73,12 @@ include '../includes/head.php';
           </div>
         </div>
 
-        <div class="card flex-fill my-4">
+        <!-- <div class="card flex-fill my-4">
           <div class="card-body">
             <div id="calendar"></div>
             <button id="addAppointmentBtn" class="btn btn-primary mt-3 text-light" data-bs-toggle="modal" data-bs-target="#addEventModal">Add Appointment</button>
           </div>
-        </div>
+        </div> -->
       </main>
     </div>
   </div>
