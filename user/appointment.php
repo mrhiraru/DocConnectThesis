@@ -476,6 +476,7 @@ include '../includes/head.php';
             flatpickr("#appointment_date", {
                 minDate: new Date().fp_incr(3),
                 inline: true,
+                dateFormat: "Y-m-d",
                 enable: [
                     function(date) {
                         return allowedDays.includes(date.getDay()); // Enable only allowed days
