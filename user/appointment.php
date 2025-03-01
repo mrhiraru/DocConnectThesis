@@ -349,6 +349,7 @@ include '../includes/head.php';
 
                                 validate_date();
                                 initFlatpickr(startDay, endDay);
+                                initTimePicker(formatMySQLTimeTo24Hour(doctor.start_wt), formatMySQLTimeTo24Hour(doctor.end_wt));
                             });
 
                             doctorDropdown.appendChild(li);
@@ -507,6 +508,44 @@ include '../includes/head.php';
                         return allowedDays.includes(date.getDay()); // Enable only allowed days
                     }
                 ]
+            });
+        }
+
+
+        let flatpickrTimeInstance = flatpickr("#appointment_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            disable: [function() {
+                return true;
+            }] // Disable all times initially
+        });
+
+        function initTimePicker(startTime, endTime) {
+            // Convert time string "HH:MM:SS" to minutes
+            function timeToMinutes(timeStr) {
+                const [hours, minutes] = timeStr.split(":").map(Number);
+                return hours * 60 + minutes;
+            }
+
+            const startMinutes = timeToMinutes(startTime);
+            const endMinutes = timeToMinutes(endTime) - 60; // Ensure last selectable time is 1 hour before end time
+
+            // Generate allowed time slots (every 1 hour)
+            const allowedTimes = [];
+            for (let minutes = startMinutes; minutes <= endMinutes; minutes += 60) {
+                let hours = Math.floor(minutes / 60);
+                let mins = minutes % 60;
+                allowedTimes.push(`${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}`);
+            }
+
+            // Update the Flatpickr time instance
+            flatpickrTimeInstance.set({
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i",
+                inline: true,
+                enable: allowedTimes
             });
         }
     </script>
