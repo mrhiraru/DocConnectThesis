@@ -475,6 +475,15 @@ include '../includes/head.php';
             return `${hours.toString().padStart(2, '0')}:${minutes}`;
         }
 
+        let flatpickrInstance = flatpickr("#appointment_date", {
+            inline: true,
+            minDate: new Date().fp_incr(3), // Set min date 3 days ahead
+            dateFormat: "Y-m-d",
+            disable: [function() {
+                return true;
+            }] // Disable all dates initially
+        });
+
 
         function initFlatpickr(startDay, endDay) {
             const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
