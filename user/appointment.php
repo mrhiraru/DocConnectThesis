@@ -119,7 +119,7 @@ include '../includes/head.php';
                 <div class="row mb-3">
                     <div class="col-md-6 mb-3 mb-md-0">
                         <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                        <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d'); ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                        <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" min="<?php echo date('Y-m-d', strtotime('+3 days')); ?>" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                         <?php
                         if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                         ?>
