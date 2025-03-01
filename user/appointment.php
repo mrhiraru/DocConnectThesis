@@ -339,23 +339,6 @@ include '../includes/head.php';
 
                         });
 
-                        if (autoClickElement) {
-                            setTimeout(() => {
-                                autoClickElement.click();
-
-                                // Remove doctor_id from the URL after auto-click
-                                const newUrl = window.location.pathname + window.location.search.replace(/([?&])doctor_id=[^&]+(&|$)/, '$1');
-                                const cleanUrl = newUrl.endsWith('?') || newUrl.endsWith('&') ? newUrl.slice(0, -1) : newUrl;
-                                window.history.replaceState(null, '', cleanUrl);
-
-                                autoClickElement = null;
-                                doctorSearch.blur();
-
-                                // Hide the dropdown
-                                doctorDropdown.classList.add('d-none');
-                            }, 200); // Ensure UI updates
-                        }
-
                         if (doctors.length > 0) {
                             doctorDropdown.classList.remove('d-none');
                         } else {
