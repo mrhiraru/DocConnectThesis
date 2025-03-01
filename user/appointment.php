@@ -348,8 +348,6 @@ include '../includes/head.php';
                                 endDay = appointment_date.dataset.endday;
 
                                 validate_date();
-                                initFlatpickr(startDay, endDay);
-                                initTimePicker(doctor.start_wt, doctor.end_wt);
                             });
 
                             doctorDropdown.appendChild(li);
@@ -446,7 +444,11 @@ include '../includes/head.php';
             return `${hours.padStart(2, '0')}:${minutes}`;
         }
 
-        
+        document.getElementById("appointment_time").addEventListener("change", function() {
+            let inputTime = this.value;
+            let roundedTime = roundTimeToNearestHalfHour(inputTime);
+            this.value = roundedTime;
+        });
 
         function formatTime(time) {
             let [hours, minutes] = time.split(':');
@@ -470,87 +472,6 @@ include '../includes/head.php';
                 hours = 23;
             }
             return `${hours.toString().padStart(2, '0')}:${minutes}`;
-        }
-
-        let flatpickrInstance = flatpickr("#appointment_date", {
-            inline: true,
-            minDate: new Date().fp_incr(3), // Set min date 3 days ahead
-            dateFormat: "Y-m-d",
-            disable: [function() {
-                return true;
-            }] // Disable all dates initially
-        });
-
-
-        function initFlatpickr(startDay, endDay) {
-            const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-
-            // Convert startDay and endDay to their respective day indexes
-            const startIdx = daysOfWeek.indexOf(startDay);
-            const endIdx = daysOfWeek.indexOf(endDay);
-
-            // Get all allowed days in the range
-            const allowedDays = [];
-            for (let i = startIdx; i !== (endIdx + 1) % 7; i = (i + 1) % 7) {
-                allowedDays.push(i);
-            }
-
-            flatpickr("#appointment_date", {
-                minDate: new Date().fp_incr(3),
-                inline: true,
-                dateFormat: "Y-m-d",
-                enable: [
-                    function(date) {
-                        return allowedDays.includes(date.getDay()); // Enable only allowed days
-                    }
-                ]
-            });
-        }
-
-
-        let flatpickrTimeInstance = flatpickr("#appointment_time", {
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "H:i",
-            disable: [function() {
-                return true;
-            }] // Disable all times initially
-        });
-
-        function initTimePicker(startTime, endTime) {
-            if (!startTime || !endTime) {
-                console.error("Invalid start or end time:", startTime, endTime);
-                return;
-            }
-
-            // Convert MySQL time format "HH:MM:SS" to "HH:MM"
-            function formatTimeToHHMM(timeStr) {
-                const [hours, minutes] = timeStr.split(":").map(Number);
-                return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-            }
-
-            const start = formatTimeToHHMM(startTime);
-            const end = formatTimeToHHMM(endTime);
-
-            // Generate allowed time slots (every 1 hour)
-            let allowedTimes = [];
-            let currentHour = parseInt(start.split(":")[0]);
-
-            while (currentHour < parseInt(end.split(":")[0])) {
-                allowedTimes.push(`${String(currentHour).padStart(2, "0")}:00`);
-                currentHour++;
-            }
-
-            console.log("Allowed time slots:", allowedTimes); // Debugging output
-
-            // Apply the Flatpickr time picker
-            flatpickr("#appointment_time", {
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i",
-                inline: true,
-                enable: allowedTimes // Only show allowed 1-hour slots
-            });
         }
     </script>
 </body>
