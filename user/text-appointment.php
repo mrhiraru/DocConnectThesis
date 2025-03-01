@@ -358,6 +358,8 @@ include '../includes/head.php';
 
                                 startDay = appointment_date.dataset.startday;
                                 endDay = appointment_date.dataset.endday;
+
+                                validate_date();
                             });
 
                             doctorDropdown.appendChild(li);
@@ -373,6 +375,52 @@ include '../includes/head.php';
                 })
                 .catch(error => console.error('Error fetching doctors:', error));
         });
+
+        function roundTimeToNearestHalfHour(time) {
+            let [hours, minutes] = time.split(":");
+            minutes = parseInt(minutes);
+
+            if (minutes < 15) {
+                minutes = "00";
+            } else if (minutes < 45) {
+                minutes = "30";
+            } else {
+                minutes = "00";
+                hours = (parseInt(hours) + 1).toString().padStart(2, '0');
+            }
+
+            return `${hours.padStart(2, '0')}:${minutes}`;
+        }
+
+        document.getElementById("appointment_time").addEventListener("change", function() {
+            let inputTime = this.value;
+            let roundedTime = roundTimeToNearestHalfHour(inputTime);
+            this.value = roundedTime;
+        });
+
+        function formatTime(time) {
+            let [hours, minutes] = time.split(':');
+            hours = parseInt(hours);
+            let suffix = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12;
+
+            return `${hours}:${minutes} ${suffix}`;
+        }
+
+        function formatMySQLTimeTo24Hour(time) {
+            const [hours, minutes] = time.split(':');
+
+            return `${hours}:${minutes}`;
+        }
+
+        function subtractOneHour(time) {
+            let [hours, minutes] = time.split(':');
+            hours = parseInt(hours) - 1;
+            if (hours < 0) {
+                hours = 23;
+            }
+            return `${hours.toString().padStart(2, '0')}:${minutes}`;
+        }
     </script>
 </body>
 
