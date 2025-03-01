@@ -80,8 +80,14 @@ include '../includes/head.php';
                     <div class="col-12 d-flex justify-content-center mb-3 ">
                         <?php
                         if ($record['appointment_status'] == "Incoming") {
+
+                            $appointment_datetime = $record['appointment_date'] . ' ' . $record['appointment_time'];
+                            $current_datetime = date('Y-m-d H:i:s'); // Get current date and time
+
+                            $disable_button = ($appointment_datetime != $current_datetime) ? 'disabled' : '';
                         ?>
-                            <button class="btn btn-success text-white mb-3" onclick="start_meeting()">
+
+                            <button class="btn btn-success text-white mb-3" id="start" onclick="start_meeting()">
                                 <i class='bx bx-video me-2 align-middle fs-5'></i>
                                 Start Appointment
                             </button>
@@ -99,10 +105,10 @@ include '../includes/head.php';
                         <?php
                         } else if ($record['appointment_status'] == "Completed") {
                         ?>
-                            <a href="" class="btn btn-danger text-white mb-3">
+                            <!-- <a href="" class="btn btn-danger text-white mb-3">
                                 <i class='bx bxs-edit align-middle fs-5 me-1'></i>
                                 New Appointment
-                            </a>
+                            </a> -->
                         <?php
                         }
                         ?>
