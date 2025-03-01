@@ -467,11 +467,6 @@ include '../includes/head.php';
             const startIdx = daysOfWeek.indexOf(startDay);
             const endIdx = daysOfWeek.indexOf(endDay);
 
-            if (startIdx === -1 || endIdx === -1) {
-                console.error("❌ Invalid startDay or endDay:", startDay, endDay);
-                return;
-            }
-
             // Get all allowed days in the range
             const allowedDays = [];
             for (let i = startIdx; i !== (endIdx + 1) % 7; i = (i + 1) % 7) {
@@ -480,7 +475,6 @@ include '../includes/head.php';
 
             flatpickr("#appointment_date", {
                 minDate: new Date().fp_incr(3),
-                inline: true,
                 enable: [
                     function(date) {
                         return allowedDays.includes(date.getDay()); // Enable only allowed days
