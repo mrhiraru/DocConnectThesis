@@ -10,8 +10,6 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment->appointment_time = htmlentities($_POST['appointment_time']);
     $appointment->reason = htmlentities($_POST['reason']);
-    $appointment->appointment_link = htmlentities($_POST['link']);
-    $appointment->event_id = htmlentities($_POST['event_id']);
     $appointment->appointment_status = "Incoming";
 
 
@@ -20,7 +18,6 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_date &&
             $appointment->appointment_time &&
             $appointment->reason &&
-            $appointment->appointment_link && $appointment->event_id &&
             $appointment->appointment_status)
     ) {
         if ($appointment->update_appointment()) {
@@ -118,6 +115,23 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
+
+            $success = 'success';
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+} else if (isset($_POST['update_link'])) {
+    $appointment->appointment_link = htmlentities($_POST['appointment_link']);
+    $appointment->event_id = htmlentities($_POST['event_id']);
+    $appointment->appointment_id = htmlentities($_POST['appointment_id']);
+
+    if (
+        validate_field($$appointment->appointment_link && $appointment->event_id)
+    ) {
+        if ($appointment->update_link()) {
 
             $success = 'success';
         } else {

@@ -323,36 +323,50 @@
                     appointment_time: $('#appointment_time').val(),
                     reason: $("#reason").val(),
                     email: $('#email').text(),
-                    link: null,
-                    event_id: null,
                 };
 
-                var created_event = await new_event(formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
-                formData.link = created_event.hangoutLink;
-                formData.event_id = created_event.eventId;
-
-                if (formData.event_id) {
-                    $.ajax({
-                        url: '../handlers/doctor.update_appointment.php',
-                        type: 'POST',
-                        data: formData,
-                        success: function(response) {
-                            if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                                const updated = document.getElementById('updatedModal');
-                                message_notifcation('confirm');
-                                if (updated) {
-                                    var myModal = new bootstrap.Modal(updated, {});
-                                    myModal.show();
-                                }
-                            } else {
-                                console.error('Error:', response);
-                            }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error sending message:', error);
+                $.ajax({
+                    url: '../handlers/doctor.update_appointment.php',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        const linkData = {
+                            update_link: "true",
+                            link: null,
+                            event_id: null
                         }
-                    });
-                }
+                        var created_event = new_event(formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+                        linkData.link = created_event.hangoutLink;
+                        linkData.event_id = created_event.eventId;
+
+                        if (linkData.event_id) {
+                            $.ajax({
+                                url: '../handlers/doctor.update_appointment.php',
+                                type: 'POST',
+                                data: linkData,
+                                success: function(response) {
+                                    if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                        const updated = document.getElementById('updatedModal');
+                                        message_notifcation('confirm');
+                                        if (updated) {
+                                            var myModal = new bootstrap.Modal(updated, {});
+                                            myModal.show();
+                                        }
+                                    } else {
+                                        console.error('Error:', response);
+                                    }
+                                },
+                                error: function(xhr, status, error) {
+                                    console.error('Error sending message:', error);
+                                }
+                            });
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error sending message:', error);
+                    }
+                });
+
             } else if (submit_button == "reschedule") {
 
                 const formData = {
