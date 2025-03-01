@@ -132,11 +132,21 @@ include '../includes/head.php';
                 <hr>
                 <div class="mb-3">
                     <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
-                    <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="3" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required></textarea>
+                    <select id="reason" name="reason" class="form-select bg-light border border-dark" required>
+                        <option value="" disabled <?= !isset($_POST['reason']) ? 'selected' : '' ?>>Select a purpose</option>
+                        <option value="Check-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
+                        <option value="Follow-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
+                        <option value="Second Opinion" <?= (isset($_POST['reason']) && $_POST['reason'] == "Second Opinion") ? 'selected' : '' ?>>Second Opinion</option>
+                        <option value="Medical Clearance" <?= (isset($_POST['reason']) && $_POST['reason'] == "Medical Clearance") ? 'selected' : '' ?>>Medical Clearance</option>
+                        <option value="Prescription Refill" <?= (isset($_POST['reason']) && $_POST['reason'] == "Prescription Refill") ? 'selected' : '' ?>>Prescription Refill</option>
+                        <option value="Vaccination" <?= (isset($_POST['reason']) && $_POST['reason'] == "Vaccination") ? 'selected' : '' ?>>Vaccination</option>
+                        <option value="Lab Test Review" <?= (isset($_POST['reason']) && $_POST['reason'] == "Lab Test Review") ? 'selected' : '' ?>>Lab Test Review</option>
+                        <option value="Other" <?= (isset($_POST['reason']) && $_POST['reason'] == "Other") ? 'selected' : '' ?>>Other</option>
+                    </select>
                     <?php
-                    if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                    if (isset($_POST['reason']) && empty($_POST['reason'])) {
                     ?>
-                        <p class="text-dark m-0 ps-2">Select purpose for appointment.</p>
+                        <p class="text-dark m-0 ps-2">Select a purpose for the appointment.</p>
                     <?php
                     }
                     ?>
