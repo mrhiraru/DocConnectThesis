@@ -332,7 +332,7 @@ include '../includes/head.php';
                                 endDay = appointment_date.dataset.endday;
 
                                 validate_date();
-                                initFlatpickr();
+                                initFlatpickr(startDay, endDay);
                             });
 
                             doctorDropdown.appendChild(li);
@@ -460,7 +460,7 @@ include '../includes/head.php';
         }
 
 
-        function initFlatpickr() {
+        function initFlatpickr(startDay, endDay) {
             const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
             // Convert startDay and endDay to their respective day indexes
