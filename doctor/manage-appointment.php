@@ -182,6 +182,23 @@ include '../includes/head.php';
         </div>
     </div>
 
+    <div class="modal fade" id="generateLink" tabindex="-1" aria-labelledby="generateLinkLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="myModalLabel">Generate Google Meet Link</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" id="generate-link" aria-label="Close">Generate</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="modal fade" id="updatedModal" tabindex="-1" aria-labelledby="updatedModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
