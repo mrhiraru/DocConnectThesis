@@ -117,7 +117,7 @@ include '../includes/head.php';
 
                 <!-- Preferred Appointment Date -->
                 <div class="row mb-3">
-                    <div class="col-md-6 mb-3 mb-md-0">
+                    <div class="col-md-6 mb-3 mb-md-0 d-flex justify-content-center">
                         <label for="appointment_date" class="form-label text-black-50">Select Date</label>
                         <input type="text" id="appointment_date" name="appointment_date" data-startday="" data-endday="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                         <?php
