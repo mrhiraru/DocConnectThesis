@@ -64,7 +64,7 @@ function getCurrentPage()
             return 'bg-success';
           case 'Ongoing':
             return 'bg-info';
-          case 'Cancelled':
+          case 'Canceled':
             return 'bg-danger';
           case 'Pending':
             return 'bg-warning';
