@@ -71,6 +71,22 @@ $title = 'Appointment';
 $appointment = 'active';
 include '../includes/head.php';
 ?>
+<style>
+    .datepicker-container {
+        display: flex;
+        justify-content: center;
+        /* Horizontally center */
+        align-items: center;
+        /* Vertically center (if needed) */
+        width: 100%;
+        /* Ensure it takes full width */
+    }
+
+    .flatpickr-calendar {
+        margin: auto;
+        /* Center the calendar */
+    }
+</style>
 
 <body>
     <?php
@@ -117,9 +133,9 @@ include '../includes/head.php';
 
                 <!-- Preferred Appointment Date -->
                 <div class="row mb-3">
-                    <div class="col-md-6 mb-3 mb-md-0 d-flex flex-column justify-content-center">
+                    <div class="col-md-6 mb-3 mb-md-0">
                         <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                        <input type="text" id="appointment_date" name="appointment_date" data-startday="" data-endday="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                        <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
                         <?php
                         if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                         ?>
