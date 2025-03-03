@@ -54,14 +54,14 @@ include '../includes/head.php';
                                     <textarea id="result" name="result" rows="2" cols="50" class="form-control" required></textarea>
                                 </div>
                                 <div class="col-12 mb-3">
-                                    Does the patient have a medical condition?
+                                    Does the patient have a medical condition? 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                        <label class="form-check-label" for="inlineRadio1">1</label>
+                                        <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes">
+                                        <label class="form-check-label" for="Yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                        <label class="form-check-label" for="inlineRadio2">2</label>
+                                        <input class="form-check-input" type="radio" name="medcon_check" id="No" value="No">
+                                        <label class="form-check-label" for="No">No</label>
                                     </div>
                                 </div>
                                 <div class="col-12 mb-3">
