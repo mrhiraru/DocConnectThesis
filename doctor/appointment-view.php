@@ -66,13 +66,12 @@ include '../includes/head.php';
                                 </div>
                                 <div class="" id="diagnosis-container">
                                     <div class="col-12 mb-3">
-                                        <label for="medcon" class="form-label">Diagnosis:</label>
-                                        <select class="rounded-3" name="medcon[]" id="medcon" multiple>
+                                        <label for="diagnosis" class="form-label">Diagnosis:</label>
+                                        <select class="rounded-3" name="diagnosis[]" id="diagnosis" multiple>
                                             <?php
                                             include_once('../handlers/appointment-view.fetch_conditions.php');
                                             ?>
                                         </select>
-                                        <input type="text" id="customMedcon" name="customMedcon" class="form-control d-none mt-2" placeholder="Specify diagnosis">
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="severity" class="form-label">Severity:</label>
@@ -242,7 +241,7 @@ include '../includes/head.php';
     }
 
     document.addEventListener("DOMContentLoaded", function() {
-        new TomSelect("#medcon", {
+        new TomSelect("#diagnosis", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
             persist: false,
             create: true, // Set to true if you want to allow custom inputs
