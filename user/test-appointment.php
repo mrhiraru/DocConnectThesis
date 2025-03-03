@@ -152,7 +152,7 @@ include '../includes/head.php';
                         <option value="Dietary and Nutrition Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Dietary and Nutrition Advice") ? 'selected' : '' ?>>Dietary and Nutrition Advice</option>
                     </select>
                     <?php
-                    if (isset($_POST['purpose']) && empty($_POST['purpose'])) {
+                    if (isset($_POST['purpose']) && !validate_field($_POST['purpose'])) {
                     ?>
                         <p class="text-dark m-0 ps-2">Select a purpose for the appointment.</p>
                     <?php
@@ -163,7 +163,7 @@ include '../includes/head.php';
                     <label for="reason" class="form-label text-black-50">Reason:</label>
                     <textarea class="form-control bg-light fs-6 mb-3 border border-dark" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."></textarea>
                     <?php
-                    if (isset($_POST['reason']) && empty($_POST['reason'])) {
+                    if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
                     ?>
                         <p class="text-dark m-0 ps-2">Reason for appointment is required.</p>
                     <?php

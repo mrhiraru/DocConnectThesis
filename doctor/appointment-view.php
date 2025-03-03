@@ -8,6 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     exit();
 }
 
+require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
 
 $appointment_class = new Appointment();
@@ -52,26 +53,40 @@ include '../includes/head.php';
                                 <div class="col-12 mb-3">
                                     <label for="result" class="form-label">Consultation Result:</label>
                                     <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required></textarea>
+                                    <?php
+                                    if (isset($_POST['result']) && !validate_field($_POST['result'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Consultation result is required.</p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                                 <div class="col-12 mb-3">
                                     Does the patient have a medical condition?
                                     <div class="form-check form-check-inline ms-3">
-                                        <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes">
+                                        <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "Yes") ? "checked" : "" ?>>
                                         <label class="form-check-label" for="Yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="medcon_check" id="No" value="No">
+                                        <input class="form-check-input" type="radio" name="medcon_check" id="No" value="No" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "No") ? "checked" : "" ?>>
                                         <label class="form-check-label" for="No">No</label>
                                     </div>
                                 </div>
                                 <div class="" id="diagnosis-container">
                                     <div class="col-12 mb-3">
                                         <label for="diagnosis" class="form-label">Diagnosis:</label>
-                                        <select class="rounded-3" name="diagnosis[]" id="diagnosis" multiple>
+                                        <select class="rounded-3" name="diagnosis[]" id="diagnosis" multiple required>
                                             <?php
                                             include_once('../handlers/appointment-view.fetch_conditions.php');
                                             ?>
                                         </select>
+                                        <?php
+                                        if (isset($_POST['diagnosis']) && !validate_field($_POST['diagnosis'])) {
+                                        ?>
+                                            <p class="text-dark m-0 ps-2">Select diagnosis is required.</p>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                     <div class="col-12 mb-3">
                                         <label for="severity" class="form-label">Severity:</label>
@@ -82,11 +97,18 @@ include '../includes/head.php';
                                             <option value="Severe" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Severe') ? 'selected' : '' ?>>Severe</option>
                                             <option value="Critical" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Critical') ? 'selected' : '' ?>>Critical</option>
                                         </select>
+                                        <?php
+                                        if (isset($_POST['severity']) && !validate_field($_POST['severity'])) {
+                                        ?>
+                                            <p class="text-dark m-0 ps-2">Select severity is required.</p>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="comment" class="form-label">Note:</label>
-                                    <textarea id="comment" name="comment" rows="7" cols="50" class="form-control"></textarea>
+                                    <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" placeholder="Write your notes here (e.g., patient instructions, prescriptions, recommendations, and etc)."></textarea>
                                 </div>
                             </form>
                         </div>
