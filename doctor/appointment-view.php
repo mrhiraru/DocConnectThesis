@@ -66,7 +66,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label for="medcon" class="form-label">Diagnosis:</label>
-                                    <select class="form-select bg-light" name="medcon[]" id="medcon" multiple>
+                                    <select class="" name="medcon[]" id="medcon" multiple>
                                         <?php
                                         include_once('../handlers/appointment-view.fetch_conditions.php');
                                         ?>
@@ -239,7 +239,7 @@ include '../includes/head.php';
         new TomSelect("#medcon", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
             persist: false,
-            create: false, // Set to true if you want to allow custom inputs
+            create: true, // Set to true if you want to allow custom inputs
             plugins: ['remove_button'] // Adds a remove button for each selected item
         });
     });
