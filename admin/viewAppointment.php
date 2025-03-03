@@ -97,7 +97,7 @@ function getCurrentPage()
 
               <div class="col d-flex ">
                 <strong class="me-2">Campus:</strong>
-                <p><?php echo htmlspecialchars($appointment['patient_campus_id']); ?></p>
+                <p><?php echo htmlspecialchars($appointment['patient_campus_name']); ?></p>
               </div>
 
               <div class="col d-flex ">
