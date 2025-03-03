@@ -50,8 +50,20 @@ include '../includes/head.php';
                         <div class="col-12 mb-3">
                             <form action="" class="row" id="resultForm">
                                 <div class="col-12 mb-3">
-                                    <label for="result" class="form-label">Consultation Result:</label>
-                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control" required><?= $record['result'] ?></textarea>
+                                    <label for="result" class="form-label">Result:</label>
+                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control" required></textarea>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="medcon" class="form-label">Diagnosis:</label>
+                                    <select class="form-select" name="medcon" id="medcon">
+
+                                    </select>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="medcon" class="form-label">Severity:</label>
+                                    <select class="form-select" name="medcon" id="medcon">
+
+                                    </select>
                                 </div>
                                 <div class="col-12">
                                     <label for="comment" class="form-label">Note:</label>

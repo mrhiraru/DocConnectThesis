@@ -11,7 +11,9 @@ class Appointment
     public $estimated_end;
     public $appointment_link;
     public $appointment_status;
+    public $purpose;
     public $reason;
+    public $diagnosis;
     public $event_id;
     public $result;
     public $comment;
