@@ -56,7 +56,7 @@ include '../includes/head.php';
                                 <div class="col-12 mb-3">
                                     Does the patient have a medical condition?
                                     <div class="form-check form-check-inline ms-3">
-                                        <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes" onselect="show_medical_conditions()">
+                                        <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes" onclick="show_medical_conditions()">
                                         <label class="form-check-label" for="Yes">Yes</label>
                                     </div>
                                     <div class="form-check form-check-inline">
