@@ -235,6 +235,6 @@ include '../includes/head.php';
     }
 
     $(function() {
-        $('medcon').selectpicker();
+        $('.selectpicker').selectpicker();
     });
 </script>
