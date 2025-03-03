@@ -43,10 +43,6 @@ include '../includes/head.php';
                                     <a href="#" class="text-decoration-none">More</a> -->
                                 </div>
                             </div>
-                            <div class="ms-auto">
-                                <button class="btn btn-primary text-light">Make appointment</button>
-                                <button class="btn btn-link text-muted"><i class='bx bx-dots-horizontal-rounded'></i></button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,7 +52,7 @@ include '../includes/head.php';
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-overview-tab" data-bs-toggle="tab" data-bs-target="#nav-overview" type="button" role="tab" aria-controls="nav-overview" aria-selected="true">Overview</button>
                             <!-- <button class="nav-link" id="nav-opinions-tab" data-bs-toggle="tab" data-bs-target="#nav-opinions" type="button" role="tab" aria-controls="nav-opinions" aria-selected="false">Opinions</button> -->
-                            <button class="nav-link" id="nav-experience-tab" data-bs-toggle="tab" data-bs-target="#nav-experience" type="button" role="tab" aria-controls="nav-Experience" aria-selected="false">Experience</button>
+                            <!-- <button class="nav-link" id="nav-experience-tab" data-bs-toggle="tab" data-bs-target="#nav-experience" type="button" role="tab" aria-controls="nav-Experience" aria-selected="false">Experience</button> -->
                         </div>
                     </nav>
                     <div class="card-body">
@@ -105,7 +101,7 @@ include '../includes/head.php';
                                 <a href="#" class="text-decoration-none">See all reviews</a>
                             </div> -->
 
-                            <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab">
+                            <!-- <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab">
                                 <h6>Professional Experience</h6>
                                 <ul class="list-unstyled">
                                     <li><strong>Senior Consultant, Orthopedics</strong> - ABC Hospital (2015 - Present)</li>
@@ -125,7 +121,7 @@ include '../includes/head.php';
                                 </ul>
 
                                 <a href="#" class="text-decoration-none">Read more about professional background</a>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
