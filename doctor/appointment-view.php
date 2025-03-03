@@ -64,7 +64,7 @@ include '../includes/head.php';
                                         <label class="form-check-label" for="No">No</label>
                                     </div>
                                 </div>
-                                <div class="m-0 p-0 " id="diagnosis-container">
+                                <div class="" id="diagnosis-container">
                                     <div class="col-12 mb-3">
                                         <label for="medcon" class="form-label">Diagnosis:</label>
                                         <select class="" name="medcon[]" id="medcon" multiple>
