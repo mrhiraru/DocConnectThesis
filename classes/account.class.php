@@ -592,6 +592,7 @@ class Account
                        a2.email AS patient_email,
                        a2.address AS patient_address,
                        a2.campus_id AS patient_campus_id,
+                       c2.campus_name AS patient_campus_name,
                        
                        ap.appointment_id,
                        ap.appointment_date,
@@ -604,13 +605,13 @@ class Account
                 LEFT JOIN account a1 ON d.account_id = a1.account_id
                 LEFT JOIN patient_info p ON ap.patient_id = p.patient_id
                 LEFT JOIN account a2 ON p.account_id = a2.account_id
+                LEFT JOIN campus c2 ON a2.campus_id = c2.campus_id
                 ORDER BY ap.appointment_date DESC, ap.appointment_time ASC;";
-
+    
         try {
             $query = $this->db->connect()->prepare($sql);
             if ($query->execute()) {
                 $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
                 return $result;
             } else {
                 echo "SQL Execution Error.";
@@ -620,7 +621,7 @@ class Account
             echo "Database Error: " . $e->getMessage();
             return [];
         }
-    }
+    }    
 
 
     // ---ANALYTICS FUNCTIONS START---
