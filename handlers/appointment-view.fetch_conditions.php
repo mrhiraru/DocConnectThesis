@@ -4,7 +4,8 @@ $medcon = new MedCon();
 
 $medconArray = $medcon->show_conditions();
 ?>
-<option value="" disabled <?= !isset($_POST['medcon']) ? 'selected' : '' ?>>Select Diagnosis</option>
+<!-- <option value="" disabled <?php //!isset($_POST['medcon']) ? 'selected' : '' 
+                                ?>>Select Diagnosis</option> -->
 <?php
 foreach ($medconArray as $item) {
 ?>
@@ -12,3 +13,4 @@ foreach ($medconArray as $item) {
 <?php
 }
 ?>
+<option value="Other">Other (Specify)</option>
