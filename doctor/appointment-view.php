@@ -227,7 +227,7 @@ include '../includes/head.php';
                 $("#medcon").html(response);
             },
             error: function(xhr, status, error) {
-                console.error('Error sending message:', error);
+                console.error('Error request:', error);
             }
         })
     }

@@ -28,7 +28,7 @@ class MedCon
     //     return $data;
     // }
 
-    function add_medhis()
+    function add_medcon()
     {
         $sql = "INSERT INTO medical_condition (medcon_name) VALUES (:medcon_name)";
 
@@ -44,7 +44,7 @@ class MedCon
 
     function show_conditions()
     {
-        $sql = "SELECT * FROM medical_condtion ORDER BY medcon_name";
+        $sql = "SELECT * FROM medical_condition ORDER BY medcon_name";
 
         $query = $this->db->connect()->prepare($sql);
 
