@@ -13,4 +13,3 @@ foreach ($medconArray as $item) {
 <?php
 }
 ?>
-<option value="Other">Other (Specify)</option>

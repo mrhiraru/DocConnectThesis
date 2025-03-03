@@ -239,18 +239,8 @@ include '../includes/head.php';
         new TomSelect("#medcon", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
             persist: false,
-            create: false, // Set to true if you want to allow custom inputs
+            create: true, // Set to true if you want to allow custom inputs
             plugins: ['remove_button'] // Adds a remove button for each selected item
-        });
-
-        document.getElementById("medcon").addEventListener("change", function() {
-            let customInput = document.getElementById("customMedcon");
-            if (this.value === "Other") {
-                customInput.style.display = "block";
-            } else {
-                customInput.style.display = "none";
-                customInput.value = ""; // Clear input when not needed
-            }
         });
     });
 </script>
