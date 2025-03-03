@@ -53,7 +53,7 @@ include '../includes/head.php';
                                     <label for="result" class="form-label">Consultation Result:</label>
                                     <textarea id="result" name="result" rows="2" cols="50" class="form-control" required></textarea>
                                 </div>
-                                <div class="row col-12 mb-3">
+                                <div class="col-12 mb-3">
                                     <p>Does the patient have a medical condition?</p>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
