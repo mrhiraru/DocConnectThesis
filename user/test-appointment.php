@@ -131,24 +131,35 @@ include '../includes/head.php';
 
                 <hr>
                 <div class="mb-3">
-                    <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
-                    <select id="reason" name="reason" class="form-select bg-light border border-dark" required>
-                        <option value="" disabled <?= !isset($_POST['reason']) ? 'selected' : '' ?>>Select a purpose</option>
-                        <option value="Check-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
-                        <option value="Follow-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
-                        <option value="Prescription Refill" <?= (isset($_POST['reason']) && $_POST['reason'] == "Prescription Refill") ? 'selected' : '' ?>>Prescription Refill</option>
-                        <option value="Medical Advice" <?= (isset($_POST['reason']) && $_POST['reason'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
-                        <option value="Chronic Condition Management" <?= (isset($_POST['reason']) && $_POST['reason'] == "Chronic Condition Management") ? 'selected' : '' ?>>Chronic Condition Management</option>
-                        <option value="Mental Health Consultation" <?= (isset($_POST['reason']) && $_POST['reason'] == "Mental Health Consultation") ? 'selected' : '' ?>>Mental Health Consultation</option>
-                        <option value="Lab Test Review" <?= (isset($_POST['reason']) && $_POST['reason'] == "Lab Test Review") ? 'selected' : '' ?>>Lab Test Review</option>
-                        <option value="Skin and Allergy Concerns" <?= (isset($_POST['reason']) && $_POST['reason'] == "Skin and Allergy Concerns") ? 'selected' : '' ?>>Skin and Allergy Concerns</option>
-                        <option value="Cold, Flu, and Minor Ailments" <?= (isset($_POST['reason']) && $_POST['reason'] == "Cold, Flu, and Minor Ailments") ? 'selected' : '' ?>>Cold, Flu, and Minor Ailments</option>
-                        <option value="Dietary and Nutrition Advice" <?= (isset($_POST['reason']) && $_POST['reason'] == "Dietary and Nutrition Advice") ? 'selected' : '' ?>>Dietary and Nutrition Advice</option>
+                    <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
+                    <select id="purpose" name="purpose" class="form-select bg-light border border-dark" required>
+                        <option value="" disabled <?= !isset($_POST['purpose']) ? 'selected' : '' ?>>Select a purpose</option>
+                        <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
+                        <option value="Follow-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
+                        <option value="Prescription Refill" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Prescription Refill") ? 'selected' : '' ?>>Prescription Refill</option>
+                        <option value="Medical Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
+                        <option value="Chronic Condition Management" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Chronic Condition Management") ? 'selected' : '' ?>>Chronic Condition Management</option>
+                        <option value="Mental Health Consultation" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Mental Health Consultation") ? 'selected' : '' ?>>Mental Health Consultation</option>
+                        <option value="Lab Test Review" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Lab Test Review") ? 'selected' : '' ?>>Lab Test Review</option>
+                        <option value="Skin and Allergy Concerns" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Skin and Allergy Concerns") ? 'selected' : '' ?>>Skin and Allergy Concerns</option>
+                        <option value="Cold, Flu, and Minor Ailments" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Cold, Flu, and Minor Ailments") ? 'selected' : '' ?>>Cold, Flu, and Minor Ailments</option>
+                        <option value="Dietary and Nutrition Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Dietary and Nutrition Advice") ? 'selected' : '' ?>>Dietary and Nutrition Advice</option>
                     </select>
+                    <?php
+                    if (isset($_POST['purpose']) && empty($_POST['purpose'])) {
+                    ?>
+                        <p class="text-dark m-0 ps-2">Select a purpose for the appointment.</p>
+                    <?php
+                    }
+                    ?>
+                </div>
+                <div class="mb-3">
+                    <label for="reason" class="form-label text-black-50">Reason:</label>
+                    <textarea rows="3" id="reason" name="reason">Include your reason here.</textarea>
                     <?php
                     if (isset($_POST['reason']) && empty($_POST['reason'])) {
                     ?>
-                        <p class="text-dark m-0 ps-2">Select a purpose for the appointment.</p>
+                        <p class="text-dark m-0 ps-2">Reason for appointment is required.</p>
                     <?php
                     }
                     ?>
@@ -177,6 +188,7 @@ include '../includes/head.php';
                         }
                         ?>
                     </div>
+
                 </div>
 
 
