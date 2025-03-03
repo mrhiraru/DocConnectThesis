@@ -38,7 +38,6 @@ $totalUsers = $userStats['totalUsers'];
 $activeUsers = $userStats['activeUsers'];
 $newSignups = $userStats['newSignups'];
 
-
 $appointmentStats = $account->fetch_appointment_statistics();
 
 $totalAppointments = $appointmentStats['totalAppointments'];
@@ -77,86 +76,136 @@ function getCurrentPage()
       <!-- User Statistics -->
       <div class="row mb-4">
         <div class="col-lg-6">
-          <h4>User Statistics</h4>
-          <canvas id="userStatsChart"></canvas>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">User Statistics</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="userStatsChart"></canvas>
+            </div>
+          </div>
         </div>
         <div class="col-lg-6">
-          <ul>
-            <li>Total Users: <strong id="totalUsers"></strong></li>
-            <li>Active Users (Monthly): <strong id="activeUsers"></strong></li>
-            <li>New Signups: <strong id="newSignups"></strong></li>
-          </ul>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">User Overview</h4>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Users: <strong id="totalUsers"></strong></li>
+                <li class="list-group-item">Active Users (Monthly): <strong id="activeUsers"></strong></li>
+                <li class="list-group-item">New Signups: <strong id="newSignups"></strong></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-
-      <!-- Appointment Type Breakdown -->
-      <!-- <div class="row mb-4">
-        <div class="col-lg-6">
-          <h4>Appointment Types</h4>
-          <canvas id="appointmentTypeChart"></canvas>
-        </div>
-        <div class="col-lg-6">
-          <ul>
-            <li>Face-to-Face Appointments: <strong id="faceToFaceCount"></strong></li>
-            <li>Online Appointments: <strong id="onlineCount"></strong></li>
-          </ul>
-        </div>
-      </div> -->
 
       <!-- Appointment Insights -->
       <div class="row mb-4">
         <div class="col-lg-6">
-          <h4>Appointment Insights</h4>
-          <canvas id="appointmentChart"></canvas>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Appointment Insights</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="appointmentChart"></canvas>
+            </div>
+          </div>
         </div>
         <div class="col-lg-6">
-          <ul>
-            <li>Total Appointments: <strong id="totalAppointments"></strong></li>
-            <li>Average Duration: <strong id="avgDuration"></strong></li>
-            <li>No-Show Rate: <strong id="noShowRate"></strong></li>
-          </ul>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Appointment Overview</h4>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
+                <li class="list-group-item">Average Duration: <strong id="avgDuration"></strong></li>
+                <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Doctor Activity Reports -->
       <div class="row mb-4">
         <div class="col-lg-6">
-          <h4>Doctor Activity</h4>
-          <canvas id="doctorActivityChart"></canvas>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Doctor Activity</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="doctorActivityChart"></canvas>
+            </div>
+          </div>
         </div>
         <div class="col-lg-6">
-          <ul>
-            <li>Active Doctors: <strong id="activeDoctors"></strong></li>
-            <!-- <li>Avg. Response Time: <strong id="avgResponseTime"></strong></li> -->
-          </ul>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Doctor Overview</h4>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Active Doctors: <strong id="activeDoctors"></strong></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Health Concerns & Trends -->
       <div class="row mb-4">
         <div class="col-lg-6">
-          <h4>Health Concerns & Trends</h4>
-          <canvas id="healthConcernsChart"></canvas>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Health Concerns & Trends</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="healthConcernsChart"></canvas>
+            </div>
+          </div>
         </div>
         <div class="col-lg-6">
-          <ul>
-            <li>Top Health Concern: <strong id="topConcern"></strong></li>
-            <li>Seasonal Trends: <strong id="seasonalTrends"></strong></li>
-          </ul>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Health Overview</h4>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Top Health Concern: <strong id="topConcern"></strong></li>
+                <li class="list-group-item">Seasonal Trends: <strong id="seasonalTrends"></strong></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- System Performance & Security -->
       <div class="row mb-4">
         <div class="col-lg-6">
-          <h4>System Performance</h4>
-          <canvas id="systemPerformanceChart"></canvas>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">System Performance</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="systemPerformanceChart"></canvas>
+            </div>
+          </div>
         </div>
         <div class="col-lg-6">
-          <ul>
-            <li>Server Uptime: <strong id="serverUptime"></strong></li>
-            <li>Error Rate: <strong id="errorRate"></strong></li>
-          </ul>
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Performance Overview</h4>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Server Uptime: <strong id="serverUptime"></strong></li>
+                <li class="list-group-item">Error Rate: <strong id="errorRate"></strong></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -189,17 +238,6 @@ function getCurrentPage()
         }
       });
 
-      new Chart(document.getElementById("appointmentTypeChart"), {
-        type: "pie",
-        data: {
-          labels: ["Face-to-Face", "Online"],
-          datasets: [{
-            data: [300, 200],
-            backgroundColor: ["#4CAF50", "#2196F3"]
-          }]
-        }
-      });
-
       // Appointment Insights Chart
       var totalAppointments = <?php echo json_encode($totalAppointments); ?>;
       var completedAppointments = <?php echo json_encode($completedAppointments); ?>;
@@ -223,11 +261,9 @@ function getCurrentPage()
       });
 
       // Doctor Activity Line Chart
-      // Fetch doctor statistics from PHP
       var activeDoctors = <?php echo json_encode($activeDoctors); ?>;
       var doctorTrends = <?php echo json_encode($doctorTrends); ?>;
 
-      // para line graph
       var trendLabels = doctorTrends.map(item => item.month);
       var trendData = doctorTrends.map(item => item.count);
 
@@ -272,7 +308,6 @@ function getCurrentPage()
         }
       });
 
-      // document.getElementById("avgResponseTime").textContent = "5 min";
       document.getElementById("topConcern").textContent = "Flu";
       document.getElementById("seasonalTrends").textContent = "High flu cases in winter";
       document.getElementById("serverUptime").textContent = "99.8%";
