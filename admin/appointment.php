@@ -24,12 +24,13 @@ function getCurrentPage()
   return basename($_SERVER['PHP_SELF']);
 }
 ?>
+
 <body>
-  <?php 
-    require_once ('./includes/admin_header.php');
+  <?php
+  require_once('./includes/admin_header.php');
   ?>
-  <?php 
-    require_once ('./includes/admin_sidepanel.php');
+  <?php
+  require_once('./includes/admin_sidepanel.php');
   ?>
 
   <section id="appointment" class="page-container">
@@ -48,7 +49,7 @@ function getCurrentPage()
             <option value="4">Appointment Date</option>
           </select>
         </div>
-        
+
         <div class="input-group w-auto d-flex align-items-center border border-1 rounded-1 me-0 me-md-4">
           <i class='bx bx-search-alt text-green ps-2'></i>
           <input type="text" name="keyword" id="keyword" placeholder="Search" class="form-control border-0">
@@ -57,63 +58,64 @@ function getCurrentPage()
       </div>
     </div>
 
-    <?php  
-      function getStatusClass($appointment_status) {
-        switch ($appointment_status) {
-          case 'Completed':
-            return 'bg-success';
-          case 'Ongoing':
-            return 'bg-info';
-          case 'Canceled':
-            return 'bg-danger';
-          case 'Pending':
-            return 'bg-warning';
-          default:
-            return 'bg-secondary';
-        }
+    <?php
+    function getStatusClass($appointment_status)
+    {
+      switch ($appointment_status) {
+        case 'Completed':
+          return 'bg-success';
+        case 'Ongoing':
+          return 'bg-info';
+        case 'Cancelled':
+          return 'bg-danger';
+        case 'Pending':
+          return 'bg-warning';
+        default:
+          return 'bg-secondary';
       }
-      ?>
-      
-      <table id="appointment_table" class="table table-striped" style="width:100%">
-        <thead>
+    }
+    ?>
+
+    <table id="appointment_table" class="table table_striped" style="width: 100%;">
+      <thead>
+        <tr>
+          <th scope="col" width="3%">#</th>
+          <th scope="col">Patient Name</th>
+          <th scope="col">Doctor Name</th>
+          <th scope="col">Appointment Date</th>
+          <th scope="col">Status</th>
+          <th scope="col" width="5%">View</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        $counter = 1;
+        foreach ($appointment_array as $item) {
+          $statusClass = getStatusClass($item['appointment_status']);
+        ?>
+
           <tr>
-            <th scope="col" width="3%">#</th>
-            <th scope="col">Appointment_id</th>
-            <th scope="col">Patient Name</th>
-            <th scope="col">Doctor Name</th>
-            <th scope="col">Appointment date</th>
-            <th scope="col">Status</th>
-            <th scope="col" width="5%">View</th>
+            <td><?= $counter ?></td>
+            <td><?= $item['patient_name'] ?></td>
+            <td><?= $item['doctor_name'] ?></td>
+            <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
+            <td class="<?= $statusClass ?> text-light text-center"><?= $item['appointment_status'] ?></td>
+            <td class="text-center">
+              <a href="./viewAppointment?i=<?= $counter - 1 ?>" title="View Details">
+                <i class='bx bx-show'></i>
+              </a>
+            </td>
           </tr>
-        </thead>
-        <tbody>
-          <?php
-          $counter = 1;
-          foreach ($appointment_array as $item) {
-            $statusClass = getStatusClass($item['appointment_status']);
-          ?>
-            <tr>
-              <td><?= $counter ?></td>
-              <td><?= $item['appointment_id'] ?></td>
-              <td><?= $item['patient_name'] ?></td>
-              <td><?= $item['doctor_name'] ?></td>
-              <td><?= $item['appointment_date'] ?></td>
-              <td class="<?= $statusClass ?> text-light text-center"><?= $item['appointment_status'] ?></td>
-              <td class="text-center">
-                <a href="./viewAppointment?i=<?= $counter-1 ?>" title="View Details">
-                  <i class='bx bx-show'></i>
-                </a>
-              </td>
-            </tr>
-          <?php
-            $counter++;
-          }
-          ?>
-        </tbody>
-      </table>
+        <?php
+          $counter++;
+        }
+        ?>
+      </tbody>
+    </table>
   </section>
 
   <script src="./js/appointment-dataTable.js"></script>
 
 </body>
+
 </html>

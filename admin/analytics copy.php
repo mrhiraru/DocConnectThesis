@@ -43,8 +43,15 @@ $appointmentStats = $account->fetch_appointment_statistics();
 
 $totalAppointments = $appointmentStats['totalAppointments'];
 $completedAppointments = $appointmentStats['completedAppointments'];
-$canceledAppointments = $appointmentStats['canceledAppointments'];
+$cancelledAppointments = $appointmentStats['cancelledAppointments'];
 $pendingAppointments = $appointmentStats['pendingAppointments'];
+$avgDuration = $appointmentStats['avgDuration'];
+
+// Fetch doctor statistics
+$doctorStats = $account->fetch_doctor_statistics();
+$activeDoctors = $doctorStats['activeDoctors'];
+$doctorTrends = $doctorStats['doctorTrends'];
+
 ?>
 
 <html lang="en">
@@ -83,7 +90,7 @@ function getCurrentPage()
       </div>
 
       <!-- Appointment Type Breakdown -->
-      <div class="row mb-4">
+      <!-- <div class="row mb-4">
         <div class="col-lg-6">
           <h4>Appointment Types</h4>
           <canvas id="appointmentTypeChart"></canvas>
@@ -94,7 +101,7 @@ function getCurrentPage()
             <li>Online Appointments: <strong id="onlineCount"></strong></li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
       <!-- Appointment Insights -->
       <div class="row mb-4">
@@ -120,7 +127,7 @@ function getCurrentPage()
         <div class="col-lg-6">
           <ul>
             <li>Active Doctors: <strong id="activeDoctors"></strong></li>
-            <li>Avg. Response Time: <strong id="avgResponseTime"></strong></li>
+            <!-- <li>Avg. Response Time: <strong id="avgResponseTime"></strong></li> -->
           </ul>
         </div>
       </div>
@@ -196,36 +203,46 @@ function getCurrentPage()
       // Appointment Insights Chart
       var totalAppointments = <?php echo json_encode($totalAppointments); ?>;
       var completedAppointments = <?php echo json_encode($completedAppointments); ?>;
-      var canceledAppointments = <?php echo json_encode($canceledAppointments); ?>;
+      var cancelledAppointments = <?php echo json_encode($cancelledAppointments); ?>;
       var pendingAppointments = <?php echo json_encode($pendingAppointments); ?>;
+      var avgDuration = <?php echo json_encode($avgDuration); ?>;
 
-      // Update text content with real data
       document.getElementById("totalAppointments").textContent = totalAppointments;
-      document.getElementById("avgDuration").textContent = noShowRate; // Example placeholder
-      document.getElementById("noShowRate").textContent = avgDuration; // Example placeholder
+      document.getElementById("avgDuration").textContent = avgDuration + " min";
+      document.getElementById("noShowRate").textContent = cancelledAppointments;
 
-      // Appointment Insights Chart
       new Chart(document.getElementById("appointmentChart"), {
         type: "pie",
         data: {
-          labels: ["Completed", "Canceled", "Pending"],
+          labels: ["Completed", "Cancelled", "Pending"],
           datasets: [{
-            data: [completedAppointments, canceledAppointments, pendingAppointments],
+            data: [completedAppointments, cancelledAppointments, pendingAppointments],
             backgroundColor: ["#8BC34A", "#F44336", "#FFEB3B"]
           }]
         }
       });
 
-      // Doctor Activity Chart
+      // Doctor Activity Line Chart
+      // Fetch doctor statistics from PHP
+      var activeDoctors = <?php echo json_encode($activeDoctors); ?>;
+      var doctorTrends = <?php echo json_encode($doctorTrends); ?>;
+
+      // para line graph
+      var trendLabels = doctorTrends.map(item => item.month);
+      var trendData = doctorTrends.map(item => item.count);
+
+      document.getElementById("activeDoctors").textContent = activeDoctors;
+
       new Chart(document.getElementById("doctorActivityChart"), {
         type: "line",
         data: {
-          labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+          labels: trendLabels,
           datasets: [{
-            label: "Appointments Per Doctor",
-            data: [50, 60, 80, 90, 120],
+            label: "Active Doctors Over Time",
+            data: trendData,
             borderColor: "#673AB7",
-            fill: false
+            backgroundColor: "rgba(103, 58, 183, 0.2)",
+            fill: true
           }]
         }
       });
@@ -255,12 +272,7 @@ function getCurrentPage()
         }
       });
 
-      // Dynamic text updates
-      document.getElementById("totalAppointments").textContent = "450";
-      document.getElementById("avgDuration").textContent = "25 min";
-      document.getElementById("noShowRate").textContent = "15%";
-      document.getElementById("activeDoctors").textContent = "120";
-      document.getElementById("avgResponseTime").textContent = "5 min";
+      // document.getElementById("avgResponseTime").textContent = "5 min";
       document.getElementById("topConcern").textContent = "Flu";
       document.getElementById("seasonalTrends").textContent = "High flu cases in winter";
       document.getElementById("serverUptime").textContent = "99.8%";

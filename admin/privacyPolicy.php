@@ -21,8 +21,6 @@ function getCurrentPage()
 }
 ?>
 
-<link rel="stylesheet" href="./css/OnOffToggle.css">
-
 <body>
   <?php
   require_once('./includes/admin_header.php');
