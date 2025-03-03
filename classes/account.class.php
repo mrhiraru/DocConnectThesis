@@ -624,6 +624,7 @@ class Account
 
 
     // ---ANALYTICS FUNCTIONS START---
+    // User Statistics Chart
     function fetch_user_statistics()
     {
         $db = $this->db->connect();
@@ -688,22 +689,21 @@ class Account
         $queryPending->execute();
         $pendingAppointments = $queryPending->fetch(PDO::FETCH_ASSOC)['pending'];
 
-        // Calculate no-show rate (as the count of canceled appointments)
-        $noShowRate = ($totalAppointments > 0) ? ($canceledAppointments / $totalAppointments) * 100 : 0;
-
-        // Calculate average meeting duration (from appointment_time to estimated_end)
-        $sqlAvgDuration = "SELECT AVG(TIMESTAMPDIFF(MINUTE, appointment_time, estimated_end)) as avgDuration FROM appointment WHERE estimated_end IS NOT NULL";
+        // Fetch average duration of completed appointments
+        $sqlAvgDuration = "SELECT AVG(TIMESTAMPDIFF(MINUTE, appointment_time, estimated_end)) as avgDuration FROM appointment WHERE appointment_status = 'Completed'";
         $queryAvgDuration = $db->prepare($sqlAvgDuration);
         $queryAvgDuration->execute();
-        $avgDuration = $queryAvgDuration->fetch(PDO::FETCH_ASSOC)['avgDuration'] ?? 0;
+        $avgDuration = $queryAvgDuration->fetch(PDO::FETCH_ASSOC)['avgDuration'];
+
+        // Default to 0 if no data is found
+        $avgDuration = $avgDuration ? round($avgDuration, 2) : 0;
 
         return [
-            'totalAppointments' => $totalAppointments,
-            'completedAppointments' => $completedAppointments,
-            'canceledAppointments' => $canceledAppointments,
-            'pendingAppointments' => $pendingAppointments,
-            'noShowRate' => round($noShowRate, 2) . '%',  // Formatting as a percentage
-            'avgDuration' => round($avgDuration, 2) . ' min' // Formatting as minutes
+            "totalAppointments" => $totalAppointments,
+            "completedAppointments" => $completedAppointments,
+            "canceledAppointments" => $canceledAppointments,
+            "pendingAppointments" => $pendingAppointments,
+            "avgDuration" => $avgDuration
         ];
     }
 }

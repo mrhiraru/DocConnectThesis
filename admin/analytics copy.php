@@ -45,6 +45,7 @@ $totalAppointments = $appointmentStats['totalAppointments'];
 $completedAppointments = $appointmentStats['completedAppointments'];
 $canceledAppointments = $appointmentStats['canceledAppointments'];
 $pendingAppointments = $appointmentStats['pendingAppointments'];
+$avgDuration = $appointmentStats['avgDuration'];
 ?>
 
 <html lang="en">
@@ -83,7 +84,7 @@ function getCurrentPage()
       </div>
 
       <!-- Appointment Type Breakdown -->
-      <div class="row mb-4">
+      <!-- <div class="row mb-4">
         <div class="col-lg-6">
           <h4>Appointment Types</h4>
           <canvas id="appointmentTypeChart"></canvas>
@@ -94,7 +95,7 @@ function getCurrentPage()
             <li>Online Appointments: <strong id="onlineCount"></strong></li>
           </ul>
         </div>
-      </div>
+      </div> -->
 
       <!-- Appointment Insights -->
       <div class="row mb-4">
@@ -120,7 +121,7 @@ function getCurrentPage()
         <div class="col-lg-6">
           <ul>
             <li>Active Doctors: <strong id="activeDoctors"></strong></li>
-            <li>Avg. Response Time: <strong id="avgResponseTime"></strong></li>
+            <!-- <li>Avg. Response Time: <strong id="avgResponseTime"></strong></li> -->
           </ul>
         </div>
       </div>
@@ -198,13 +199,12 @@ function getCurrentPage()
       var completedAppointments = <?php echo json_encode($completedAppointments); ?>;
       var canceledAppointments = <?php echo json_encode($canceledAppointments); ?>;
       var pendingAppointments = <?php echo json_encode($pendingAppointments); ?>;
+      var avgDuration = <?php echo json_encode($avgDuration); ?>;
 
-      // Update text content with real data
       document.getElementById("totalAppointments").textContent = totalAppointments;
-      document.getElementById("avgDuration").textContent = noShowRate; // Example placeholder
-      document.getElementById("noShowRate").textContent = avgDuration; // Example placeholder
+      document.getElementById("avgDuration").textContent = avgDuration + " min";
+      document.getElementById("noShowRate").textContent = canceledAppointments;
 
-      // Appointment Insights Chart
       new Chart(document.getElementById("appointmentChart"), {
         type: "pie",
         data: {
@@ -255,10 +255,6 @@ function getCurrentPage()
         }
       });
 
-      // Dynamic text updates
-      document.getElementById("totalAppointments").textContent = "450";
-      document.getElementById("avgDuration").textContent = "25 min";
-      document.getElementById("noShowRate").textContent = "15%";
       document.getElementById("activeDoctors").textContent = "120";
       document.getElementById("avgResponseTime").textContent = "5 min";
       document.getElementById("topConcern").textContent = "Flu";
