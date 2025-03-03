@@ -75,22 +75,14 @@ function getCurrentPage()
 
       <!-- User Statistics -->
       <div class="row mb-4">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
           <div class="card">
             <div class="card-header">
               <h4 class="card-title">User Statistics</h4>
             </div>
             <div class="card-body">
               <canvas id="userStatsChart"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-header">
               <h4 class="card-title">User Overview</h4>
-            </div>
-            <div class="card-body">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Total Users: <strong id="totalUsers"></strong></li>
                 <li class="list-group-item">Active Users (Monthly): <strong id="activeUsers"></strong></li>
@@ -99,54 +91,15 @@ function getCurrentPage()
             </div>
           </div>
         </div>
-      </div>
-
-      <!-- Appointment Insights -->
-      <div class="row mb-4">
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">Appointment Insights</h4>
-            </div>
-            <div class="card-body">
-              <canvas id="appointmentChart"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title">Appointment Overview</h4>
-            </div>
-            <div class="card-body">
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
-                <li class="list-group-item">Average Duration: <strong id="avgDuration"></strong></li>
-                <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Doctor Activity Reports -->
-      <div class="row mb-4">
-        <div class="col-lg-6">
+        <!-- Appointment Insights -->
+        <div class="col-lg-7">
           <div class="card">
             <div class="card-header">
               <h4 class="card-title">Doctor Activity</h4>
             </div>
             <div class="card-body">
               <canvas id="doctorActivityChart"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-header">
               <h4 class="card-title">Doctor Overview</h4>
-            </div>
-            <div class="card-body">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Active Doctors: <strong id="activeDoctors"></strong></li>
               </ul>
@@ -155,8 +108,25 @@ function getCurrentPage()
         </div>
       </div>
 
-      <!-- Health Concerns & Trends -->
       <div class="row mb-4">
+        <!-- Appointment Insights -->
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Appointment Insights</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="appointmentChart"></canvas>
+              <h4 class="card-title">Appointment Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
+                <li class="list-group-item">Average Duration: <strong id="avgDuration"></strong></li>
+                <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Health Concerns & Trends -->
         <div class="col-lg-6">
           <div class="card">
             <div class="card-header">
@@ -164,15 +134,7 @@ function getCurrentPage()
             </div>
             <div class="card-body">
               <canvas id="healthConcernsChart"></canvas>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="card">
-            <div class="card-header">
               <h4 class="card-title">Health Overview</h4>
-            </div>
-            <div class="card-body">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Top Health Concern: <strong id="topConcern"></strong></li>
                 <li class="list-group-item">Seasonal Trends: <strong id="seasonalTrends"></strong></li>
@@ -181,9 +143,9 @@ function getCurrentPage()
           </div>
         </div>
       </div>
-
+      
       <!-- System Performance & Security -->
-      <div class="row mb-4">
+      <!-- <div class="row mb-4">
         <div class="col-lg-6">
           <div class="card">
             <div class="card-header">
@@ -207,7 +169,7 @@ function getCurrentPage()
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
   <script>
