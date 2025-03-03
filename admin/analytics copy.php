@@ -46,6 +46,12 @@ $completedAppointments = $appointmentStats['completedAppointments'];
 $canceledAppointments = $appointmentStats['canceledAppointments'];
 $pendingAppointments = $appointmentStats['pendingAppointments'];
 $avgDuration = $appointmentStats['avgDuration'];
+
+// Fetch doctor statistics
+$doctorStats = $account->fetch_doctor_statistics();
+$activeDoctors = $doctorStats['activeDoctors'];
+$doctorTrends = $doctorStats['doctorTrends'];
+
 ?>
 
 <html lang="en">
@@ -216,16 +222,27 @@ function getCurrentPage()
         }
       });
 
-      // Doctor Activity Chart
+      // Doctor Activity Line Chart
+      // Fetch doctor statistics from PHP
+      var activeDoctors = <?php echo json_encode($activeDoctors); ?>;
+      var doctorTrends = <?php echo json_encode($doctorTrends); ?>;
+
+      // para line graph
+      var trendLabels = doctorTrends.map(item => item.month);
+      var trendData = doctorTrends.map(item => item.count);
+
+      document.getElementById("activeDoctors").textContent = activeDoctors;
+
       new Chart(document.getElementById("doctorActivityChart"), {
         type: "line",
         data: {
-          labels: ["Jan", "Feb", "Mar", "Apr", "May"],
+          labels: trendLabels,
           datasets: [{
-            label: "Appointments Per Doctor",
-            data: [50, 60, 80, 90, 120],
+            label: "Active Doctors Over Time",
+            data: trendData,
             borderColor: "#673AB7",
-            fill: false
+            backgroundColor: "rgba(103, 58, 183, 0.2)",
+            fill: true
           }]
         }
       });
@@ -255,8 +272,7 @@ function getCurrentPage()
         }
       });
 
-      document.getElementById("activeDoctors").textContent = "120";
-      document.getElementById("avgResponseTime").textContent = "5 min";
+      // document.getElementById("avgResponseTime").textContent = "5 min";
       document.getElementById("topConcern").textContent = "Flu";
       document.getElementById("seasonalTrends").textContent = "High flu cases in winter";
       document.getElementById("serverUptime").textContent = "99.8%";

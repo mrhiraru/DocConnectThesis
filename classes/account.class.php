@@ -706,4 +706,27 @@ class Account
             "avgDuration" => $avgDuration
         ];
     }
+
+
+    function fetch_doctor_statistics()
+    {
+        $db = $this->db->connect();
+
+        // Fetch total active doctors
+        $sqlActiveDoctors = "SELECT COUNT(*) as activeDoctors FROM account WHERE user_role = '1' AND last_login >= NOW() - INTERVAL 30 DAY";
+        $queryActiveDoctors = $db->prepare($sqlActiveDoctors);
+        $queryActiveDoctors->execute();
+        $activeDoctors = $queryActiveDoctors->fetch(PDO::FETCH_ASSOC)['activeDoctors'];
+
+        // Fetch monthly active doctor trends for line graph
+        $sqlDoctorTrends = "SELECT DATE_FORMAT(last_login, '%Y-%m') as month, COUNT(*) as count FROM account WHERE user_role = '1' AND last_login IS NOT NULL GROUP BY month ORDER BY month";
+        $queryDoctorTrends = $db->prepare($sqlDoctorTrends);
+        $queryDoctorTrends->execute();
+        $doctorTrends = $queryDoctorTrends->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            "activeDoctors" => $activeDoctors,
+            "doctorTrends" => $doctorTrends
+        ];
+    }
 }
