@@ -51,7 +51,7 @@ include '../includes/head.php';
                             <form action="" class="row" id="resultForm">
                                 <div class="col-12 mb-3">
                                     <label for="result" class="form-label">Consultation Result:</label>
-                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control" required></textarea>
+                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                 </div>
                                 <div class="col-12 mb-3">
                                     Does the patient have a medical condition?
@@ -74,7 +74,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label for="medcon" class="form-label">Severity:</label>
-                                    <select class="form-select" name="medcon" id="medcon">
+                                    <select class="form-select bg-light" name="medcon" id="medcon">
 
                                     </select>
                                 </div>
