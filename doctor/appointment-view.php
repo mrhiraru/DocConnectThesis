@@ -242,12 +242,15 @@ include '../includes/head.php';
             create: false, // Set to true if you want to allow custom inputs
             plugins: ['remove_button'] // Adds a remove button for each selected item
         });
-        let customInput = document.getElementById("customMedcon");
-        if (this.value === "Other") {
-            customInput.style.display = "block";
-        } else {
-            customInput.style.display = "none";
-            customInput.value = ""; // Clear input when not needed
-        }
+
+        document.getElementById("medcon").addEventListener("change", function() {
+            let customInput = document.getElementById("customMedcon");
+            if (this.value === "Other") {
+                customInput.style.display = "block";
+            } else {
+                customInput.style.display = "none";
+                customInput.value = ""; // Clear input when not needed
+            }
+        });
     });
 </script>
