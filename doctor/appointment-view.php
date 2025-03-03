@@ -66,7 +66,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label for="medcon" class="form-label">Diagnosis:</label>
-                                    <select class="selectpicker form-select" name="medcon" id="medcon">
+                                    <select class="form-select" name="medcon[]" id="medcon" multiple>
                                         <?php
                                         include_once('../handlers/appointment-view.fetch_conditions.php');
                                         ?>
@@ -234,7 +234,12 @@ include '../includes/head.php';
         })
     }
 
-    $(function() {
-        $('.selectpicker').selectpicker();
+    document.addEventListener("DOMContentLoaded", function() {
+        new TomSelect("#medcon", {
+            maxItems: null, // Allows unlimited selections, set a number if you want to limit it
+            persist: false,
+            create: false, // Set to true if you want to allow custom inputs
+            plugins: ['remove_button'] // Adds a remove button for each selected item
+        });
     });
 </script>
