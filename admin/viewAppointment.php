@@ -62,10 +62,10 @@ function getCurrentPage()
                 case "ongoing":
                   $statusClass = "text-info";
                   break;
-                case "cancelled":
+                case "canceled":
                   $statusClass = "text-danger";
                   break;
-                case "waiting":
+                case "pending":
                   $statusClass = "text-warning";
                   break;
                 default:

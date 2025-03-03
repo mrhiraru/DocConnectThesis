@@ -164,33 +164,33 @@ include '../includes/head.php';
                     }
                     ?>
                 </div>
-                <!-- Preferred Appointment Date -->
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                        <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                        <?php
-                        if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
-                        ?>
-                            <p class="text-dark m-0 ps-2">Select appointment date.</p>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="appointment_time" class="form-label text-black-50">Select Time</label>
-                        <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                        <?php
-                        if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
-                        ?>
-                            <p class="text-dark m-0 ps-2">Select appointment time.</p>
-                        <?php
-                        }
-                        ?>
+
+                <div class="container mt-4">
+                    <div class="row g-3">
+                        <!-- Date Picker -->
+                        <div class="col-lg-6">
+                            <label for="appointment_date" class="form-label text-secondary fw-semibold">Select Date</label>
+                            <div class="p-2 border rounded bg-light shadow-sm">
+                                <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="MONTH DD YYYY" required readonly>
+                            </div>
+                            <?php if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) { ?>
+                                <p class="text-danger small mt-1">Select a valid appointment date.</p>
+                            <?php } ?>
+                        </div>
+
+                        <!-- Time Picker -->
+                        <div class="col-lg-6">
+                            <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
+                            <div class="p-2 pb-3 border rounded bg-light shadow-sm">
+                                <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 d-none" placeholder="HH:MM AM/PM" required>
+                            </div>
+                            <?php if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) { ?>
+                                <p class="text-danger small mt-1">Select a valid appointment time.</p>
+                            <?php } ?>
+                        </div>
                     </div>
 
                 </div>
-
 
                 <hr class="my-2">
                 <div class="w-100 d-flex justify-content-end">
@@ -433,6 +433,31 @@ include '../includes/head.php';
             }
             return `${hours.toString().padStart(2, '0')}:${minutes}`;
         }
+    </script>
+
+    <script>
+        function disableDates(date) {
+            const today = new Date();
+            const threeDaysLater = new Date();
+            threeDaysLater.setDate(today.getDate() + 3);
+            return date.getDay() === 0 || date < threeDaysLater;
+        }
+
+        flatpickr("#appointment_date", {
+            dateFormat: "F j, Y",
+            allowInput: true,
+            inline: true,
+            disable: [disableDates]
+        });
+
+        flatpickr("#appointment_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "h:i K",
+            time_24hr: false,
+            allowInput: true,
+            inline: true
+        });
     </script>
 </body>
 

@@ -36,6 +36,10 @@
   <!-- Paper.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.15/paper-full.min.js"></script>
 
+  <!-- flatpickr.js -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
   <!-- Custom Styles -->
   <link rel="stylesheet" href="../css/custom.min.css">
   <link rel="stylesheet" href="../css/style.css">
