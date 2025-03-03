@@ -43,7 +43,7 @@ $appointmentStats = $account->fetch_appointment_statistics();
 
 $totalAppointments = $appointmentStats['totalAppointments'];
 $completedAppointments = $appointmentStats['completedAppointments'];
-$canceledAppointments = $appointmentStats['canceledAppointments'];
+$cancelledAppointments = $appointmentStats['cancelledAppointments'];
 $pendingAppointments = $appointmentStats['pendingAppointments'];
 $avgDuration = $appointmentStats['avgDuration'];
 
@@ -203,20 +203,20 @@ function getCurrentPage()
       // Appointment Insights Chart
       var totalAppointments = <?php echo json_encode($totalAppointments); ?>;
       var completedAppointments = <?php echo json_encode($completedAppointments); ?>;
-      var canceledAppointments = <?php echo json_encode($canceledAppointments); ?>;
+      var cancelledAppointments = <?php echo json_encode($cancelledAppointments); ?>;
       var pendingAppointments = <?php echo json_encode($pendingAppointments); ?>;
       var avgDuration = <?php echo json_encode($avgDuration); ?>;
 
       document.getElementById("totalAppointments").textContent = totalAppointments;
       document.getElementById("avgDuration").textContent = avgDuration + " min";
-      document.getElementById("noShowRate").textContent = canceledAppointments;
+      document.getElementById("noShowRate").textContent = cancelledAppointments;
 
       new Chart(document.getElementById("appointmentChart"), {
         type: "pie",
         data: {
-          labels: ["Completed", "Canceled", "Pending"],
+          labels: ["Completed", "Cancelled", "Pending"],
           datasets: [{
-            data: [completedAppointments, canceledAppointments, pendingAppointments],
+            data: [completedAppointments, cancelledAppointments, pendingAppointments],
             backgroundColor: ["#8BC34A", "#F44336", "#FFEB3B"]
           }]
         }

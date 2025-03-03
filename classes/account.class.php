@@ -677,11 +677,11 @@ class Account
         $queryCompleted->execute();
         $completedAppointments = $queryCompleted->fetch(PDO::FETCH_ASSOC)['completed'];
 
-        // Fetch canceled appointments (also used for noShowRate)
-        $sqlCanceled = "SELECT COUNT(*) as canceled FROM appointment WHERE appointment_status = 'Canceled'";
-        $queryCanceled = $db->prepare($sqlCanceled);
-        $queryCanceled->execute();
-        $canceledAppointments = $queryCanceled->fetch(PDO::FETCH_ASSOC)['canceled'];
+        // Fetch cancelled appointments (also used for noShowRate)
+        $sqlCancelled = "SELECT COUNT(*) as cancelled FROM appointment WHERE appointment_status = 'Cancelled'";
+        $queryCancelled = $db->prepare($sqlCancelled);
+        $queryCancelled->execute();
+        $cancelledAppointments = $queryCancelled->fetch(PDO::FETCH_ASSOC)['cancelled'];
 
         // Fetch pending appointments
         $sqlPending = "SELECT COUNT(*) as pending FROM appointment WHERE appointment_status = 'Pending'";
@@ -701,7 +701,7 @@ class Account
         return [
             "totalAppointments" => $totalAppointments,
             "completedAppointments" => $completedAppointments,
-            "canceledAppointments" => $canceledAppointments,
+            "cancelledAppointments" => $cancelledAppointments,
             "pendingAppointments" => $pendingAppointments,
             "avgDuration" => $avgDuration
         ];

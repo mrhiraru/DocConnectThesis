@@ -7,6 +7,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ./index.php');
 }
 
+include_once './helpers/data_masking.php';
 require_once '../classes/account.class.php';
 $account = new Account();
 $appointment_array = $account->get_appointments_with_doctors_and_patients();
@@ -62,7 +63,7 @@ function getCurrentPage()
                 case "ongoing":
                   $statusClass = "text-info";
                   break;
-                case "canceled":
+                case "cancelled":
                   $statusClass = "text-danger";
                   break;
                 case "pending":
@@ -79,10 +80,10 @@ function getCurrentPage()
             <hr class="mx-3 my-4">
 
             <div class="row row-cols-1 row-cols-md-2">
-              <div class="col d-flex ">
+              <!-- <div class="col d-flex ">
                 <strong class="me-2">Appointment ID:</strong>
                 <p><?php echo htmlspecialchars($appointment['appointment_id']); ?></p>
-              </div>
+              </div> -->
 
               <div class="col d-flex ">
                 <strong class="me-2">Time:</strong>
@@ -111,12 +112,12 @@ function getCurrentPage()
 
               <div class="col d-flex ">
                 <strong class="me-2">Email:</strong>
-                <p><?php echo htmlspecialchars($appointment['patient_email']); ?></p>
+                <p><?= maskEmail(($appointment['patient_email'])) ?></p>
               </div>
 
               <div class="col d-flex ">
                 <strong class="me-2">Patient Contact:</strong>
-                <p><?php echo htmlspecialchars($appointment['patient_contact']); ?></p>
+                <p><?= maskPhone(($appointment['patient_contact'])) ?></p>
               </div>
             </div>
 
