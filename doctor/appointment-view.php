@@ -64,20 +64,22 @@ include '../includes/head.php';
                                         <label class="form-check-label" for="No">No</label>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <label for="medcon" class="form-label">Diagnosis:</label>
-                                    <select class="" name="medcon[]" id="medcon" multiple>
-                                        <?php
-                                        include_once('../handlers/appointment-view.fetch_conditions.php');
-                                        ?>
-                                    </select>
-                                    <input type="text" id="customMedcon" name="customMedcon" class="form-control d-none mt-2" placeholder="Specify diagnosis">
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label for="medcon" class="form-label">Severity:</label>
-                                    <select class="form-select bg-light" name="medcon" id="medcon">
+                                <div class="m-0 p-0 " id="diagnosis-container">
+                                    <div class="col-12 mb-3">
+                                        <label for="medcon" class="form-label">Diagnosis:</label>
+                                        <select class="" name="medcon[]" id="medcon" multiple>
+                                            <?php
+                                            include_once('../handlers/appointment-view.fetch_conditions.php');
+                                            ?>
+                                        </select>
+                                        <input type="text" id="customMedcon" name="customMedcon" class="form-control d-none mt-2" placeholder="Specify diagnosis">
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <label for="medcon" class="form-label">Severity:</label>
+                                        <select class="form-select bg-light" name="medcon" id="medcon">
 
-                                    </select>
+                                        </select>
+                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="comment" class="form-label">Note:</label>
@@ -241,6 +243,25 @@ include '../includes/head.php';
             persist: false,
             create: true, // Set to true if you want to allow custom inputs
             plugins: ['remove_button'] // Adds a remove button for each selected item
+        });
+
+        const medconCheck = document.getElementsByName("medcon_check");
+        const diagnosisContainer = document.getElementById("diagnosis-container");
+
+        diagnosisContainer.style.display = "none";
+
+        // Function to toggle visibility
+        function toggleDiagnosisContainer() {
+            if (document.getElementById("Yes").checked) {
+                diagnosisContainer.style.display = "block"; // Show if Yes is checked
+            } else {
+                diagnosisContainer.style.display = "none"; // Hide if No is checked
+            }
+        }
+
+        // Add event listeners to both radio buttons
+        medconCheck.forEach(radio => {
+            radio.addEventListener("change", toggleDiagnosisContainer);
         });
     });
 </script>
