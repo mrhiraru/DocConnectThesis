@@ -75,9 +75,13 @@ include '../includes/head.php';
                                         <input type="text" id="customMedcon" name="customMedcon" class="form-control d-none mt-2" placeholder="Specify diagnosis">
                                     </div>
                                     <div class="col-12 mb-3">
-                                        <label for="medcon" class="form-label">Severity:</label>
-                                        <select class="form-select bg-light" name="medcon" id="medcon">
-
+                                        <label for="severity" class="form-label">Severity:</label>
+                                        <select class="form-select bg-light" name="severity" id="severity">
+                                            <option value="" disabled <?= !isset($_POST['severity']) ? 'selected' : '' ?>>Select Severity</option>
+                                            <option value="Mild" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Mild') ? 'selected' : '' ?>>Mild</option>
+                                            <option value="Moderate" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Moderate') ? 'selected' : '' ?>>Moderate</option>
+                                            <option value="Severe" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Severe') ? 'selected' : '' ?>>Severe</option>
+                                            <option value="Critical" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Critical') ? 'selected' : '' ?>>Critical</option>
                                         </select>
                                     </div>
                                 </div>
