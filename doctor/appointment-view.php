@@ -66,7 +66,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label for="medcon" class="form-label">Diagnosis:</label>
-                                    <select class="form-select" name="medcon" id="medcon">
+                                    <select class="selectpicker form-select" name="medcon" id="medcon">
                                         <?php
                                         include_once('../handlers/appointment-view.fetch_conditions.php');
                                         ?>
