@@ -155,7 +155,7 @@ include '../includes/head.php';
                 </div>
                 <div class="mb-3">
                     <label for="reason" class="form-label text-black-50">Reason:</label>
-                    <textarea rows="3" id="reason" name="reason">Include your reason here.</textarea>
+                    <textarea class="form-control border-0 text-center fs-6 mb-3 border border-dark" rows="3" id="reason" name="reason">Include your reason here.</textarea>
                     <?php
                     if (isset($_POST['reason']) && empty($_POST['reason'])) {
                     ?>
