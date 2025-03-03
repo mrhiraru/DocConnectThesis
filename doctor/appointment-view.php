@@ -54,7 +54,7 @@ include '../includes/head.php';
                                     <textarea id="result" name="result" rows="2" cols="50" class="form-control" required></textarea>
                                 </div>
                                 <div class="col-12 mb-3">
-                                    Does the patient have a medical condition? 
+                                    Does the patient have a medical condition?
                                     <div class="form-check form-check-inline ms-3">
                                         <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes">
                                         <label class="form-check-label" for="Yes">Yes</label>
@@ -67,7 +67,9 @@ include '../includes/head.php';
                                 <div class="col-12 mb-3">
                                     <label for="medcon" class="form-label">Diagnosis:</label>
                                     <select class="form-select" name="medcon" id="medcon">
-
+                                        <?php
+                                        require_once('../handlers/appointment-view.fetch_conditions.php');
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="col-12 mb-3">
