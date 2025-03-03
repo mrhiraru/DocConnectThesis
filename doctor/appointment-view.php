@@ -67,9 +67,9 @@ include '../includes/head.php';
                                 <div class="col-12 mb-3">
                                     <label for="medcon" class="form-label">Diagnosis:</label>
                                     <select class="form-select" name="medcon" id="medcon">
-                                        <?php 
+                                        <?php
                                         include_once('../handlers/appointment-view.fetch_conditions.php');
-                                        ?>  
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="col-12 mb-3">
@@ -233,4 +233,8 @@ include '../includes/head.php';
             }
         })
     }
+
+    $(function() {
+        $('medcon').selectpicker();
+    });
 </script>
