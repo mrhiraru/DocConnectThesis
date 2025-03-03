@@ -19,6 +19,11 @@ if (isset($_POST['request'])) {
     $appointment_class->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
     $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
+    if (isset($_POST['purpose'])) {
+        $account->gender = htmlentities($_POST['purpose']);
+    } else {
+        $account->gender = '';
+    }
     $appointment_class->reason = htmlentities($_POST['reason']);
     $appointment_class->appointment_status = "Pending";
 
@@ -28,6 +33,7 @@ if (isset($_POST['request'])) {
         validate_field($appointment_class->appointment_date) &&
         validate_field($appointment_class->appointment_time) &&
         validate_field($appointment_class->reason) &&
+        validate_field($appointment_class->purpose) &&
         validate_field($appointment_class->appointment_status)
     ) {
         if ($appointment_class->add_appointment()) {
