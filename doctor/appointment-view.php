@@ -239,7 +239,7 @@ include '../includes/head.php';
         new TomSelect("#medcon", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
             persist: false,
-            create: true, // Set to true if you want to allow custom inputs
+            create: false, // Set to true if you want to allow custom inputs
             plugins: ['remove_button'] // Adds a remove button for each selected item
         });
     });
