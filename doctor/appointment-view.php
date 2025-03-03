@@ -71,6 +71,7 @@ include '../includes/head.php';
                                         include_once('../handlers/appointment-view.fetch_conditions.php');
                                         ?>
                                     </select>
+                                    <input type="text" id="customMedcon" name="customMedcon" class="form-control d-none mt-2" placeholder="Specify diagnosis">
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label for="medcon" class="form-label">Severity:</label>
@@ -241,5 +242,12 @@ include '../includes/head.php';
             create: false, // Set to true if you want to allow custom inputs
             plugins: ['remove_button'] // Adds a remove button for each selected item
         });
+        let customInput = document.getElementById("customMedcon");
+        if (this.value === "Other") {
+            customInput.style.display = "block";
+        } else {
+            customInput.style.display = "none";
+            customInput.value = ""; // Clear input when not needed
+        }
     });
 </script>
