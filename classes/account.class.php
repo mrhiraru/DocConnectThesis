@@ -198,6 +198,20 @@ class Account
         return $data;
     }
 
+    function get_doctor_info_2($account_id)
+    {
+        $sql = "SELECT a.*, d.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), 
+        ' ', a.lastname) AS doctor_name FROM account a INNER JOIN doctor_info d ON a.account_id = d.account_id WHERE a.account_id = :account_id, a.user_role = 1 AND d.is_deleted = 0";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
 
     function sign_in_doctor()
     {

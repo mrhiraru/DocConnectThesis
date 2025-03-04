@@ -141,18 +141,8 @@ include '../includes/head.php';
                             ?>
                         </select>
                     </div>
-                    <div class="row align-items-center border p-3 mx-2 rounded bg-light">
-                        <div class="d-flex justify-content-center col-12 col-md-auto mb-3 mb-md-0">
-                            <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
-                        </div>
-                        <div class="col-12 col-md-7">
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email">N/A</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Days: <span class="text-black" id="working_day">N/A</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Time: <span class="text-black" id="working_time">N/A</span> </p>
-                        </div>
+                    <div class="row align-items-center border p-3 mx-2 rounded bg-light" id="doctor_info">
+                        <p class='text-center'>Select Doctor</p>
                     </div>
                 </div>
 
@@ -333,26 +323,31 @@ include '../includes/head.php';
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const doctorSearch = document.getElementById("doctorSearch");
-            const doctorDropdown = document.getElementById("doctorDropdown");
-            const doctorIdInput = document.getElementById("doctor_id");
-            const specialty = document.getElementById("specialty");
-            const contact = document.getElementById("contact");
-            const email = document.getElementById("email");
-            const working_days = document.getElementById("working_day");
-            const working_hours = document.getElementById("working_time");
-            const account_image = document.getElementById("account_image");
-            const appointment_time = document.getElementById("appointment_time");
-            const appointment_date = document.getElementById("appointment_date");
-            const doctor_name = document.getElementById("doctor_name");
-            const request_button = document.getElementById("request");
-
-            const doctorSelect = document.getElementById("doctor-select");
-
             var startDay;
             var endDay;
             var minTime;
             var maxTime;
+
+            function show_doctor_info(account_id) {
+                $.ajax({
+                    url: '../handlers/appointment.show_doctor_info.php',
+                    type: 'GET',
+                    data: {
+                        fetch: 'true',
+                        account_id: account_id
+                    },
+                    success: function(response) {
+                        if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                            
+                        } else {
+                            console.error('Error:', response);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error completing meeting:', error);
+                    }
+                });
+            }
 
             flatpickr("#appointment_date", {
                 dateFormat: "Y-m-d",
