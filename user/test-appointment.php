@@ -142,7 +142,7 @@ include '../includes/head.php';
                         </select>
                     </div>
                     <div class="row align-items-center border p-3 mx-2 rounded bg-light" id="doctor_info">
-                        <p class='text-center'>Select Doctor</p>
+                        <p class='text-center text-muted m-0 p-0'>No doctor selected.</p>
                     </div>
                 </div>
 
