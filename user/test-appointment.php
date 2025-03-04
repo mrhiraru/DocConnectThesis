@@ -336,8 +336,7 @@ include '../includes/head.php';
                 startTime = selectedOption.getAttribute("data-starttime");
                 endTime = selectedOption.getAttribute("data-endtime");
 
-                console.log("Specialty:", specialty);
-                console.log("Contact:", contact);
+                reinitializeFlatpickr();
             });
 
             function getDisabledDays(startDay, endDay) {
@@ -374,25 +373,27 @@ include '../includes/head.php';
                 };
             }
 
-            flatpickr("#appointment_date", {
-                dateFormat: "Y-m-d",
-                altInput: true,
-                altFormat: "F j, Y",
-                inline: true,
-                disabled: getDisabledDays(startDay, endDay),
-            });
+            function reinitializeFlatpickr() {
+                flatpickr("#appointment_date", {
+                    dateFormat: "Y-m-d",
+                    altInput: true,
+                    altFormat: "F j, Y",
+                    inline: true,
+                    disable: getDisabledDays(startDay, endDay), // Set dynamic disabled days
+                });
 
-            flatpickr("#appointment_time", {
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i:s",
-                altInput: true,
-                altFormat: "h:i K",
-                inline: true,
-                minuteIncrement: 60,
-                minTime: "09:00", //Change min
-                maxTime: "17:00" //Change max
-            });
+                flatpickr("#appointment_time", {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i:s",
+                    altInput: true,
+                    altFormat: "h:i K",
+                    inline: true,
+                    minuteIncrement: 60,
+                    minTime: startTime, // Set dynamic min time
+                    maxTime: endTime // Set dynamic max time
+                });
+            }
 
             new TomSelect("#doctor_id", {
                 sortField: {
