@@ -192,9 +192,12 @@ include '../includes/head.php';
             return; // Stop execution
         }
 
-        var medconCheck = $('#medcon_check');
+        var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
 
-
+        if (medconCheck.length === 0) { // If no option is selected
+            $('input[name="medcon_check"]')[0].reportValidity(); // Show validation popup on first radio button
+            return;
+        }
 
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
