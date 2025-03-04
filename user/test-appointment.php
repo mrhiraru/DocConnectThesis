@@ -352,7 +352,8 @@ include '../includes/head.php';
                 sortField: {
                     field: "text",
                     direction: "asc"
-                }
+                },
+                persist: true,
             });
 
             function formatMySQLTimeTo24Hour(time) {
