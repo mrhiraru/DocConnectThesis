@@ -193,9 +193,13 @@ include '../includes/head.php';
                             <div class="p-2 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT DAY" required readonly>
                             </div>
-                            <?php if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) { ?>
+                            <?php
+                            if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
+                            ?>
                                 <p class="text-danger small mt-1">Select a valid appointment date.</p>
-                            <?php } ?>
+                            <?php
+                            }
+                            ?>
                         </div>
 
                         <!-- Time Picker -->
@@ -414,82 +418,14 @@ include '../includes/head.php';
                 .catch(error => console.error('Error fetching doctors:', error));
 
 
-            function validate_date() {
-                const minDate = new Date();
-                const maxDate = new Date(minDate);
-                maxDate.setMonth(maxDate.getMonth() + 1);
-
-                appointment_date.min = formatDate(minDate);
-                appointment_date.max = formatDate(maxDate);
-
-                // Helper function to format date as YYYY-MM-DD
-                function formatDate(date) {
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    return `${year}-${month}-${day}`;
-                }
-
-                // Helper function to get all allowed days in a weekly cycle
-                function getAllowedDaysRange(startDay, endDay) {
-                    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                    const startIdx = daysOfWeek.indexOf(startDay);
-                    const endIdx = daysOfWeek.indexOf(endDay);
-
-                    // Create allowed days array that cycles through the week
-                    const allowedDays = [];
-                    for (let i = startIdx; i !== endIdx + 1; i = (i + 1) % 7) {
-                        allowedDays.push(daysOfWeek[i]);
-                    }
-
-                    return allowedDays;
-                }
-
-                // Get the allowed days for the specified range
-                const allowedDays = getAllowedDaysRange(startDay, endDay);
-
-                // Validate the selected date
-
-                const selectedDate = new Date(appointment_date.value);
-                const dayName = selectedDate.toLocaleDateString("en-US", {
-                    weekday: 'long'
-                });
-
-
-                if (!allowedDays.includes(dayName)) {
-                    // Set a custom validity message
-                    appointment_date.setCustomValidity("Please select a valid day from " + startDay + " to " + endDay + ".");
-                } else {
-                    // Clear any previous custom validity message
-                    appointment_date.setCustomValidity("");
-                }
-            }
-
-            appointment_date.addEventListener("input", function(event) {
-                validate_date();
-            });
-
-            const form = document.getElementById('appointmentForm');
-            form.addEventListener("submit", function(event) {
-                if (!appointment_date.checkValidity()) {
-                    event.preventDefault(); // Prevent submission if the input is invalid
-                    appointment_date.reportValidity(); // Show tooltip if invalid
-                }
-            });
-
-            function disableDates(date) {
-                const today = new Date();
-                const threeDaysLater = new Date();
-                threeDaysLater.setDate(today.getDate() + 3);
-                return date.getDay() === 0 || date < threeDaysLater;
-            }
+        
 
             flatpickr("#appointment_date", {
                 dateFormat: "Y-m-d",
                 altInput: true,
                 altFormat: "F j, Y",
                 inline: true,
-                disable: [disableDates]
+                
             });
 
             flatpickr("#appointment_time", {
@@ -500,56 +436,11 @@ include '../includes/head.php';
                 altFormat: "h:i K",
                 inline: true,
                 minuteIncrement: 60,
-                minTime: "09:00", // Set minimum time (9:00 AM)
-                maxTime: "17:00" // Set maximum time (5:00 PM)
+                minTime: "09:00", //Change min
+                maxTime: "17:00" //Change max
             });
         });
 
-        function roundTimeToNearestHalfHour(time) {
-            let [hours, minutes] = time.split(":");
-            minutes = parseInt(minutes);
-
-            if (minutes < 15) {
-                minutes = "00";
-            } else if (minutes < 45) {
-                minutes = "30";
-            } else {
-                minutes = "00";
-                hours = (parseInt(hours) + 1).toString().padStart(2, '0');
-            }
-
-            return `${hours.padStart(2, '0')}:${minutes}`;
-        }
-
-        document.getElementById("appointment_time").addEventListener("change", function() {
-            let inputTime = this.value;
-            let roundedTime = roundTimeToNearestHalfHour(inputTime);
-            this.value = roundedTime;
-        });
-
-        function formatTime(time) {
-            let [hours, minutes] = time.split(':');
-            hours = parseInt(hours);
-            let suffix = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
-
-            return `${hours}:${minutes} ${suffix}`;
-        }
-
-        function formatMySQLTimeTo24Hour(time) {
-            const [hours, minutes] = time.split(':');
-
-            return `${hours}:${minutes}`;
-        }
-
-        function subtractOneHour(time) {
-            let [hours, minutes] = time.split(':');
-            hours = parseInt(hours) - 1;
-            if (hours < 0) {
-                hours = 23;
-            }
-            return `${hours.toString().padStart(2, '0')}:${minutes}`;
-        }
     </script>
 </body>
 
