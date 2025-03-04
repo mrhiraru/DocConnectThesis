@@ -61,19 +61,19 @@ include '../includes/head.php';
                                     }
                                     ?>
                                 </div>
-                                <div class="col-12">
-                                    Does the patient have a medical condition?
-                                    <div class="form-check form-check-inline ms-3">
-                                        <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "Yes") ? "checked" : "" ?>>
-                                        <label class="form-check-label" for="Yes">Yes</label>
+                                <div class="col-12 mb-3">
+                                    <div class="col-12">
+                                        Does the patient have a medical condition?
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "Yes") ? "checked" : "" ?>>
+                                            <label class="form-check-label" for="Yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="medcon_check" id="No" value="No" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "No") ? "checked" : "" ?>>
+                                            <label class="form-check-label" for="No">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="medcon_check" id="No" value="No" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "No") ? "checked" : "" ?>>
-                                        <label class="form-check-label" for="No">No</label>
-                                    </div>
-                                </div>
-                                <div class="" id="diagnosis-container">
-                                    <div class="col-12 mb-3">
+                                    <div class="col-12" id="diagnosis-container">
                                         <label for="diagnosis" class="form-label">What medical condition does the patient have?</label>
                                         <select class="rounded-3" name="diagnosis[]" id="diagnosis" multiple required>
                                             <?php
