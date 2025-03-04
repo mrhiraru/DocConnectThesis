@@ -75,10 +75,8 @@ include '../includes/head.php';
                                     </div>
                                     <div class="col-12" id="diagnosis-container">
                                         <label for="diagnosis" class="form-label">What medical condition does the patient have?</label>
-                                        <select class="rounded-3" name="diagnosis[]" id="diagnosis" multiple required>
-                                            <?php
-                                            include_once('../handlers/appointment-view.fetch_conditions.php');
-                                            ?>
+                                        <select class="" name="diagnosis[]" id="diagnosis" multiple required>
+
                                         </select>
                                         <?php
                                         if (isset($_POST['diagnosis']) && !validate_field($_POST['diagnosis'])) {
@@ -245,7 +243,14 @@ include '../includes/head.php';
         })
     }
 
+
+
     document.addEventListener("DOMContentLoaded", function() {
+
+        window.onload = function() {
+            show_medical_conditions();
+        };
+
         new TomSelect("#diagnosis", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
             persist: false,
