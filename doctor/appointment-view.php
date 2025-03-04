@@ -243,12 +243,12 @@ include '../includes/head.php';
             }
         })
     }
-
+    window.addEventListener("load", function() {
+        show_medical_conditions();
+    });
 
 
     document.addEventListener("DOMContentLoaded", function() {
-
-        show_medical_conditions();
 
         new TomSelect("#diagnosis", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
