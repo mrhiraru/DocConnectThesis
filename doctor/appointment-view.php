@@ -195,7 +195,7 @@ include '../includes/head.php';
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
 
         if (medconCheck.length === 0) { // If no option is selected
-            alert("Please select Yes or No for medical condition.");
+            $('input[name="medcon_check"]').get(0).reportValidity();
             return;
         }
 
