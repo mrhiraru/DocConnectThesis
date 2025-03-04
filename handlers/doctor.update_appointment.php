@@ -125,7 +125,6 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
-            
             $success = 'success';
         } else {
             $success = 'failed';
