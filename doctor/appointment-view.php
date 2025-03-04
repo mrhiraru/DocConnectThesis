@@ -75,7 +75,7 @@ include '../includes/head.php';
                                     </div>
                                     <div class="col-12" id="diagnosis-container">
                                         <label for="diagnosis" class="form-label">What medical condition does the patient have?</label>
-                                        <select class="" name="diagnosis[]" id="diagnosis" multiple required onload="show_medical_conditions();">
+                                        <select class="" name="diagnosis[]" id="diagnosis" multiple required>
 
                                         </select>
                                         <?php
@@ -262,6 +262,7 @@ include '../includes/head.php';
         function toggleDiagnosisContainer() {
             if (document.getElementById("Yes").checked) {
                 diagnosisContainer.style.display = "block"; // Show if Yes is checked
+                show_medical_conditions();
             } else {
                 diagnosisContainer.style.display = "none"; // Hide if No is checked
             }
