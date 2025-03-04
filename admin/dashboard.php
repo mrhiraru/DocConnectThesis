@@ -13,6 +13,14 @@ $account = new Account();
 
 $user_summarry = $account->fetch_user_summary();
 
+$appointmentStats = $account->fetch_appointment_statistics();
+
+$totalAppointments = $appointmentStats['totalAppointments'];
+$completedAppointments = $appointmentStats['completedAppointments'];
+$cancelledAppointments = $appointmentStats['cancelledAppointments'];
+$pendingAppointments = $appointmentStats['pendingAppointments'];
+$avgDuration = $appointmentStats['avgDuration'];
+
 ?>
 
 <html lang="en">
@@ -39,11 +47,11 @@ function getCurrentPage()
     <div class="container">
       <div class="row flex-md-nowrap row-cols-1 row-cols-md-4 mx-0 me-md-5 mb-4">
         <div class="col bg-primary mx-0 mx-md-2 p-3 text-white rounded-3 mb-3 mb-md-0">
-          <div class="row g-3">
+          <div class="row g-3" style="height: 100%;">
             <div class="col-6 d-flex align-items-end justify-content-start">
               <i class='bx bx-user'></i>
             </div>
-            <div class="col-6 text-end">
+            <div class="col-6 d-flex flex-column align-items-end justify-content-start">
               <p class="fs-1 m-0"><?php echo $user_summarry['totalUsers']; ?></p>
               <p>Total Users</p>
             </div>
@@ -57,7 +65,7 @@ function getCurrentPage()
             </div>
             <div class="col-6 text-end">
               <p class="fs-1 m-0"><?php echo $user_summarry['totalActiveUsers']; ?></p>
-              <p>Total Active Users.</p>
+              <p>Total Active Users</p>
             </div>
           </div>
         </div>
@@ -90,40 +98,114 @@ function getCurrentPage()
 
     <div class="container px-0 px-md-2">
       <div class="row mx-2">
-        <div class="col-12 col-lg-4">
-          <div class="border border-2 border-dark-subtle shadow-sm p-3 h-100">
-            <h3 class="text-center mb-4">Appoint Management</h3>
-            <h5>Appointments today: </h5>
+        <div class="col-12 col-lg-8">
+          <div class="card h-100">
+            <div class="card-header">
+              <h3 class="text-center">Appoint Management</h3>
+            </div>
+            <div class="p-3">
+              <h5>Appointment Overview</h5>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
+                <li class="list-group-item">Average Duration: <strong id="avgDuration"></strong></li>
+                <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
+              </ul>
+            </div>
+
+            <hr>
+            <div class="p-3">
+              <h4 class="card-title">Appointment/s today</h4>
+              <table id="appointment_table" class="table table_striped" style="width: 100%;">
+                <thead>
+                  <tr>
+                    <th scope="col" width="3%">#</th>
+                    <th scope="col">Patient Name</th>
+                    <th scope="col">Doctor Name</th>
+                    <th scope="col">Appointment Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  $counter = 1;
+                  foreach ($user_summarry['appointments'] as $item) {
+                    $appointmentDateTime = $item['appointment_date'] . ' ' . $item['appointment_time'];
+                  ?>
+                    <tr>
+                      <td><?= $counter ?></td>
+                      <td><?= $item['patient_firstname'] . ' ' . $item['patient_lastname'] ?></td>
+                      <td><?= $item['doctor_firstname'] . ' ' . $item['doctor_lastname'] ?></td>
+                      <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
+                    </tr>
+                  <?php
+                    $counter++;
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-
-        <div class="col-12 col-lg-8">
-          <nav>
-            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-              <button class="nav-link  active" id="nav-campus-tab" data-bs-toggle="tab" data-bs-target="#nav-campus" type="button" role="tab" aria-controls="nav-campus" aria-selected="true">Campus</button>
-              <button class="nav-link" id="nav-type-tab" data-bs-toggle="tab" data-bs-target="#nav-type" type="button" role="tab" aria-controls="nav-type" aria-selected="false">Type</button>
+        <div class="col-lg-4">
+          <div class="card h-100">
+            <div class="card-header">
+              <h4 class="card-title">Appointment Insights</h4>
             </div>
-          </nav>
-          <div class="tab-content p-3 border bg-white" id="nav-tabContent">
-            <select id="yearSelect" class="form-select form-select-sm w-25" aria-label=".form-select-sm example">
-              <option value="1">2021-2022</option>
-              <option value="2">2022-2023</option>
-              <option value="3">2023-2024</option>
-            </select>
-
-            <div class="tab-pane fade active show" id="nav-campus" role="tabpanel" aria-labelledby="nav-campus-tab">
-              <canvas id="campusChart" class="chart" role="img"></canvas>
-            </div>
-            <div class="tab-pane fade" id="nav-type" role="tabpanel" aria-labelledby="nav-type-tab">
-              <canvas id="typeChart" class="chart" role="img"></canvas>
+            <div class="card-body">
+              <canvas id="appointmentChart"></canvas>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-8">
+      <nav>
+        <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+          <button class="nav-link  active" id="nav-campus-tab" data-bs-toggle="tab" data-bs-target="#nav-campus" type="button" role="tab" aria-controls="nav-campus" aria-selected="true">Campus</button>
+          <button class="nav-link" id="nav-type-tab" data-bs-toggle="tab" data-bs-target="#nav-type" type="button" role="tab" aria-controls="nav-type" aria-selected="false">Type</button>
+        </div>
+      </nav>
+      <div class="tab-content p-3 border bg-white" id="nav-tabContent">
+        <select id="yearSelect" class="form-select form-select-sm w-25" aria-label=".form-select-sm example">
+          <option value="1">2021-2022</option>
+          <option value="2">2022-2023</option>
+          <option value="3">2023-2024</option>
+        </select>
+
+        <div class="tab-pane fade active show" id="nav-campus" role="tabpanel" aria-labelledby="nav-campus-tab">
+          <canvas id="campusChart" class="chart" role="img"></canvas>
+        </div>
+        <div class="tab-pane fade" id="nav-type" role="tabpanel" aria-labelledby="nav-type-tab">
+          <canvas id="typeChart" class="chart" role="img"></canvas>
         </div>
       </div>
     </div>
   </section>
 
   <script src="./js/analytics-lineChart.js"></script>
+
+  <script>
+    var totalAppointments = <?php echo json_encode($totalAppointments); ?>;
+    var completedAppointments = <?php echo json_encode($completedAppointments); ?>;
+    var cancelledAppointments = <?php echo json_encode($cancelledAppointments); ?>;
+    var pendingAppointments = <?php echo json_encode($pendingAppointments); ?>;
+    var avgDuration = <?php echo json_encode($avgDuration); ?>;
+
+    document.getElementById("totalAppointments").textContent = totalAppointments;
+    document.getElementById("avgDuration").textContent = avgDuration + " min";
+    document.getElementById("noShowRate").textContent = cancelledAppointments;
+
+    new Chart(document.getElementById("appointmentChart"), {
+      type: "pie",
+      data: {
+        labels: ["Completed", "Cancelled", "Pending"],
+        datasets: [{
+          data: [completedAppointments, cancelledAppointments, pendingAppointments],
+          backgroundColor: ["#8BC34A", "#F44336", "#FFEB3B"]
+        }]
+      }
+    });
+  </script>
 
 </body>
 
