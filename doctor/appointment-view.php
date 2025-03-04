@@ -216,7 +216,7 @@ include '../includes/head.php';
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
             data: {
-                end: null,
+                
                 result: resultInput.val().trim(),
                 comment: $('#comment').val(),
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
