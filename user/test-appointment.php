@@ -135,7 +135,7 @@ include '../includes/head.php';
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <select name="doctor_id" id="doctor_id" class="col-12" onselect="show_doctor_info(this.value)">
+                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.value)">
                             <?php
                             include_once('../handlers/appointment.get_doctors.php');
                             ?>
@@ -381,19 +381,25 @@ include '../includes/head.php';
         });
 
         function show_doctor_info(account_id) {
-            $.ajax({
-                url: '../handlers/appointment.show_doctor_info.php',
-                type: 'GET',
-                data: {
-                    account_id: account_id
-                },
-                success: function(response) {
-                    $('#doctor_info').html(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching doctor information:', error);
-                }
-            });
+
+            if (account_id) {
+                $.ajax({
+                    url: '../handlers/appointment.show_doctor_info.php',
+                    type: 'GET',
+                    data: {
+                        account_id: account_id
+                    },
+                    success: function(response) {
+                        $('#doctor_info').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching doctor information:', error);
+                    }
+                });
+            } else {
+                $('#doctor_info').html("<p class='text-center text-muted m-0 p-0'>No doctor selected.</p>");
+            }
+
         }
     </script>
 </body>
