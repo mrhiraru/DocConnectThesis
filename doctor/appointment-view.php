@@ -76,7 +76,9 @@ include '../includes/head.php';
                                     <div class="col-12" id="diagnosis-container">
                                         <label for="diagnosis" class="form-label">What medical condition does the patient have?</label>
                                         <select class="" name="diagnosis[]" id="diagnosis" multiple required>
-
+                                            <?php
+                                            include_once('../handlers/appointment-view.fetch_conditions.php');
+                                            ?>
                                         </select>
                                         <?php
                                         if (isset($_POST['diagnosis']) && !validate_field($_POST['diagnosis'])) {
@@ -183,20 +185,21 @@ include '../includes/head.php';
     }
 
     function end_meeting() {
-        var resultInput = $('#result').get(0);
+        var resultInput = $('#result');
 
-        if (!resultInput.value.trim()) {
+        if (!resultInput.val().trim()) {
             resultInput.reportValidity(); // Show validation popup
             return; // Stop execution
         }
+
+        var medconCheck = $('#medcon_check').get
 
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
             data: {
                 end: true,
-                result: resultInput.value.trim(),
-                diagnosis: $('#diagnosis').val(),
+                result: resultInput.val().trim(),
                 comment: $('#comment').val(),
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
             },
@@ -244,7 +247,11 @@ include '../includes/head.php';
         })
     }
 
+
+
     document.addEventListener("DOMContentLoaded", function() {
+
+
 
         new TomSelect("#diagnosis", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
@@ -270,7 +277,6 @@ include '../includes/head.php';
         // Add event listeners to both radio buttons
         medconCheck.forEach(radio => {
             radio.addEventListener("change", toggleDiagnosisContainer);
-            show_medical_conditions();
         });
     });
 </script>
