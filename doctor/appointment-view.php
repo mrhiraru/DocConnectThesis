@@ -225,7 +225,7 @@ include '../includes/head.php';
             },
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                    message_notifcation('end');
+                    //message_notifcation('end');
                     add_new_medcon(diagnosis);
                     location.reload();
                 } else {
@@ -268,7 +268,7 @@ include '../includes/head.php';
                 console.log('New medical condition added.');
             },
             error: function(xhr, status, error) {
-                console.error('Error sending message:', error);
+                console.error('Error adding medical condition:', error);
             }
         })
     }
