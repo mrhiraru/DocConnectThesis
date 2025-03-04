@@ -88,23 +88,6 @@ include '../includes/head.php';
                                         }
                                         ?>
                                     </div>
-                                    <div class="col-12 mb-3">
-                                        <label for="severity" class="form-label">Severity:</label>
-                                        <select class="form-select bg-light" name="severity" id="severity">
-                                            <option value="" disabled <?= !isset($_POST['severity']) ? 'selected' : '' ?>>Select Severity</option>
-                                            <option value="Mild" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Mild') ? 'selected' : '' ?>>Mild</option>
-                                            <option value="Moderate" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Moderate') ? 'selected' : '' ?>>Moderate</option>
-                                            <option value="Severe" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Severe') ? 'selected' : '' ?>>Severe</option>
-                                            <option value="Critical" <?= (isset($_POST['severity']) && $_POST['severity'] == 'Critical') ? 'selected' : '' ?>>Critical</option>
-                                        </select>
-                                        <?php
-                                        if (isset($_POST['severity']) && !validate_field($_POST['severity'])) {
-                                        ?>
-                                            <p class="text-dark m-0 ps-2">Select severity is required.</p>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
                                 </div>
                                 <div class="col-12">
                                     <label for="comment" class="form-label">Note:</label>
