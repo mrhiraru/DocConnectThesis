@@ -183,7 +183,7 @@ include '../includes/head.php';
                         <div class="col-lg-6">
                             <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
                             <div class="p-2 pb-3 border rounded bg-light shadow-sm">
-                                <input type="time" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 d-none" placeholder="HH:MM AM/PM" required>
+                                <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 d-none" placeholder="HH:MM AM/PM" required>
                             </div>
                             <?php
                             if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
@@ -451,7 +451,7 @@ include '../includes/head.php';
         }
 
         flatpickr("#appointment_date", {
-            dateFormat: "F j, Y",
+            dateFormat: "Y-m-d",
             allowInput: true,
             inline: true,
             disable: [disableDates]
@@ -460,14 +460,13 @@ include '../includes/head.php';
         flatpickr("#appointment_time", {
             enableTime: true,
             noCalendar: true,
-            dateFormat: "h:i K",
+            dateFormat: "H:i:s",
             time_24hr: false,
             allowInput: true,
             inline: true,
             minuteIncrement: 60,
             minTime: "09:00", // Set minimum time (9:00 AM)
             maxTime: "17:00" // Set maximum time (5:00 PM)
-
         });
     </script>
 </body>
