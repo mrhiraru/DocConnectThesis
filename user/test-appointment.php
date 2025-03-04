@@ -135,12 +135,11 @@ include '../includes/head.php';
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Select Doctor" aria-label="Doctor search" value="">
-                        <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
-                        <select name="doctor-select" id="doctor-select" class="">
-
+                        <select name="doctor_id" id="doctor_id" class="">
+                        <?php
+                        include_once('../handlers/appointment.get_doctors.php');
+                        ?>
                         </select>
-                        <input type="hidden" id="doctor_id" name="doctor_id" value="">
                     </div>
                     <div class="row align-items-center border p-3 mx-2 rounded bg-light">
                         <div class="d-flex justify-content-center col-12 col-md-auto mb-3 mb-md-0">
@@ -355,89 +354,6 @@ include '../includes/head.php';
             var minTime;
             var maxTime;
 
-            fetch('../handlers/appointment.get_doctors.php')
-                .then(response => response.json())
-                .then(data => {
-
-                    data.forEach(doctor => {
-                        doctorSelect.innerHTML = '';
-                        const option = document.createElement("option");
-                        option.value = doctor.account_id; // Use the unique ID as the value
-                        option.textContent = doctor.doctor_name; // Display doctor name
-
-                        doctorSelect.appendChild(option);
-                    });
-
-                    doctorSearch.addEventListener("focus", function() {
-                        if (doctorSearch.value === '' && data.length > 0) {
-                            doctorDropdown.classList.remove('d-none');
-                            populateDropdown(data);
-                        }
-                    });
-
-                    doctorSearch.addEventListener("input", function() {
-                        const searchTerm = doctorSearch.value.toLowerCase();
-                        doctorDropdown.innerHTML = '';
-
-                        const filteredDoctors = data.filter(doctor =>
-                            doctor.doctor_name.toLowerCase().includes(searchTerm)
-                        );
-
-                        populateDropdown(filteredDoctors);
-                    });
-
-                    function populateDropdown(doctors) {
-                        doctorDropdown.innerHTML = '';
-
-                        doctors.forEach(doctor => {
-                            const li = document.createElement("li");
-                            li.classList.add("list-group-item", "cursor-pointer");
-                            li.textContent = doctor.doctor_name;
-                            li.setAttribute("data-id", doctor.account_id);
-
-                            li.addEventListener("click", function() {
-                                doctor_name.innerHTML = doctor.doctor_name;
-                                doctorIdInput.value = doctor.doctor_id;
-                                specialty.innerHTML = doctor.specialty;
-                                contact.innerHTML = doctor.contact;
-                                email.innerHTML = doctor.email;
-                                working_days.innerHTML = doctor.start_day + " to " + doctor.end_day;
-                                working_hours.innerHTML = formatTime(doctor.start_wt) + " to " + formatTime(doctor.end_wt);
-                                account_image.src = "../assets/images/" + doctor.account_image;
-
-
-                                appointment_time.min = formatMySQLTimeTo24Hour(doctor.start_wt);
-                                appointment_time.max = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
-                                appointment_date.dataset.startday = doctor.start_day;
-                                appointment_date.dataset.endday = doctor.end_day;
-
-                                request_button.removeAttribute("disabled");
-                                doctorDropdown.classList.add('d-none');
-
-                                startDay = appointment_date.dataset.startday;
-                                endDay = appointment_date.dataset.endday;
-
-                                minTime = formatMySQLTimeTo24Hour(doctor.start_wt);
-                                maxTime = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
-
-                            });
-
-                            doctorDropdown.appendChild(li);
-
-                        });
-
-                        if (doctors.length > 0) {
-                            doctorDropdown.classList.remove('d-none');
-                        } else {
-                            doctorDropdown.classList.add('d-none');
-                        }
-                    }
-                })
-                .catch(error => console.error('Error fetching doctors:', error));
-
-
-
-
             flatpickr("#appointment_date", {
                 dateFormat: "Y-m-d",
                 altInput: true,
@@ -458,13 +374,12 @@ include '../includes/head.php';
                 maxTime: "17:00" //Change max
             });
 
-            new TomSelect("#doctor-select", {
+            new TomSelect("#doctor_id", {
                 sortField: {
                     field: "text",
                     direction: "asc"
                 }
             });
-
 
             function formatMySQLTimeTo24Hour(time) {
                 const [hours, minutes] = time.split(':');
