@@ -476,6 +476,33 @@ include '../includes/head.php';
                     appointment_date.reportValidity(); // Show tooltip if invalid
                 }
             });
+
+            function disableDates(date) {
+                const today = new Date();
+                const threeDaysLater = new Date();
+                threeDaysLater.setDate(today.getDate() + 3);
+                return date.getDay() === 0 || date < threeDaysLater;
+            }
+
+            flatpickr("#appointment_date", {
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "F j, Y",
+                inline: true,
+                disable: [disableDates]
+            });
+
+            flatpickr("#appointment_time", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i:s",
+                altInput: true,
+                altFormat: "h:i K",
+                inline: true,
+                minuteIncrement: 60,
+                minTime: "09:00", // Set minimum time (9:00 AM)
+                maxTime: "17:00" // Set maximum time (5:00 PM)
+            });
         });
 
         function roundTimeToNearestHalfHour(time) {
@@ -523,35 +550,6 @@ include '../includes/head.php';
             }
             return `${hours.toString().padStart(2, '0')}:${minutes}`;
         }
-    </script>
-
-    <script>
-        function disableDates(date) {
-            const today = new Date();
-            const threeDaysLater = new Date();
-            threeDaysLater.setDate(today.getDate() + 3);
-            return date.getDay() === 0 || date < threeDaysLater;
-        }
-
-        flatpickr("#appointment_date", {
-            dateFormat: "Y-m-d",
-            altInput: true,
-            altFormat: "F j, Y",
-            inline: true,
-            disable: [disableDates]
-        });
-
-        flatpickr("#appointment_time", {
-            enableTime: true,
-            noCalendar: true,
-            dateFormat: "H:i:s",
-            altInput: true,
-            altFormat: "h:i K",
-            inline: true,
-            minuteIncrement: 60,
-            minTime: "09:00", // Set minimum time (9:00 AM)
-            maxTime: "17:00" // Set maximum time (5:00 PM)
-        });
     </script>
 </body>
 
