@@ -10,7 +10,14 @@ $doctorArray = $account->get_doctor();
 <?php
 foreach ($doctorArray as $item) {
 ?>
-  <option value="<?= $item['account_id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] ==  $item['account_id']) ? 'selected' : '' ?>><?= $item['doctor_name'] ?></option>
+  <option
+    data-startday="<?= $item['start_day'] ?>"
+    data-endday="<?= $item['end_day'] ?>"
+    data-starttime="<?= $item['start_wt'] ?>"
+    data-endtime="<?= $item['end_wt'] ?>"
+    value="<?= $item['account_id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] ==  $item['account_id']) ? 'selected' : '' ?>>
+    <?= $item['doctor_name'] ?>
+  </option>
 <?php
 }
 

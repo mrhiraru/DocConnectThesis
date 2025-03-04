@@ -325,15 +325,61 @@ include '../includes/head.php';
         document.addEventListener("DOMContentLoaded", function() {
             var startDay;
             var endDay;
-            var minTime;
-            var maxTime;
+            var startTime;
+            var endTime;
+
+            document.getElementById("doctor_id").addEventListener("change", function() {
+                let selectedOption = this.options[this.selectedIndex];
+
+                startDay = selectedOption.getAttribute("data-startday");
+                endDay = selectedOption.getAttribute("data-endday");
+                startTime = selectedOption.getAttribute("data-starttime");
+                endTime = selectedOption.getAttribute("data-endtime");
+
+                console.log("Specialty:", specialty);
+                console.log("Contact:", contact);
+            });
+
+            function getDisabledDays(startDay, endDay) {
+                const daysMap = {
+                    "Sunday": 0,
+                    "Monday": 1,
+                    "Tuesday": 2,
+                    "Wednesday": 3,
+                    "Thursday": 4,
+                    "Friday": 5,
+                    "Saturday": 6
+                };
+
+                let start = daysMap[startDay];
+                let end = daysMap[endDay];
+
+                return function(date) {
+                    let day = date.getDay();
+                    let today = new Date();
+                    let threeDaysLater = new Date();
+                    threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
+
+                    // Disable if date is within next 3 days
+                    if (date < threeDaysLater) {
+                        return true;
+                    }
+
+                    // Disable if day is outside startDay to endDay range
+                    if (start <= end) {
+                        return !(day >= start && day <= end);
+                    } else {
+                        return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
+                    }
+                };
+            }
 
             flatpickr("#appointment_date", {
                 dateFormat: "Y-m-d",
                 altInput: true,
                 altFormat: "F j, Y",
                 inline: true,
-
+                disabled: getDisabledDays(startDay, endDay),
             });
 
             flatpickr("#appointment_time", {
@@ -391,6 +437,7 @@ include '../includes/head.php';
                     },
                     success: function(response) {
                         $('#doctor_info').html(response);
+
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching doctor information:', error);
@@ -399,7 +446,6 @@ include '../includes/head.php';
             } else {
                 $('#doctor_info').html("<p class='text-center text-muted m-0 p-0'>No doctor selected.</p>");
             }
-
         }
     </script>
 </body>
