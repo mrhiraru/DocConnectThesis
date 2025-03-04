@@ -262,7 +262,6 @@ include '../includes/head.php';
         function toggleDiagnosisContainer() {
             if (document.getElementById("Yes").checked) {
                 diagnosisContainer.style.display = "block"; // Show if Yes is checked
-                show_medical_conditions();
             } else {
                 diagnosisContainer.style.display = "none"; // Hide if No is checked
             }
@@ -271,6 +270,7 @@ include '../includes/head.php';
         // Add event listeners to both radio buttons
         medconCheck.forEach(radio => {
             radio.addEventListener("change", toggleDiagnosisContainer);
+            show_medical_conditions();
         });
     });
 </script>
