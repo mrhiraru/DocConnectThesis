@@ -100,11 +100,17 @@ include '../includes/head.php';
     }
 
     /* Hide all arrows by default */
-    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowUp,
-    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowDown {
+    .flatpickr-time .numInputWrapper span.arrowUp,
+    .flatpickr-time .numInputWrapper span.arrowDown {
         display: none;
     }
 
+    /* Show only the arrows for the minutes input */
+    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowUp,
+    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowDown {
+        display: inline-block !important;
+        /* Make minute arrows visible */
+    }
 </style>
 
 <body>
