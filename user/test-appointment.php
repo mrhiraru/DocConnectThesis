@@ -328,23 +328,6 @@ include '../includes/head.php';
             var minTime;
             var maxTime;
 
-            function show_doctor_info(account_id) {
-                $.ajax({
-                    url: '../handlers/appointment.show_doctor_info.php',
-                    type: 'GET',
-                    data: {
-                        fetch: 'true',
-                        account_id: account_id
-                    },
-                    success: function(response) {
-                        $('#doctor_info').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error completing meeting:', error);
-                    }
-                });
-            }
-
             flatpickr("#appointment_date", {
                 dateFormat: "Y-m-d",
                 altInput: true,
@@ -396,6 +379,23 @@ include '../includes/head.php';
                 return `${hours}:${minutes} ${suffix}`;
             }
         });
+
+        function show_doctor_info(account_id) {
+            $.ajax({
+                url: '../handlers/appointment.show_doctor_info.php',
+                type: 'GET',
+                data: {
+                    fetch: 'true',
+                    account_id: account_id
+                },
+                success: function(response) {
+                    $('#doctor_info').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error completing meeting:', error);
+                }
+            });
+        }
     </script>
 </body>
 
