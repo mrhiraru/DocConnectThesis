@@ -195,7 +195,7 @@ include '../includes/head.php';
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
 
         if (medconCheck.length === 0) { // If no option is selected
-            $('input[name="medcon_check"]')[0].reportValidity(); // Show validation popup on first radio button
+            alert("Please select Yes or No for medical condition.");
             return;
         }
 
@@ -255,8 +255,6 @@ include '../includes/head.php';
 
 
     document.addEventListener("DOMContentLoaded", function() {
-
-
 
         new TomSelect("#diagnosis", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
