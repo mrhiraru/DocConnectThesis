@@ -196,6 +196,7 @@ include '../includes/head.php';
             data: {
                 end: true,
                 result: resultInput.value.trim(),
+                diagnosis: $('#diagnosis').val(),
                 comment: $('#comment').val(),
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
             },
@@ -247,9 +248,7 @@ include '../includes/head.php';
 
     document.addEventListener("DOMContentLoaded", function() {
 
-        window.onload = function() {
-            show_medical_conditions();
-        };
+        show_medical_conditions();
 
         new TomSelect("#diagnosis", {
             maxItems: null, // Allows unlimited selections, set a number if you want to limit it
