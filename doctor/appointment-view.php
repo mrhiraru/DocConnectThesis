@@ -75,7 +75,7 @@ include '../includes/head.php';
                                     </div>
                                     <div class="col-12" id="diagnosis-container">
                                         <label for="diagnosis" class="form-label">What medical condition does the patient have?</label>
-                                        <select class="" name="diagnosis[]" id="diagnosis" multiple required>
+                                        <select class="" name="diagnosis[]" id="diagnosis" multiple required onload="show_medical_conditions();">
 
                                         </select>
                                         <?php
@@ -243,10 +243,6 @@ include '../includes/head.php';
             }
         })
     }
-    window.addEventListener("load", function() {
-        show_medical_conditions();
-    });
-
 
     document.addEventListener("DOMContentLoaded", function() {
 
