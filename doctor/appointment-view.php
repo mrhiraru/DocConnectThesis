@@ -289,12 +289,16 @@ include '../includes/head.php';
 
     document.addEventListener("DOMContentLoaded", function() {
 
-        new TomSelect("#diagnosis", {
-            maxItems: null, // Allows unlimited selections, set a number if you want to limit it
-            persist: false,
-            create: true, // Set to true if you want to allow custom inputs
-            plugins: ['remove_button'] // Adds a remove button for each selected item
-        });
+        var diagnosis_input = document.getElementById("diagnosis");
+        if (diagnosis_input) {
+            new TomSelect("#diagnosis", {
+                maxItems: null, // Allows unlimited selections, set a number if you want to limit it
+                persist: false,
+                create: true, // Set to true if you want to allow custom inputs
+                plugins: ['remove_button'] // Adds a remove button for each selected item
+            });
+        }
+
 
         const medconCheck = document.getElementsByName("medcon_check");
         const diagnosisContainer = document.getElementById("diagnosis-container");
