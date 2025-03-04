@@ -398,7 +398,7 @@ include '../includes/head.php';
                                 appointment_date.dataset.endday = doctor.end_day;
 
                                 request_button.removeAttribute("disabled");
-                                //doctorDropdown.classList.add('d-none');
+                                doctorDropdown.classList.add('d-none');
 
                                 startDay = appointment_date.dataset.startday;
                                 endDay = appointment_date.dataset.endday;
@@ -412,7 +412,11 @@ include '../includes/head.php';
 
                         });
 
-                        
+                        if (doctors.length > 0) {
+                            doctorDropdown.classList.remove('d-none');
+                        } else {
+                            doctorDropdown.classList.add('d-none');
+                        }
                     }
                 })
                 .catch(error => console.error('Error fetching doctors:', error));
