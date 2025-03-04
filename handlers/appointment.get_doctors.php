@@ -4,6 +4,10 @@ $account = new Account();
 
 $doctorArray = $account->get_doctor();
 
+?>
+<option value="" disabled <?= !isset($_POST['doctor_id']) ? 'selected' : ''
+                          ?>>Select Diagnosis</option>
+<?php
 foreach ($doctorArray as $item) {
 ?>
   <option value="<?= $item['account_id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] ==  $item['account_id']) ? 'selected' : '' ?>><?= $item['doctor_name'] ?></option>
@@ -18,7 +22,7 @@ foreach ($doctorArray as $item) {
 //   if ($doctors) {
 //     echo json_encode($doctors);
 //   } else {
-//     echo json_encode([]);
+//     echo json_encode([]);F
 //   }
 // } catch (PDOException $e) {
 //   echo json_encode(['error' => $e->getMessage()]);
