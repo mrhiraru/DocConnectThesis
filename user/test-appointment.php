@@ -78,19 +78,20 @@ $appointment = 'active';
 include '../includes/head.php';
 ?>
 <style>
-    .flatpickr-time .flatpickr-hour {
-    pointer-events: none; /* Disable interaction with the hour input */
-}
+    .datepicker-container {
+        display: flex;
+        justify-content: center;
+        /* Horizontally center */
+        align-items: center;
+        /* Vertically center (if needed) */
+        width: 100%;
+        /* Ensure it takes full width */
+    }
 
-.flatpickr-time .numInputWrapper span.arrowUp,
-.flatpickr-time .numInputWrapper span.arrowDown {
-    display: none; /* Hide all arrows */
-}
-
-.flatpickr-time .flatpickr-minute + .numInputWrapper span.arrowUp,
-.flatpickr-time .flatpickr-minute + .numInputWrapper span.arrowDown {
-    display: inline-block !important; /* Show only the arrows after minutes */
-}
+    .flatpickr-calendar {
+        margin: auto;
+        /* Center the calendar */
+    }
 </style>
 
 <body>
