@@ -219,7 +219,7 @@ include '../includes/head.php';
                 end: true,
                 result: resultInput.val().trim(),
                 diagnosis: diagnosisSelect.val(),
-                medcon_checl: medconCheck.val(),
+                medcon_check: medconCheck.val(),
                 comment: $('#comment').val(),
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
             },
