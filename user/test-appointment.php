@@ -353,24 +353,22 @@ include '../includes/head.php';
                 let start = daysMap[startDay];
                 let end = daysMap[endDay];
 
-                return function(date) {
-                    let day = date.getDay();
-                    let today = new Date();
-                    let threeDaysLater = new Date();
-                    threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
+                return [
+                    function(date) {
+                        let day = date.getDay();
+                        let today = new Date();
+                        let threeDaysLater = new Date();
+                        threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
 
-                    // Disable if date is within next 3 days
-                    if (date < threeDaysLater) {
-                        return true;
-                    }
+                        if (date < threeDaysLater) return true; // Disable next 3 days
 
-                    // Disable if day is outside startDay to endDay range
-                    if (start <= end) {
-                        return !(day >= start && day <= end);
-                    } else {
-                        return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
+                        if (start <= end) {
+                            return !(day >= start && day <= end);
+                        } else {
+                            return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
+                        }
                     }
-                };
+                ]; // Wrapped inside an array
             }
 
             function reinitializeFlatpickr() {
