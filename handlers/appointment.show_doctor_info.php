@@ -6,7 +6,11 @@ $record = $account->get_doctor_info_2($_GET['account_id']);
 
 ?>
 <div class="d-flex justify-content-center col-12 col-md-auto mb-3 mb-md-0">
-    <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
+    <img id="account_image" src="<?php if (isset($record['account_image'])) {
+                                        echo "../assets/images/" . $record['account_image'];
+                                    } else {
+                                        echo "../assets/images/default_profile.png";
+                                    } ?>" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
 </div>
 <div class="col-12 col-md-7">
     <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name"><?= $record['doctor_name'] ?></span> </p>

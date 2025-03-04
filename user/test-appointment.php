@@ -385,14 +385,13 @@ include '../includes/head.php';
                 url: '../handlers/appointment.show_doctor_info.php',
                 type: 'GET',
                 data: {
-                    fetch: 'true',
                     account_id: account_id
                 },
                 success: function(response) {
                     $('#doctor_info').html(response);
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error completing meeting:', error);
+                    console.error('Error fetching doctor information:', error);
                 }
             });
         }
