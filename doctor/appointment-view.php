@@ -188,11 +188,13 @@ include '../includes/head.php';
         var resultInput = $('#result');
 
         if (!resultInput.val().trim()) {
-            resultInput.reportValidity(); // Show validation popup
+            resultInput[0].reportValidity(); // Show validation popup
             return; // Stop execution
         }
 
-        var medconCheck = $('#medcon_check').get
+        var medconCheck = $('#medcon_check');
+
+
 
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
