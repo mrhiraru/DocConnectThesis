@@ -98,18 +98,6 @@ include '../includes/head.php';
         /* Prevent users from manually changing the hour */
     }
 
-    /* Hide all arrows by default */
-    .flatpickr-time .numInputWrapper span.arrowUp,
-    .flatpickr-time .numInputWrapper span.arrowDown {
-        display: none;
-    }
-
-    /* Show only the arrows for the minutes input */
-    .flatpickr-time .flatpickr-minute+.numInputWrapper span.arrowUp,
-    .flatpickr-time .flatpickr-minute+.numInputWrapper span.arrowDown {
-        display: inline-block !important;
-        /* Ensure only minute arrows appear */
-    }
 </style>
 
 <body>
