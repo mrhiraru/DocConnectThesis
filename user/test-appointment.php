@@ -135,7 +135,7 @@ include '../includes/head.php';
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <select name="doctor_id" id="doctor_id" class="col-12">
+                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.value)">
                             <?php
                             include_once('../handlers/appointment.get_doctors.php');
                             ?>
@@ -337,11 +337,7 @@ include '../includes/head.php';
                         account_id: account_id
                     },
                     success: function(response) {
-                        if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                            
-                        } else {
-                            console.error('Error:', response);
-                        }
+                        $('#doctor_info').html(response);
                     },
                     error: function(xhr, status, error) {
                         console.error('Error completing meeting:', error);
