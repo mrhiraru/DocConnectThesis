@@ -348,6 +348,8 @@ include '../includes/head.php';
             const doctor_name = document.getElementById("doctor_name");
             const request_button = document.getElementById("request");
 
+            const doctorSelect = document.getElementById("doctor-select");
+
             var startDay;
             var endDay;
             var minTime;
@@ -356,6 +358,15 @@ include '../includes/head.php';
             fetch('../handlers/appointment.get_doctors.php')
                 .then(response => response.json())
                 .then(data => {
+
+                    doctors.forEach(doctor => {
+                        doctorSelect.innerHTML = '';
+                        const option = document.createElement("option");
+                        option.value = doctor.account_id; // Use the unique ID as the value
+                        option.textContent = doctor.doctor_name; // Display doctor name
+
+                        doctorSelect.appendChild(option);
+                    });
 
                     doctorSearch.addEventListener("focus", function() {
                         if (doctorSearch.value === '' && data.length > 0) {
