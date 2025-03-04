@@ -135,7 +135,7 @@ include '../includes/head.php';
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.value)">
+                        <select name="doctor_id" id="doctor_id" class="col-12" onselect="show_doctor_info(this.value)">
                             <?php
                             include_once('../handlers/appointment.get_doctors.php');
                             ?>
@@ -352,11 +352,6 @@ include '../includes/head.php';
                 sortField: {
                     field: "text",
                     direction: "asc"
-                },
-                persist: true,
-                allowEmptyOption: false,
-                onDelete: function() {
-                    return false; // Prevents user from deleting selected option
                 }
             });
 
