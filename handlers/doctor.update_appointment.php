@@ -129,7 +129,7 @@ if (isset($_POST['confirm'])) {
 
             if (isset($_POST['diagnosis'])) {
                 foreach ($_POST['diagnosis'] as $key => $diagnosis) {
-                    if ($medcon->is_medcon_exist($diagnosis)) {
+                    if (!$medcon->is_medcon_exist($diagnosis)) {
                         $medcon->medcon_name = $diagnosis;
                         if ($medcon->add_medcon()) {
                             $success = 'success';
