@@ -183,11 +183,15 @@ include '../includes/head.php';
                         <div class="col-lg-6">
                             <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
                             <div class="p-2 pb-3 border rounded bg-light shadow-sm">
-                                <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 d-none" placeholder="HH:MM AM/PM" required>
+                                <input type="time" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 d-none" placeholder="HH:MM AM/PM" required>
                             </div>
-                            <?php if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) { ?>
+                            <?php
+                            if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
+                            ?>
                                 <p class="text-danger small mt-1">Select a valid appointment time.</p>
-                            <?php } ?>
+                            <?php
+                            }
+                            ?>
                         </div>
                     </div>
 
