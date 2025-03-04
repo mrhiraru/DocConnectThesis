@@ -261,7 +261,7 @@ include '../includes/head.php';
             url: '../handlers/medcon.add_new_medcon.php',
             type: 'POST',
             data: {
-                add: true,
+                add: 'true',
                 medcon: $medcon
             },
             success: function(response) {
