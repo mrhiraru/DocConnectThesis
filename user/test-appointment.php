@@ -142,13 +142,8 @@ include '../includes/head.php';
                         <option value="" disabled <?= !isset($_POST['purpose']) ? 'selected' : '' ?>>Select a purpose</option>
                         <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
                         <option value="Follow-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
-                        <option value="Prescription Refill" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Prescription Refill") ? 'selected' : '' ?>>Prescription Refill</option>
                         <option value="Medical Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
-                        <option value="Chronic Condition Management" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Chronic Condition Management") ? 'selected' : '' ?>>Chronic Condition Management</option>
                         <option value="Mental Health Consultation" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Mental Health Consultation") ? 'selected' : '' ?>>Mental Health Consultation</option>
-                        <option value="Lab Test Review" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Lab Test Review") ? 'selected' : '' ?>>Lab Test Review</option>
-                        <option value="Skin and Allergy Concerns" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Skin and Allergy Concerns") ? 'selected' : '' ?>>Skin and Allergy Concerns</option>
-                        <option value="Cold, Flu, and Minor Ailments" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Cold, Flu, and Minor Ailments") ? 'selected' : '' ?>>Cold, Flu, and Minor Ailments</option>
                         <option value="Dietary and Nutrition Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Dietary and Nutrition Advice") ? 'selected' : '' ?>>Dietary and Nutrition Advice</option>
                     </select>
                     <?php
@@ -366,6 +361,8 @@ include '../includes/head.php';
                                 working_days.innerHTML = doctor.start_day + " to " + doctor.end_day;
                                 working_hours.innerHTML = formatTime(doctor.start_wt) + " to " + formatTime(doctor.end_wt);
                                 account_image.src = "../assets/images/" + doctor.account_image;
+
+
                                 appointment_time.min = formatMySQLTimeTo24Hour(doctor.start_wt);
                                 appointment_time.max = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
                                 appointment_date.dataset.startday = doctor.start_day;
@@ -462,7 +459,8 @@ include '../includes/head.php';
             dateFormat: "h:i K",
             time_24hr: false,
             allowInput: true,
-            inline: true
+            inline: true,
+            minuteIncrement: 60
         });
     </script>
 </body>
