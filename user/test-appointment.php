@@ -137,7 +137,7 @@ include '../includes/head.php';
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
                         <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Select Doctor" aria-label="Doctor search" value="">
                         <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
-                        <select name="doctor-select" id="doctor-select" class="form-select">
+                        <select name="doctor-select" id="doctor-select" class="">
 
                         </select>
                         <input type="hidden" id="doctor_id" name="doctor_id" value="">
