@@ -6,7 +6,7 @@ $doctorArray = $account->get_doctor();
 
 ?>
 <option value="" disabled <?= !isset($_POST['doctor_id']) ? 'selected' : ''
-                          ?>>Select Diagnosis</option>
+                          ?>>Select Doctor</option>
 <?php
 foreach ($doctorArray as $item) {
 ?>
