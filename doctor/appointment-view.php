@@ -226,7 +226,7 @@ include '../includes/head.php';
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                     message_notifcation('end');
-                    //add another ajax request for adding the medcon that does not exist in the system:
+                    add_new_medcon(diagnosis);
                     location.reload();
                 } else {
                     console.error('Error:', response);
@@ -249,6 +249,23 @@ include '../includes/head.php';
             },
             success: function(response) {
                 console.log('Message notifcation sent.');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error sending message:', error);
+            }
+        })
+    }
+
+    function add_new_medcon($medcon) {
+        $.ajax({
+            url: '../handlers/medcon.add_new_medcon.php',
+            type: 'POST',
+            data: {
+                add: true,
+                medcon: $medcon
+            },
+            success: function(response) {
+                console.log('New medical condition added.');
             },
             error: function(xhr, status, error) {
                 console.error('Error sending message:', error);
