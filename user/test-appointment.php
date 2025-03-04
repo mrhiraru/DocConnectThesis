@@ -354,6 +354,7 @@ include '../includes/head.php';
                     direction: "asc"
                 },
                 persist: true,
+                allowEmptyOption: false,
             });
 
             function formatMySQLTimeTo24Hour(time) {
