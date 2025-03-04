@@ -297,26 +297,27 @@ include '../includes/head.php';
                 create: true, // Set to true if you want to allow custom inputs
                 plugins: ['remove_button'] // Adds a remove button for each selected item
             });
-        }
 
 
-        const medconCheck = document.getElementsByName("medcon_check");
-        const diagnosisContainer = document.getElementById("diagnosis-container");
 
-        diagnosisContainer.style.display = "none";
+            const medconCheck = document.getElementsByName("medcon_check");
+            const diagnosisContainer = document.getElementById("diagnosis-container");
 
-        // Function to toggle visibility
-        function toggleDiagnosisContainer() {
-            if (document.getElementById("Yes").checked) {
-                diagnosisContainer.style.display = "block"; // Show if Yes is checked
-            } else {
-                diagnosisContainer.style.display = "none"; // Hide if No is checked
+            diagnosisContainer.style.display = "none";
+
+            // Function to toggle visibility
+            function toggleDiagnosisContainer() {
+                if (document.getElementById("Yes").checked) {
+                    diagnosisContainer.style.display = "block"; // Show if Yes is checked
+                } else {
+                    diagnosisContainer.style.display = "none"; // Hide if No is checked
+                }
             }
-        }
 
-        // Add event listeners to both radio buttons
-        medconCheck.forEach(radio => {
-            radio.addEventListener("change", toggleDiagnosisContainer);
-        });
+            // Add event listeners to both radio buttons
+            medconCheck.forEach(radio => {
+                radio.addEventListener("change", toggleDiagnosisContainer);
+            });
+        }
     });
 </script>
