@@ -199,11 +199,24 @@ include '../includes/head.php';
             return;
         }
 
+        var diagnosisSelect = $('#diagnosis');
+
+        if (medconCheck.val() === "Yes") {
+            if (diagnosisSelect.val() === null || diagnosisSelect.val().length === 0) {
+                diagnosisSelect.get(0).setCustomValidity("Please select at least one diagnosis."); // Set custom validation message
+                diagnosisSelect.get(0).reportValidity(); // Show validation popup
+                return;
+            } else {
+                diagnosisSelect.get(0).setCustomValidity(""); // Reset validation if valid
+            }
+        }
+
+
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
             data: {
-                end: true,
+                end: null,
                 result: resultInput.val().trim(),
                 comment: $('#comment').val(),
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
