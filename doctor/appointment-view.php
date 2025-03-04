@@ -226,7 +226,7 @@ include '../includes/head.php';
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                     message_notifcation('end');
-                    add_new_medcon(diagnosis);
+                    add_new_medcon(diagnosisSelect.val());
                     location.reload();
                 } else {
                     console.error('Error:', response);
@@ -256,13 +256,13 @@ include '../includes/head.php';
         })
     }
 
-    function add_new_medcon($medcon) {
+    function add_new_medcon(medcon) {
         $.ajax({
             url: '../handlers/medcon.add_new_medcon.php',
             type: 'POST',
             data: {
                 add: 'true',
-                medcon: $medcon
+                medcon: medcon
             },
             success: function(response) {
                 console.log('New medical condition added.');
