@@ -396,7 +396,7 @@ include '../includes/head.php';
                                 appointment_time.max = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
                                 appointment_date.dataset.startday = doctor.start_day;
                                 appointment_date.dataset.endday = doctor.end_day;
-                                
+
                                 request_button.removeAttribute("disabled");
                                 doctorDropdown.classList.add('d-none');
 
@@ -458,6 +458,15 @@ include '../includes/head.php';
                     hours = 23;
                 }
                 return `${hours.toString().padStart(2, '0')}:${minutes}`;
+            }
+
+            function formatTime(time) {
+                let [hours, minutes] = time.split(':');
+                hours = parseInt(hours);
+                let suffix = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12 || 12;
+
+                return `${hours}:${minutes} ${suffix}`;
             }
         });
     </script>
