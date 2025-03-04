@@ -281,7 +281,7 @@ class Appointment
 
     function complete_appointment()
     {
-        $sql = "UPDATE appointment SET result=:result, comment=:comment, appointment_status=:appointment_status, diagnosis:diagnosis WHERE appointment_id = :appointment_id";
+        $sql = "UPDATE appointment SET result=:result, comment=:comment, appointment_status=:appointment_status, diagnosis=:diagnosis WHERE appointment_id = :appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':result', $this->result);
