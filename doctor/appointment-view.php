@@ -41,6 +41,7 @@ include '../includes/head.php';
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
                         <p class="m-0 p-0 fs-6 text-secondary">Patient: <span class="text-dark"><?= $record['patient_name'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary">Purpose: <span class="text-dark"><?= $record['purpose'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary">Reason: <span class="text-dark"><?= $record['reason'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Link: <a href="<?= $record['appointment_link'] ?>" class="text-primary"><?= $record['appointment_link'] ?></a></p>
