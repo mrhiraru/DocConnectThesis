@@ -355,6 +355,9 @@ include '../includes/head.php';
                 },
                 persist: true,
                 allowEmptyOption: false,
+                onDelete: function() {
+                    return false; // Prevents user from deleting selected option
+                }
             });
 
             function formatMySQLTimeTo24Hour(time) {
