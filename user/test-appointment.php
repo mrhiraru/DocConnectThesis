@@ -535,7 +535,8 @@ include '../includes/head.php';
 
         flatpickr("#appointment_date", {
             dateFormat: "Y-m-d",
-            allowInput: true,
+            altInput: true,
+            altFormat: "F j, Y",
             inline: true,
             disable: [disableDates]
         });
@@ -544,8 +545,8 @@ include '../includes/head.php';
             enableTime: true,
             noCalendar: true,
             dateFormat: "H:i:s",
-            time_24hr: false,
-            allowInput: true,
+            altInput: true,
+            altFormat: "h:i K",
             inline: true,
             minuteIncrement: 60,
             minTime: "09:00", // Set minimum time (9:00 AM)
