@@ -137,6 +137,9 @@ include '../includes/head.php';
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
                         <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Select Doctor" aria-label="Doctor search" value="">
                         <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
+                        <select name="doctor-select" id="doctor-select" class="form-select">
+
+                        </select>
                         <input type="hidden" id="doctor_id" name="doctor_id" value="">
                     </div>
                     <div class="row align-items-center border p-3 mx-2 rounded bg-light">
@@ -442,6 +445,13 @@ include '../includes/head.php';
                 minuteIncrement: 60,
                 minTime: "09:00", //Change min
                 maxTime: "17:00" //Change max
+            });
+
+            new TomSelect("#doctor-select", {
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
             });
 
 

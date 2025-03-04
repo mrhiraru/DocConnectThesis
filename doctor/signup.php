@@ -130,7 +130,7 @@ include '../includes/head.php';
                 </div>
                 <div class="col-12 col-md-4 mb-3">
                   <label for="contact">Contact</label>
-                  <input type="text" class="form-control" id="contact" name="contact" pattern="\+63 \d{3} \d{3} \d{4}" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+                  <input type="text" class="form-control" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" maxlength="13" pattern="09\d{2} \d{3} \d{4}" oninput="formatPhoneNumber(this)" required value="+63 <?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
                   <?php
                   if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                   ?>
@@ -229,6 +229,22 @@ include '../includes/head.php';
   ?>
   <script src="../js/main.js"></script>
   <script src="../js/viewHideTogglePassword.js"></script>
+  <script>
+    function formatPhoneNumber(input) {
+      let value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
+      if (value.startsWith("09")) {
+        if (value.length > 4) {
+          value = value.slice(0, 4) + " " + value.slice(4);
+        }
+        if (value.length > 8) {
+          value = value.slice(0, 8) + " " + value.slice(8);
+        }
+      } else {
+        value = "09"; // Force it to start with 09
+      }
+      input.value = value.slice(0, 13); // Limit to 11 characters
+    }
+  </script>
 </body>
 
 </html>
