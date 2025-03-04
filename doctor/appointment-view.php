@@ -108,7 +108,7 @@ include '../includes/head.php';
                                 if (isset($record['diagnosis'])) {
                                 ?>
                                     <div class="col-12 mb-3">
-                                        <label for="result" class="form-label">Medical Conditions:</label>
+                                        <label for="result" class="form-label">Medical Condition/s:</label>
                                         <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
                                     </div>
                                 <?php
