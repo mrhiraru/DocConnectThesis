@@ -65,7 +65,7 @@ include '../includes/head.php';
                                     <div class="col-12">
                                         Does the patient have a medical condition?
                                         <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "Yes") ? "checked" : "" ?>>
+                                            <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "Yes") ? "checked" : "" ?> required>
                                             <label class="form-check-label" for="Yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
