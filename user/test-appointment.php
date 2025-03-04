@@ -359,11 +359,11 @@ include '../includes/head.php';
                 .then(response => response.json())
                 .then(data => {
 
-                    doctors.forEach(doctor => {
+                    doctors.forEach(data => {
                         doctorSelect.innerHTML = '';
                         const option = document.createElement("option");
-                        option.value = doctor.account_id; // Use the unique ID as the value
-                        option.textContent = doctor.doctor_name; // Display doctor name
+                        option.value = data.account_id; // Use the unique ID as the value
+                        option.textContent = data.doctor_name; // Display doctor name
 
                         doctorSelect.appendChild(option);
                     });
