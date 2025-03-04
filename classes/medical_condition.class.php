@@ -42,6 +42,19 @@ class MedCon
         }
     }
 
+    function is_medcon_exist($medcon_name)
+    {
+        $sql = "SELECT * FROM medical_condtion WHERE medcon_name = :medcon_name;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':medcon_name', $tmedcon_name);
+        if ($query->execute()) {
+            if ($query->rowCount() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     function show_conditions()
     {
         $sql = "SELECT * FROM medical_condition ORDER BY medcon_name";

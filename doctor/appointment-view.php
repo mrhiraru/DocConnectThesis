@@ -203,7 +203,7 @@ include '../includes/head.php';
 
         if (medconCheck.val() === "Yes") {
             if (diagnosisSelect.val() === null || diagnosisSelect.val().length === 0) {
-                diagnosisSelect.get(0).setCustomValidity("Please select at least one diagnosis."); // Set custom validation message
+                diagnosisSelect.get(0).setCustomValidity("Please enter at least one medical condition."); // Set custom validation message
                 diagnosisSelect.get(0).reportValidity(); // Show validation popup
                 return;
             } else {
@@ -216,8 +216,10 @@ include '../includes/head.php';
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
             data: {
-                
+                end: true,
                 result: resultInput.val().trim(),
+                diagnosis: diagnosisSelect.val(),
+                medcon_checl: medconCheck.val(),
                 comment: $('#comment').val(),
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
             },

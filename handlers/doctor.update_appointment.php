@@ -1,5 +1,6 @@
 <?php
 require_once('../classes/appointment.class.php');
+require_once('../classes/medical_condition.class.php');
 require_once('../tools/functions.php');
 
 $appointment = new Appointment();
@@ -113,12 +114,29 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_status = 'Completed';
 
+    if ($_POST['medcon_check'] === 'Yes') {
+        $appointment->diagnosis = implode(", ", $selectedDiagnoses);
+    } else if ($_POST['medcon_check'] === 'No') {
+        $appointment->diagnosis = "No medical condition";
+    }
+
     if (
         validate_field($appointment->appointment_id && $appointment->result &&
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
+            $medcon = new MedCon();
 
+            if (isset($_POST['diagnosis'])) {
+                foreach ($_POST['diagnosis'] as $key => $diagnosis) {
+                    if ($medcon->is_medcon_exist($diagnosis)) {
+                        $medcon->medcon_name = $diagnosis;
+                        if ($medcon->add_medcon()) {
+                            $success = 'success';
+                        }
+                    }
+                }
+            }
             $success = 'success';
         } else {
             $success = 'failed';
