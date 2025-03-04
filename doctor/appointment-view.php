@@ -226,6 +226,7 @@ include '../includes/head.php';
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                     message_notifcation('end');
+                    //add another ajax request for adding the medcon that does not exist in the system:
                     location.reload();
                 } else {
                     console.error('Error:', response);
