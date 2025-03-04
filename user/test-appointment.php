@@ -191,7 +191,7 @@ include '../includes/head.php';
                         <div class="col-lg-6">
                             <label for="appointment_date" class="form-label text-secondary fw-semibold">Select Date</label>
                             <div class="p-2 border rounded bg-light shadow-sm">
-                                <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT DAY" required readonly>
+                                <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT DATE" required readonly>
                             </div>
                             <?php
                             if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
@@ -347,6 +347,8 @@ include '../includes/head.php';
 
             var startDay;
             var endDay;
+            var minTime;
+            var maxTime;
 
             fetch('../handlers/appointment.get_doctors.php')
                 .then(response => response.json())
@@ -394,38 +396,36 @@ include '../includes/head.php';
                                 appointment_time.max = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
                                 appointment_date.dataset.startday = doctor.start_day;
                                 appointment_date.dataset.endday = doctor.end_day;
+                                
                                 request_button.removeAttribute("disabled");
-                                doctorDropdown.classList.add('d-none');
-
+                                //doctorDropdown.classList.add('d-none');
 
                                 startDay = appointment_date.dataset.startday;
                                 endDay = appointment_date.dataset.endday;
 
-                                validate_date();
+                                minTime = formatMySQLTimeTo24Hour(doctor.start_wt);
+                                maxTime = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
+
                             });
 
                             doctorDropdown.appendChild(li);
 
                         });
 
-                        if (doctors.length > 0) {
-                            doctorDropdown.classList.remove('d-none');
-                        } else {
-                            doctorDropdown.classList.add('d-none');
-                        }
+                       
                     }
                 })
                 .catch(error => console.error('Error fetching doctors:', error));
 
 
-        
+
 
             flatpickr("#appointment_date", {
                 dateFormat: "Y-m-d",
                 altInput: true,
                 altFormat: "F j, Y",
                 inline: true,
-                
+
             });
 
             flatpickr("#appointment_time", {
@@ -439,8 +439,23 @@ include '../includes/head.php';
                 minTime: "09:00", //Change min
                 maxTime: "17:00" //Change max
             });
-        });
 
+
+            function formatMySQLTimeTo24Hour(time) {
+                const [hours, minutes] = time.split(':');
+
+                return `${hours}:${minutes}`;
+            }
+
+            function subtractOneHour(time) {
+                let [hours, minutes] = time.split(':');
+                hours = parseInt(hours) - 1;
+                if (hours < 0) {
+                    hours = 23;
+                }
+                return `${hours.toString().padStart(2, '0')}:${minutes}`;
+            }
+        });
     </script>
 </body>
 
