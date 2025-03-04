@@ -92,6 +92,24 @@ include '../includes/head.php';
         margin: auto;
         /* Center the calendar */
     }
+
+    /* Disable clicking on the hour input */
+    .flatpickr-time .flatpickr-hour {
+        pointer-events: none;
+        /* Prevent users from manually changing the hour */
+    }
+
+    /* Hide all arrows */
+    .flatpickr-time .numInputWrapper span.arrowUp,
+    .flatpickr-time .numInputWrapper span.arrowDown {
+        display: none;
+    }
+
+    /* Show only the arrows next to the minute input */
+    .flatpickr-time .flatpickr-minute~.numInputWrapper span.arrowUp,
+    .flatpickr-time .flatpickr-minute~.numInputWrapper span.arrowDown {
+        display: inline-block !important;
+    }
 </style>
 
 <body>
