@@ -460,7 +460,10 @@ include '../includes/head.php';
             time_24hr: false,
             allowInput: true,
             inline: true,
-            minuteIncrement: 60
+            minuteIncrement: 60,
+            minTime: "09:00", // Set minimum time (9:00 AM)
+            maxTime: "17:00" // Set maximum time (5:00 PM)
+
         });
     </script>
 </body>
