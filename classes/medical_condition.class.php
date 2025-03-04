@@ -46,7 +46,7 @@ class MedCon
     {
         $sql = "SELECT * FROM medical_condtion WHERE medcon_name = :medcon_name;";
         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':medcon_name', $tmedcon_name);
+        $query->bindParam(':medcon_name', $medcon_name);
         if ($query->execute()) {
             if ($query->rowCount() > 0) {
                 return true;

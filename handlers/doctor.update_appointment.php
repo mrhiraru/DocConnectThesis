@@ -125,6 +125,14 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
+            // if (isset($_POST['diagnosis'])) {
+            //     foreach ($_POST['diagnosis'] as $key => $med) {
+            //         if (!$medcon->is_medcon_exist($med)) {
+            //             $medcon->medcon_name = $med;
+            //             $medcon->add_medcon();
+            //         }
+            //     }
+            // }
             $success = 'success';
         } else {
             $success = 'failed';
