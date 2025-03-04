@@ -125,16 +125,7 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
-            $medcon = new MedCon();
-
-            if (isset($_POST['diagnosis'])) {
-                foreach ($_POST['diagnosis'] as $key => $diagnosis) {
-                    if (!$medcon->is_medcon_exist($diagnosis)) {
-                        $medcon->medcon_name = $diagnosis;
-                        $medcon->add_medcon();
-                    }
-                }
-            }
+            
             $success = 'success';
         } else {
             $success = 'failed';
