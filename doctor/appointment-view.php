@@ -232,7 +232,7 @@ include '../includes/head.php';
                 }
             },
             error: function(xhr, status, error) {
-                console.error('Error starting meeting:', error);
+                console.error('Error completing meeting:', error);
             }
         });
     }

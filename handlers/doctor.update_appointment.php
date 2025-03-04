@@ -115,7 +115,7 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_status = 'Completed';
 
     if ($_POST['medcon_check'] === 'Yes') {
-        $appointment->diagnosis = implode(", ", $selectedDiagnoses);
+        $appointment->diagnosis = implode(", ", $_POST['diagnosis']);
     } else if ($_POST['medcon_check'] === 'No') {
         $appointment->diagnosis = "No medical condition";
     }
