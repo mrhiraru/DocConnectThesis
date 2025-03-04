@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
@@ -8,38 +8,43 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
+require_once '../classes/account.class.php';
+$account = new Account();
+
+$user_summarry = $account->fetch_user_summary();
 
 ?>
 
 <html lang="en">
-<?php 
-  $title = 'Admin | Dashboard';
-  include './includes/admin_head.php';
-  function getCurrentPage() {
-    return basename($_SERVER['PHP_SELF']);
-  }
+<?php
+$title = 'Admin | Dashboard';
+include './includes/admin_head.php';
+function getCurrentPage()
+{
+  return basename($_SERVER['PHP_SELF']);
+}
 ?>
+
 <body>
-  <?php 
-    require_once ('./includes/admin_header.php');
+  <?php
+  require_once('./includes/admin_header.php');
   ?>
-  <?php 
-    require_once ('./includes/admin_sidepanel.php');
+  <?php
+  require_once('./includes/admin_sidepanel.php');
   ?>
 
   <section id="dashboard" class="page-container">
     <h1 class="text-center">Overview</h1>
 
     <div class="container">
-      <div class="row flex-md-nowrap row-cols-1 row-cols-md-3 mx-0 mx-md-5 mb-4">
+      <div class="row flex-md-nowrap row-cols-1 row-cols-md-4 mx-0 me-md-5 mb-4">
         <div class="col bg-primary mx-0 mx-md-2 p-3 text-white rounded-3 mb-3 mb-md-0">
           <div class="row g-3">
             <div class="col-6 d-flex align-items-end justify-content-start">
               <i class='bx bx-user'></i>
             </div>
             <div class="col-6 text-end">
-              <p class="fs-1 m-0">1,100</p>
+              <p class="fs-1 m-0"><?php echo $user_summarry['totalUsers']; ?></p>
               <p>Total Users</p>
             </div>
           </div>
@@ -51,7 +56,7 @@ require_once('../classes/account.class.php');
               <i class='bx bx-user-check'></i>
             </div>
             <div class="col-6 text-end">
-              <p class="fs-1 m-0">35</p>
+              <p class="fs-1 m-0"><?php echo $user_summarry['totalActiveUsers']; ?></p>
               <p>Total Active Users.</p>
             </div>
           </div>
@@ -63,8 +68,20 @@ require_once('../classes/account.class.php');
               <i class='bx bx-user-plus'></i>
             </div>
             <div class="col-6 text-end">
-              <p class="fs-1 m-0">659</p>
+              <p class="fs-1 m-0"><?php echo $user_summarry['totalPatients']; ?></p>
               <p>Total Patients</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col bg-primary mx-0 mx-md-2 p-3 text-white rounded-3 mb-3 mb-md-0">
+          <div class="row g-3">
+            <div class="col-6 d-flex align-items-end justify-content-start">
+              <i class='bx bx-user-plus'></i>
+            </div>
+            <div class="col-6 text-end">
+              <p class="fs-1 m-0"><?php echo $user_summarry['totalDoctors']; ?></p>
+              <p>Total Doctors</p>
             </div>
           </div>
         </div>
@@ -79,7 +96,7 @@ require_once('../classes/account.class.php');
             <h5>Appointments today: </h5>
           </div>
         </div>
-        
+
         <div class="col-12 col-lg-8">
           <nav>
             <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
@@ -105,8 +122,9 @@ require_once('../classes/account.class.php');
       </div>
     </div>
   </section>
-    
+
   <script src="./js/analytics-lineChart.js"></script>
 
 </body>
+
 </html>

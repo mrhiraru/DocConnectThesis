@@ -573,6 +573,44 @@ class Account
 
     // user functions end
 
+    // ---DASHBOARD FANCTION START---
+    function fetch_user_summary()
+    {
+        // Fetch total users count
+        $sqlTotal = "SELECT COUNT(*) as total FROM account";
+        $queryTotal = $this->db->connect()->prepare($sqlTotal);
+        $queryTotal->execute();
+        $totalUsers = $queryTotal->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Fetch total active users
+        $sqlActive = "SELECT COUNT(*) as active FROM account WHERE last_login >= NOW() - INTERVAL 30 DAY";
+        $queryActive = $this->db->connect()->prepare($sqlActive);
+        $queryActive->execute();
+        $activeUsers = $queryActive->fetch(PDO::FETCH_ASSOC)['active'];
+
+        // Fetch total patients
+        $sqlPatients = "SELECT COUNT(*) as total FROM account WHERE user_role IN (3, 4, 5, 6, 7)";
+        $queryPatients = $this->db->connect()->prepare($sqlPatients);
+        $queryPatients->execute();
+        $totalPatients = $queryPatients->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Fetch total doctor
+        $sqlDoctors = "SELECT COUNT(*) as total FROM account WHERE user_role = '1'";
+        $queryDoctors = $this->db->connect()->prepare($sqlDoctors);
+        $queryDoctors->execute();
+        $totalDoctors = $queryDoctors->fetch(PDO::FETCH_ASSOC)['total'];
+
+        return [
+            'totalUsers' => $totalUsers,
+            'totalActiveUsers' => $activeUsers,
+            'totalPatients' => $totalPatients,
+            'totalDoctors' => $totalDoctors
+        ];
+    }
+
+
+
+
     // ---APPOINMENTS FUNCTIONS START---
     function get_appointments_with_doctors_and_patients()
     {
@@ -607,7 +645,7 @@ class Account
                 LEFT JOIN account a2 ON p.account_id = a2.account_id
                 LEFT JOIN campus c2 ON a2.campus_id = c2.campus_id
                 ORDER BY ap.appointment_date DESC, ap.appointment_time ASC;";
-    
+
         try {
             $query = $this->db->connect()->prepare($sql);
             if ($query->execute()) {
@@ -621,7 +659,7 @@ class Account
             echo "Database Error: " . $e->getMessage();
             return [];
         }
-    }    
+    }
 
 
     // ---ANALYTICS FUNCTIONS START---
