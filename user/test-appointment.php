@@ -390,9 +390,6 @@ include '../includes/head.php';
                     minuteIncrement: 60,
                     minTime: startTime,
                     maxTime: endTime,
-                    onReady: function(selectedDates, dateStr, instance) {
-                        instance.input.placeholder = startTime; // Show startTime as placeholder
-                    }
                 });
             }
 
