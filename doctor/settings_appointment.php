@@ -178,11 +178,18 @@ include '../includes/head.php';
                     <label for="work-hours">Working Hours</label>
                     <div class="d-flex align-items-center">
                       <select id="start_wt" class="form-select" name="start_wt" required>
+                        <option value="" disabled>Select Time </option>
                         <?php
                         for ($i = 0; $i < 24; $i++) {
                           $timeValue = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00";
                           $displayTime = date("g:i A", strtotime($timeValue)); // Convert to 12-hour format
-                          $selected = (isset($_POST['start_wt']) && $_POST['start_wt'] == $timeValue) ? 'selected' : '';
+
+                          $selected = '';
+                          if ((isset($_POST['start_wt']) && $_POST['start_wt'] == $timeValue) ||
+                            (isset($_SESSION['start_wt']) && $_SESSION['start_wt'] == $timeValue)
+                          ) {
+                            $selected = 'selected';
+                          }
 
                           echo "<option value=\"$timeValue\" $selected> $displayTime </option>";
                         }
@@ -190,11 +197,18 @@ include '../includes/head.php';
                       </select>
                       <p class="m-0 mx-3"> to </p>
                       <select id="end_wt" class="form-select" name="end_wt" required>
+                        <option value="" disabled>Select Time </option>
                         <?php
                         for ($i = 0; $i < 24; $i++) {
                           $timeValue = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00";
                           $displayTime = date("g:i A", strtotime($timeValue)); // Convert to 12-hour format
-                          $selected = (isset($_POST['end_wt']) && $_POST['end_wt'] == $timeValue) ? 'selected' : '';
+
+                          $selected = '';
+                          if ((isset($_POST['end_wt']) && $_POST['end_wt'] == $timeValue) ||
+                            (isset($_SESSION['end_wt']) && $_SESSION['end_wt'] == $timeValue)
+                          ) {
+                            $selected = 'selected';
+                          }
 
                           echo "<option value=\"$timeValue\" $selected> $displayTime </option>";
                         }
