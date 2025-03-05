@@ -133,20 +133,6 @@ include '../includes/head.php';
                 </div>
 
                 <hr>
-                <div class="col-12">
-                    <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.value)">
-                            <?php
-                            include_once('../handlers/appointment.get_doctors.php');
-                            ?>
-                        </select>
-                    </div>
-                    <div class="row align-items-center border p-3 mx-2 rounded bg-light" id="doctor_info">
-                        <p class='text-center text-muted m-0 p-0'>No doctor selected.</p>
-                    </div>
-                </div>
-
-                <hr>
                 <div class="mb-3">
                     <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
                     <select id="purpose" name="purpose" class="form-select bg-light border border-dark" required>
@@ -175,6 +161,21 @@ include '../includes/head.php';
                     <?php
                     }
                     ?>
+                </div>
+
+
+                <hr>
+                <div class="col-12">
+                    <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
+                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.value)">
+                            <?php
+                            include_once('../handlers/appointment.get_doctors.php');
+                            ?>
+                        </select>
+                    </div>
+                    <div class="row align-items-center border p-3 mx-2 rounded bg-light" id="doctor_info">
+                        <p class='text-center text-muted m-0 p-0'>No doctor selected.</p>
+                    </div>
                 </div>
 
                 <div class="container mt-4">
