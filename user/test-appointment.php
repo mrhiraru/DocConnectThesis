@@ -329,13 +329,15 @@ include '../includes/head.php';
             var endTime;
             var request_btn = document.getElementById('request');
 
+            reinitializeFlatpickr();
+
             document.getElementById("doctor_id").addEventListener("change", function() {
                 if (!this.value) { // Check if no doctor is selected
 
                     startDay = "";
                     endDay = "";
-                    startTime = "";
-                    endTime = "";
+                    startTime = "00:00:00";
+                    endTime = "00:00:00";
 
                     reinitializeFlatpickr();
                     request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
