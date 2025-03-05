@@ -325,8 +325,8 @@ include '../includes/head.php';
         document.addEventListener("DOMContentLoaded", function() {
             var startDay;
             var endDay;
-            var startTime;
-            var endTime;
+            var startTime = "00:00:00";
+            var endTime = "00:00:00";
             var request_btn = document.getElementById('request');
 
             reinitializeFlatpickr();
