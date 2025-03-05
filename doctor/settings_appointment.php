@@ -181,7 +181,7 @@ include '../includes/head.php';
                         <option value="" disabled>Select Time </option>
                         <?php
                         for ($i = 0; $i < 24; $i++) {
-                          $timeValue = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00";
+                          $timeValue = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00:00";
                           $displayTime = date("g:i A", strtotime($timeValue)); // Convert to 12-hour format
 
                           $selected = '';
@@ -200,7 +200,7 @@ include '../includes/head.php';
                         <option value="" disabled>Select Time </option>
                         <?php
                         for ($i = 0; $i < 24; $i++) {
-                          $timeValue = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00";
+                          $timeValue = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00:00";
                           $displayTime = date("g:i A", strtotime($timeValue)); // Convert to 12-hour format
 
                           $selected = '';
