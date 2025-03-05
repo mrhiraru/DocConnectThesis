@@ -149,7 +149,7 @@ include '../includes/head.php';
                 <hr>
                 <div class="mb-3">
                     <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
-                    <select id="purpose" name="purpose" class="form-select bg-light border border-dark" required>
+                    <select id="purpose" name="purpose" class="col-12" required>
                         <option value="" disabled <?= !isset($_POST['purpose']) ? 'selected' : '' ?>>Select a purpose</option>
                         <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
                         <option value="Follow-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
