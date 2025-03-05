@@ -334,7 +334,7 @@ include '../includes/head.php';
                 startDay = selectedOption.getAttribute("data-startday");
                 endDay = selectedOption.getAttribute("data-endday");
                 startTime = selectedOption.getAttribute("data-starttime");
-                endTime = selectedOption.getAttribute("data-endtime");
+                endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
 
                 reinitializeFlatpickr();
             });
@@ -399,30 +399,6 @@ include '../includes/head.php';
                     direction: "asc"
                 }
             });
-
-            function formatMySQLTimeTo24Hour(time) {
-                const [hours, minutes] = time.split(':');
-
-                return `${hours}:${minutes}`;
-            }
-
-            function subtractOneHour(time) {
-                let [hours, minutes] = time.split(':');
-                hours = parseInt(hours) - 1;
-                if (hours < 0) {
-                    hours = 23;
-                }
-                return `${hours.toString().padStart(2, '0')}:${minutes}`;
-            }
-
-            function formatTime(time) {
-                let [hours, minutes] = time.split(':');
-                hours = parseInt(hours);
-                let suffix = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12 || 12;
-
-                return `${hours}:${minutes} ${suffix}`;
-            }
         });
 
         function show_doctor_info(account_id) {
@@ -445,6 +421,12 @@ include '../includes/head.php';
             } else {
                 $('#doctor_info').html("<p class='text-center text-muted m-0 p-0'>No doctor selected.</p>");
             }
+        }
+
+        function subtractOneHour(time) {
+            let [hours, minutes] = time.split(":").map(Number);
+            hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
+            return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
         }
     </script>
 </body>
