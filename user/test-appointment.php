@@ -336,7 +336,7 @@ include '../includes/head.php';
 
                     startDay = "";
                     endDay = "";
-                    startTime = "00:00:00";
+                    startTime = "--:--:--";
                     endTime = "00:00:00";
 
                     reinitializeFlatpickr();
