@@ -10,6 +10,7 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment->appointment_time = htmlentities($_POST['appointment_time']);
+    $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
     $appointment->reason = htmlentities($_POST['reason']);
     $appointment->appointment_link = htmlentities($_POST['link']);
     $appointment->event_id = htmlentities($_POST['event_id']);
@@ -53,6 +54,7 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment->appointment_time = htmlentities($_POST['appointment_time']);
+    $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
     $appointment->reason = htmlentities($_POST['reason']);
     $appointment->appointment_status = "Incoming";
 
