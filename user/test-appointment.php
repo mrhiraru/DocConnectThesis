@@ -377,7 +377,7 @@ include '../includes/head.php';
                     altInput: true,
                     altFormat: "F j, Y",
                     inline: true,
-                    disable: getDisabledDays(startDay, endDay), 
+                    disable: getDisabledDays(startDay, endDay),
                 });
 
                 flatpickr("#appointment_time", {
@@ -388,9 +388,11 @@ include '../includes/head.php';
                     altFormat: "h:i K",
                     inline: true,
                     minuteIncrement: 60,
-                    minTime: startTime, 
+                    minTime: startTime,
                     maxTime: endTime,
-                    defaultDate: startTime
+                    onReady: function(selectedDates, dateStr, instance) {
+                        instance.input.placeholder = startTime; // Show startTime as placeholder
+                    }
                 });
             }
 
