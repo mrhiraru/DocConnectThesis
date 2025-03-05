@@ -330,11 +330,10 @@ include '../includes/head.php';
             var request_btn = document.getElementById('request');
 
             document.getElementById("doctor_id").addEventListener("change", function() {
-                if (this.value == null) {
+                if (!this.value) { // Check if no doctor is selected
                     reinitializeFlatpickr();
-                    request_btn.toggleAttribute('disabled');
+                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
                 } else {
-
                     let selectedOption = this.options[this.selectedIndex];
 
                     startDay = selectedOption.getAttribute("data-startday");
@@ -343,7 +342,7 @@ include '../includes/head.php';
                     endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
 
                     reinitializeFlatpickr();
-                    request_btn.toggleAttribute('disabled');
+                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
 
