@@ -336,9 +336,10 @@ include '../includes/head.php';
 
                     startDay = "";
                     endDay = "";
-                    startTime = "--:--:--";
+                    startTime = "00:00:00";
                     endTime = "00:00:00";
 
+                    document.getElementById('appointment_time').value = '';
                     reinitializeFlatpickr();
                     request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
                 } else {
