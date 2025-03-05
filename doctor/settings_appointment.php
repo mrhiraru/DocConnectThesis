@@ -75,7 +75,7 @@ include '../includes/head.php';
                     <label for="work-hours">Day</label>
                     <div class="d-flex align-items-center">
                       <select id="start_day" class="form-select" name="start_day" required>
-                        <option value="">Select Day </option>
+                        <option value="" disabled>Select Day </option>
                         <?= $_SESSION['start_day'] ?>
                         <option value="Sunday" <?php if ((isset($_POST['start_day']) && $_POST['start_day'] == "Sunday")) {
                                                   echo 'selected';
@@ -115,7 +115,7 @@ include '../includes/head.php';
                       </select>
                       <p class="m-0 mx-3"> to </p>
                       <select id="end_day" class="form-select" name="end_day" required>
-                        <option value="">Select Day </option>
+                        <option value="" disabled>Select Day </option>
                         <option value="Sunday" <?php if ((isset($_POST['end_day']) && $_POST['end_day'] == "Sunday")) {
                                                   echo 'selected';
                                                 } else if ($_SESSION['end_day'] == "Sunday") {
