@@ -377,7 +377,7 @@ include '../includes/head.php';
                     altInput: true,
                     altFormat: "F j, Y",
                     inline: true,
-                    disable: getDisabledDays(startDay, endDay), // Set dynamic disabled days
+                    disable: getDisabledDays(startDay, endDay), 
                 });
 
                 flatpickr("#appointment_time", {
@@ -388,8 +388,9 @@ include '../includes/head.php';
                     altFormat: "h:i K",
                     inline: true,
                     minuteIncrement: 60,
-                    minTime: startTime, // Set dynamic min time
-                    maxTime: endTime // Set dynamic max time
+                    minTime: startTime, 
+                    maxTime: endTime,
+                    defaultDate: startTime
                 });
             }
 
