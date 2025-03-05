@@ -177,7 +177,17 @@ include '../includes/head.php';
                   <div class="form-group mb-2">
                     <label for="work-hours">Working Hours</label>
                     <div class="d-flex align-items-center">
-                      <input type="time" class="form-control" id="work-hours" name="start_wt" placeholder="" value="<?= (isset($_POST['start_wt'])) ? $_POST['start_wt'] : $_SESSION['start_wt'] ?>">
+                      <select id="start_wt" class="form-select" name="start_wt" required>
+                        <?php
+                        for ($i = 0; $i < 24; $i++) {
+                          $timeValue = str_pad($i, 2, "0", STR_PAD_LEFT) . ":00";
+                          $displayTime = date("g:i A", strtotime($timeValue)); // Convert to 12-hour format
+                          $selected = (isset($_POST['start_wt']) && $_POST['start_wt'] == $timeValue) ? 'selected' : '';
+
+                          echo "<option value=\"$timeValue\" $selected> $displayTime </option>";
+                        }
+                        ?>
+                      </select>
                       <p class="m-0 mx-3"> to </p>
                       <input type="time" class="form-control" id="work-hours" name="end_wt" placeholder="" value="<?= (isset($_POST['end_wt'])) ? $_POST['end_wt'] : $_SESSION['end_wt'] ?>">
                     </div>
