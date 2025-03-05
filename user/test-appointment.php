@@ -167,7 +167,7 @@ include '../includes/head.php';
                 </div>
                 <div class="mb-3">
                     <label for="reason" class="form-label text-black-50">Reason:</label>
-                    <textarea class="form-control bg-white" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."></textarea>
+                    <textarea class="form-control bg-white rounded-2" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."></textarea>
                     <?php
                     if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
                     ?>
