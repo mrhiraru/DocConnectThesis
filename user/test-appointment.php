@@ -415,6 +415,13 @@ include '../includes/head.php';
                     direction: "asc"
                 }
             });
+
+            new TomSelect("#purpose", {
+                sortField: {
+                    field: "text",
+                    direction: "asc"
+                }
+            });
         });
 
         function show_doctor_info(account_id) {
