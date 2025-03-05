@@ -327,16 +327,24 @@ include '../includes/head.php';
             var endDay;
             var startTime;
             var endTime;
+            var request_btn = document.getElementById('request');
 
             document.getElementById("doctor_id").addEventListener("change", function() {
-                let selectedOption = this.options[this.selectedIndex];
+                if (this.value == null) {
+                    reinitializeFlatpickr();
+                    request_btn.toggleAttribute('disabled');
+                } else {
 
-                startDay = selectedOption.getAttribute("data-startday");
-                endDay = selectedOption.getAttribute("data-endday");
-                startTime = selectedOption.getAttribute("data-starttime");
-                endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                    let selectedOption = this.options[this.selectedIndex];
 
-                reinitializeFlatpickr();
+                    startDay = selectedOption.getAttribute("data-startday");
+                    endDay = selectedOption.getAttribute("data-endday");
+                    startTime = selectedOption.getAttribute("data-starttime");
+                    endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+
+                    reinitializeFlatpickr();
+                    request_btn.toggleAttribute('disabled');
+                }
             });
 
             function getDisabledDays(startDay, endDay) {
