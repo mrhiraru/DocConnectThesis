@@ -360,6 +360,10 @@ include '../includes/head.php';
             });
 
             function getDisabledDays($startDay, $endDay, $full_dates) {
+                if (!Array.isArray(full_dates)) {
+                    full_dates = full_dates ? [full_dates] : [];
+                }
+
                 const daysMap = {
                     "Sunday": 0,
                     "Monday": 1,
