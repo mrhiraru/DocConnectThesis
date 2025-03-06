@@ -7,8 +7,21 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ../index.php');
 }
 
-require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
+require_once('../classes/termsOfService.class.php');
+
+$termsOfService = new TermsOfService();
+$currentTerms = $termsOfService->getTermsOfService();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $content = $_POST['terms_of_service'];
+  if ($termsOfService->updateTermsOfService($content)) {
+    $_SESSION['message'] = 'Terms of Service updated successfully!';
+    header('location: termsOfServices.php');
+    exit();
+  } else {
+    $_SESSION['error'] = 'Failed to update Terms of Service.';
+  }
+}
 
 ?>
 <html lang="en">
@@ -20,8 +33,6 @@ function getCurrentPage()
   return basename($_SERVER['PHP_SELF']);
 }
 ?>
-
-<link rel="stylesheet" href="./css/OnOffToggle.css">
 
 <body>
   <?php
@@ -43,8 +54,18 @@ function getCurrentPage()
 
     <h1 class="text-start">Terms Of Services</h1>
 
-    <form method="POST" action="save_privacy_policy.php">
-      <textarea id="editor" name="privacy_policy"></textarea>
+    <?php if (isset($_SESSION['message'])): ?>
+      <div class="alert alert-success"><?php echo $_SESSION['message'];
+                                        unset($_SESSION['message']); ?></div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+      <div class="alert alert-danger"><?php echo $_SESSION['error'];
+                                      unset($_SESSION['error']); ?></div>
+    <?php endif; ?>
+
+    <form method="POST" action="termsOfServices.php">
+      <textarea id="editor" name="terms_of_service"><?php echo htmlspecialchars($currentTerms['content'] ?? ''); ?></textarea>
 
       <div class="d-flex gap-2 mt-3">
         <button type="submit" class="btn btn-primary text-light">Save</button>

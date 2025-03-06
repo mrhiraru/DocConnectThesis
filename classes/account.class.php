@@ -823,4 +823,49 @@ class Account
             "doctorTrends" => $doctorTrends
         ];
     }
+
+    function fetch_health_concerns_and_trends()
+    {
+        $db = $this->db->connect();
+
+        $sqlTopConcern = "SELECT diagnosis, COUNT(*) as count 
+                          FROM appointment 
+                          WHERE diagnosis IS NOT NULL AND diagnosis != '' 
+                          GROUP BY diagnosis 
+                          ORDER BY count DESC 
+                          LIMIT 1";
+        $queryTopConcern = $db->prepare($sqlTopConcern);
+        $queryTopConcern->execute();
+        $topConcern = $queryTopConcern->fetch(PDO::FETCH_ASSOC);
+
+        $sqlSeasonalTrends = "SELECT DATE_FORMAT(appointment_date, '%Y-%m') as month, COUNT(*) as count 
+                              FROM appointment 
+                              GROUP BY month 
+                              ORDER BY month";
+        $querySeasonalTrends = $db->prepare($sqlSeasonalTrends);
+        $querySeasonalTrends->execute();
+        $seasonalTrends = $querySeasonalTrends->fetchAll(PDO::FETCH_ASSOC);
+
+        $sqlHealthConcerns = "SELECT diagnosis, COUNT(*) as count 
+                              FROM appointment 
+                              WHERE diagnosis IS NOT NULL AND diagnosis != '' 
+                              GROUP BY diagnosis";
+        $queryHealthConcerns = $db->prepare($sqlHealthConcerns);
+        $queryHealthConcerns->execute();
+        $healthConcerns = $queryHealthConcerns->fetchAll(PDO::FETCH_ASSOC);
+
+        $healthConcernLabels = [];
+        $healthConcernData = [];
+        foreach ($healthConcerns as $concern) {
+            $healthConcernLabels[] = $concern['diagnosis'];
+            $healthConcernData[] = $concern['count'];
+        }
+
+        return [
+            'topConcern' => $topConcern['diagnosis'] ?? 'No data',
+            'seasonalTrends' => $seasonalTrends,
+            'healthConcernLabels' => $healthConcernLabels,
+            'healthConcernData' => $healthConcernData
+        ];
+    }
 }

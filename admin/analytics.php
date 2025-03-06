@@ -1,98 +1,287 @@
-<html lang="en">
-<?php 
-  $title = 'Admin | Analytics';
-	include './includes/admin_head.php';
-  function getCurrentPage() {
-    return basename($_SERVER['PHP_SELF']);
-  }
+<?php
+session_start();
 
-  // Doughnut chart data
-  $data = [240, 400, 100];
-  $totalSum = array_sum($data);
-  $percentages = array_map(function($value) use ($totalSum) {
-    return number_format(($value / $totalSum) * 100, 2) . '%';
-  }, $data);
+if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
+  header('location: ../user/verification.php');
+} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
+  header('location: ./index.php');
+}
+
+require_once '../classes/account.class.php';
+$account = new Account();
+
+$userStats = $account->fetch_user_statistics();
+$roleData = [];
+$roleLabels = [
+  0 => "Admins",
+  1 => "Doctors",
+  2 => "Moderators",
+  3 => "Students",
+  4 => "Alumni",
+  5 => "Employees",
+  6 => "Faculties",
+  7 => "Dependents"
+];
+
+// Initialize role data with zero values
+$roleCounts = array_fill(0, count($roleLabels), 0);
+
+// Assign fetched values to the correct role index
+foreach ($userStats['roles'] as $row) {
+  $roleIndex = intval($row['user_role']);
+  if (isset($roleLabels[$roleIndex])) {
+    $roleCounts[$roleIndex] = intval($row['count']);
+  }
+}
+
+$totalUsers = $userStats['totalUsers'];
+$activeUsers = $userStats['activeUsers'];
+$newSignups = $userStats['newSignups'];
+
+$appointmentStats = $account->fetch_appointment_statistics();
+$totalAppointments = $appointmentStats['totalAppointments'];
+$completedAppointments = $appointmentStats['completedAppointments'];
+$cancelledAppointments = $appointmentStats['cancelledAppointments'];
+$pendingAppointments = $appointmentStats['pendingAppointments'];
+$avgDuration = $appointmentStats['avgDuration'];
+
+// Fetch doctor statistics
+$doctorStats = $account->fetch_doctor_statistics();
+$activeDoctors = $doctorStats['activeDoctors'];
+$doctorTrends = $doctorStats['doctorTrends'];
+
+$healthStats = $account->fetch_health_concerns_and_trends();
+$topConcern = $healthStats['topConcern'];
+$seasonalTrends = $healthStats['seasonalTrends'];
+$healthConcernLabels = $healthStats['healthConcernLabels'];
+$healthConcernData = $healthStats['healthConcernData'];
 ?>
+
+<html lang="en">
+<?php
+$title = 'Admin | Analytics & Reports';
+include './includes/admin_head.php';
+function getCurrentPage()
+{
+  return basename($_SERVER['PHP_SELF']);
+}
+?>
+
 <body>
-  <?php 
-    require_once ('./includes/admin_header.php');
-  ?>
-  <?php 
-    require_once ('./includes/admin_sidepanel.php');
+  <?php
+  require_once('./includes/admin_header.php');
+  require_once('./includes/admin_sidepanel.php');
   ?>
 
   <section id="analytics" class="page-container">
+    <div class="container-fluid">
+      <h2 class="text-center my-4">Analytics & Reports</h2>
 
-    <div class="row justify-content-center mb-3">
-      <div class="col-12 col-lg-5 d-flex flex-column justify-content-center p-3 border border-danger-subtle shadow-lg rounded-1 me-lg-3 mb-lg-0 mb-3">
-        <h4 class="mx-2">Total Type of   users</h4>
-        <hr class="mx-4 mb-3">
-        <canvas id="barGraph" class="bar" role="img"></canvas>
-      </div>
-
-      <div class="col-12 col-lg-6 d-flex flex-column justify-content-start p-3 border border-danger-subtle shadow-lg rounded-1 ms-lg-3">
-        <div class="row row-cols-2 mx-2">
-          <div class="col mb-2 d-flex justify-content-center px-3" id="campusA">
-            <div class=" border border-1 border-primary w-100 p-2">
-              <p class="m-0 text-center">Campus A: <strong><?php echo $percentages[0]; ?></strong></p>
+      <!-- User Statistics -->
+      <div class="row mb-4">
+        <div class="col-lg-5">
+          <div class="card h-100">
+            <div class="card-header">
+              <h4 class="card-title">User Statistics</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="userStatsChart"></canvas>
+              <h4 class="card-title">User Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Users: <strong id="totalUsers"></strong></li>
+                <li class="list-group-item">Active Users (Monthly): <strong id="activeUsers"></strong></li>
+                <li class="list-group-item">New Signups: <strong id="newSignups"></strong></li>
+              </ul>
             </div>
           </div>
-          <div class="col mb-2 d-flex justify-content-center px-3" id="campusA">
-            <div class=" border border-1 border-primary w-100 p-2">
-              <p class="m-0 text-center">Campus B: <strong><?php echo $percentages[1]; ?></strong></p>
+        </div>
+        <!-- Appointment Insights -->
+        <div class="col-lg-7">
+          <div class="card h-100">
+            <div class="card-header">
+              <h4 class="card-title">Doctor Activity</h4>
             </div>
-          </div>
-          <div class="col mb-2 d-flex justify-content-center px-3" id="campusA">
-            <div class=" border border-1 border-primary w-100 p-2">
-              <p class="m-0 text-center">Campus C: <strong><?php echo $percentages[2]; ?></strong></p>
+            <div class="card-body">
+              <canvas id="doctorActivityChart"></canvas>
+              <h4 class="card-title">Doctor Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Active Doctors: <strong id="activeDoctors"></strong></li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
 
-    </div>
-
-    <div class="row justify-content-center">
-      <!-- First Column -->
-      <div class="col-12 col-lg-6 d-flex flex-column justify-content-center py-2 px-0 border border-danger-subtle shadow-lg rounded-1 me-lg-3 mb-lg-0 mb-3">
-        <h4 class="mx-3">Total Email Senders</h4>
-        <hr class="mx-4 mb-3">
-        <nav>
-          <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-campus-tab" data-bs-toggle="tab" data-bs-target="#nav-campus" type="button" role="tab" aria-controls="nav-campus" aria-selected="true">Campus</button>
-            <button class="nav-link" id="nav-type-tab" data-bs-toggle="tab" data-bs-target="#nav-type" type="button" role="tab" aria-controls="nav-type" aria-selected="false">Type</button>
+      <div class="row mb-4">
+        <!-- Appointment Insights -->
+        <div class="col-lg-6">
+          <div class="card h-100">
+            <div class="card-header">
+              <h4 class="card-title">Appointment Insights</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="appointmentChart"></canvas>
+              <h4 class="card-title">Appointment Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
+                <li class="list-group-item">Average Duration: <strong id="avgDuration"></strong></li>
+                <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
+              </ul>
+            </div>
           </div>
-        </nav>
-        <div class="tab-content p-3 mx-2 border bg-white" id="nav-tabContent">
-          <select id="yearSelect" class="form-select form-select-sm w-25" aria-label=".form-select-sm example">
-            <option value="1">2021-2022</option>
-            <option value="2">2022-2023</option>
-            <option value="3">2023-2024</option>
-          </select>
-
-          <div class="tab-pane fade active show" id="nav-campus" role="tabpanel" aria-labelledby="nav-campus-tab">
-            <canvas id="campusChart" class="chart" role="img"></canvas>
-          </div>
-          <div class="tab-pane fade" id="nav-type" role="tabpanel" aria-labelledby="nav-type-tab">
-            <canvas id="typeChart" class="chart" role="img"></canvas>
+        </div>
+        <!-- Health Concerns & Trends -->
+        <div class="col-lg-6">
+          <div class="card h-100">
+            <div class="card-header">
+              <h4 class="card-title">Health Concerns & Trends</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="healthConcernsChart"></canvas>
+              <h4 class="card-title">Health Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Top Health Concern: <strong id="topConcern"></strong></li>
+                <!-- <li class="list-group-item">Seasonal Trends: <strong id="seasonalTrends"></strong></li> -->
+              </ul>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Second Column -->
-      <div class="col-12 col-lg-5 d-flex flex-column justify-content-start p-3 border border-danger-subtle shadow-lg rounded-1 ms-lg-3">
-        <h4>Total Email Senders</h4>
-        <hr class="mx-2">
-        <div class="d-flex justify-content-center align-items-center flex-grow-1">
-          <canvas id="doughnutChart" class="chart" role="img" style="max-height: 451px;"></canvas>
+      <!-- System Performance & Security -->
+      <!-- <div class="row mb-4">
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">System Performance</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="systemPerformanceChart"></canvas>
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="col-lg-6">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Performance Overview</h4>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Server Uptime: <strong id="serverUptime"></strong></li>
+                <li class="list-group-item">Error Rate: <strong id="errorRate"></strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div> -->
     </div>
   </section>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var userStatsData = <?php echo json_encode($roleData); ?>;
 
-  <script src="./js/analytics-lineChart.js"></script>
-  <script src="./js/analytics-donutChart.js"></script>
-  <script src="./js/analytics-barGraph.js"></script>
+      // User Statistics Chart
+      var userStatsData = <?php echo json_encode($roleCounts); ?>;
+      var totalUsers = <?php echo json_encode($totalUsers); ?>;
+      var activeUsers = <?php echo json_encode($activeUsers); ?>;
+      var newSignups = <?php echo json_encode($newSignups); ?>;
+
+      // Update text content with real data
+      document.getElementById("totalUsers").textContent = totalUsers;
+      document.getElementById("activeUsers").textContent = activeUsers;
+      document.getElementById("newSignups").textContent = newSignups;
+
+      // User Statistics Chart
+      new Chart(document.getElementById("userStatsChart"), {
+        type: "bar",
+        data: {
+          labels: ["Admins", "Doctors", "Moderators", "Students", "Alumni", "Employees", "Faculties", "Dependents"],
+          datasets: [{
+            label: "Total Users",
+            data: userStatsData,
+            backgroundColor: ["#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#2196F3", "#9C27B0"]
+          }]
+        }
+      });
+
+      // Appointment Insights Chart
+      var totalAppointments = <?php echo json_encode($totalAppointments); ?>;
+      var completedAppointments = <?php echo json_encode($completedAppointments); ?>;
+      var cancelledAppointments = <?php echo json_encode($cancelledAppointments); ?>;
+      var pendingAppointments = <?php echo json_encode($pendingAppointments); ?>;
+      var avgDuration = <?php echo json_encode($avgDuration); ?>;
+
+      document.getElementById("totalAppointments").textContent = totalAppointments;
+      document.getElementById("avgDuration").textContent = avgDuration + " min";
+      document.getElementById("noShowRate").textContent = cancelledAppointments;
+
+      new Chart(document.getElementById("appointmentChart"), {
+        type: "pie",
+        data: {
+          labels: ["Completed", "Cancelled", "Pending"],
+          datasets: [{
+            data: [completedAppointments, cancelledAppointments, pendingAppointments],
+            backgroundColor: ["#8BC34A", "#F44336", "#FFEB3B"]
+          }]
+        }
+      });
+
+      // Doctor Activity Line Chart
+      var activeDoctors = <?php echo json_encode($activeDoctors); ?>;
+      var doctorTrends = <?php echo json_encode($doctorTrends); ?>;
+
+      var trendLabels = doctorTrends.map(item => item.month);
+      var trendData = doctorTrends.map(item => item.count);
+
+      document.getElementById("activeDoctors").textContent = activeDoctors;
+
+      new Chart(document.getElementById("doctorActivityChart"), {
+        type: "line",
+        data: {
+          labels: trendLabels,
+          datasets: [{
+            label: "Active Doctors Over Time",
+            data: trendData,
+            borderColor: "#673AB7",
+            backgroundColor: "rgba(103, 58, 183, 0.2)",
+            fill: true
+          }]
+        }
+      });
+
+      // Health Concerns & Trends Chart
+      new Chart(document.getElementById("healthConcernsChart"), {
+        type: "doughnut",
+        data: {
+          labels: <?php echo json_encode($healthConcernLabels); ?>,
+          datasets: [{
+            data: <?php echo json_encode($healthConcernData); ?>,
+            backgroundColor: ["#FF5722", "#03A9F4", "#8BC34A", "#9E9E9E"]
+          }]
+        }
+      });
+
+      document.getElementById("topConcern").textContent = <?php echo json_encode($topConcern); ?>;
+      // document.getElementById("seasonalTrends").textContent = "Seasonal trends data available";
+
+      // System Performance Chart
+      // new Chart(document.getElementById("systemPerformanceChart"), {
+      //   type: "bar",
+      //   data: {
+      //     labels: ["Server Uptime", "Load Time", "Error Rate"],
+      //     datasets: [{
+      //       label: "Performance Metrics",
+      //       data: [99.8, 1.2, 0.5],
+      //       backgroundColor: ["#00BCD4", "#FFEB3B", "#F44336"]
+      //     }]
+      //   }
+      // });
+
+      // document.getElementById("serverUptime").textContent = "99.8%";
+      // document.getElementById("errorRate").textContent = "0.5%";
+    });
+  </script>
 
 </body>
+
 </html>
