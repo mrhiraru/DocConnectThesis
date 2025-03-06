@@ -37,7 +37,7 @@ $availableTime = getAvailableTimes($startTime, $endTime, $takenHours, 60);
 
 foreach ($availableTime as $time) {
 ?>
-    <div class="col-6">
+    <div class="col-6 text-center">
         <button type="button" class="btn btn-sm btn-outline-secondary text-muted bg-light m-0"><?= date("h:i A", strtotime($time)) . " - " . date("h:i A", strtotime($time . ' +1 hour')) ?></button>
     </div>
 
