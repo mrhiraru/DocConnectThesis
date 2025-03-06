@@ -385,6 +385,9 @@ include '../includes/head.php';
 
                         if (full_dates.includes(date.toISOString().split('T')[0])) return true; // Disable fully booked dates
 
+                        console.log("Checking date:", date.toISOString().split('T')[0]);
+                        console.log("Full dates:", full_dates);
+
                         if (start <= end) {
                             return !(day >= start && day <= end);
                         } else {
@@ -433,7 +436,7 @@ include '../includes/head.php';
                     end_wt: end_wt,
                 },
                 success: function(response) {
-                    full_dates = response;
+                    console.log("Fetched full dates:", full_dates); // Debugging
                     callback(full_dates);
                 },
                 error: function(xhr, status, error) {
