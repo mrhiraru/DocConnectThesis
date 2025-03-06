@@ -415,7 +415,7 @@ include '../includes/head.php';
                 });
 
                 flatpickr("#appointment_time", {
-                    enableTime: true,
+                    enableTime: false,
                     noCalendar: true,
                     dateFormat: "H:i:s",
                     altInput: true,
