@@ -37,30 +37,30 @@ if (isset($_POST['request'])) {
         validate_field($appointment_class->appointment_status)
     ) {
         if ($appointment_class->add_appointment()) {
-            // $message = new Message();
+            $message = new Message();
 
-            // $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
-            // $date_time = $date_time->format('F j, Y \a\t h:i A');
-            // $id = $message->get_doctor_account($appointment_class->doctor_id);
+            $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
+            $date_time = $date_time->format('F j, Y \a\t h:i A');
+            $id = $message->get_doctor_account($appointment_class->doctor_id);
 
-            // $message->sender_id = $_SESSION['account_id'];
-            // $message->receiver_id = $id['account_id'];
-            // $message->message = $_SESSION['fullname'] . ' has requested an appointment on ' . $date_time . '.';
-            // $message->message_type = 'System';
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = $_SESSION['fullname'] . ' has requested an appointment on ' . $date_time . '.';
+            $message->message_type = 'System';
 
-            // if (
-            //     validate_field($message->message) &&
-            //     validate_field($message->sender_id) &&
-            //     validate_field($message->receiver_id)
-            // ) {
-            //     if ($message->send_message()) {
-            //         $success = 'success';
-            //     } else {
-            //         echo 'An error occured while adding in the database.';
-            //     }
-            // } else {
-            //     $success = 'failed';
-            // }
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
         } else {
             echo 'An error occured while adding in the database.';
         }
