@@ -448,14 +448,18 @@ include '../includes/head.php';
             let timecontainer = document.getElementById('time_picker_cont');
 
             let appointmentInput = timecontainer.querySelector('.form-control.input');
-            appointmentInput.value = formattedTime + " - " + addOneHour(formattedTime);
+            appointmentInput.value = formattedTime + " - " + addOneHour(selectedTime);
         }
 
         function addOneHour(time) {
-            let [hours, minutes] = time.split(":").slice(0, 2).map(Number); // Extract only HH and MM
-            hours = (hours === 23) ? 0 : hours + 1; // Handle midnight wrap-around
+            let [hours, minutes] = time.split(":").map(Number); // Extract HH and MM
 
-            return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:00`;
+            hours = (hours + 1) % 24; // Add one hour and wrap around if it exceeds 23
+
+            let period = hours >= 12 ? "PM" : "AM"; // Determine AM or PM
+            let formattedHours = hours % 12 || 12; // Convert 24-hour to 12-hour format
+
+            return `${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
         }
 
         function available_time(date, doctor_id, start, end) {
