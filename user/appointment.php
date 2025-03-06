@@ -338,6 +338,7 @@ include '../includes/head.php';
 
             const form = document.getElementById('appointmentForm');
             const purpose_field = document.getElementById('purpose');
+            const reason_field = document.getElementById('reason');
 
             reinitializeFlatpickr();
 
@@ -369,6 +370,7 @@ include '../includes/head.php';
                     show_doctor_info(selectedOption.getAttribute('data-accountid'));
                     reinitializeFlatpickr();
                     purpose_field.setCustomValidity("Please select the purpose of appointment.");
+                    reason_field.setCustomValidity("Please provide a reason for the appointment.");
                     request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
@@ -452,10 +454,22 @@ include '../includes/head.php';
                 }
             });
 
+            reason_field.addEventListener("change", function() {
+                if (reason_field.value.trim() === "") {
+                    reason_field.setCustomValidity("Please provide a reason for the appointment.");
+                } else {
+                    reason_field.setCustomValidity("");
+                }
+            });
+
             form.addEventListener("submit", function(event) {
                 if (!purpose_field.checkValidity()) {
                     event.preventDefault();
                     purpose_field.reportValidity();
+                }
+                if (!reason_field.checkValidity()) {
+                    event.preventDefault();
+                    reason_field.reportValidity();
                 }
             });
         });
