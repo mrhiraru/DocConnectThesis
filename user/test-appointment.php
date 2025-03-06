@@ -400,7 +400,10 @@ include '../includes/head.php';
                     disable: [
                         ...full_dates, // Directly disable full dates
                         ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
-                    ]
+                    ],
+                    onChange: function(selectedDates, dateStr, instance) {
+                        console.log("Selected Date:", dateStr);
+                    }
                 });
 
                 flatpickr("#appointment_time", {
