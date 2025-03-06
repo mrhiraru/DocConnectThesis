@@ -135,7 +135,7 @@ include '../includes/head.php';
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.getAttribute('data-accountid'))">
+                        <select name="doctor_id" id="doctor_id" class="col-12">
                             <?php
                             include_once('../handlers/appointment.get_doctors.php');
                             ?>
@@ -362,6 +362,7 @@ include '../includes/head.php';
                     full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
                     doctor_id = selectedOption.getAttribute("data-doctorid");
 
+                    show_doctor_info(this.getAttribute('data-accountid'));
                     reinitializeFlatpickr();
                     request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
