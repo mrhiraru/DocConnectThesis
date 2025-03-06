@@ -342,7 +342,7 @@ include '../includes/head.php';
             const appointment_time_field = document.getElementById('appointment_time');
             const appointment_date_field = document.getElementById('appointment_date');
             const datecontainer = document.getElementById('date_picker_cont');
-            const appointment_date_alt_field = timecontainer.querySelector('.form-control.input');
+            const appointment_date_alt_field = datecontainer.querySelector('.form-control.input');
             const timecontainer = document.getElementById('time_picker_cont');
             const appointment_time_alt_field = timecontainer.querySelector('.form-control.input');
 
