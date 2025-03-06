@@ -43,27 +43,28 @@ function getCurrentPage()
       ?>
 
         <div class="col p-0 mb-3">
-          <a href="./view_campus.php?campus_id=<?= $item['campus_id'] ?>" class="card mx-3 mb-sm-3 rounded-3 shadow-sm h-100">
-            <div class="card-body d-flex flex-column justify-content-between shadow-sm">
-              <div class="align-content-center text-center">
-                <img src="<?php if (isset($item['campus_profile'])) {
-                            echo "../assets/images/" . $item['campus_profile'];
-                          } else {
-                            echo "../assets/images/bg-1.png";
-                          } ?>" alt="" class="w-100 rounded-2">
-                <div class="details mx-3">
-                  <div class="d-flex mt-2 align-items-center">
-                    <i class='bx bxs-school fs-3'></i>
-                    <p class="m-0 ms-3 fs-5"><?= $item['campus_name'] ?></p>
-                  </div>
-                  <div class="d-flex mt-2 align-items-center">
-                    <i class='bx bxs-map fs-3'></i>
-                    <p class="m-0 ms-3 fs-5 text-start"><?= $item['campus_address'] ?></p>
-                  </div>
-                </div>
+          <div class="mx-3">
+            <a href="./view_campus.php?campus_id=<?= $item['campus_id'] ?>" class="card w-100 h-100 shadow-sm">
+              <img src="<?php if (isset($item['campus_profile'])) {
+                          echo "../assets/images/" . $item['campus_profile'];
+                        } else {
+                          echo "../assets/images/bg-1.png";
+                        } ?>" class="card-img-top" alt="campus_image_no<?= $item['campus_id'] ?>">
+              <div class="card-body">
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item d-flex mt-2 align-items-center">
+                    <i class='bx bxs-school fs-3 me-3 text-green'></i>
+                    <p class="card-text fw-bold"><?= $item['campus_name'] ?></p>
+                  </li>
+                  <li class="list-group-item d-flex mt-2 align-items-top">
+                    <i class='bx bxs-map fs-3 me-3 text-green'></i>
+                    <p class="card-text fw-bold"><?= $item['campus_address'] ?></p>
+                  </li>
+                </ul>
               </div>
-            </div>
-          </a>
+            </a>
+
+          </div>
         </div>
 
       <?php

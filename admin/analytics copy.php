@@ -76,7 +76,7 @@ function getCurrentPage()
       <!-- User Statistics -->
       <div class="row mb-4">
         <div class="col-lg-5">
-          <div class="card">
+          <div class="card h-100">
             <div class="card-header">
               <h4 class="card-title">User Statistics</h4>
             </div>
@@ -93,7 +93,7 @@ function getCurrentPage()
         </div>
         <!-- Appointment Insights -->
         <div class="col-lg-7">
-          <div class="card">
+          <div class="card h-100">
             <div class="card-header">
               <h4 class="card-title">Doctor Activity</h4>
             </div>
@@ -111,7 +111,7 @@ function getCurrentPage()
       <div class="row mb-4">
         <!-- Appointment Insights -->
         <div class="col-lg-6">
-          <div class="card">
+          <div class="card h-100">
             <div class="card-header">
               <h4 class="card-title">Appointment Insights</h4>
             </div>
@@ -128,7 +128,7 @@ function getCurrentPage()
         </div>
         <!-- Health Concerns & Trends -->
         <div class="col-lg-6">
-          <div class="card">
+          <div class="card h-100">
             <div class="card-header">
               <h4 class="card-title">Health Concerns & Trends</h4>
             </div>
