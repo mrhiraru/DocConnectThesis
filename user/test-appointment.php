@@ -329,7 +329,7 @@ include '../includes/head.php';
             var endTime = "00:00:00";
             var request_btn = document.getElementById('request');
             var full_dates = [];
-            var doctor_id = '<?= $_SESSION['doctor_id'] ?>';
+            var doctor_id;
 
             reinitializeFlatpickr();
 
@@ -341,6 +341,7 @@ include '../includes/head.php';
                     startTime = "00:00:00";
                     endTime = "00:00:00";
                     full_dates = [];
+                    doctor_id = "";
 
                     document.getElementById('appointment_time').value = '';
                     reinitializeFlatpickr();
@@ -353,6 +354,7 @@ include '../includes/head.php';
                     startTime = selectedOption.getAttribute("data-starttime");
                     endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
                     full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+                    doctor_id = selectedOption.getAttribute("data-doctorid");
 
                     reinitializeFlatpickr();
                     request_btn.removeAttribute('disabled'); // Ensure it's enabled

@@ -22,6 +22,7 @@ foreach ($doctorArray as $item) {
   $formattedDates = implode(', ', $fullDates);
 ?>
   <option
+    data-doctorid="<?= $item['doctor_id'] ?>"
     data-startday="<?= $item['start_day'] ?>"
     data-endday="<?= $item['end_day'] ?>"
     data-starttime="<?= $item['start_wt'] ?>"
