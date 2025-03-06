@@ -434,30 +434,21 @@ include '../includes/head.php';
                     minuteIncrement: 60,
                     minTime: startTime,
                     maxTime: endTime,
-                    onReady: function(selectedDates, dateStr, instance) {
-                        disableSpecificHours(instance, disabled_hours);
-                    },
-                    onOpen: function(selectedDates, dateStr, instance) {
-                        disableSpecificHours(instance, disabled_hours);
-                    },
+                    enable: generateEnabledHours(disabled_hours),
                 });
             }
 
-            function disableSpecificHours(instance, disabled_hours) {
-                setTimeout(() => {
-                    let disabledHours = [1, 2, 11, 15]; // Define disabled hours
-                    let timeList = instance.timeContainer.querySelectorAll(".flatpickr-time input");
-
-                    if (timeList) {
-                        timeList.forEach(input => {
-                            let hour = parseInt(input.value.split(":")[0], 10); // Extract hour from time value
-                            if (disabledHours.includes(hour)) {
-                                input.disabled = true; // Disable the specific hour
-                                input.style.opacity = "0.5"; // Optional: Make it visually disabled
-                            }
+            function generateEnabledHours(disabled_hours) {
+                let enabled = [];
+                for (let i = 0; i < 24; i++) {
+                    if (!disabled_hours.includes(i)) {
+                        enabled.push({
+                            from: `${String(i).padStart(2, "0")}:00:00`,
+                            to: `${String(i).padStart(2, "0")}:59:59`
                         });
                     }
-                }, 10);
+                }
+                return enabled;
             }
 
             function available_time(date, doctor_id) {
