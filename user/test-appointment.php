@@ -199,7 +199,7 @@ include '../includes/head.php';
                             <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
                             <div class="p-2 pb-3 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
-                                <div class="row row-cols-2 g-2" id="available_time">
+                                <div class="row row-cols-2 g-2 " id="available_time">
 
                                 </div>
                             </div>
