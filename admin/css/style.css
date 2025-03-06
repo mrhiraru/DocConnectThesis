@@ -280,6 +280,21 @@ body.sidepanel-open {
 	font-size: 17.5px !important;
 }
 
+.campus-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.hoverable-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hoverable-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* ADD/ EDIT CAMPUS */
 .campus-pic {
   color: transparent;

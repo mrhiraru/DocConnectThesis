@@ -44,12 +44,12 @@ function getCurrentPage()
 
         <div class="col p-0 mb-3">
           <div class="mx-3">
-            <a href="./view_campus.php?campus_id=<?= $item['campus_id'] ?>" class="card w-100 h-100 shadow-sm">
+            <a href="./view_campus.php?campus_id=<?= $item['campus_id'] ?>" class="card w-100 h-100 shadow-sm hoverable-card">
               <img src="<?php if (isset($item['campus_profile'])) {
                           echo "../assets/images/" . $item['campus_profile'];
                         } else {
                           echo "../assets/images/bg-1.png";
-                        } ?>" class="card-img-top" alt="campus_image_no<?= $item['campus_id'] ?>">
+                        } ?>" class="card-img-top campus-image" alt="campus_image_no<?= $item['campus_id'] ?>">
               <div class="card-body">
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item d-flex mt-2 align-items-center">
