@@ -39,7 +39,6 @@ $activeUsers = $userStats['activeUsers'];
 $newSignups = $userStats['newSignups'];
 
 $appointmentStats = $account->fetch_appointment_statistics();
-
 $totalAppointments = $appointmentStats['totalAppointments'];
 $completedAppointments = $appointmentStats['completedAppointments'];
 $cancelledAppointments = $appointmentStats['cancelledAppointments'];
@@ -51,6 +50,11 @@ $doctorStats = $account->fetch_doctor_statistics();
 $activeDoctors = $doctorStats['activeDoctors'];
 $doctorTrends = $doctorStats['doctorTrends'];
 
+$healthStats = $account->fetch_health_concerns_and_trends();
+$topConcern = $healthStats['topConcern'];
+$seasonalTrends = $healthStats['seasonalTrends'];
+$healthConcernLabels = $healthStats['healthConcernLabels'];
+$healthConcernData = $healthStats['healthConcernData'];
 ?>
 
 <html lang="en">
@@ -143,7 +147,7 @@ function getCurrentPage()
           </div>
         </div>
       </div>
-      
+
       <!-- System Performance & Security -->
       <!-- <div class="row mb-4">
         <div class="col-lg-6">
@@ -249,31 +253,32 @@ function getCurrentPage()
       new Chart(document.getElementById("healthConcernsChart"), {
         type: "doughnut",
         data: {
-          labels: ["Flu", "Anxiety", "Injuries", "Other"],
+          labels: <?php echo json_encode($healthConcernLabels); ?>,
           datasets: [{
-            data: [200, 150, 50, 100],
+            data: <?php echo json_encode($healthConcernData); ?>,
             backgroundColor: ["#FF5722", "#03A9F4", "#8BC34A", "#9E9E9E"]
           }]
         }
       });
 
-      // System Performance Chart
-      new Chart(document.getElementById("systemPerformanceChart"), {
-        type: "bar",
-        data: {
-          labels: ["Server Uptime", "Load Time", "Error Rate"],
-          datasets: [{
-            label: "Performance Metrics",
-            data: [99.8, 1.2, 0.5],
-            backgroundColor: ["#00BCD4", "#FFEB3B", "#F44336"]
-          }]
-        }
-      });
+      document.getElementById("topConcern").textContent = <?php echo json_encode($topConcern); ?>;
+      document.getElementById("seasonalTrends").textContent = "Seasonal trends data available";
 
-      document.getElementById("topConcern").textContent = "Flu";
-      document.getElementById("seasonalTrends").textContent = "High flu cases in winter";
-      document.getElementById("serverUptime").textContent = "99.8%";
-      document.getElementById("errorRate").textContent = "0.5%";
+      // System Performance Chart
+      // new Chart(document.getElementById("systemPerformanceChart"), {
+      //   type: "bar",
+      //   data: {
+      //     labels: ["Server Uptime", "Load Time", "Error Rate"],
+      //     datasets: [{
+      //       label: "Performance Metrics",
+      //       data: [99.8, 1.2, 0.5],
+      //       backgroundColor: ["#00BCD4", "#FFEB3B", "#F44336"]
+      //     }]
+      //   }
+      // });
+
+      // document.getElementById("serverUptime").textContent = "99.8%";
+      // document.getElementById("errorRate").textContent = "0.5%";
     });
   </script>
 
