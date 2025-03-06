@@ -400,15 +400,6 @@ include '../includes/head.php';
                 ]; // Wrapped inside an array
             }
 
-            $('input[name="time"]').change(function() {
-                if ($(this).is(':checked')) {
-                    let selectedTime = $(this).val(); // Get time in HH:MM:SS format
-                    let formattedTime = $(this).next('label').text().split(" - ")[0]; // Extract AM/PM format
-
-                    $('.form-control.input').val(selectedTime).attr("alt", formattedTime);
-                }
-            });
-
             function reinitializeFlatpickr() {
                 flatpickr("#appointment_date", {
                     dateFormat: "Y-m-d",
@@ -446,6 +437,15 @@ include '../includes/head.php';
                 }
             });
         });
+
+
+        function set_value(selectedRadio) {
+            let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
+            let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
+
+            document.querySelector('.form-control.input').value = selectedTime;
+            document.querySelector('.form-control.input').setAttribute("alt", formattedTime);
+        }
 
         function available_time(date, doctor_id, start, end) {
             $.ajax({
