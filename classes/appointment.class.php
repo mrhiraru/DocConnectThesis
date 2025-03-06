@@ -160,18 +160,18 @@ class Appointment
         return $data;
     }
 
-    function get_taken_hours()
+    function get_taken_hours($doctor_id, $appointment_date)
     {
         $sql = "SELECT appointment_time
         FROM appointment
         WHERE appointment_status = 'Incoming'
         AND doctor_id = :doctor_id
-        AND appointment_date = :date
+        AND appointment_date = :appointment_date
         ORDER BY appointment_time ASC;";
 
         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':doctor_id', $this->doctor_id);
-        $query->bindParam(':date', $this->appointment_date);
+        $query->bindParam(':doctor_id', $doctor_id);
+        $query->bindParam(':appointment_date', $appointment_date);
 
         $data = null;
         if ($query->execute()) {
