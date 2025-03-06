@@ -35,8 +35,8 @@ function getAvailableTimes($startTime, $endTime, $takenHours, $interval = 60)
 
 $availableTime = getAvailableTimes($startTime, $endTime, $takenHours, 60);
 
-foreach ($availableTime as $time) {
+foreach ($availableTime as $index => $time) {
 ?>
-    <input type="radio" class="btn-check" name="options" id="option1" autocomplete="off" value="<?= $time ?>">
-    <label class="btn btn-outline-secondary" for="option1"><?= date("h:i A", strtotime($time)) . " - " . date("h:i A", strtotime($time . ' +1 hour')) ?></label>
+    <input type="radio" class="btn-check" name="time" id="time<?= $index ?>" autocomplete="off" value="<?= $time ?>">
+    <label class="btn btn-sm btn-outline-secondary" for="time<?= $index ?>"><?= date("h:i A", strtotime($time)) . " - " . date("h:i A", strtotime($time . ' +1 hour')) ?></label>
 <?php } ?>
