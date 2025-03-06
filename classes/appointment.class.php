@@ -41,7 +41,7 @@ class Appointment
 
         if ($query->execute()) {
             return true;
-        } else {
+        } else { 
             return false;
         }
     }
