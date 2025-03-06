@@ -1,4 +1,7 @@
 <?php
+$errorInfo = $query->errorInfo();
+echo 'SQL Error: ' . $errorInfo[2];  // Show detailed error
+return false;
 session_start();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
@@ -135,7 +138,7 @@ include '../includes/head.php';
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.value)">
+                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.getAttribute('data-account_id'))">
                             <?php
                             include_once('../handlers/appointment.get_doctors.php');
                             ?>

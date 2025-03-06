@@ -41,9 +41,7 @@ class Appointment
 
         if ($query->execute()) {
             return true;
-        } else {
-            $errorInfo = $query->errorInfo();
-            echo 'SQL Error: ' . $errorInfo[2];  // Show detailed error
+        } else { 
             return false;
         }
     }
