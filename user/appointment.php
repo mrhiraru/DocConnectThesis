@@ -478,7 +478,7 @@ include '../includes/head.php';
                 }
             });
 
-            appointment_date_field.addEventListener("change", function() {
+            appointment_date_field.value.addEventListener("change", function() {
                 if (appointment_date_field.value.trim() === "") {
                     appointment_date_field.setCustomValidity("Please select date of appointment.");
                     appointment_date_alt_field.setCustomValidity("Please select date of appointment.");
@@ -488,7 +488,7 @@ include '../includes/head.php';
                 }
             });
 
-            appointment_time_field.addEventListener("change", function() {
+            appointment_time_field.value.addEventListener("change", function() {
                 if (appointment_time_field.value.trim() === "") {
                     appointment_time_field.setCustomValidity("Please select time of appointment.");
                     appointment_time_alt_field.setCustomValidity("Please select time of appointment.");
