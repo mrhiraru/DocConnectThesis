@@ -437,12 +437,11 @@ include '../includes/head.php';
                         startTime: startTime,
                         endTime: rawendTime,
                     },
-                    dataType: 'json',
                     success: function(response) {
                         $('#available_time').html(respose);
                     },
                     error: function(xhr, status, error) {
-                        console.error('Error fetching doctor information:', error);
+                        console.error('Error fetching available time:', error);
                     }
                 });
             }
