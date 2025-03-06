@@ -448,11 +448,13 @@ include '../includes/head.php';
             let timecontainer = document.getElementById('time_picker_cont');
 
             let appointmentInput = timecontainer.querySelector('.form-control.input');
-            appointmentInput.value = formattedTime;
-            
-            if (appointmentInput._flatpickr) {
-                appointmentInput._flatpickr.setDate(selectedTime, true); // true = trigger onChange event
-            }
+            appointmentInput.value = formattedTime + " - " + addOneHour(formattedTime);
+        }
+
+        function addOneHour(time) {
+            let [hours, minutes] = time.split(":").map(Number);
+            hours = (hours === 23) ? 0 : hours + 1; // Handle midnight wrap-around
+            return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
         }
 
         function available_time(date, doctor_id, start, end) {
