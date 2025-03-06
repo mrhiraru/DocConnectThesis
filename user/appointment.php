@@ -341,6 +341,10 @@ include '../includes/head.php';
             const reason_field = document.getElementById('reason');
             const appointment_time_field = document.getElementById('appointment_time');
             const appointment_date_field = document.getElementById('appointment_date');
+            const datecontainer = document.getElementById('date_picker_cont');
+            const appointment_date_alt_field = timecontainer.querySelector('.form-control.input');
+            const timecontainer = document.getElementById('time_picker_cont');
+            const appointment_time_alt_field = timecontainer.querySelector('.form-control.input');
 
             reinitializeFlatpickr();
 
@@ -374,7 +378,9 @@ include '../includes/head.php';
                     purpose_field.setCustomValidity("Please select the purpose of appointment.");
                     reason_field.setCustomValidity("Please provide a reason for the appointment.");
                     appointment_date_field.setCustomValidity("Please select date of appointment.");
+                    appointment_date_alt_field.setCustomValidity("Please select date of appointment.");
                     appointment_time_field.setCustomValidity("Please select time of appointment.");
+                    appointment_time_alt_field.setCustomValidity("Please select time of appointment.");
                     request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
@@ -469,16 +475,20 @@ include '../includes/head.php';
             appointment_date_field.addEventListener("change", function() {
                 if (appointment_date_field.value.trim() === "") {
                     appointment_date_field.setCustomValidity("Please select date of appointment.");
+                    appointment_date_alt_field.setCustomValidity("Please select date of appointment.");
                 } else {
                     appointment_date_field.setCustomValidity("");
+                    appointment_date_alt_field.setCustomValidity("");
                 }
             });
 
             appointment_time_field.addEventListener("change", function() {
                 if (appointment_time_field.value.trim() === "") {
                     appointment_time_field.setCustomValidity("Please select time of appointment.");
+                    appointment_time_alt_field.setCustomValidity("Please select time of appointment.");
                 } else {
                     appointment_time_field.setCustomValidity("");
+                    appointment_time_alt_field.setCustomValidity("");
                 }
             });
 
@@ -494,11 +504,11 @@ include '../includes/head.php';
                 }
                 if (!appointment_date_field.checkValidity()) {
                     event.preventDefault();
-                    reason_field.reportValidity();
+                    appointment_date_alt_field.reportValidity();
                 }
                 if (!appointment_time_field.checkValidity()) {
                     event.preventDefault();
-                    reason_field.reportValidity();
+                    appointment_time_alt_field.reportValidity();
                 }
             });
         });
