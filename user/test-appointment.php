@@ -372,6 +372,8 @@ include '../includes/head.php';
                 let start = daysMap[startDay];
                 let end = daysMap[endDay];
 
+                console.log("Disabled Full Dates (Inside Function):", full_date);
+
                 return [
                     function(date) {
                         let day = date.getDay();
