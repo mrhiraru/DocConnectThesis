@@ -454,6 +454,7 @@ include '../includes/head.php';
                         date,
                         doctor_id
                     },
+                    dataType: 'json',
                     success: function(response) {
                         console.log("Raw Response:", response); // Debug JSON response
 
