@@ -433,18 +433,7 @@ include '../includes/head.php';
                     inline: true,
                     minuteIncrement: 60,
                     minTime: startTime,
-                    maxTime: endTime,
-                    onReady: function(selectedDates, dateStr, instance) {
-                        setTimeout(function() {
-                            const allowedTimes = ["09:00", "14:00", "16:30"]; // Allowed times only
-                            document.querySelectorAll(".flatpickr-time .flatpickr-hour, .flatpickr-minute").forEach((elem) => {
-                                if (!allowedTimes.includes(elem.textContent)) {
-                                    elem.style.pointerEvents = "none"; // Disable clicks
-                                    elem.style.opacity = "0.5"; // Make it look disabled
-                                }
-                            });
-                        }, 10);
-                    }
+                    maxTime: endTime
                 });
             }
 
