@@ -436,6 +436,7 @@ include '../includes/head.php';
                     ],
                     onChange: function(selectedDates, dateStr, instance) {
                         available_time(dateStr, doctor_id, startTime, rawendTime);
+                        set_value(null);
                     }
                 });
 
@@ -519,15 +520,24 @@ include '../includes/head.php';
         });
 
         function set_value(selectedRadio) {
-            let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
-            let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
+            if (selectedRadio === null) {
 
-            document.getElementById('appointment_time').value = selectedTime;
+                document.getElementById('appointment_time').value = null;
+                let timecontainer = document.getElementById('time_picker_cont');
 
-            let timecontainer = document.getElementById('time_picker_cont');
+                let appointmentInput = timecontainer.querySelector('.form-control.input');
+                appointmentInput.value = "SELECT TIME";
+            } else {
+                let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
+                let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
 
-            let appointmentInput = timecontainer.querySelector('.form-control.input');
-            appointmentInput.value = formattedTime + " - " + addOneHour(selectedTime);
+                document.getElementById('appointment_time').value = selectedTime;
+
+                let timecontainer = document.getElementById('time_picker_cont');
+
+                let appointmentInput = timecontainer.querySelector('.form-control.input');
+                appointmentInput.value = formattedTime + " - " + addOneHour(selectedTime);
+            }
         }
 
         function addOneHour(time) {
