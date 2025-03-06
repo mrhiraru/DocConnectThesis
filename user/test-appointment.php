@@ -454,6 +454,9 @@ include '../includes/head.php';
                         doctor_id
                     },
                     success: function(response) {
+
+                        let disabled_hours = JSON.parse(response);
+                        
                         reinitializeFlatpickrTime(response);
                     },
                     error: function(xhr, status, error) {
