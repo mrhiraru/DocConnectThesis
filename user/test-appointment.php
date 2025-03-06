@@ -420,7 +420,42 @@ include '../includes/head.php';
                 });
             }
 
+            function reinitializeFlatpickrTime(disabled_hours) {
+                flatpickr("#appointment_time", {
+                    enableTime: true,
+                    noCalendar: true,
+                    dateFormat: "H:i:s",
+                    altInput: true,
+                    altFormat: "h:i K",
+                    inline: true,
+                    minuteIncrement: 60,
+                    minTime: startTime,
+                    maxTime: endTime,
+                    disable: disabled_hours.map(hour => {
+                        return {
+                            from: `${String(hour).padStart(2, "0")}:00:00`,
+                            to: `${String(hour).padStart(2, "0")}:59:59`
+                        };
+                    })
+                });
+            }
 
+            function available_time(date, doctor_id) {
+                $.ajax({
+                    url: '../handlers/appointment.get_date_available_time.php',
+                    type: 'GET',
+                    data: {
+                        date,
+                        doctor_id
+                    },
+                    success: function(response) {
+                        reinitializeFlatpickrTime(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching doctor information:', error);
+                    }
+                });
+            }
 
             new TomSelect("#doctor_id", {
                 sortField: {
@@ -430,42 +465,7 @@ include '../includes/head.php';
             });
         });
 
-        function reinitializeFlatpickrTime(disabled_hours) {
-            flatpickr("#appointment_time", {
-                enableTime: true,
-                noCalendar: true,
-                dateFormat: "H:i:s",
-                altInput: true,
-                altFormat: "h:i K",
-                inline: true,
-                minuteIncrement: 60,
-                minTime: startTime,
-                maxTime: endTime,
-                disable: disabled_hours.map(hour => {
-                    return {
-                        from: `${String(hour).padStart(2, "0")}:00:00`,
-                        to: `${String(hour).padStart(2, "0")}:59:59`
-                    };
-                })
-            });
-        }
 
-        function available_time(date, doctor_id) {
-            $.ajax({
-                url: '../handlers/appointment.get_date_available_time.php',
-                type: 'GET',
-                data: {
-                    date,
-                    doctor_id
-                },
-                success: function(response) {
-                    reinitializeFlatpickrTime(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching doctor information:', error);
-                }
-            });
-        }
 
         function show_doctor_info(account_id) {
 
