@@ -140,7 +140,7 @@ include '../includes/head.php';
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
                         <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.getAttribute('data-accountid'))">
                             <?php
-                            include_once('../handlers/appointment.get_doctors.php');
+                            //include_once('../handlers/appointment.get_doctors.php');
                             ?>
                         </select>
                     </div>
