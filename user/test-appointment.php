@@ -385,7 +385,7 @@ include '../includes/head.php';
                         if (date < threeDaysLater) return true;
 
                         // Disable fully booked dates
-                        if (full_date.includes(formattedDate)) return true;
+                        if (Array.isArray(full_date) && full_date.includes(formattedDate)) return true;
 
                         // Disable days outside the working range
                         if (start <= end) {
