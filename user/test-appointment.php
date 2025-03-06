@@ -358,7 +358,7 @@ include '../includes/head.php';
                 }
             });
 
-            function getDisabledDays(startDay, endDay, full_date) {
+            function getDisabledDays(startDay, endDay) {
                 const daysMap = {
                     "Sunday": 0,
                     "Monday": 1,
@@ -372,8 +372,6 @@ include '../includes/head.php';
                 let start = daysMap[startDay];
                 let end = daysMap[endDay];
 
-                console.log("Disabled Full Dates (Inside Function):", full_date);
-
                 return [
                     function(date) {
                         let day = date.getDay();
@@ -381,14 +379,8 @@ include '../includes/head.php';
                         let threeDaysLater = new Date();
                         threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
 
-                        let dateString = date.toISOString().split('T')[0]; // Convert date to YYYY-MM-DD format
 
                         if (date < threeDaysLater) return true; // Disable next 3 days
-
-                        if (full_date.includes(dateString)) {
-                            console.log("Disabled due to full booking:", dateString);
-                            return true;
-                        } // Disable fully booked dates
 
                         if (start <= end) {
                             return !(day >= start && day <= end);
@@ -405,7 +397,10 @@ include '../includes/head.php';
                     altInput: true,
                     altFormat: "F j, Y",
                     inline: true,
-                    disable: getDisabledDays(startDay, endDay, full_dates),
+                    disable: [
+                        ...full_dates, // Directly disable full dates
+                        ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
+                    ]
                 });
 
                 flatpickr("#appointment_time", {
