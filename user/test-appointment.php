@@ -448,7 +448,7 @@ include '../includes/head.php';
                     endTime: end,
                 },
                 success: function(response) {
-                    $('#available_time').html(respose);
+                    $('#available_time').html(response);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching available time:', error);
