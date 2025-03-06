@@ -133,12 +133,25 @@ class Appointment
         return $data;
     }
 
-    function get_appointments($doctor_id)
+    function get_full_dates($doctor_id, $start, $end)
     {
-        $sql = "SELECT * FROM appointment WHERE appointment_status = 'Incoming' AND doctor_id = :doctor_id;";
+        $sql = "SELECT appointment_date
+        FROM appointment
+        WHERE appointment_status = 'Incoming'
+        AND doctor_id = :doctor_id
+        AND appointment_time >= :start
+        AND appointment_time < :end
+        GROUP BY appointment_date
+        HAVING COUNT(DISTINCT appointment_time) = 
+            (SELECT COUNT(*) 
+             FROM (SELECT DISTINCT appointment_time FROM appointment 
+                   WHERE appointment_time >= :start 
+                   AND appointment_time < :end) AS time_slots);";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);
+        $query->bindParam(':start', $start);
+        $query->bindParam(':end', $end);
 
         $data = null;
         if ($query->execute()) {
