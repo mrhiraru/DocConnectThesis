@@ -1,12 +1,19 @@
 <?php
-header('Content-Type: application/json'); // Ensure correct content type
+header('Content-Type: application/json'); // Set JSON response
 
 require_once('../classes/appointment.class.php');
 $appointment = new Appointment();
 
+// Ensure session is started
+session_start();
+
+// Validate input parameters
+if (!isset($_SESSION['doctor_id'], $_GET['start_wt'], $_GET['end_wt'])) {
+    echo json_encode(["error" => "Missing parameters"]);
+    exit;
+}
+
 $appArray = $appointment->get_appointments($_SESSION['doctor_id']);
-
-
 $fullyBookedDates = [];
 
 // Convert time format to hour integers
@@ -31,5 +38,6 @@ foreach ($appointmentsByDate as $date => $hours) {
     }
 }
 
-return json_encode($fullyBookedDates);
+// Ensure JSON output
+echo json_encode($fullyBookedDates);
 exit;
