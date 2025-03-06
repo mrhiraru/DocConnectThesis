@@ -31,5 +31,5 @@ foreach ($appointmentsByDate as $date => $hours) {
     }
 }
 
-return $fullyBookedDates;
+return json_encode($fullyBookedDates);
 exit;
