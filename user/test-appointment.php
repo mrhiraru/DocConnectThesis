@@ -180,7 +180,7 @@ include '../includes/head.php';
                 <div class="container mt-4">
                     <div class="row g-3">
                         <!-- Date Picker -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" id="date_picker_cont">
                             <label for="appointment_date" class="form-label text-secondary fw-semibold">Select Date</label>
                             <div class="p-2 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT DATE" required readonly>
@@ -195,7 +195,7 @@ include '../includes/head.php';
                         </div>
 
                         <!-- Time Picker -->
-                        <div class="col-lg-6">
+                        <div class="col-lg-6" id="time_picker_cont">
                             <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
                             <div class="p-2 pb-3 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
@@ -444,6 +444,13 @@ include '../includes/head.php';
             let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
 
             document.getElementById('appointment_time').value = selectedTime;
+
+            let timecontainer = document.getElementById('time_picker_cont');
+
+            let appointmentInput = timecontainer.querySelector('.form-control.input');
+            if (appointmentInput._flatpickr) {
+                appointmentInput._flatpickr.setDate(selectedTime, true); // true = trigger onChange event
+            }
         }
 
         function available_time(date, doctor_id, start, end) {
