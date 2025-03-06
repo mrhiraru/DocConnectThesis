@@ -616,20 +616,19 @@ class Account
         $totalDoctors = $queryDoctors->fetch(PDO::FETCH_ASSOC)['total'];
 
         // Fetch patient names, doctor names, and appointment dates
-        $sqlAppointments = "SELECT 
-    a2.firstname AS patient_firstname, 
-    a2.lastname AS patient_lastname, 
-    a1.firstname AS doctor_firstname, 
-    a1.lastname AS doctor_lastname, 
-    ap.appointment_date,
-    ap.appointment_time
-FROM appointment ap
-LEFT JOIN doctor_info d ON ap.doctor_id = d.doctor_id
-LEFT JOIN account a1 ON d.account_id = a1.account_id
-LEFT JOIN patient_info p ON ap.patient_id = p.patient_id
-LEFT JOIN account a2 ON p.account_id = a2.account_id
-WHERE DATE(ap.appointment_date) = CURDATE()
-ORDER BY ap.appointment_date DESC, ap.appointment_time ASC";
+        $sqlAppointments = "SELECT a2.firstname AS patient_firstname, 
+                                   a2.lastname AS patient_lastname, 
+                                   a1.firstname AS doctor_firstname, 
+                                   a1.lastname AS doctor_lastname, 
+                                   ap.appointment_date,
+                                   ap.appointment_time
+                            FROM appointment ap
+                            LEFT JOIN doctor_info d ON ap.doctor_id = d.doctor_id
+                            LEFT JOIN account a1 ON d.account_id = a1.account_id
+                            LEFT JOIN patient_info p ON ap.patient_id = p.patient_id
+                            LEFT JOIN account a2 ON p.account_id = a2.account_id
+                            WHERE DATE(ap.appointment_date) = CURDATE()
+                            ORDER BY ap.appointment_date DESC, ap.appointment_time ASC";
 
         $queryAppointments = $this->db->connect()->prepare($sqlAppointments);
         $queryAppointments->execute();
@@ -640,9 +639,11 @@ ORDER BY ap.appointment_date DESC, ap.appointment_time ASC";
             'totalActiveUsers' => $activeUsers,
             'totalPatients' => $totalPatients,
             'totalDoctors' => $totalDoctors,
-            'appointments' => $appointments // Add the appointments data to the return array
+            'appointments' => $appointments
         ];
     }
+
+    
 
 
     // ---APPOINMENTS FUNCTIONS START---
