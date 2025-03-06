@@ -329,6 +329,7 @@ include '../includes/head.php';
             var endTime = "00:00:00";
             var request_btn = document.getElementById('request');
             var full_dates = [];
+            var doctor_id = '<?= $_SESSION['doctor_id'] ?>';
 
             reinitializeFlatpickr();
 
@@ -402,7 +403,7 @@ include '../includes/head.php';
                         ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
                     ],
                     onChange: function(selectedDates, dateStr, instance) {
-                        console.log("Selected Date:", dateStr);
+                        available_time(dateStr, doctor_id);
                     }
                 });
 
@@ -419,6 +420,8 @@ include '../includes/head.php';
                 });
             }
 
+
+
             new TomSelect("#doctor_id", {
                 sortField: {
                     field: "text",
@@ -426,6 +429,43 @@ include '../includes/head.php';
                 }
             });
         });
+
+        function reinitializeFlatpickrTime(disabled_hours) {
+            flatpickr("#appointment_time", {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "H:i:s",
+                altInput: true,
+                altFormat: "h:i K",
+                inline: true,
+                minuteIncrement: 60,
+                minTime: startTime,
+                maxTime: endTime,
+                disable: disabled_hours.map(hour => {
+                    return {
+                        from: `${String(hour).padStart(2, "0")}:00:00`,
+                        to: `${String(hour).padStart(2, "0")}:59:59`
+                    };
+                })
+            });
+        }
+
+        function available_time(date, doctor_id) {
+            $.ajax({
+                url: '../handlers/appointment.get_date_available_time.php',
+                type: 'GET',
+                data: {
+                    date,
+                    doctor_id
+                },
+                success: function(response) {
+                    reinitializeFlatpickrTime(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching doctor information:', error);
+                }
+            });
+        }
 
         function show_doctor_info(account_id) {
 
