@@ -323,198 +323,204 @@ include '../includes/head.php';
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var startDay;
-            var endDay;
-            var startTime = "00:00:00";
-            var endTime = "00:00:00";
-            var request_btn = document.getElementById('request');
-            var full_dates = [];
-            var doctor_id = '<?= $_SESSION['doctor_id'] ?>';
-
-            reinitializeFlatpickr();
-
-            document.getElementById("doctor_id").addEventListener("change", function() {
-                if (!this.value) { // Check if no doctor is selected
-
-                    startDay = "";
-                    endDay = "";
-                    startTime = "00:00:00";
-                    endTime = "00:00:00";
-                    full_dates = [];
-
-                    document.getElementById('appointment_time').value = '';
-                    reinitializeFlatpickr();
-                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
-                } else {
-                    let selectedOption = this.options[this.selectedIndex];
-
-                    startDay = selectedOption.getAttribute("data-startday");
-                    endDay = selectedOption.getAttribute("data-endday");
-                    startTime = selectedOption.getAttribute("data-starttime");
-                    endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
-                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+                    var startDay;
+                    var endDay;
+                    var startTime = "00:00:00";
+                    var endTime = "00:00:00";
+                    var request_btn = document.getElementById('request');
+                    var full_dates = [];
+                    var doctor_id = '<?= $_SESSION['doctor_id'] ?>';
 
                     reinitializeFlatpickr();
-                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
-                }
-            });
 
-            function getDisabledDays(startDay, endDay) {
-                const daysMap = {
-                    "Sunday": 0,
-                    "Monday": 1,
-                    "Tuesday": 2,
-                    "Wednesday": 3,
-                    "Thursday": 4,
-                    "Friday": 5,
-                    "Saturday": 6
-                };
+                    document.getElementById("doctor_id").addEventListener("change", function() {
+                        if (!this.value) { // Check if no doctor is selected
 
-                let start = daysMap[startDay];
-                let end = daysMap[endDay];
+                            startDay = "";
+                            endDay = "";
+                            startTime = "00:00:00";
+                            endTime = "00:00:00";
+                            full_dates = [];
 
-                return [
-                    function(date) {
-                        let day = date.getDay();
-                        let today = new Date();
-                        let threeDaysLater = new Date();
-                        threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
-
-
-                        if (date < threeDaysLater) return true; // Disable next 3 days
-
-                        if (start <= end) {
-                            return !(day >= start && day <= end);
+                            document.getElementById('appointment_time').value = '';
+                            reinitializeFlatpickr();
+                            request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
                         } else {
-                            return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
+                            let selectedOption = this.options[this.selectedIndex];
+
+                            startDay = selectedOption.getAttribute("data-startday");
+                            endDay = selectedOption.getAttribute("data-endday");
+                            startTime = selectedOption.getAttribute("data-starttime");
+                            endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                            full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+
+                            reinitializeFlatpickr();
+                            request_btn.removeAttribute('disabled'); // Ensure it's enabled
                         }
-                    }
-                ]; // Wrapped inside an array
-            }
+                    });
 
-            function reinitializeFlatpickr() {
-                flatpickr("#appointment_date", {
-                    dateFormat: "Y-m-d",
-                    altInput: true,
-                    altFormat: "F j, Y",
-                    inline: true,
-                    disable: [
-                        ...full_dates, // Directly disable full dates
-                        ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
-                    ],
-                    onChange: function(selectedDates, dateStr, instance) {
-                        available_time(dateStr, doctor_id);
-                    }
-                });
-
-                flatpickr("#appointment_time", {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i:s",
-                    altInput: true,
-                    altFormat: "h:i K",
-                    inline: true,
-                    minuteIncrement: 60,
-                    minTime: startTime,
-                    maxTime: endTime,
-                });
-            }
-
-            function reinitializeFlatpickrTime(disabled_hours) {
-
-                if (!Array.isArray(disabled_hours)) {
-                    console.error("disabled_hours is not an array:", disabled_hours);
-                    return;
-                }
-                console.error("Found:", disabled_hours);
-                flatpickr("#appointment_time", {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i:s",
-                    altInput: true,
-                    altFormat: "h:i K",
-                    inline: true,
-                    minuteIncrement: 60,
-                    minTime: startTime,
-                    maxTime: endTime,
-                    disable: disabled_hours.map(hour => {
-                        return {
-                            from: `${String(hour).padStart(2, "0")}:00:00`,
-                            to: `${String(hour).padStart(2, "0")}:59:59`
+                    function getDisabledDays(startDay, endDay) {
+                        const daysMap = {
+                            "Sunday": 0,
+                            "Monday": 1,
+                            "Tuesday": 2,
+                            "Wednesday": 3,
+                            "Thursday": 4,
+                            "Friday": 5,
+                            "Saturday": 6
                         };
-                    })
-                });
-            }
 
-            function available_time(date, doctor_id) {
-                $.ajax({
-                    url: '../handlers/appointment.get_date_available_time.php',
-                    type: 'GET',
-                    data: {
-                        date,
-                        doctor_id
-                    },
-                    success: function(response) {
-                        console.log("Raw Response:", response); // Debug JSON response
+                        let start = daysMap[startDay];
+                        let end = daysMap[endDay];
 
-                        let disabled_hours = [];
-                        try {
-                            disabled_hours = JSON.parse(response);
-                        } catch (error) {
-                            console.error("JSON parsing error:", error, "Response:", response);
-                        }
+                        return [
+                            function(date) {
+                                let day = date.getDay();
+                                let today = new Date();
+                                let threeDaysLater = new Date();
+                                threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
 
-                        console.log("Parsed disabled_hours:", disabled_hours); // ✅ Check if it's correct
+
+                                if (date < threeDaysLater) return true; // Disable next 3 days
+
+                                if (start <= end) {
+                                    return !(day >= start && day <= end);
+                                } else {
+                                    return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
+                                }
+                            }
+                        ]; // Wrapped inside an array
+                    }
+
+                    function reinitializeFlatpickr() {
+                        flatpickr("#appointment_date", {
+                            dateFormat: "Y-m-d",
+                            altInput: true,
+                            altFormat: "F j, Y",
+                            inline: true,
+                            disable: [
+                                ...full_dates, // Directly disable full dates
+                                ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
+                            ],
+                            onChange: function(selectedDates, dateStr, instance) {
+                                available_time(dateStr, doctor_id);
+                            }
+                        });
+
+                        flatpickr("#appointment_time", {
+                            enableTime: true,
+                            noCalendar: true,
+                            dateFormat: "H:i:s",
+                            altInput: true,
+                            altFormat: "h:i K",
+                            inline: true,
+                            minuteIncrement: 60,
+                            minTime: startTime,
+                            maxTime: endTime,
+                        });
+                    }
+
+                    function reinitializeFlatpickrTime(disabled_hours) {
 
                         if (!Array.isArray(disabled_hours)) {
-                            console.error("Invalid data type for disabled_hours:", disabled_hours);
-                            disabled_hours = [];
+                            console.error("disabled_hours is not an array:", disabled_hours);
+                            return;
+                        }
+                        console.error("Found:", disabled_hours);
+                        flatpickr("#appointment_time", {
+                            enableTime: true,
+                            noCalendar: true,
+                            dateFormat: "H:i:s",
+                            altInput: true,
+                            altFormat: "h:i K",
+                            inline: true,
+                            minuteIncrement: 60,
+                            minTime: startTime,
+                            maxTime: endTime,
+                            disable: disabled_hours.map(hour => {
+                                return {
+                                    from: `${String(hour).padStart(2, "0")}:00:00`,
+                                    to: `${String(hour).padStart(2, "0")}:59:59`
+                                };
+                            })
+                        });
+                    }
+
+                    function available_time(date, doctor_id) {
+                        $.ajax({
+                                url: '../handlers/appointment.get_date_available_time.php',
+                                type: 'GET',
+                                data: {
+                                    date,
+                                    doctor_id
+                                },
+                                success: function(response) {
+                                    console.log("Raw Response:", response); // Debug
+
+                                    if (!response.trim()) {
+                                        console.error("Empty response received");
+                                        reinitializeFlatpickrTime([]); // Prevent error
+                                        return;
+                                    }
+
+                                    let disabled_hours;
+                                    try {
+                                        disabled_hours = JSON.parse(response);
+                                    } catch (error) {
+                                        console.error("JSON parsing error:", error, "Response:", response);
+                                        disabled_hours = [];
+                                    }
+
+                                    console.log("Parsed disabled_hours:", disabled_hours);
+
+                                    if (!Array.isArray(disabled_hours)) {
+                                        console.error("Invalid data type for disabled_hours:", disabled_hours);
+                                        disabled_hours = [];
+                                    }
+
+                                    reinitializeFlatpickrTime(disabled_hours);
+                                    error: function(xhr, status, error) {
+                                        console.error('Error fetching doctor information:', error);
+                                    }
+                                });
                         }
 
-                        reinitializeFlatpickrTime(disabled_hours);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching doctor information:', error);
-                    }
-                });
-            }
+                        new TomSelect("#doctor_id", {
+                            sortField: {
+                                field: "text",
+                                direction: "asc"
+                            }
+                        });
+                    });
 
-            new TomSelect("#doctor_id", {
-                sortField: {
-                    field: "text",
-                    direction: "asc"
+
+
+                function show_doctor_info(account_id) {
+
+                    if (account_id) {
+                        $.ajax({
+                            url: '../handlers/appointment.show_doctor_info.php',
+                            type: 'GET',
+                            data: {
+                                account_id: account_id
+                            },
+                            success: function(response) {
+                                $('#doctor_info').html(response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error fetching doctor information:', error);
+                            }
+                        });
+                    } else {
+                        $('#doctor_info').html("<p class='text-center text-muted m-0 p-0'>No doctor selected.</p>");
+                    }
                 }
-            });
-        });
 
-
-
-        function show_doctor_info(account_id) {
-
-            if (account_id) {
-                $.ajax({
-                    url: '../handlers/appointment.show_doctor_info.php',
-                    type: 'GET',
-                    data: {
-                        account_id: account_id
-                    },
-                    success: function(response) {
-                        $('#doctor_info').html(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching doctor information:', error);
-                    }
-                });
-            } else {
-                $('#doctor_info').html("<p class='text-center text-muted m-0 p-0'>No doctor selected.</p>");
-            }
-        }
-
-        function subtractOneHour(time) {
-            let [hours, minutes] = time.split(":").map(Number);
-            hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
-            return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
-        }
+                function subtractOneHour(time) {
+                    let [hours, minutes] = time.split(":").map(Number);
+                    hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
+                    return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+                }
     </script>
 </body>
 
