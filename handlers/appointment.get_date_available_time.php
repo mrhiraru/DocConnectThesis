@@ -37,5 +37,5 @@ $availableTime = getAvailableTimes($startTime, $endTime, $takenHours, 60);
 
 foreach ($availableTime as $time) {
 ?>
-    <p class="text-muted"><?= date("h:i A", strtotime($time)) ?> <small>(<?= $time ?>)</small></p>
+    <p class="text-muted"><?= date("h:i A", strtotime($time)) . " - " . date("h:i A", strtotime($time . ' +1 hour')) ?></p>
 <?php } ?>
