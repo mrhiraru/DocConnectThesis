@@ -385,7 +385,10 @@ include '../includes/head.php';
 
                         if (date < threeDaysLater) return true; // Disable next 3 days
 
-                        if (full_date.includes(dateString)) return true; // Disable fully booked dates
+                        if (full_date.includes(dateString)) {
+                            console.log("Disabled due to full booking:", dateString);
+                            return true;
+                        } // Disable fully booked dates
 
                         if (start <= end) {
                             return !(day >= start && day <= end);
