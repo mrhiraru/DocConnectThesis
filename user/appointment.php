@@ -150,7 +150,7 @@ include '../includes/head.php';
                 <hr>
                 <div class="mb-3">
                     <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
-                    <select id="purpose" name="purpose" class="form-select bg-light border border-dark">
+                    <select id="purpose" name="purpose" class="form-select bg-light border border-secondary">
                         <option value="" disabled <?= !isset($_POST['purpose']) ? 'selected' : '' ?>>Select a purpose</option>
                         <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
                         <option value="Follow-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
@@ -168,7 +168,7 @@ include '../includes/head.php';
                 </div>
                 <div class="mb-3">
                     <label for="reason" class="form-label text-black-50">Reason:</label>
-                    <textarea class="form-control bg-light fs-6 mb-3 border border-dark" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."></textarea>
+                    <textarea class="form-control bg-light fs-6 mb-3 border border-secondary" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."></textarea>
                     <?php
                     if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
                     ?>
