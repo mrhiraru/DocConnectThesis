@@ -327,6 +327,7 @@ include '../includes/head.php';
             var endDay;
             var startTime = "00:00:00";
             var endTime = "00:00:00";
+            var full_dates = [];
             var request_btn = document.getElementById('request');
 
             reinitializeFlatpickr();
@@ -338,6 +339,7 @@ include '../includes/head.php';
                     endDay = "";
                     startTime = "00:00:00";
                     endTime = "00:00:00";
+                    full_dates = [];
 
                     document.getElementById('appointment_time').value = '';
                     reinitializeFlatpickr();
@@ -350,12 +352,15 @@ include '../includes/head.php';
                     startTime = selectedOption.getAttribute("data-starttime");
                     endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
 
-                    reinitializeFlatpickr();
-                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
+                    get_full_dates(startTime, selectedOption.getAttribute("data-endtime"), function(updatedFullDates) {
+                        full_dates = updatedFullDates;
+                        reinitializeFlatpickr();
+                        request_btn.removeAttribute('disabled'); // Ensure it's enabled
+                    });
                 }
             });
 
-            function getDisabledDays(startDay, endDay) {
+            function getDisabledDays(startDay, endDay, full_dates) {
                 const daysMap = {
                     "Sunday": 0,
                     "Monday": 1,
@@ -365,6 +370,7 @@ include '../includes/head.php';
                     "Friday": 5,
                     "Saturday": 6
                 };
+
 
                 let start = daysMap[startDay];
                 let end = daysMap[endDay];
@@ -393,7 +399,7 @@ include '../includes/head.php';
                     altInput: true,
                     altFormat: "F j, Y",
                     inline: true,
-                    disable: getDisabledDays(startDay, endDay),
+                    disable: getDisabledDays(startDay, endDay, full_dates),
                 });
 
                 flatpickr("#appointment_time", {
@@ -416,6 +422,24 @@ include '../includes/head.php';
                 }
             });
         });
+
+        function get_full_dates(start_wt, end_wt, callback) {
+            $.ajax({
+                url: '../handlers/appointment.get_full_dates.php',
+                type: 'GET',
+                data: {
+                    start_wt: start_wt,
+                    end_wt: end_wt,
+                },
+                success: function(response) {
+                    full_dates = response;
+                    callback(full_dates);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching doctor information:', error);
+                }
+            });
+        }
 
         function show_doctor_info(account_id) {
 

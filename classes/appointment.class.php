@@ -133,6 +133,20 @@ class Appointment
         return $data;
     }
 
+    function get_appointments($doctor_id)
+    {
+        $sql = "SELECT * FROM appointment WHERE appointment_status = 'Incoming' AND doctor_id = :doctor_id;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':doctor_id', $doctor_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function check_availability($doctor_id, $appointment_date, $appointment_time, $appointment_id)
     {
         $sql = "SELECT ap.* FROM appointment ap
