@@ -455,17 +455,16 @@ include '../includes/head.php';
                         doctor_id
                     },
                     success: function(response) {
-                        console.log("Raw Response:", response); // Debugging
+                        console.log("Raw Response:", response); // Debug JSON response
 
-                        let disabled_hours;
+                        let disabled_hours = [];
                         try {
                             disabled_hours = JSON.parse(response);
                         } catch (error) {
                             console.error("JSON parsing error:", error, "Response:", response);
-                            disabled_hours = []; // Ensure it's an array
                         }
 
-                        console.log("Parsed disabled_hours:", disabled_hours);
+                        console.log("Parsed disabled_hours:", disabled_hours); // ✅ Check if it's correct
 
                         if (!Array.isArray(disabled_hours)) {
                             console.error("Invalid data type for disabled_hours:", disabled_hours);
