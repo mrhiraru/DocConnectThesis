@@ -202,7 +202,7 @@ class Account
     {
         $sql = "SELECT a.*, d.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), 
         ' ', a.lastname) AS doctor_name FROM account a INNER JOIN doctor_info d ON a.account_id = d.account_id WHERE a.account_id = :account_id AND a.user_role = 1 AND d.is_deleted = 0";
-        
+
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);
 
@@ -643,15 +643,17 @@ class Account
         ];
     }
 
-    function fetch_users_per_campus_per_year() {
-        $sql = "SELECT COALESCE(c.campus_name, 'Unknown') AS campus_name, 
+    function fetch_users_per_campus_per_year()
+    {
+        $sql = "SELECT c.campus_name, 
                        YEAR(a.is_created) AS year_created, 
                        COUNT(a.account_id) AS total_users
                 FROM account a
                 LEFT JOIN campus c ON a.campus_id = c.campus_id
-                GROUP BY campus_name, year_created
+                WHERE c.campus_name IS NOT NULL AND c.campus_name != 'Unknown'
+                GROUP BY c.campus_name, year_created
                 ORDER BY year_created ASC, total_users DESC";
-    
+
         try {
             $query = $this->db->connect()->prepare($sql);
             $query->execute();
@@ -661,7 +663,7 @@ class Account
             echo "Database Error: " . $e->getMessage();
             return [];
         }
-    }      
+    }
     // ---DASHBOARD FUNCTION END---
 
     // ---APPOINMENTS FUNCTIONS START---

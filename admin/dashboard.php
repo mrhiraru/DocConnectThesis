@@ -159,16 +159,21 @@ function getCurrentPage()
       <div class="row mx-2 g-3">
         <div class="col-12 col-lg-4">
           <div class="card h-100">
-            <div class="card-header fs-4 text-center">
-              2
+            <div class="card-header fs-4 text-center">Campus Summary</div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Campuses: <strong id="totalCampuses"></strong></li>
+                <li class="list-group-item">Total Users: <strong id="totalUsers"></strong></li>
+                <li class="list-group-item">Top Campus: <strong id="topCampus"></strong></li>
+                <li class="list-group-item">Year Range: <strong id="selectedYearRange"></strong></li>
+              </ul>
             </div>
           </div>
         </div>
+
         <div class="col-12 col-lg-8">
           <div class="card h-100">
-            <div class="card-header">
-              <h4 class="text-center">Appointment Management</h4>
-            </div>
+            <div class="card-header fs-4 text-center">Campus Insights</div>
             <div class="card-body">
               <div class="p-3" id="nav-tabContent">
                 <select id="yearSelect" class="form-select form-select-sm w-25"></select>
@@ -312,6 +317,43 @@ function getCurrentPage()
         updateChart(this.value);
       });
     });
+
+    // ----Campus Summary----
+    var campuses = new Set();
+    var totalUsers = 0;
+    var campusUserCounts = {};
+    var allYears = new Set();
+
+    usersPerCampusPerYear.forEach(item => {
+      let campus = item.campus_name;
+      let users = parseInt(item.total_users);
+      let year = parseInt(item.year_created);
+
+      campuses.add(campus);
+      totalUsers += users;
+      allYears.add(year);
+
+      if (!campusUserCounts[campus]) {
+        campusUserCounts[campus] = 0;
+      }
+      campusUserCounts[campus] += users;
+    });
+
+    // Get total campuses
+    var totalCampuses = campuses.size;
+
+    // Get top campus
+    var topCampus = Object.keys(campusUserCounts).reduce((a, b) => campusUserCounts[a] > campusUserCounts[b] ? a : b, "N/A");
+
+    // Get year range
+    var minYear = Math.min(...allYears);
+    var maxYear = Math.max(...allYears);
+    var yearRange = minYear + " - " + maxYear;
+
+    document.getElementById("totalCampuses").textContent = totalCampuses;
+    document.getElementById("totalUsers").textContent = totalUsers;
+    document.getElementById("topCampus").textContent = topCampus;
+    document.getElementById("selectedYearRange").textContent = yearRange;
   </script>
 
 
