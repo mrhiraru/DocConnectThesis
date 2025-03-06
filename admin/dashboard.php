@@ -21,6 +21,9 @@ $cancelledAppointments = $appointmentStats['cancelledAppointments'];
 $pendingAppointments = $appointmentStats['pendingAppointments'];
 $avgDuration = $appointmentStats['avgDuration'];
 
+$usersPerCampusPerYear = $account->fetch_users_per_campus_per_year();
+
+
 ?>
 
 <html lang="en">
@@ -159,30 +162,29 @@ function getCurrentPage()
         <div class="col-12 col-lg-8">
           <div class="card h-100">
             <div class="card-header">
-              <h4 class="text-center">Appoint Management</h4>
+              <h4 class="text-center">Appointment Management</h4>
             </div>
-            <div class="card-cody">
-          
+            <div class="card-body">
               <div class="p-3" id="nav-tabContent">
-                <select id="yearSelect" class="form-select form-select-sm w-25" aria-label="form-select-sm example">
-                  <option value="1">2021-2022</option>
-                  <option value="2">2022-2023</option>
-                  <option value="3">2023-2024</option>
+                <select id="yearSelect" class="form-select form-select-sm w-25">
+                  <option value="2020-2025">2020-2025</option>
+                  <option value="2026-2030">2026-2030</option>
+                  <option value="2031-2035">2031-2035</option>
                 </select>
-  
-                <div class="tab-pane fade active show" id="nav-campus" role="tabpanel" aria-labelledby="nav-campus-tab">
+                <div class="tab-pane fade active show">
                   <canvas id="campusChart" class="chart" role="img"></canvas>
                 </div>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     </div>
 
   </section>
-
-  <script src="./js/analytics-lineChart.js"></script>
+  <!-- 
+  <script src="./js/analytics-lineChart.js"></script> -->
 
   <script>
     var totalAppointments = <?php echo json_encode($totalAppointments); ?>;
@@ -206,6 +208,85 @@ function getCurrentPage()
       }
     });
   </script>
+
+  <script>
+    var usersPerCampusPerYear = <?php echo json_encode($usersPerCampusPerYear); ?>;
+
+    document.addEventListener("DOMContentLoaded", function() {
+      var usersPerCampusPerYear = <?php echo json_encode($usersPerCampusPerYear); ?>;
+
+      // Extract unique years and campuses
+      var allYears = [...new Set(usersPerCampusPerYear.map(item => item.year_created))].sort((a, b) => a - b);
+      var campuses = [...new Set(usersPerCampusPerYear.map(item => item.campus_name))];
+
+      var colorPalette = [
+        "#ff5733", "#2eb346", "#3357FF", "#FF33A6", "#A633FF",
+        "#33FFF6", "#FFC733", "#FF3380", "#4DFF33", "#3380FF"
+      ];
+
+      var ctx = document.getElementById("campusChart").getContext("2d");
+      var campusChart;
+
+      function getFilteredYears(selectedRange) {
+        let [startYear, endYear] = selectedRange.split("-").map(Number);
+        return allYears.filter(year => year >= startYear && year <= endYear);
+      }
+
+      function updateChart(selectedRange) {
+        let years = getFilteredYears(selectedRange);
+
+        var datasets = campuses.map((campus, index) => {
+          let dataPoints = years.map(year => {
+            let record = usersPerCampusPerYear.find(item => item.campus_name === campus && item.year_created == year);
+            return record ? record.total_users : 0;
+          });
+
+          return {
+            label: campus,
+            data: dataPoints,
+            borderWidth: 2,
+            fill: false,
+            borderColor: colorPalette[index % colorPalette.length],
+            backgroundColor: colorPalette[index % colorPalette.length] + "80",
+            tension: 0.4
+          };
+        });
+
+        if (campusChart) {
+          campusChart.destroy();
+        }
+
+        campusChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: years,
+            datasets: datasets
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: "top"
+              }
+            },
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      }
+
+      document.getElementById("yearSelect").addEventListener("change", function() {
+        updateChart(this.value);
+      });
+
+      // Initialize chart with the first option
+      updateChart(document.getElementById("yearSelect").value);
+    });
+  </script>
+
 
 </body>
 

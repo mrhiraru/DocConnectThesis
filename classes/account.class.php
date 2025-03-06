@@ -643,6 +643,25 @@ class Account
         ];
     }
 
+    function fetch_users_per_campus_per_year() {
+        $sql = "SELECT COALESCE(c.campus_name, 'Unknown') AS campus_name, 
+                       YEAR(a.is_created) AS year_created, 
+                       COUNT(a.account_id) AS total_users
+                FROM account a
+                LEFT JOIN campus c ON a.campus_id = c.campus_id
+                GROUP BY campus_name, year_created
+                ORDER BY year_created ASC, total_users DESC";
+    
+        try {
+            $query = $this->db->connect()->prepare($sql);
+            $query->execute();
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Database Error: " . $e->getMessage();
+            return [];
+        }
+    }    
     
 
 
