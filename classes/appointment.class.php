@@ -173,9 +173,12 @@ class Appointment
         $query->bindParam(':doctor_id', $doctor_id);
         $query->bindParam(':appointment_date', $appointment_date);
 
-        $data = null;
+        $data = [];
         if ($query->execute()) {
-            $data = $query->fetchAll();
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($results as $row) {
+                $data[] = $row['appointment_time']; // Extract just the time
+            }
         }
         return $data;
     }

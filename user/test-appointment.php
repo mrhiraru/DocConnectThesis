@@ -501,7 +501,6 @@ include '../includes/head.php';
                     },
                     success: function(response) {
                         $('#doctor_info').html(response);
-
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching doctor information:', error);
