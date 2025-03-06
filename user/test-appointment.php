@@ -400,6 +400,15 @@ include '../includes/head.php';
                 ]; // Wrapped inside an array
             }
 
+            $('input[name="time"]').change(function() {
+                if ($(this).is(':checked')) {
+                    let selectedTime = $(this).val(); // HH:MM:SS format
+                    let formattedTime = $(this).next('label').text().split(" - ")[0]; // Extract AM/PM format
+
+                    $('#appointment_time').val(selectedTime).attr("alt", formattedTime);
+                }
+            });
+
             function reinitializeFlatpickr() {
                 flatpickr("#appointment_date", {
                     dateFormat: "Y-m-d",
