@@ -328,6 +328,7 @@ include '../includes/head.php';
             var startTime = "00:00:00";
             var endTime = "00:00:00";
             var request_btn = document.getElementById('request');
+            var full_dates = [];
 
             reinitializeFlatpickr();
 
@@ -338,6 +339,7 @@ include '../includes/head.php';
                     endDay = "";
                     startTime = "00:00:00";
                     endTime = "00:00:00";
+                    full_dates = [];
 
                     document.getElementById('appointment_time').value = '';
                     reinitializeFlatpickr();
@@ -349,13 +351,14 @@ include '../includes/head.php';
                     endDay = selectedOption.getAttribute("data-endday");
                     startTime = selectedOption.getAttribute("data-starttime");
                     endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
 
                     reinitializeFlatpickr();
                     request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
 
-            function getDisabledDays(startDay, endDay) {
+            function getDisabledDays(startDay, endDay, full_date) {
                 const daysMap = {
                     "Sunday": 0,
                     "Monday": 1,
@@ -376,8 +379,15 @@ include '../includes/head.php';
                         let threeDaysLater = new Date();
                         threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
 
-                        if (date < threeDaysLater) return true; // Disable next 3 days
+                        let formattedDate = date.toISOString().split('T')[0]; // Convert date to YYYY-MM-DD
 
+                        // Disable if it's within the next 3 days
+                        if (date < threeDaysLater) return true;
+
+                        // Disable fully booked dates
+                        if (full_date.includes(formattedDate)) return true;
+
+                        // Disable days outside the working range
                         if (start <= end) {
                             return !(day >= start && day <= end);
                         } else {
@@ -416,24 +426,6 @@ include '../includes/head.php';
                 }
             });
         });
-
-        function get_full_dates(start_wt, end_wt) {
-            $.ajax({
-                url: '../handlers/appointment.get_full_dates.php',
-                type: 'GET',
-                data: {
-                    start_wt,
-                    end_wt
-                },
-                success: function(response) {
-                    $('#doctor_info').html(response);
-
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching doctor information:', error);
-                }
-            });
-        }
 
         function show_doctor_info(account_id) {
 
