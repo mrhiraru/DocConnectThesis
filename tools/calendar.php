@@ -68,21 +68,21 @@
      */
     const authentication_checkbox = document.getElementById('authenticate');
 
-    authentication_checkbox.addEventListener('click', async function(event) {
-        event.preventDefault(); // Stop the checkbox from checking immediately
+    // authentication_checkbox.addEventListener('click', async function(event) {
+    //     event.preventDefault(); // Stop the checkbox from checking immediately
 
-        try {
-            const isVerified = await handleAuthClick();
-            if (isVerified) {
-                authentication_checkbox.checked = true; // Only check if verification is successful
-            } else {
-                authentication_checkbox.checked = false; // Make sure it's unchecked if verification fails
-            }
-        } catch (error) {
-            console.error('Authentication/Verification failed:', error);
-            authentication_checkbox.checked = false; // Uncheck on error
-        }
-    });
+    //     try {
+    //         const isVerified = await handleAuthClick();
+    //         if (isVerified) {
+    //             authentication_checkbox.checked = true; // Only check if verification is successful
+    //         } else {
+    //             authentication_checkbox.checked = false; // Make sure it's unchecked if verification fails
+    //         }
+    //     } catch (error) {
+    //         console.error('Authentication/Verification failed:', error);
+    //         authentication_checkbox.checked = false; // Uncheck on error
+    //     }
+    // });
 
     async function handleAuthClick() {
         const tokenData = await fetch('../handlers/get_token.php');
@@ -153,7 +153,7 @@
             return false;
         } else {
             console.log(`Authenticated as ${userInfo.email}`);
-
+            //show new modal for confirm.
             return true;
         }
     }
@@ -316,6 +316,9 @@
             let submit_button = event.submitter.name;
 
             if (submit_button == "confirm") {
+
+                handleAuthClick();
+
                 const formData = {
                     appointment_id: <?= $record['appointment_id'] ?>,
                     confirm: $('#confirm').val(),
