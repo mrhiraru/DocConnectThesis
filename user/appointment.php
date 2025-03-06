@@ -455,7 +455,7 @@ include '../includes/head.php';
             });
 
             reason_field.addEventListener("change", function() {
-                if (reason_field.value.trim() === "") {
+                if (reason_field.innerText.trim() === "") {
                     reason_field.setCustomValidity("Please provide a reason for the appointment.");
                 } else {
                     reason_field.setCustomValidity("");
