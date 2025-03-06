@@ -541,12 +541,12 @@ include '../includes/head.php';
                 isValid = false;
             }
 
-            // If any field is invalid, prevent form submission
-            if (!isValid) {
-                event.preventDefault();
+            // If all fields are valid, submit the form
+            if (isValid) {
+                document.getElementById("appointmentForm").submit(); // Submit the form
             }
 
-            // Return true if all fields are valid
+            // If validation fails, prevent form submission
             return isValid;
         }
     </script>
