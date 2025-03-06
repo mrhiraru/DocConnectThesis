@@ -27,7 +27,7 @@ function getAvailableTimes($startTime, $endTime, $takenHours, $interval = 30)
     return $availableTimes;
 }
 
-$availableTime = getAvailableTimes($startTime, $endTime, $takenHours);
+$availableTime = getAvailableTimes($startTime, $endTime, $takenHours, 60);
 
 
 foreach ($availableTime as $time) {
