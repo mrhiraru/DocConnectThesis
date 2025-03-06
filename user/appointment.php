@@ -218,7 +218,7 @@ include '../includes/head.php';
 
                 <hr class="my-2">
                 <div class="w-100 d-flex justify-content-end">
-                    <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2" onclick="validateForm(event)" disabled>Request Appointment</button>
+                    <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2" disabled>Request Appointment</button>
                 </div>
             </div>
         </section>
@@ -467,7 +467,7 @@ include '../includes/head.php';
             });
 
             reason_field.addEventListener("change", function() {
-                if (reason_field.innerText.trim() === "") {
+                if (reason_field.value.trim() === "") {
                     reason_field.setCustomValidity("Please provide a reason for the appointment.");
                 } else {
                     reason_field.setCustomValidity("");
