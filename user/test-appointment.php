@@ -443,8 +443,7 @@ include '../includes/head.php';
             let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
             let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
 
-            document.querySelector('.form-control.input').value = selectedTime;
-            document.querySelector('.form-control.input').setAttribute("alt", formattedTime);
+            $('#appointment_time').value = selectedTime;
         }
 
         function available_time(date, doctor_id, start, end) {
