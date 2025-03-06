@@ -402,10 +402,10 @@ include '../includes/head.php';
 
             $('input[name="time"]').change(function() {
                 if ($(this).is(':checked')) {
-                    let selectedTime = $(this).val(); // HH:MM:SS format
+                    let selectedTime = $(this).val(); // Get time in HH:MM:SS format
                     let formattedTime = $(this).next('label').text().split(" - ")[0]; // Extract AM/PM format
 
-                    $('#appointment_time').val(selectedTime).attr("alt", formattedTime);
+                    $('.form-control.input').val(selectedTime).attr("alt", formattedTime);
                 }
             });
 
