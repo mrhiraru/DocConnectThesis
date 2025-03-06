@@ -426,7 +426,7 @@ include '../includes/head.php';
                     console.error("disabled_hours is not an array:", disabled_hours);
                     return;
                 }
-                console.error("Found:", disabled_hours);
+
                 flatpickr("#appointment_time", {
                     enableTime: true,
                     noCalendar: true,
@@ -456,7 +456,7 @@ include '../includes/head.php';
                     },
                     dataType: 'json',
                     success: function(response) {
-                        console.log("Raw Response:", response); // Debug JSON response
+                        console.log("Raw Response:", JSON.parse(response)); // Debug JSON response
 
                         let disabled_hours = response;
 
