@@ -19,6 +19,11 @@ if (isset($_POST['request'])) {
     $appointment_class->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
     $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
+    if (isset($_POST['purpose'])) {
+        $appointment_class->purpose = htmlentities($_POST['purpose']);
+    } else {
+        $appointment_class->purpose = '';
+    }
     $appointment_class->reason = htmlentities($_POST['reason']);
     $appointment_class->appointment_status = "Pending";
 
@@ -28,6 +33,7 @@ if (isset($_POST['request'])) {
         validate_field($appointment_class->appointment_date) &&
         validate_field($appointment_class->appointment_time) &&
         validate_field($appointment_class->reason) &&
+        validate_field($appointment_class->purpose) &&
         validate_field($appointment_class->appointment_status)
     ) {
         if ($appointment_class->add_appointment()) {
@@ -86,6 +92,25 @@ include '../includes/head.php';
         margin: auto;
         /* Center the calendar */
     }
+
+    .flatpickr-time .flatpickr-hour,
+    .flatpickr-time .flatpickr-minute {
+        pointer-events: none;
+        /* Prevent users from manually changing the hour */
+    }
+
+    /* Hide all arrows by default */
+    .flatpickr-time .numInputWrapper span.arrowUp,
+    .flatpickr-time .numInputWrapper span.arrowDown {
+        display: none;
+    }
+
+    /* Show only the arrows for the minutes input */
+    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowUp,
+    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowDown {
+        display: inline-block !important;
+        /* Make minute arrows visible */
+    }
 </style>
 
 <body>
@@ -110,73 +135,90 @@ include '../includes/head.php';
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <input type="text" id="doctorSearch" class="form-control bg-light border border-dark" placeholder="Select Doctor" aria-label="Doctor search" value="">
-                        <ul id="doctorDropdown" class="docDropDown list-group position-absolute d-none w-50" style="max-height: 200px; overflow-y: auto; z-index: 100; margin-top: 2.3rem;"></ul>
-                        <input type="hidden" id="doctor_id" name="doctor_id" value="">
+                        <select name="doctor_id" id="doctor_id" class="col-12" onchange="show_doctor_info(this.value)">
+                            <?php
+                            include_once('../handlers/appointment.get_doctors.php');
+                            ?>
+                        </select>
                     </div>
-                    <div class="row align-items-center border p-3 mx-2 rounded bg-light">
-                        <div class="d-flex justify-content-center col-12 col-md-auto mb-3 mb-md-0">
-                            <img id="account_image" src="../assets/images/default_profile.png" alt="Doctor Profile" width="125" height="125" class="rounded-circle border border-2 shadow-sm">
-                        </div>
-                        <div class="col-12 col-md-7">
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Name: <span class="text-black" id="doctor_name">Not Selected</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Specialty: <span class="text-black" id="specialty">N/A</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Contact: <span class="text-black" id="contact">N/A</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Email: <span class="text-black" id="email">N/A</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Days: <span class="text-black" id="working_day">N/A</span> </p>
-                            <p class="fs-6 fw-semibold text-dark mb-1 text-black-50">Working Time: <span class="text-black" id="working_time">N/A</span> </p>
-                        </div>
+                    <div class="row align-items-center border p-3 mx-2 rounded bg-light" id="doctor_info">
+                        <p class='text-center text-muted m-0 p-0'>No doctor selected.</p>
                     </div>
                 </div>
 
                 <hr>
                 <div class="mb-3">
-                    <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
-                    <select id="reason" name="reason" class="form-select bg-light border border-dark" required>
-                        <option value="" disabled <?= !isset($_POST['reason']) ? 'selected' : '' ?>>Select a purpose</option>
-                        <option value="Check-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
-                        <option value="Follow-up" <?= (isset($_POST['reason']) && $_POST['reason'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
-                        <option value="Medical Advice" <?= (isset($_POST['reason']) && $_POST['reason'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
-                        <option value="Mental Health Consultation" <?= (isset($_POST['reason']) && $_POST['reason'] == "Mental Health Consultation") ? 'selected' : '' ?>>Mental Health Consultation</option>
+                    <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
+                    <select id="purpose" name="purpose" class="form-select bg-light border border-dark">
+                        <option value="" disabled <?= !isset($_POST['purpose']) ? 'selected' : '' ?>>Select a purpose</option>
+                        <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
+                        <option value="Follow-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
+                        <option value="Medical Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
+                        <option value="Mental Health Consultation" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Mental Health Consultation") ? 'selected' : '' ?>>Mental Health Consultation</option>
+                        <option value="Dietary and Nutrition Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Dietary and Nutrition Advice") ? 'selected' : '' ?>>Dietary and Nutrition Advice</option>
                     </select>
                     <?php
-                    if (isset($_POST['reason']) && empty($_POST['reason'])) {
+                    if (isset($_POST['purpose']) && !validate_field($_POST['purpose'])) {
                     ?>
                         <p class="text-dark m-0 ps-2">Select a purpose for the appointment.</p>
                     <?php
                     }
                     ?>
                 </div>
-                <!-- Preferred Appointment Date -->
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                        <input type="date" id="appointment_date" name="appointment_date" data-startday="" data-endday="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                        <?php
-                        if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
-                        ?>
-                            <p class="text-dark m-0 ps-2">Select appointment date.</p>
-                        <?php
-                        }
-                        ?>
-                    </div>
-                    <div class="col-md-6">
-                        <label for="appointment_time" class="form-label text-black-50">Select Time</label>
-                        <input type="time" id="appointment_time" name="appointment_time" step="1800" min="" max="" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                        <?php
-                        if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
-                        ?>
-                            <p class="text-dark m-0 ps-2">Select appointment time.</p>
-                        <?php
-                        }
-                        ?>
-                    </div>
+                <div class="mb-3">
+                    <label for="reason" class="form-label text-black-50">Reason:</label>
+                    <textarea class="form-control bg-light fs-6 mb-3 border border-dark" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."></textarea>
+                    <?php
+                    if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                    ?>
+                        <p class="text-dark m-0 ps-2">Reason for appointment is required.</p>
+                    <?php
+                    }
+                    ?>
                 </div>
 
+                <div class="container mt-4">
+                    <div class="row g-3">
+                        <!-- Date Picker -->
+                        <div class="col-lg-6" id="date_picker_cont">
+                            <label for="appointment_date" class="form-label text-secondary fw-semibold">Select Date</label>
+                            <div class="p-2 border rounded bg-light shadow-sm">
+                                <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT DATE" required readonly>
+                            </div>
+                            <?php
+                            if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
+                            ?>
+                                <p class="text-danger small mt-1">Select a valid appointment date.</p>
+                            <?php
+                            }
+                            ?>
+                        </div>
+
+                        <!-- Time Picker -->
+                        <div class="col-lg-6" id="time_picker_cont">
+                            <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
+                            <div class="p-2 pb-3 border rounded bg-light shadow-sm">
+                                <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
+                                <div class="row row-cols-2 g-3 p-3" id="available_time">
+
+                                </div>
+                            </div>
+
+                            <?php
+                            if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
+                            ?>
+                                <p class="text-danger small mt-1">Select a valid appointment time.</p>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
+
+                </div>
 
                 <hr class="my-2">
                 <div class="w-100 d-flex justify-content-end">
-                    <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2" disabled>Request Appointment</button>
+                    <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2" onclick="validateForm(event)" disabled>Request Appointment</button>
                 </div>
             </div>
         </section>
@@ -285,199 +327,184 @@ include '../includes/head.php';
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const doctorSearch = document.getElementById("doctorSearch");
-            const doctorDropdown = document.getElementById("doctorDropdown");
-            const doctorIdInput = document.getElementById("doctor_id");
-            const specialty = document.getElementById("specialty");
-            const contact = document.getElementById("contact");
-            const email = document.getElementById("email");
-            const working_days = document.getElementById("working_day");
-            const working_hours = document.getElementById("working_time");
-            const account_image = document.getElementById("account_image");
-            const appointment_time = document.getElementById("appointment_time");
-            const appointment_date = document.getElementById("appointment_date");
-            const doctor_name = document.getElementById("doctor_name");
-            const request_button = document.getElementById("request");
-
             var startDay;
             var endDay;
+            var startTime = "00:00:00";
+            var endTime = "00:00:00";
+            var rawendTime = "00:00:00";
+            var request_btn = document.getElementById('request');
+            var full_dates = [];
+            var doctor_id;
 
-            fetch('../handlers/appointment.get_doctors.php')
-                .then(response => response.json())
-                .then(data => {
+            reinitializeFlatpickr();
 
-                    doctorSearch.addEventListener("focus", function() {
-                        if (doctorSearch.value === '' && data.length > 0) {
-                            doctorDropdown.classList.remove('d-none');
-                            populateDropdown(data);
-                        }
-                    });
+            document.getElementById("doctor_id").addEventListener("change", function() {
+                if (!this.value) { // Check if no doctor is selected
 
-                    doctorSearch.addEventListener("input", function() {
-                        const searchTerm = doctorSearch.value.toLowerCase();
-                        doctorDropdown.innerHTML = '';
+                    startDay = "";
+                    endDay = "";
+                    startTime = "00:00:00";
+                    endTime = "00:00:00";
+                    full_dates = [];
+                    doctor_id = "";
 
-                        const filteredDoctors = data.filter(doctor =>
-                            doctor.doctor_name.toLowerCase().includes(searchTerm)
-                        );
+                    document.getElementById('appointment_time').value = '';
+                    reinitializeFlatpickr();
+                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
+                } else {
+                    let selectedOption = this.options[this.selectedIndex];
 
-                        populateDropdown(filteredDoctors);
-                    });
+                    startDay = selectedOption.getAttribute("data-startday");
+                    endDay = selectedOption.getAttribute("data-endday");
+                    startTime = selectedOption.getAttribute("data-starttime");
+                    endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                    rawendTime = selectedOption.getAttribute("data-endtime");
+                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+                    doctor_id = selectedOption.getAttribute("data-doctorid");
 
-                    function populateDropdown(doctors) {
-                        doctorDropdown.innerHTML = '';
+                    reinitializeFlatpickr();
+                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
+                }
+            });
 
-                        doctors.forEach(doctor => {
-                            const li = document.createElement("li");
-                            li.classList.add("list-group-item", "cursor-pointer");
-                            li.textContent = doctor.doctor_name;
-                            li.setAttribute("data-id", doctor.account_id);
+            function getDisabledDays(startDay, endDay) {
+                const daysMap = {
+                    "Sunday": 0,
+                    "Monday": 1,
+                    "Tuesday": 2,
+                    "Wednesday": 3,
+                    "Thursday": 4,
+                    "Friday": 5,
+                    "Saturday": 6
+                };
 
-                            li.addEventListener("click", function() {
-                                doctor_name.innerHTML = doctor.doctor_name;
-                                doctorIdInput.value = doctor.doctor_id;
-                                specialty.innerHTML = doctor.specialty;
-                                contact.innerHTML = doctor.contact;
-                                email.innerHTML = doctor.email;
-                                working_days.innerHTML = doctor.start_day + " to " + doctor.end_day;
-                                working_hours.innerHTML = formatTime(doctor.start_wt) + " to " + formatTime(doctor.end_wt);
-                                account_image.src = "../assets/images/" + doctor.account_image;
-                                appointment_time.min = formatMySQLTimeTo24Hour(doctor.start_wt);
-                                appointment_time.max = subtractOneHour(formatMySQLTimeTo24Hour(doctor.end_wt));
-                                appointment_date.dataset.startday = doctor.start_day;
-                                appointment_date.dataset.endday = doctor.end_day;
-                                request_button.removeAttribute("disabled");
-                                doctorDropdown.classList.add('d-none');
+                let start = daysMap[startDay];
+                let end = daysMap[endDay];
+
+                return [
+                    function(date) {
+                        let day = date.getDay();
+                        let today = new Date();
+                        let threeDaysLater = new Date();
+                        threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
 
 
-                                startDay = appointment_date.dataset.startday;
-                                endDay = appointment_date.dataset.endday;
+                        if (date < threeDaysLater) return true; // Disable next 3 days
 
-                                validate_date();
-                            });
-
-                            doctorDropdown.appendChild(li);
-
-                        });
-
-                        if (doctors.length > 0) {
-                            doctorDropdown.classList.remove('d-none');
+                        if (start <= end) {
+                            return !(day >= start && day <= end);
                         } else {
-                            doctorDropdown.classList.add('d-none');
+                            return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
                         }
                     }
-                })
-                .catch(error => console.error('Error fetching doctors:', error));
+                ]; // Wrapped inside an array
+            }
 
-            // Check if the selected day is within the allowed range
-            function validate_date() {
-                const minDate = new Date();
-                const maxDate = new Date(minDate);
-                maxDate.setMonth(maxDate.getMonth() + 1);
-
-                appointment_date.min = formatDate(minDate);
-                appointment_date.max = formatDate(maxDate);
-
-                // Helper function to format date as YYYY-MM-DD
-                function formatDate(date) {
-                    const year = date.getFullYear();
-                    const month = String(date.getMonth() + 1).padStart(2, '0');
-                    const day = String(date.getDate()).padStart(2, '0');
-                    return `${year}-${month}-${day}`;
-                }
-
-                // Helper function to get all allowed days in a weekly cycle
-                function getAllowedDaysRange(startDay, endDay) {
-                    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                    const startIdx = daysOfWeek.indexOf(startDay);
-                    const endIdx = daysOfWeek.indexOf(endDay);
-
-                    // Create allowed days array that cycles through the week
-                    const allowedDays = [];
-                    for (let i = startIdx; i !== endIdx + 1; i = (i + 1) % 7) {
-                        allowedDays.push(daysOfWeek[i]);
+            function reinitializeFlatpickr() {
+                flatpickr("#appointment_date", {
+                    dateFormat: "Y-m-d",
+                    altInput: true,
+                    altFormat: "F j, Y",
+                    inline: true,
+                    disable: [
+                        ...full_dates, // Directly disable full dates
+                        ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
+                    ],
+                    onChange: function(selectedDates, dateStr, instance) {
+                        available_time(dateStr, doctor_id, startTime, rawendTime);
                     }
-
-                    return allowedDays;
-                }
-
-                // Get the allowed days for the specified range
-                const allowedDays = getAllowedDaysRange(startDay, endDay);
-
-                // Validate the selected date
-
-                const selectedDate = new Date(appointment_date.value);
-                const dayName = selectedDate.toLocaleDateString("en-US", {
-                    weekday: 'long'
                 });
 
-
-                if (!allowedDays.includes(dayName)) {
-                    // Set a custom validity message
-                    appointment_date.setCustomValidity("Please select a valid day from " + startDay + " to " + endDay + ".");
-                } else {
-                    // Clear any previous custom validity message
-                    appointment_date.setCustomValidity("");
-                }
+                flatpickr("#appointment_time", {
+                    enableTime: false,
+                    noCalendar: true,
+                    dateFormat: "H:i:s",
+                    altInput: true,
+                    altFormat: "h:i K",
+                    inline: true,
+                    minuteIncrement: 60,
+                    minTime: startTime,
+                    maxTime: endTime,
+                });
             }
 
-            appointment_date.addEventListener("input", function(event) {
-                validate_date();
-            });
 
-            const form = document.getElementById('appointmentForm');
-            form.addEventListener("submit", function(event) {
-                if (!appointment_date.checkValidity()) {
-                    event.preventDefault(); // Prevent submission if the input is invalid
-                    appointment_date.reportValidity(); // Show tooltip if invalid
+
+            new TomSelect("#doctor_id", {
+                sortField: {
+                    field: "text",
+                    direction: "asc"
                 }
             });
         });
 
-        function roundTimeToNearestHalfHour(time) {
-            let [hours, minutes] = time.split(":");
-            minutes = parseInt(minutes);
+        function set_value(selectedRadio) {
+            let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
+            let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
 
-            if (minutes < 15) {
-                minutes = "00";
-            } else if (minutes < 45) {
-                minutes = "30";
+            document.getElementById('appointment_time').value = selectedTime;
+
+            let timecontainer = document.getElementById('time_picker_cont');
+
+            let appointmentInput = timecontainer.querySelector('.form-control.input');
+            appointmentInput.value = formattedTime + " - " + addOneHour(selectedTime);
+        }
+
+        function addOneHour(time) {
+            let [hours, minutes] = time.split(":").map(Number); // Extract HH and MM
+
+            hours = (hours + 1) % 24; // Add one hour and wrap around if it exceeds 23
+
+            let period = hours >= 12 ? "PM" : "AM"; // Determine AM or PM
+            let formattedHours = hours % 12 || 12; // Convert 24-hour to 12-hour format
+
+            return `${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
+        }
+
+        function available_time(date, doctor_id, start, end) {
+            $.ajax({
+                url: '../handlers/appointment.get_date_available_time.php',
+                type: 'GET',
+                data: {
+                    date,
+                    doctor_id,
+                    startTime: start,
+                    endTime: end,
+                },
+                success: function(response) {
+                    $('#available_time').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching available time:', error);
+                }
+            });
+        }
+
+        function show_doctor_info(account_id) {
+
+            if (account_id) {
+                $.ajax({
+                    url: '../handlers/appointment.show_doctor_info.php',
+                    type: 'GET',
+                    data: {
+                        account_id: account_id
+                    },
+                    success: function(response) {
+                        $('#doctor_info').html(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching doctor information:', error);
+                    }
+                });
             } else {
-                minutes = "00";
-                hours = (parseInt(hours) + 1).toString().padStart(2, '0');
+                $('#doctor_info').html("<p class='text-center text-muted m-0 p-0'>No doctor selected.</p>");
             }
-
-            return `${hours.padStart(2, '0')}:${minutes}`;
-        }
-
-        document.getElementById("appointment_time").addEventListener("change", function() {
-            let inputTime = this.value;
-            let roundedTime = roundTimeToNearestHalfHour(inputTime);
-            this.value = roundedTime;
-        });
-
-        function formatTime(time) {
-            let [hours, minutes] = time.split(':');
-            hours = parseInt(hours);
-            let suffix = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12;
-
-            return `${hours}:${minutes} ${suffix}`;
-        }
-
-        function formatMySQLTimeTo24Hour(time) {
-            const [hours, minutes] = time.split(':');
-
-            return `${hours}:${minutes}`;
         }
 
         function subtractOneHour(time) {
-            let [hours, minutes] = time.split(':');
-            hours = parseInt(hours) - 1;
-            if (hours < 0) {
-                hours = 23;
-            }
-            return `${hours.toString().padStart(2, '0')}:${minutes}`;
+            let [hours, minutes] = time.split(":").map(Number);
+            hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
+            return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
         }
     </script>
 </body>
