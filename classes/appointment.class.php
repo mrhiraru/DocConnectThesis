@@ -84,7 +84,7 @@ class Appointment
         FROM appointment ap 
         INNER JOIN patient_info p ON ap.patient_id = p.patient_id 
         INNER JOIN account a ON p.account_id = a.account_id
-        WHERE ap.doctor_id = :doctor_id AND ap.appointment_status = :appointment_status ORDER BY appointment_date DESC, appointment_time DESC;";
+        WHERE ap.doctor_id = :doctor_id AND ap.appointment_status = :appointment_status ORDER BY appointment_date ASC, appointment_time ASC;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);

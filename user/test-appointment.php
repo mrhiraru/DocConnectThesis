@@ -327,22 +327,21 @@ include '../includes/head.php';
             var endDay;
             var startTime = "00:00:00";
             var endTime = "00:00:00";
-            var full_dates = [];
             var request_btn = document.getElementById('request');
 
             reinitializeFlatpickr();
 
             document.getElementById("doctor_id").addEventListener("change", function() {
-                if (!this.value) { // No doctor selected
+                if (!this.value) { // Check if no doctor is selected
+
                     startDay = "";
                     endDay = "";
                     startTime = "00:00:00";
                     endTime = "00:00:00";
-                    full_dates = [];
 
                     document.getElementById('appointment_time').value = '';
-                    reinitializeFlatpickr(); // Reset immediately
-                    request_btn.setAttribute('disabled', 'true');
+                    reinitializeFlatpickr();
+                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
                 } else {
                     let selectedOption = this.options[this.selectedIndex];
 
@@ -351,19 +350,12 @@ include '../includes/head.php';
                     startTime = selectedOption.getAttribute("data-starttime");
                     endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
 
-                    // Fetch fully booked dates and update flatpickr when done
-                    get_full_dates(startTime, selectedOption.getAttribute("data-endtime"), function(updatedFullDates) {
-                        full_dates = updatedFullDates;
-                        request_btn.removeAttribute('disabled'); // Enable button
-                    });
+                    reinitializeFlatpickr();
+                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
 
-            function getDisabledDays($startDay, $endDay, $full_dates) {
-                if (!Array.isArray(full_dates)) {
-                    full_dates = full_dates ? [full_dates] : [];
-                }
-
+            function getDisabledDays(startDay, endDay) {
                 const daysMap = {
                     "Sunday": 0,
                     "Monday": 1,
@@ -386,11 +378,6 @@ include '../includes/head.php';
 
                         if (date < threeDaysLater) return true; // Disable next 3 days
 
-                        if (full_dates.includes(date.toISOString().split('T')[0])) return true; // Disable fully booked dates
-
-                        console.log("Checking date:", date.toISOString().split('T')[0]);
-                        console.log("Full dates:", full_dates);
-
                         if (start <= end) {
                             return !(day >= start && day <= end);
                         } else {
@@ -406,7 +393,7 @@ include '../includes/head.php';
                     altInput: true,
                     altFormat: "F j, Y",
                     inline: true,
-                    disable: getDisabledDays(startDay, endDay, full_dates),
+                    disable: getDisabledDays(startDay, endDay),
                 });
 
                 flatpickr("#appointment_time", {
@@ -422,25 +409,6 @@ include '../includes/head.php';
                 });
             }
 
-            function get_full_dates(start_wt, end_wt, callback) {
-                $.ajax({
-                    url: '../handlers/appointment.get_full_dates.php',
-                    type: 'GET',
-                    data: {
-                        start_wt,
-                        end_wt
-                    },
-                    dataType: 'json',
-                    success: function(response) {
-                        callback(response); // Pass the updated full_dates back
-                        reinitializeFlatpickr(); // Reinitialize with updated full_dates
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching fully booked dates:', error);
-                    }
-                });
-            }
-
             new TomSelect("#doctor_id", {
                 sortField: {
                     field: "text",
@@ -449,6 +417,23 @@ include '../includes/head.php';
             });
         });
 
+        function get_full_dates(start_wt, end_wt) {
+            $.ajax({
+                url: '../handlers/appointment.get_full_dates.php',
+                type: 'GET',
+                data: {
+                    start_wt,
+                    end_wt
+                },
+                success: function(response) {
+                    $('#doctor_info').html(response);
+
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching doctor information:', error);
+                }
+            });
+        }
 
         function show_doctor_info(account_id) {
 
