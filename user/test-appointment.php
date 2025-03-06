@@ -410,7 +410,7 @@ include '../includes/head.php';
                         ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
                     ],
                     onChange: function(selectedDates, dateStr, instance) {
-                        available_time(dateStr, doctor_id);
+                        available_time(dateStr, doctor_id, startTime, rawendTime);
                     }
                 });
 
@@ -437,15 +437,15 @@ include '../includes/head.php';
             });
         });
 
-        function available_time(date, doctor_id) {
+        function available_time(date, doctor_id, start, end) {
             $.ajax({
                 url: '../handlers/appointment.get_date_available_time.php',
                 type: 'GET',
                 data: {
                     date,
                     doctor_id,
-                    startTime: startTime,
-                    endTime: rawendTime,
+                    startTime: start,
+                    endTime: end,
                 },
                 success: function(response) {
                     $('#available_time').html(respose);
