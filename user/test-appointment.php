@@ -113,12 +113,12 @@ include '../includes/head.php';
     }
 </style>
 
-<body onload="show_doctor_info(<?= $_POST['doctor_id'] ?>)">
+<body>
     <?php
     require_once('../includes/header.php');
     ?>
 
-    <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
+    <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center" onsubmit="return validateForm(event)">
         <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
             <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
                 <div class="row d-flex justify-content-between align-items-center">
@@ -367,35 +367,6 @@ include '../includes/head.php';
                 }
             });
 
-            document.getElementById("doctor_id").addEventListener("load", function() {
-                if (!this.value) { // Check if no doctor is selected
-
-                    startDay = "";
-                    endDay = "";
-                    startTime = "00:00:00";
-                    endTime = "00:00:00";
-                    full_dates = [];
-                    doctor_id = "";
-
-                    document.getElementById('appointment_time').value = '';
-                    reinitializeFlatpickr();
-                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
-                } else {
-                    let selectedOption = this.options[this.selectedIndex];
-
-                    startDay = selectedOption.getAttribute("data-startday");
-                    endDay = selectedOption.getAttribute("data-endday");
-                    startTime = selectedOption.getAttribute("data-starttime");
-                    endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
-                    rawendTime = selectedOption.getAttribute("data-endtime");
-                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
-                    doctor_id = selectedOption.getAttribute("data-doctorid");
-
-                    reinitializeFlatpickr();
-                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
-                }
-            });
-
             function getDisabledDays(startDay, endDay) {
                 const daysMap = {
                     "Sunday": 0,
@@ -467,7 +438,6 @@ include '../includes/head.php';
             });
         });
 
-
         function set_value(selectedRadio) {
             let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
             let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
@@ -535,6 +505,25 @@ include '../includes/head.php';
             let [hours, minutes] = time.split(":").map(Number);
             hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
             return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+        }
+
+        function validateForm(event) {
+            // Get the form inputs
+            let purpose = document.getElementById("purpose");
+            let reason = document.getElementById("reason");
+            let appointmentDate = document.getElementById("appointment_date");
+            let appointmentTime = document.getElementById("appointment_time");
+
+            // Check if any of the fields are empty
+            if (purpose.value.trim() === "" || reason.value.trim() === "" || appointmentDate.value.trim() === "" || appointmentTime.value.trim() === "") {
+                // If any field is empty, prevent form submission and alert the user
+                event.preventDefault(); // Prevent form submission
+                alert("Please fill in all the fields before submitting.");
+                return false;
+            }
+
+            // If all fields are filled, allow form submission
+            return true;
         }
     </script>
 </body>
