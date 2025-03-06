@@ -118,7 +118,7 @@ include '../includes/head.php';
     require_once('../includes/header.php');
     ?>
 
-    <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center" onsubmit="return validateForm(event)">
+    <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center" onsubmit="return false;">
         <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
             <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
                 <div class="row d-flex justify-content-between align-items-center">
@@ -149,7 +149,7 @@ include '../includes/head.php';
                 <hr>
                 <div class="mb-3">
                     <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
-                    <select id="purpose" name="purpose" class="form-select bg-light border border-dark" required>
+                    <select id="purpose" name="purpose" class="form-select bg-light border border-dark">
                         <option value="" disabled <?= !isset($_POST['purpose']) ? 'selected' : '' ?>>Select a purpose</option>
                         <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
                         <option value="Follow-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
@@ -218,7 +218,7 @@ include '../includes/head.php';
 
                 <hr class="my-2">
                 <div class="w-100 d-flex justify-content-end">
-                    <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2" disabled>Request Appointment</button>
+                    <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2" onclick="validateForm(event)" disabled>Request Appointment</button>
                 </div>
             </div>
         </section>
@@ -525,7 +525,7 @@ include '../includes/head.php';
 
             // Check if each field is empty and set custom validation message if needed
             if (purpose.value.trim() === "") {
-                purpose.setCustomValidity("Please enter the purpose of the appointment.");
+                purpose.setCustomValidity("Please select the purpose of the appointment.");
                 isValid = false;
             }
             if (reason.value.trim() === "") {
