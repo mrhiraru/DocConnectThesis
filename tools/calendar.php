@@ -317,45 +317,51 @@
 
             if (submit_button == "confirm") {
 
-                handleAuthClick();
+                const isVerified = await handleAuthClick();
 
-                const formData = {
-                    appointment_id: <?= $record['appointment_id'] ?>,
-                    confirm: $('#confirm').val(),
-                    appointment_date: $('#appointment_date').val(),
-                    appointment_time: $('#appointment_time').val(),
-                    reason: $("#reason").val(),
-                    email: $('#email').text(),
-                    link: null,
-                    event_id: null,
-                };
+                if (isVerified) {
+                    const formData = {
+                        appointment_id: <?= $record['appointment_id'] ?>,
+                        confirm: $('#confirm').val(),
+                        appointment_date: $('#appointment_date').val(),
+                        appointment_time: $('#appointment_time').val(),
+                        reason: $("#reason").val(),
+                        email: $('#email').text(),
+                        link: null,
+                        event_id: null,
+                    };
 
-                var created_event = await new_event(formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
-                formData.link = created_event.hangoutLink;
-                formData.event_id = created_event.eventId;
+                    var created_event = await new_event(formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+                    formData.link = created_event.hangoutLink;
+                    formData.event_id = created_event.eventId;
 
-                if (formData.event_id) {
-                    $.ajax({
-                        url: '../handlers/doctor.update_appointment.php',
-                        type: 'POST',
-                        data: formData,
-                        success: function(response) {
-                            if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                                const updated = document.getElementById('updatedModal');
-                                message_notifcation('confirm');
-                                if (updated) {
-                                    var myModal = new bootstrap.Modal(updated, {});
-                                    myModal.show();
+                    if (formData.event_id) {
+                        $.ajax({
+                            url: '../handlers/doctor.update_appointment.php',
+                            type: 'POST',
+                            data: formData,
+                            success: function(response) {
+                                if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                    const updated = document.getElementById('updatedModal');
+                                    message_notifcation('confirm');
+                                    if (updated) {
+                                        var myModal = new bootstrap.Modal(updated, {});
+                                        myModal.show();
+                                    }
+                                } else {
+                                    console.error('Error:', response);
                                 }
-                            } else {
-                                console.error('Error:', response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error sending message:', error);
                             }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error sending message:', error);
-                        }
-                    });
+                        });
+                    }
+                } else {
+                    
                 }
+
+
             } else if (submit_button == "reschedule") {
 
                 const formData = {
