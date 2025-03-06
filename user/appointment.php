@@ -135,7 +135,8 @@ include '../includes/head.php';
                 <hr>
                 <div class="col-12">
                     <div class="d-flex flex-row flex-wrap justify-content-start mb-3">
-                        <select name="doctor_id" id="doctor_id" class="col-12">
+                        <label for="purpose" class="form-label text-black-50">Select Doctor</label>
+                        <select name="purpose" id="doctor_id" class="col-12">
                             <?php
                             include_once('../handlers/appointment.get_doctors.php');
                             ?>
