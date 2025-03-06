@@ -28,7 +28,8 @@ foreach ($doctorArray as $item) {
     data-starttime="<?= $item['start_wt'] ?>"
     data-endtime="<?= $item['end_wt'] ?>"
     data-fulldates="<?= $formattedDates ?>"
-    value="<?= $item['account_id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] ==  $item['account_id']) ? 'selected' : '' ?>>
+    data-accountid="<?= $item['account_id'] ?>"
+    value="<?= $item['doctor_id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] ==  $item['account_id']) ? 'selected' : '' ?>>
     <?= $item['doctor_name'] ?>
   </option>
 <?php
