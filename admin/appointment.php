@@ -11,8 +11,6 @@ require_once '../classes/account.class.php';
 $account = new Account(); // Create an instance of the class
 $appointment_array = $account->get_appointments_with_doctors_and_patients();
 
-
-
 ?>
 
 <html lang="en">

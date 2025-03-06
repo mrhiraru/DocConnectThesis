@@ -202,7 +202,7 @@ class Account
     {
         $sql = "SELECT a.*, d.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), 
         ' ', a.lastname) AS doctor_name FROM account a INNER JOIN doctor_info d ON a.account_id = d.account_id WHERE a.account_id = :account_id AND a.user_role = 1 AND d.is_deleted = 0";
-        
+
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $account_id);
 
@@ -588,6 +588,84 @@ class Account
 
     // user functions end
 
+    // ---DASHBOARD FUNCTION START---
+    function fetch_user_summary()
+    {
+        // Fetch total users count
+        $sqlTotal = "SELECT COUNT(*) as total FROM account";
+        $queryTotal = $this->db->connect()->prepare($sqlTotal);
+        $queryTotal->execute();
+        $totalUsers = $queryTotal->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Fetch total active users
+        $sqlActive = "SELECT COUNT(*) as active FROM account WHERE last_login >= NOW() - INTERVAL 30 DAY";
+        $queryActive = $this->db->connect()->prepare($sqlActive);
+        $queryActive->execute();
+        $activeUsers = $queryActive->fetch(PDO::FETCH_ASSOC)['active'];
+
+        // Fetch total patients
+        $sqlPatients = "SELECT COUNT(*) as total FROM account WHERE user_role IN (3, 4, 5, 6, 7)";
+        $queryPatients = $this->db->connect()->prepare($sqlPatients);
+        $queryPatients->execute();
+        $totalPatients = $queryPatients->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Fetch total doctors
+        $sqlDoctors = "SELECT COUNT(*) as total FROM account WHERE user_role = '1'";
+        $queryDoctors = $this->db->connect()->prepare($sqlDoctors);
+        $queryDoctors->execute();
+        $totalDoctors = $queryDoctors->fetch(PDO::FETCH_ASSOC)['total'];
+
+        // Fetch patient names, doctor names, and appointment dates
+        $sqlAppointments = "SELECT a2.firstname AS patient_firstname, 
+                                   a2.lastname AS patient_lastname, 
+                                   a1.firstname AS doctor_firstname, 
+                                   a1.lastname AS doctor_lastname, 
+                                   ap.appointment_date,
+                                   ap.appointment_time
+                            FROM appointment ap
+                            LEFT JOIN doctor_info d ON ap.doctor_id = d.doctor_id
+                            LEFT JOIN account a1 ON d.account_id = a1.account_id
+                            LEFT JOIN patient_info p ON ap.patient_id = p.patient_id
+                            LEFT JOIN account a2 ON p.account_id = a2.account_id
+                            WHERE DATE(ap.appointment_date) = CURDATE()
+                            ORDER BY ap.appointment_date DESC, ap.appointment_time ASC";
+
+        $queryAppointments = $this->db->connect()->prepare($sqlAppointments);
+        $queryAppointments->execute();
+        $appointments = $queryAppointments->fetchAll(PDO::FETCH_ASSOC);
+
+        return [
+            'totalUsers' => $totalUsers,
+            'totalActiveUsers' => $activeUsers,
+            'totalPatients' => $totalPatients,
+            'totalDoctors' => $totalDoctors,
+            'appointments' => $appointments
+        ];
+    }
+
+    function fetch_users_per_campus_per_year()
+    {
+        $sql = "SELECT c.campus_name, 
+                       YEAR(a.is_created) AS year_created, 
+                       COUNT(a.account_id) AS total_users
+                FROM account a
+                LEFT JOIN campus c ON a.campus_id = c.campus_id
+                WHERE c.campus_name IS NOT NULL AND c.campus_name != 'Unknown'
+                GROUP BY c.campus_name, year_created
+                ORDER BY year_created ASC, total_users DESC";
+
+        try {
+            $query = $this->db->connect()->prepare($sql);
+            $query->execute();
+            $result = $query->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        } catch (PDOException $e) {
+            echo "Database Error: " . $e->getMessage();
+            return [];
+        }
+    }
+    // ---DASHBOARD FUNCTION END---
+
     // ---APPOINMENTS FUNCTIONS START---
     function get_appointments_with_doctors_and_patients()
     {
@@ -622,7 +700,7 @@ class Account
                 LEFT JOIN account a2 ON p.account_id = a2.account_id
                 LEFT JOIN campus c2 ON a2.campus_id = c2.campus_id
                 ORDER BY ap.appointment_date DESC, ap.appointment_time ASC;";
-    
+
         try {
             $query = $this->db->connect()->prepare($sql);
             if ($query->execute()) {
@@ -636,7 +714,7 @@ class Account
             echo "Database Error: " . $e->getMessage();
             return [];
         }
-    }    
+    }
 
 
     // ---ANALYTICS FUNCTIONS START---
