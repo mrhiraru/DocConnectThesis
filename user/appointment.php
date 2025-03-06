@@ -343,11 +343,6 @@ include '../includes/head.php';
             const appointment_time_field = document.getElementById('appointment_time');
             const appointment_date_field = document.getElementById('appointment_date');
 
-            const datecontainer = document.getElementById('date_picker_cont');
-            let appointment_date_alt_field;
-            const timecontainer = document.getElementById('time_picker_cont');
-            let appointment_time_alt_field;
-
             reinitializeFlatpickr();
 
             document.getElementById("doctor_id").addEventListener("change", function() {
@@ -378,15 +373,8 @@ include '../includes/head.php';
                     show_doctor_info(selectedOption.getAttribute('data-accountid'));
                     reinitializeFlatpickr();
 
-                    appointment_date_alt_field = datecontainer.querySelector('.form-control.input');
-                    appointment_time_alt_field = timecontainer.querySelector('.form-control.input');
-
                     purpose_field.setCustomValidity("Please select the purpose of appointment.");
                     reason_field.setCustomValidity("Please provide a reason for the appointment.");
-                    appointment_date_field.setCustomValidity("Please select date of appointment.");
-                    appointment_date_alt_field.setCustomValidity("Please select date of appointment.");
-                    appointment_time_field.setCustomValidity("Please select time of appointment.");
-                    appointment_time_alt_field.setCustomValidity("Please select time of appointment.");
                     request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
@@ -508,6 +496,17 @@ include '../includes/head.php';
                     event.preventDefault();
                     reason_field.reportValidity();
                 }
+
+                const datecontainer = document.getElementById('date_picker_cont');
+                let appointment_date_alt_field = datecontainer.querySelector('.form-control.input');
+                const timecontainer = document.getElementById('time_picker_cont');
+                let appointment_time_alt_field = timecontainer.querySelector('.form-control.input');
+
+                appointment_date_field.setCustomValidity("Please select date of appointment.");
+                appointment_date_alt_field.setCustomValidity("Please select date of appointment.");
+                appointment_time_field.setCustomValidity("Please select time of appointment.");
+                appointment_time_alt_field.setCustomValidity("Please select time of appointment.");
+
                 if (appointment_date_field.value.trim() === "") {
                     event.preventDefault();
                     appointment_date_alt_field.reportValidity();
