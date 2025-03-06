@@ -458,7 +458,7 @@ include '../includes/head.php';
                     },
                     dataType: 'json',
                     success: function(response) {
-                        console.log("Raw Response:", JSON.parse(response)); // Debug JSON response
+                        console.log("Raw Response:", response); // Debug JSON response
 
                         let disabled_hours = response;
 
