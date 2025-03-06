@@ -7,15 +7,13 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ../index.php');
 }
 
-require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
 require_once('../classes/termsOfService.class.php');
 
 $termsOfService = new TermsOfService();
 $currentTerms = $termsOfService->getTermsOfService();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-  $content = $_POST['privacy_policy'];
+  $content = $_POST['terms_of_service'];
   if ($termsOfService->updateTermsOfService($content)) {
     $_SESSION['message'] = 'Terms of Service updated successfully!';
     header('location: termsOfServices.php');
@@ -35,8 +33,6 @@ function getCurrentPage()
   return basename($_SERVER['PHP_SELF']);
 }
 ?>
-
-<link rel="stylesheet" href="./css/OnOffToggle.css">
 
 <body>
   <?php
@@ -69,7 +65,7 @@ function getCurrentPage()
     <?php endif; ?>
 
     <form method="POST" action="termsOfServices.php">
-      <textarea id="editor" name="privacy_policy"><?php echo htmlspecialchars($currentTerms['content'] ?? ''); ?></textarea>
+      <textarea id="editor" name="terms_of_service"><?php echo htmlspecialchars($currentTerms['content'] ?? ''); ?></textarea>
 
       <div class="d-flex gap-2 mt-3">
         <button type="submit" class="btn btn-primary text-light">Save</button>

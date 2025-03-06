@@ -7,8 +7,21 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ../index.php');
 }
 
-require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
+require_once('../classes/privacyPolicy.class.php');
+
+$privacyPolicy = new PrivacyPolicy();
+$currentPolicy = $privacyPolicy->getPrivacyPolicy();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+  $content = $_POST['privacy_policy'];
+  if ($privacyPolicy->updatePrivacyPolicy($content)) {
+    $_SESSION['message'] = 'Privacy Policy updated successfully!';
+    header('location: privacyPolicy.php');
+    exit();
+  } else {
+    $_SESSION['error'] = 'Failed to update Privacy Policy.';
+  }
+}
 
 ?>
 <html lang="en">
@@ -41,8 +54,18 @@ function getCurrentPage()
 
     <h1 class="text-start">Privacy Policy</h1>
 
-    <form method="POST" action="save_privacy_policy.php">
-      <textarea id="editor" name="privacy_policy"></textarea>
+    <?php if (isset($_SESSION['message'])): ?>
+      <div class="alert alert-success"><?php echo $_SESSION['message'];
+                                        unset($_SESSION['message']); ?></div>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+      <div class="alert alert-danger"><?php echo $_SESSION['error'];
+                                      unset($_SESSION['error']); ?></div>
+    <?php endif; ?>
+
+    <form method="POST" action="privacyPolicy.php">
+    <textarea id="editor" name="privacy_policy"><?php echo htmlspecialchars($currentPolicy['content'] ?? ''); ?></textarea>
 
       <div class="d-flex gap-2 mt-3">
         <button type="submit" class="btn btn-primary text-light">Save</button>
