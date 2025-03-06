@@ -189,9 +189,6 @@ function getCurrentPage()
     </div>
 
   </section>
-  <!-- 
-  <script src="./js/analytics-lineChart.js"></script> -->
-
   <script>
     var totalAppointments = <?php echo json_encode($totalAppointments); ?>;
     var completedAppointments = <?php echo json_encode($completedAppointments); ?>;
@@ -213,9 +210,7 @@ function getCurrentPage()
         }]
       }
     });
-  </script>
-
-  <script>
+    
     var usersPerCampusPerYear = <?php echo json_encode($usersPerCampusPerYear); ?>;
 
     document.addEventListener("DOMContentLoaded", function() {
