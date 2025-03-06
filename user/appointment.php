@@ -430,12 +430,29 @@ include '../includes/head.php';
                 });
             }
 
-
-
             new TomSelect("#doctor_id", {
                 sortField: {
                     field: "text",
                     direction: "asc"
+                }
+            });
+
+            // START form submit validation 
+            const form = document.getElementById('appointmentForm');
+            const purpose_field = document.getElementById('purpose');
+
+            purpose_field.addEventListener("change", function() {
+                if (purpose_field.value.trim() === "") {
+                    purpose_field.setCustomValidity("Please select the purpose of appointment.");
+                } else {
+                    purpose_field.setCustomValidity("");
+                }
+            });
+
+            form.addEventListener("submit", function(event) {
+                if (!purpose_field.checkValidity()) {
+                    event.preventDefault(); 
+                    purpose_field.reportValidity(); 
                 }
             });
         });
