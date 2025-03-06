@@ -158,6 +158,11 @@ function getCurrentPage()
 
       <div class="row mx-2 g-3">
         <div class="col-12 col-lg-4">
+          <div class="card h-100">
+            <div class="card-header fs-4 text-center">
+              2
+            </div>
+          </div>
         </div>
         <div class="col-12 col-lg-8">
           <div class="card h-100">
@@ -166,11 +171,7 @@ function getCurrentPage()
             </div>
             <div class="card-body">
               <div class="p-3" id="nav-tabContent">
-                <select id="yearSelect" class="form-select form-select-sm w-25">
-                  <option value="2020-2025">2020-2025</option>
-                  <option value="2026-2030">2026-2030</option>
-                  <option value="2031-2035">2031-2035</option>
-                </select>
+                <select id="yearSelect" class="form-select form-select-sm w-25"></select>
                 <div class="tab-pane fade active show">
                   <canvas id="campusChart" class="chart" role="img"></canvas>
                 </div>
@@ -216,7 +217,7 @@ function getCurrentPage()
       var usersPerCampusPerYear = <?php echo json_encode($usersPerCampusPerYear); ?>;
 
       // Extract unique years and campuses
-      var allYears = [...new Set(usersPerCampusPerYear.map(item => item.year_created))].sort((a, b) => a - b);
+      var allYears = [...new Set(usersPerCampusPerYear.map(item => parseInt(item.year_created)))].sort((a, b) => a - b);
       var campuses = [...new Set(usersPerCampusPerYear.map(item => item.campus_name))];
 
       var colorPalette = [
@@ -226,6 +227,23 @@ function getCurrentPage()
 
       var ctx = document.getElementById("campusChart").getContext("2d");
       var campusChart;
+      var yearSelect = document.getElementById("yearSelect");
+
+      // Dynamically generate year range options in the dropdown
+      function generateYearRanges() {
+        let minYear = Math.min(...allYears);
+        let maxYear = Math.max(...allYears);
+
+        let options = "";
+        for (let start = minYear; start <= maxYear; start += 5) {
+          let end = start + 4;
+          options += `<option value="${start}-${end}">${start}-${end}</option>`;
+        }
+        yearSelect.innerHTML = options;
+
+        // Select the most recent range by default
+        yearSelect.value = options ? `${maxYear - 4}-${maxYear}` : "";
+      }
 
       function getFilteredYears(selectedRange) {
         let [startYear, endYear] = selectedRange.split("-").map(Number);
@@ -278,12 +296,13 @@ function getCurrentPage()
         });
       }
 
-      document.getElementById("yearSelect").addEventListener("change", function() {
+      generateYearRanges();
+
+      updateChart(yearSelect.value);
+
+      yearSelect.addEventListener("change", function() {
         updateChart(this.value);
       });
-
-      // Initialize chart with the first option
-      updateChart(document.getElementById("yearSelect").value);
     });
   </script>
 
