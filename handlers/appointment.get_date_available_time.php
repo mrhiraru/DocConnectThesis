@@ -8,4 +8,5 @@ $formattedHours = array_map(function ($time) {
     return (int)explode(":", $time)[0]; // Extract and convert hour to integer
 }, $takenHours);
 
-echo "[" . implode(", ", $formattedHours) . "]";
+// Ensure a valid JSON response, even if empty
+echo json_encode($formattedHours);

@@ -426,6 +426,7 @@ include '../includes/head.php';
                     console.error("disabled_hours is not an array:", disabled_hours);
                     return;
                 }
+
                 flatpickr("#appointment_time", {
                     enableTime: true,
                     noCalendar: true,
@@ -454,10 +455,24 @@ include '../includes/head.php';
                         doctor_id
                     },
                     success: function(response) {
+                        console.log("Raw Response:", response); // Debugging
 
-                        let disabled_hours = JSON.parse(response);
-                        
-                        reinitializeFlatpickrTime(response);
+                        let disabled_hours;
+                        try {
+                            disabled_hours = JSON.parse(response);
+                        } catch (error) {
+                            console.error("JSON parsing error:", error, "Response:", response);
+                            disabled_hours = []; // Ensure it's an array
+                        }
+
+                        console.log("Parsed disabled_hours:", disabled_hours);
+
+                        if (!Array.isArray(disabled_hours)) {
+                            console.error("Invalid data type for disabled_hours:", disabled_hours);
+                            disabled_hours = [];
+                        }
+
+                        reinitializeFlatpickrTime(disabled_hours);
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching doctor information:', error);
