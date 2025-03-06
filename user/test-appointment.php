@@ -381,6 +381,9 @@ include '../includes/head.php';
 
                         let formattedDate = date.toISOString().split('T')[0]; // Convert date to YYYY-MM-DD
 
+                        if (!Array.isArray(full_date)) {
+                            full_date = [];
+                        }
                         // Disable if it's within the next 3 days
                         if (date < threeDaysLater) return true;
 
