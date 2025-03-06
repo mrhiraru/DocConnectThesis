@@ -357,47 +357,47 @@
                             }
                         });
                     }
-                } else {
-
                 }
-
-
             } else if (submit_button == "reschedule") {
 
-                const formData = {
-                    appointment_id: <?= $record['appointment_id'] ?>,
-                    reschedule: $('#reschedule').val(),
-                    appointment_date: $('#appointment_date').val(),
-                    appointment_time: $('#appointment_time').val(),
-                    reason: $("#reason").val(),
-                    email: $('#email').text(),
-                    link: '<?= $record['appointment_link'] ?>',
-                    event_id: '<?= $record['event_id'] ?>'
-                };
+                const isVerified = await handleAuthClick();
 
-                var updated_event = await update_event(formData.event_id, formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+                if (isVerified) {
+                    const formData = {
+                        appointment_id: <?= $record['appointment_id'] ?>,
+                        reschedule: $('#reschedule').val(),
+                        appointment_date: $('#appointment_date').val(),
+                        appointment_time: $('#appointment_time').val(),
+                        reason: $("#reason").val(),
+                        email: $('#email').text(),
+                        link: '<?= $record['appointment_link'] ?>',
+                        event_id: '<?= $record['event_id'] ?>'
+                    };
 
-                if (updated_event.updated) {
-                    $.ajax({
-                        url: '../handlers/doctor.update_appointment.php',
-                        type: 'POST',
-                        data: formData,
-                        success: function(response) {
-                            if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                                const updated = document.getElementById('rescheduleModal');
-                                message_notifcation('resched');
-                                if (updated) {
-                                    var myModal = new bootstrap.Modal(updated, {});
-                                    myModal.show();
+                    var updated_event = await update_event(formData.event_id, formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+
+                    if (updated_event.updated) {
+                        $.ajax({
+                            url: '../handlers/doctor.update_appointment.php',
+                            type: 'POST',
+                            data: formData,
+                            success: function(response) {
+                                if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                    const updated = document.getElementById('rescheduleModal');
+                                    message_notifcation('resched');
+                                    if (updated) {
+                                        var myModal = new bootstrap.Modal(updated, {});
+                                        myModal.show();
+                                    }
+                                } else {
+                                    console.error('Error:', response);
                                 }
-                            } else {
-                                console.error('Error:', response);
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Error sending message:', error);
                             }
-                        },
-                        error: function(xhr, status, error) {
-                            console.error('Error sending message:', error);
-                        }
-                    });
+                        });
+                    }
                 }
             } else if (submit_button == "cancel") {
                 const updated = document.getElementById('cancelModal');
