@@ -418,6 +418,25 @@ include '../includes/head.php';
                 });
             }
 
+            function get_full_dates(start_wt, end_wt, callback) {
+                $.ajax({
+                    url: '../handlers/appointment.get_full_dates.php',
+                    type: 'GET',
+                    data: {
+                        start_wt,
+                        end_wt
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        callback(response); // Pass the updated full_dates back
+                        reinitializeFlatpickr(); // Reinitialize with updated full_dates
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching fully booked dates:', error);
+                    }
+                });
+            }
+
             new TomSelect("#doctor_id", {
                 sortField: {
                     field: "text",
@@ -426,24 +445,6 @@ include '../includes/head.php';
             });
         });
 
-        function get_full_dates(start_wt, end_wt, callback) {
-            $.ajax({
-                url: '../handlers/appointment.get_full_dates.php',
-                type: 'GET',
-                data: {
-                    start_wt,
-                    end_wt
-                },
-                dataType: 'json',
-                success: function(response) {
-                    callback(response); // Pass the updated full_dates back
-                    reinitializeFlatpickr(); // Reinitialize with updated full_dates
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching fully booked dates:', error);
-                }
-            });
-        }
 
         function show_doctor_info(account_id) {
 
