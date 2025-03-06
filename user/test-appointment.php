@@ -435,15 +435,15 @@ include '../includes/head.php';
                     minTime: startTime,
                     maxTime: endTime,
                     onReady: function(selectedDates, dateStr, instance) {
-                        disableSpecificHours(instance, disable_hours);
+                        disableSpecificHours(instance, disabled_hours);
                     },
                     onOpen: function(selectedDates, dateStr, instance) {
-                        disableSpecificHours(instance, disable_hours);
+                        disableSpecificHours(instance, disabled_hours);
                     },
                 });
             }
 
-            function disableSpecificHours(instance, disable_hours) {
+            function disableSpecificHours(instance, disabled_hours) {
                 setTimeout(() => {
                     let disabledHours = [1, 2, 11, 15]; // Define disabled hours
                     let timeList = instance.timeContainer.querySelectorAll(".flatpickr-time input");
