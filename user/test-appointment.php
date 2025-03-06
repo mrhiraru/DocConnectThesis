@@ -379,15 +379,12 @@ include '../includes/head.php';
                         let threeDaysLater = new Date();
                         threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
 
-                        let formattedDate = date.toISOString().split('T')[0]; // Convert date to YYYY-MM-DD
+                        let dateString = date.toISOString().split('T')[0]; // Convert date to YYYY-MM-DD format
 
-                        // Disable if it's within the next 3 days
-                        if (date < threeDaysLater) return true;
+                        if (date < threeDaysLater) return true; // Disable next 3 days
 
-                        // Disable fully booked dates
-                        if (Array.isArray(full_date) && full_date.includes(formattedDate)) return true;
+                        if (full_date.includes(dateString)) return true; // Disable fully booked dates
 
-                        // Disable days outside the working range
                         if (start <= end) {
                             return !(day >= start && day <= end);
                         } else {
