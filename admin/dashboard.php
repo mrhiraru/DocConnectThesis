@@ -221,7 +221,6 @@ function getCurrentPage()
     document.addEventListener("DOMContentLoaded", function() {
       var usersPerCampusPerYear = <?php echo json_encode($usersPerCampusPerYear); ?>;
 
-      // Extract unique years and campuses
       var allYears = [...new Set(usersPerCampusPerYear.map(item => parseInt(item.year_created)))].sort((a, b) => a - b);
       var campuses = [...new Set(usersPerCampusPerYear.map(item => item.campus_name))];
 
@@ -234,7 +233,6 @@ function getCurrentPage()
       var campusChart;
       var yearSelect = document.getElementById("yearSelect");
 
-      // Dynamically generate year range options in the dropdown
       function generateYearRanges() {
         let minYear = Math.min(...allYears);
         let maxYear = Math.max(...allYears);
@@ -244,7 +242,7 @@ function getCurrentPage()
         let selectedRange = "";
 
         for (let start = minYear; start <= maxYear; start += 5) {
-          let end = start + 4;
+          let end = Math.min(start + 4, maxYear);
           let range = `${start}-${end}`;
           options += `<option value="${range}">${range}</option>`;
 
@@ -254,13 +252,48 @@ function getCurrentPage()
         }
 
         yearSelect.innerHTML = options;
-
         yearSelect.value = selectedRange || `${maxYear - 4}-${maxYear}`;
       }
 
       function getFilteredYears(selectedRange) {
         let [startYear, endYear] = selectedRange.split("-").map(Number);
         return allYears.filter(year => year >= startYear && year <= endYear);
+      }
+
+      function updateCampusSummary(selectedRange) {
+        let [startYear, endYear] = selectedRange.split("-").map(Number);
+
+        // Filter data for the selected year range
+        let filteredData = usersPerCampusPerYear.filter(item => {
+          let year = parseInt(item.year_created);
+          return year >= startYear && year <= endYear;
+        });
+
+        // Calculate total users
+        let totalUsers = filteredData.reduce((sum, item) => sum + parseInt(item.total_users), 0);
+
+        // Calculate total campuses
+        let campusesSet = new Set(filteredData.map(item => item.campus_name));
+        let totalCampuses = campusesSet.size;
+
+        // Calculate top campus
+        let campusUserCounts = {};
+        filteredData.forEach(item => {
+          let campus = item.campus_name;
+          let users = parseInt(item.total_users);
+          if (!campusUserCounts[campus]) {
+            campusUserCounts[campus] = 0;
+          }
+          campusUserCounts[campus] += users;
+        });
+
+        let topCampus = Object.keys(campusUserCounts).reduce((a, b) => campusUserCounts[a] > campusUserCounts[b] ? a : b, "N/A");
+
+        // Update the DOM
+        document.getElementById("totalUsers").textContent = totalUsers;
+        document.getElementById("topCampus").textContent = topCampus;
+        document.getElementById("totalCampuses").textContent = totalCampuses;
+        document.getElementById("selectedYearRange").textContent = `${startYear} - ${endYear}`;
       }
 
       function updateChart(selectedRange) {
@@ -307,53 +340,20 @@ function getCurrentPage()
             }
           }
         });
+
+        updateCampusSummary(selectedRange);
       }
 
       generateYearRanges();
-
       updateChart(yearSelect.value);
 
       yearSelect.addEventListener("change", function() {
         updateChart(this.value);
       });
+
+      // Initial campus summary update
+      updateCampusSummary(yearSelect.value);
     });
-
-    // ----Campus Summary----
-    var campuses = new Set();
-    var totalUsers = 0;
-    var campusUserCounts = {};
-    var allYears = new Set();
-
-    usersPerCampusPerYear.forEach(item => {
-      let campus = item.campus_name;
-      let users = parseInt(item.total_users);
-      let year = parseInt(item.year_created);
-
-      campuses.add(campus);
-      totalUsers += users;
-      allYears.add(year);
-
-      if (!campusUserCounts[campus]) {
-        campusUserCounts[campus] = 0;
-      }
-      campusUserCounts[campus] += users;
-    });
-
-    // Get total campuses
-    var totalCampuses = campuses.size;
-
-    // Get top campus
-    var topCampus = Object.keys(campusUserCounts).reduce((a, b) => campusUserCounts[a] > campusUserCounts[b] ? a : b, "N/A");
-
-    // Get year range
-    var minYear = Math.min(...allYears);
-    var maxYear = Math.max(...allYears);
-    var yearRange = minYear + " - " + maxYear;
-
-    document.getElementById("totalCampuses").textContent = totalCampuses;
-    document.getElementById("totalUsers").textContent = totalUsers;
-    document.getElementById("topCampus").textContent = topCampus;
-    document.getElementById("selectedYearRange").textContent = yearRange;
   </script>
 
 
