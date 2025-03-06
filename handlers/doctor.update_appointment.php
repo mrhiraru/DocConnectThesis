@@ -10,6 +10,7 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment->appointment_time = htmlentities($_POST['appointment_time']);
+    $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
     $appointment->reason = htmlentities($_POST['reason']);
     $appointment->appointment_link = htmlentities($_POST['link']);
     $appointment->event_id = htmlentities($_POST['event_id']);
@@ -53,6 +54,7 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment->appointment_time = htmlentities($_POST['appointment_time']);
+    $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
     $appointment->reason = htmlentities($_POST['reason']);
     $appointment->appointment_status = "Incoming";
 
@@ -125,6 +127,14 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
+            // if (isset($_POST['diagnosis'])) {
+            //     foreach ($_POST['diagnosis'] as $key => $med) {
+            //         if (!$medcon->is_medcon_exist($med)) {
+            //             $medcon->medcon_name = $med;
+            //             $medcon->add_medcon();
+            //         }
+            //     }
+            // }
             $success = 'success';
         } else {
             $success = 'failed';

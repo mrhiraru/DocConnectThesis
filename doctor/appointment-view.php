@@ -41,6 +41,7 @@ include '../includes/head.php';
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
                         <p class="m-0 p-0 fs-6 text-secondary">Patient: <span class="text-dark"><?= $record['patient_name'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary">Purpose: <span class="text-dark"><?= $record['purpose'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary">Reason: <span class="text-dark"><?= $record['reason'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Link: <a href="<?= $record['appointment_link'] ?>" class="text-primary"><?= $record['appointment_link'] ?></a></p>
@@ -104,6 +105,17 @@ include '../includes/head.php';
                                     <label for="result" class="form-label">Consultation Result:</label>
                                     <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['result'] ?></textarea>
                                 </div>
+                                <?php
+                                if (isset($record['diagnosis'])) {
+                                ?>
+                                    <div class="col-12 mb-3">
+                                        <label for="result" class="form-label">Medical Condition/s:</label>
+                                        <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+
                                 <div class="col-12">
                                     <label for="comment" class="form-label">Note:</label>
                                     <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
@@ -226,7 +238,7 @@ include '../includes/head.php';
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                     message_notifcation('end');
-                    //add another ajax request for adding the medcon that does not exist in the system:
+                    add_new_medcon(diagnosisSelect.val());
                     location.reload();
                 } else {
                     console.error('Error:', response);
@@ -256,6 +268,23 @@ include '../includes/head.php';
         })
     }
 
+    function add_new_medcon(medcon) {
+        $.ajax({
+            url: '../handlers/medcon.add_new_medcon.php',
+            type: 'POST',
+            data: {
+                add: 'true',
+                medcon: medcon
+            },
+            success: function(response) {
+                console.log('New medical condition added.');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error adding medical condition:', error);
+            }
+        })
+    }
+
     function show_medical_conditions() {
         $.ajax({
             url: '../handlers/appointment-view.fetch_conditions.php',
@@ -272,30 +301,35 @@ include '../includes/head.php';
 
     document.addEventListener("DOMContentLoaded", function() {
 
-        new TomSelect("#diagnosis", {
-            maxItems: null, // Allows unlimited selections, set a number if you want to limit it
-            persist: false,
-            create: true, // Set to true if you want to allow custom inputs
-            plugins: ['remove_button'] // Adds a remove button for each selected item
-        });
+        var diagnosis_input = document.getElementById("diagnosis");
+        if (diagnosis_input) {
+            new TomSelect("#diagnosis", {
+                maxItems: null, // Allows unlimited selections, set a number if you want to limit it
+                persist: false,
+                create: true, // Set to true if you want to allow custom inputs
+                plugins: ['remove_button'] // Adds a remove button for each selected item
+            });
 
-        const medconCheck = document.getElementsByName("medcon_check");
-        const diagnosisContainer = document.getElementById("diagnosis-container");
 
-        diagnosisContainer.style.display = "none";
 
-        // Function to toggle visibility
-        function toggleDiagnosisContainer() {
-            if (document.getElementById("Yes").checked) {
-                diagnosisContainer.style.display = "block"; // Show if Yes is checked
-            } else {
-                diagnosisContainer.style.display = "none"; // Hide if No is checked
+            const medconCheck = document.getElementsByName("medcon_check");
+            const diagnosisContainer = document.getElementById("diagnosis-container");
+
+            diagnosisContainer.style.display = "none";
+
+            // Function to toggle visibility
+            function toggleDiagnosisContainer() {
+                if (document.getElementById("Yes").checked) {
+                    diagnosisContainer.style.display = "block"; // Show if Yes is checked
+                } else {
+                    diagnosisContainer.style.display = "none"; // Hide if No is checked
+                }
             }
-        }
 
-        // Add event listeners to both radio buttons
-        medconCheck.forEach(radio => {
-            radio.addEventListener("change", toggleDiagnosisContainer);
-        });
+            // Add event listeners to both radio buttons
+            medconCheck.forEach(radio => {
+                radio.addEventListener("change", toggleDiagnosisContainer);
+            });
+        }
     });
 </script>
