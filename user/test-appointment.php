@@ -358,7 +358,7 @@ include '../includes/head.php';
                 }
             });
 
-            function getDisabledDays(startDay, endDay, full_date) {
+            function getDisabledDays(startDay, endDay, full_date = []) {
                 const daysMap = {
                     "Sunday": 0,
                     "Monday": 1,
@@ -383,7 +383,10 @@ include '../includes/head.php';
 
                         if (date < threeDaysLater) return true; // Disable next 3 days
 
-                        if (Array.isArray(full_date) && full_date.includes(dateString)) return true; // Disable fully booked dates
+                        if (Array.isArray(full_date) && full_date.includes(dateString)) {
+                            console.log("Disabled due to full booking:", dateString);
+                            return true; // Disable fully booked dates
+                        }
 
                         if (start <= end) {
                             return !(day >= start && day <= end);
