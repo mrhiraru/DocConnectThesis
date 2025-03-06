@@ -448,6 +448,8 @@ include '../includes/head.php';
             let timecontainer = document.getElementById('time_picker_cont');
 
             let appointmentInput = timecontainer.querySelector('.form-control.input');
+            appointmentInput.value = formattedTime;
+            
             if (appointmentInput._flatpickr) {
                 appointmentInput._flatpickr.setDate(selectedTime, true); // true = trigger onChange event
             }
