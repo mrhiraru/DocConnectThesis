@@ -200,6 +200,9 @@ include '../includes/head.php';
                             <div class="p-2 pb-3 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
                             </div>
+                            <div>
+                                cololol
+                            </div>
                             <?php
                             if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
                             ?>
