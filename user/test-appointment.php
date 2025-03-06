@@ -113,7 +113,7 @@ include '../includes/head.php';
     }
 </style>
 
-<body>
+<body onload="show_doctor_info(<?= $_POST['doctor_id'] ?>)">
     <?php
     require_once('../includes/header.php');
     ?>
@@ -448,7 +448,7 @@ include '../includes/head.php';
             let timecontainer = document.getElementById('time_picker_cont');
 
             let appointmentInput = timecontainer.querySelector('.form-control.input');
-            appointmentInput.placeholder = formattedTime + " - " + addOneHour(selectedTime);
+            appointmentInput.value = formattedTime + " - " + addOneHour(selectedTime);
         }
 
         function addOneHour(time) {
