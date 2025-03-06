@@ -160,7 +160,7 @@ include '../includes/head.php';
                     <?php
                     if (isset($_POST['purpose']) && !validate_field($_POST['purpose'])) {
                     ?>
-                        <p class="text-dark m-0 ps-2">Select a purpose for the appointment.</p>
+                        <p class="text-danger small mt-1">Select a purpose for the appointment.</p>
                     <?php
                     }
                     ?>
@@ -171,7 +171,7 @@ include '../includes/head.php';
                     <?php
                     if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
                     ?>
-                        <p class="text-dark m-0 ps-2">Reason for appointment is required.</p>
+                        <p class="text-danger small mt-1">Reason for appointment is required.</p>
                     <?php
                     }
                     ?>
@@ -377,8 +377,8 @@ include '../includes/head.php';
                     show_doctor_info(selectedOption.getAttribute('data-accountid'));
                     reinitializeFlatpickr();
 
-                    const appointment_date_alt_field = datecontainer.querySelector('.form-control.input');
-                    const appointment_time_alt_field = timecontainer.querySelector('.form-control.input');
+                    appointment_date_alt_field = datecontainer.querySelector('.form-control.input');
+                    appointment_time_alt_field = timecontainer.querySelector('.form-control.input');
 
                     purpose_field.setCustomValidity("Please select the purpose of appointment.");
                     reason_field.setCustomValidity("Please provide a reason for the appointment.");
