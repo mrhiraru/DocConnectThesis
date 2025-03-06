@@ -434,21 +434,18 @@ include '../includes/head.php';
                     minuteIncrement: 60,
                     minTime: startTime,
                     maxTime: endTime,
-                    enable: generateEnabledHours(disabled_hours),
-                });
-            }
-
-            function generateEnabledHours(disabled_hours) {
-                let enabled = [];
-                for (let i = 0; i < 24; i++) {
-                    if (!disabled_hours.includes(i)) {
-                        enabled.push({
-                            from: `${String(i).padStart(2, "0")}:00:00`,
-                            to: `${String(i).padStart(2, "0")}:59:59`
-                        });
+                    onReady: function(selectedDates, dateStr, instance) {
+                        setTimeout(function() {
+                            const allowedTimes = ["09:00", "14:00", "16:30"]; // Allowed times only
+                            document.querySelectorAll(".flatpickr-time .flatpickr-hour, .flatpickr-minute").forEach((elem) => {
+                                if (!allowedTimes.includes(elem.textContent)) {
+                                    elem.style.pointerEvents = "none"; // Disable clicks
+                                    elem.style.opacity = "0.5"; // Make it look disabled
+                                }
+                            });
+                        }, 10);
                     }
-                }
-                return enabled;
+                });
             }
 
             function available_time(date, doctor_id) {
