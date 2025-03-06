@@ -1,4 +1,6 @@
 <?php
+header('Content-Type: application/json'); // Ensure correct content type
+
 require_once('../classes/appointment.class.php');
 $appointment = new Appointment();
 
@@ -30,3 +32,4 @@ foreach ($appointmentsByDate as $date => $hours) {
 }
 
 return $fullyBookedDates;
+exit;
