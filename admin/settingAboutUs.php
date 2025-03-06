@@ -19,10 +19,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $missions = $_POST['missions'] ?? [];
     $technology_heading = $_POST['technology_heading'];
     $technology_subtext = $_POST['technology_subtext'];
+    $technology_icons = $_POST['technology_icons'] ?? [];
+    $technology_titles = $_POST['technology_titles'] ?? [];
+    $technology_descriptions = $_POST['technology_descriptions'] ?? [];
 
     $image_path = $currentAboutUs['image_path'] ?? '';
     if (!empty($_FILES['imageUpload']['name'])) {
-        $targetDir = "../assets/images/about_us";
+        $targetDir = "../assets/images/about_us/";
         $targetFile = $targetDir . basename($_FILES["imageUpload"]["name"]);
 
         // Check if the file is an image
@@ -39,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    if ($aboutUs->updateAboutUs($heading, $subtext, $visions, $missions, $image_path, $technology_heading, $technology_subtext)) {
+    if ($aboutUs->updateAboutUs($heading, $subtext, $visions, $missions, $image_path, $technology_heading, $technology_subtext, $technology_icons, $technology_titles, $technology_descriptions)) {
         $_SESSION['message'] = 'About Us updated successfully!';
         header('location: settingAboutUs.php');
         exit();
@@ -81,13 +84,11 @@ function getCurrentPage()
         <h6 class="text-start mb-4 text-muted">Icon Class: <a href="https://boxicons.com/" target="_blank">Boxicons.com</a></h6>
 
         <?php if (isset($_SESSION['message'])): ?>
-            <div class="alert alert-success"><?php echo $_SESSION['message'];
-                                                unset($_SESSION['message']); ?></div>
+            <div class="alert alert-success"><?php echo $_SESSION['message']; unset($_SESSION['message']); ?></div>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger"><?php echo $_SESSION['error'];
-                                            unset($_SESSION['error']); ?></div>
+            <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
         <?php endif; ?>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
@@ -147,79 +148,46 @@ function getCurrentPage()
                             <button type="submit" class="btn btn-primary text-light">Save</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#secondSection" aria-expanded="false" aria-controls="secondSection">
-            <h5 class="card-title">Second section</h5>
+            <h5 class="card-title">Technology and Innovation</h5>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="secondSection">
             <div class="card w-100">
                 <div class="card-body">
-                    <form>
+                    <form method="POST">
                         <div class="mb-3">
-                            <label for="heading" class="form-label">Heading</label>
-                            <input type="text" class="form-control" id="heading" value="Technology and Innovation">
+                            <label for="technology_heading" class="form-label">Heading</label>
+                            <input type="text" class="form-control" name="technology_heading" value="<?= htmlspecialchars($currentAboutUs['technology_heading'] ?? 'Technology and Innovation') ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="subheading" class="form-label">Subheading</label>
-                            <textarea class="form-control" id="subheading" rows="2">Using cutting-edge telecommunication tools, we ensure secure, reliable, and seamless interactions between students and healthcare providers.</textarea>
+                            <label for="technology_subtext" class="form-label">Subheading</label>
+                            <textarea class="form-control" name="technology_subtext" rows="2"><?= htmlspecialchars($currentAboutUs['technology_subtext'] ?? 'Using cutting-edge telecommunication tools, we ensure secure, reliable, and seamless interactions between students and healthcare providers.') ?></textarea>
                         </div>
                         <div class="row row-cols-1 row-cols-md-2">
-                            <div class="col p-0 mb-3">
-                                <div class="card mx-3 mb-sm-3 rounded-3 shadow-sm h-100">
-                                    <div class="card-body d-flex flex-column justify-content-between shadow-sm text-center">
-                                        <label for="icon1" class="form-label">Icon Class</label>
-                                        <input type="text" id="icon1" class="form-control mb-2" value="bxs-heart">
-                                        <label for="title1" class="form-label">Title</label>
-                                        <input type="text" id="title1" class="form-control mb-2" value="Enhanced Patient Engagement and Satisfaction">
-                                        <label for="desc1" class="form-label">Description</label>
-                                        <textarea id="desc1" class="form-control" rows="3">Empower patients to participate in their healthcare journey through telecommunication health services.</textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php
+                            $technology_icons = json_decode($currentAboutUs['technology_icons'] ?? '[]');
+                            $technology_titles = json_decode($currentAboutUs['technology_titles'] ?? '[]');
+                            $technology_descriptions = json_decode($currentAboutUs['technology_descriptions'] ?? '[]');
 
-                            <div class="col p-0 mb-3">
-                                <div class="card mx-3 mb-sm-3 rounded-3 shadow-sm h-100">
-                                    <div class="card-body d-flex flex-column justify-content-between shadow-sm text-center">
-                                        <label for="icon2" class="form-label">Icon Class</label>
-                                        <input type="text" id="icon2" class="form-control mb-2" value="bx-phone-call">
-                                        <label for="title2" class="form-label">Title</label>
-                                        <input type="text" id="title2" class="form-control mb-2" value="Remote Consultations">
-                                        <label for="desc2" class="form-label">Description</label>
-                                        <textarea id="desc2" class="form-control" rows="3">Access healthcare professionals from anywhere, eliminating the need for in-person visits.</textarea>
+                            for ($i = 0; $i < 4; $i++): ?>
+                                <div class="col p-0 mb-3">
+                                    <div class="card mx-3 mb-sm-3 rounded-3 shadow-sm h-100">
+                                        <div class="card-body d-flex flex-column justify-content-between shadow-sm text-center">
+                                            <label for="icon<?= $i + 1 ?>" class="form-label">Icon Class</label>
+                                            <input type="text" class="form-control mb-2" name="technology_icons[]" value="<?= htmlspecialchars($technology_icons[$i] ?? '') ?>">
+                                            <label for="title<?= $i + 1 ?>" class="form-label">Title</label>
+                                            <input type="text" class="form-control mb-2" name="technology_titles[]" value="<?= htmlspecialchars($technology_titles[$i] ?? '') ?>">
+                                            <label for="desc<?= $i + 1 ?>" class="form-label">Description</label>
+                                            <textarea class="form-control" name="technology_descriptions[]" rows="3"><?= htmlspecialchars($technology_descriptions[$i] ?? '') ?></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="col p-0 mb-3">
-                                <div class="card mx-3 mb-sm-3 rounded-3 shadow-sm h-100">
-                                    <div class="card-body d-flex flex-column justify-content-between shadow-sm text-center">
-                                        <label for="icon3" class="form-label">Icon Class</label>
-                                        <input type="text" id="icon3" class="form-control mb-2" value="bxs-user-voice">
-                                        <label for="title3" class="form-label">Title</label>
-                                        <input type="text" id="title3" class="form-control mb-2" value="Specialized Telehealth Services">
-                                        <label for="desc3" class="form-label">Description</label>
-                                        <textarea id="desc3" class="form-control" rows="3">Collaborative care coordination between your primary care provider and specialists for comprehensive treatment plans.</textarea>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col p-0 mb-3">
-                                <div class="card mx-3 mb-sm-3 rounded-3 shadow-sm h-100">
-                                    <div class="card-body d-flex flex-column justify-content-between shadow-sm text-center">
-                                        <label for="icon4" class="form-label">Icon Class</label>
-                                        <input type="text" id="icon4" class="form-control mb-2" value="bxs-buildings">
-                                        <label for="title4" class="form-label">Title</label>
-                                        <input type="text" id="title4" class="form-control mb-2" value="Scalable Telehealth Solutions for Healthcare Providers">
-                                        <label for="desc4" class="form-label">Description</label>
-                                        <textarea id="desc4" class="form-control" rows="3">Customizable telehealth platforms tailored to the needs of individual healthcare practices.</textarea>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endfor; ?>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary text-light">Save</button>

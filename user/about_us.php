@@ -92,53 +92,29 @@ include '../includes/head.php';
     </div>
 
     <div class="mb-5">
-      <h2 class="text-green">Technology and Innovation</h2>
+      <h2 class="text-green"><?= htmlspecialchars($currentAboutUs['technology_heading'] ?? 'Technology and Innovation') ?></h2>
       <hr class="my-3 c-red rounded-5" style="height: 5px;">
-      <p>Using cutting-edge telecommunication tools, we ensure secure, reliable, and seamless interactions between students and healthcare providers.</p>
+      <p><?= htmlspecialchars($currentAboutUs['technology_subtext'] ?? 'Using cutting-edge telecommunication tools, we ensure secure, reliable, and seamless interactions between students and healthcare providers.') ?></p>
     </div>
 
     <div class="container mt-5">
       <div class="row text-center">
-        <!-- Virtual Consultations -->
-        <div class="col-md-3 mb-4 d-flex align-items-stretch">
-          <div class="p-4 shadow-sm rounded-3 border bg-light w-100">
-            <div class="icon-circle bg-primary text-white mx-auto mb-3">
-              <i class='bx bx-video display-6'></i>
+        <?php
+        $technology_icons = json_decode($currentAboutUs['technology_icons'] ?? '[]');
+        $technology_titles = json_decode($currentAboutUs['technology_titles'] ?? '[]');
+        $technology_descriptions = json_decode($currentAboutUs['technology_descriptions'] ?? '[]');
+
+        for ($i = 0; $i < 4; $i++): ?>
+          <div class="col-md-3 mb-4 d-flex align-items-stretch">
+            <div class="p-4 shadow-sm rounded-3 border bg-light w-100">
+              <div class="icon-circle bg-primary text-white mx-auto mb-3">
+                <i class='<?= htmlspecialchars($technology_icons[$i] ?? '') ?> display-6'></i>
+              </div>
+              <h5 class="fw-bold text-green"><?= htmlspecialchars($technology_titles[$i] ?? '') ?></h5>
+              <p class="text-muted small"><?= htmlspecialchars($technology_descriptions[$i] ?? '') ?></p>
             </div>
-            <h5 class="fw-bold text-green">Virtual Consultations</h5>
-            <p class="text-muted small">Skip the waiting room—consult with healthcare professionals online!</p>
           </div>
-        </div>
-        <!-- Online Doctor Appointments -->
-        <div class="col-md-3 mb-4 d-flex align-items-stretch">
-          <div class="p-4 shadow-sm rounded-3 border bg-light w-100">
-            <div class="icon-circle bg-primary text-white mx-auto mb-3">
-              <i class='bx bx-calendar-check display-6'></i>
-            </div>
-            <h5 class="fw-bold text-green">Online Doctor Appointments</h5>
-            <p class="text-muted small">Connect directly with doctors via video calls.</p>
-          </div>
-        </div>
-        <!-- Remote Monitoring -->
-        <div class="col-md-3 mb-4 d-flex align-items-stretch">
-          <div class="p-4 shadow-sm rounded-3 border bg-light w-100">
-            <div class="icon-circle bg-primary text-white mx-auto mb-3">
-              <i class='bx bx-health display-6'></i>
-            </div>
-            <h5 class="fw-bold text-green">Remote Monitoring</h5>
-            <p class="text-muted small">Stay in control of your health with cutting-edge tools.</p>
-          </div>
-        </div>
-        <!-- Mental Health Support -->
-        <div class="col-md-3 mb-4 d-flex align-items-stretch">
-          <div class="p-4 shadow-sm rounded-3 border bg-light w-100">
-            <div class="icon-circle bg-primary text-white mx-auto mb-3">
-              <i class='bx bx-brain display-6'></i>
-            </div>
-            <h5 class="fw-bold text-green">Mental Health Support</h5>
-            <p class="text-muted small">Access mental health resources anytime, anywhere.</p>
-          </div>
-        </div>
+        <?php endfor; ?>
       </div>
     </div>
 
