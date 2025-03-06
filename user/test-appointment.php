@@ -360,7 +360,7 @@ include '../includes/head.php';
                 }
             });
 
-            function getDisabledDays(startDay, endDay, full_dates) {
+            function getDisabledDays($startDay, $endDay, $full_dates) {
                 const daysMap = {
                     "Sunday": 0,
                     "Monday": 1,
@@ -370,7 +370,6 @@ include '../includes/head.php';
                     "Friday": 5,
                     "Saturday": 6
                 };
-
 
                 let start = daysMap[startDay];
                 let end = daysMap[endDay];
@@ -383,6 +382,8 @@ include '../includes/head.php';
                         threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
 
                         if (date < threeDaysLater) return true; // Disable next 3 days
+
+                        if (full_dates.includes(date.toISOString().split('T')[0])) return true; // Disable fully booked dates
 
                         if (start <= end) {
                             return !(day >= start && day <= end);
