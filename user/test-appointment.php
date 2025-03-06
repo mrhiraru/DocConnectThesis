@@ -20,9 +20,9 @@ if (isset($_POST['request'])) {
     $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
     $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
     if (isset($_POST['purpose'])) {
-        $account->gender = htmlentities($_POST['purpose']);
+        $appointment_class->purpose = htmlentities($_POST['purpose']);
     } else {
-        $account->gender = '';
+        $appointment_class->purpose = '';
     }
     $appointment_class->reason = htmlentities($_POST['reason']);
     $appointment_class->appointment_status = "Pending";
