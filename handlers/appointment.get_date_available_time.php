@@ -13,7 +13,7 @@ function getAvailableTimes($startTime, $endTime, $takenHours, $interval = 30)
     $endTimestamp = strtotime($endTime);
 
     while ($currentTime <= $endTimestamp) {
-        $timeSlot = date("H:i", $currentTime);
+        $timeSlot = date("H:i:s", $currentTime);
 
         // Check if the time is not in taken hours
         if (!in_array($timeSlot, $takenHours)) {
