@@ -362,7 +362,7 @@ include '../includes/head.php';
                     full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
                     doctor_id = selectedOption.getAttribute("data-doctorid");
 
-                    show_doctor_info(this.getAttribute('data-accountid'));
+                    show_doctor_info(selectedOption.getAttribute('data-accountid'));
                     reinitializeFlatpickr();
                     request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
