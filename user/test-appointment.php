@@ -436,8 +436,8 @@ include '../includes/head.php';
                     end_wt: end_wt,
                 },
                 success: function(response) {
-                    console.log("Fetched full dates:", full_dates); // Debugging
-                    callback(full_dates);
+                    console.log("Fetched full dates:", response); // Debugging
+                    callback(response);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error fetching doctor information:', error);
