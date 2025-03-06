@@ -333,8 +333,7 @@ include '../includes/head.php';
             reinitializeFlatpickr();
 
             document.getElementById("doctor_id").addEventListener("change", function() {
-                if (!this.value) { // Check if no doctor is selected
-
+                if (!this.value) { // No doctor selected
                     startDay = "";
                     endDay = "";
                     startTime = "00:00:00";
@@ -342,8 +341,8 @@ include '../includes/head.php';
                     full_dates = [];
 
                     document.getElementById('appointment_time').value = '';
-                    reinitializeFlatpickr();
-                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
+                    reinitializeFlatpickr(); // Reset immediately
+                    request_btn.setAttribute('disabled', 'true');
                 } else {
                     let selectedOption = this.options[this.selectedIndex];
 
@@ -352,10 +351,10 @@ include '../includes/head.php';
                     startTime = selectedOption.getAttribute("data-starttime");
                     endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
 
+                    // Fetch fully booked dates and update flatpickr when done
                     get_full_dates(startTime, selectedOption.getAttribute("data-endtime"), function(updatedFullDates) {
                         full_dates = updatedFullDates;
-                        reinitializeFlatpickr();
-                        request_btn.removeAttribute('disabled'); // Ensure it's enabled
+                        request_btn.removeAttribute('disabled'); // Enable button
                     });
                 }
             });
@@ -432,15 +431,16 @@ include '../includes/head.php';
                 url: '../handlers/appointment.get_full_dates.php',
                 type: 'GET',
                 data: {
-                    start_wt: start_wt,
-                    end_wt: end_wt,
+                    start_wt,
+                    end_wt
                 },
+                dataType: 'json',
                 success: function(response) {
-                    console.log("Fetched full dates:", response); // Debugging
-                    callback(response);
+                    callback(response); // Pass the updated full_dates back
+                    reinitializeFlatpickr(); // Reinitialize with updated full_dates
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error fetching doctor information:', error);
+                    console.error('Error fetching fully booked dates:', error);
                 }
             });
         }
