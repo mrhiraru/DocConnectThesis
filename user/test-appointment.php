@@ -330,6 +330,7 @@ include '../includes/head.php';
             var endDay;
             var startTime = "00:00:00";
             var endTime = "00:00:00";
+            var rawendTime = "00:00:00";
             var request_btn = document.getElementById('request');
             var full_dates = [];
             var doctor_id;
@@ -356,6 +357,7 @@ include '../includes/head.php';
                     endDay = selectedOption.getAttribute("data-endday");
                     startTime = selectedOption.getAttribute("data-starttime");
                     endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                    rawendTime = selectedOption.getAttribute("data-endtime");
                     full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
                     doctor_id = selectedOption.getAttribute("data-doctorid");
 
@@ -433,7 +435,7 @@ include '../includes/head.php';
                         date,
                         doctor_id,
                         startTime: startTime,
-                        endTime: endTime,
+                        endTime: rawendTime,
                     },
                     dataType: 'json',
                     success: function(response) {
