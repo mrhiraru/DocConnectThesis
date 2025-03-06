@@ -353,12 +353,12 @@
                                 }
                             },
                             error: function(xhr, status, error) {
-                                console.error('Error sending message:', error);
+                                console.error('Error update appointment:', error);
                             }
                         });
                     }
                 } else {
-                    
+
                 }
 
 
