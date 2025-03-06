@@ -426,7 +426,7 @@ include '../includes/head.php';
                     console.error("disabled_hours is not an array:", disabled_hours);
                     return;
                 }
-
+                console.error("Found:", disabled_hours);
                 flatpickr("#appointment_time", {
                     enableTime: true,
                     noCalendar: true,
