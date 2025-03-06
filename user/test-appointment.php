@@ -427,24 +427,7 @@ include '../includes/head.php';
                 });
             }
 
-            function available_time(date, doctor_id) {
-                $.ajax({
-                    url: '../handlers/appointment.get_date_available_time.php',
-                    type: 'GET',
-                    data: {
-                        date,
-                        doctor_id,
-                        startTime: startTime,
-                        endTime: rawendTime,
-                    },
-                    success: function(response) {
-                        $('#available_time').html(respose);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('Error fetching available time:', error);
-                    }
-                });
-            }
+
 
             new TomSelect("#doctor_id", {
                 sortField: {
@@ -454,7 +437,24 @@ include '../includes/head.php';
             });
         });
 
-
+        function available_time(date, doctor_id) {
+            $.ajax({
+                url: '../handlers/appointment.get_date_available_time.php',
+                type: 'GET',
+                data: {
+                    date,
+                    doctor_id,
+                    startTime: startTime,
+                    endTime: rawendTime,
+                },
+                success: function(response) {
+                    $('#available_time').html(respose);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching available time:', error);
+                }
+            });
+        }
 
         function show_doctor_info(account_id) {
 
