@@ -349,6 +349,7 @@ include '../includes/head.php';
                     doctor_id = "";
 
                     document.getElementById('appointment_time').value = '';
+                    show_doctor_info(null);
                     reinitializeFlatpickr();
                     request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
                 } else {
