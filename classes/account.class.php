@@ -588,7 +588,7 @@ class Account
 
     // user functions end
 
-    // ---DASHBOARD FANCTION START---
+    // ---DASHBOARD FUNCTION START---
     function fetch_user_summary()
     {
         // Fetch total users count
@@ -661,9 +661,8 @@ class Account
             echo "Database Error: " . $e->getMessage();
             return [];
         }
-    }    
-    
-
+    }      
+    // ---DASHBOARD FUNCTION END---
 
     // ---APPOINMENTS FUNCTIONS START---
     function get_appointments_with_doctors_and_patients()

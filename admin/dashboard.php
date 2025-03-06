@@ -233,16 +233,24 @@ function getCurrentPage()
       function generateYearRanges() {
         let minYear = Math.min(...allYears);
         let maxYear = Math.max(...allYears);
+        let currentYear = new Date().getFullYear();
 
         let options = "";
+        let selectedRange = "";
+
         for (let start = minYear; start <= maxYear; start += 5) {
           let end = start + 4;
-          options += `<option value="${start}-${end}">${start}-${end}</option>`;
+          let range = `${start}-${end}`;
+          options += `<option value="${range}">${range}</option>`;
+
+          if (currentYear >= start && currentYear <= end) {
+            selectedRange = range;
+          }
         }
+
         yearSelect.innerHTML = options;
 
-        // Select the most recent range by default
-        yearSelect.value = options ? `${maxYear - 4}-${maxYear}` : "";
+        yearSelect.value = selectedRange || `${maxYear - 4}-${maxYear}`;
       }
 
       function getFilteredYears(selectedRange) {
