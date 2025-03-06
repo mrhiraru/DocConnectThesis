@@ -515,15 +515,39 @@ include '../includes/head.php';
             let appointmentTime = document.getElementById("appointment_time");
 
             // Check if any of the fields are empty
-            if (purpose.value.trim() === "" || reason.value.trim() === "" || appointmentDate.value.trim() === "" || appointmentTime.value.trim() === "") {
-                // If any field is empty, prevent form submission and alert the user
-                event.preventDefault(); // Prevent form submission
-                alert("Please fill in all the fields before submitting.");
-                return false;
+            let isValid = true; // Flag to track validity
+
+            // Clear custom validity messages
+            purpose.setCustomValidity("");
+            reason.setCustomValidity("");
+            appointmentDate.setCustomValidity("");
+            appointmentTime.setCustomValidity("");
+
+            // Check if each field is empty and set custom validation message if needed
+            if (purpose.value.trim() === "") {
+                purpose.setCustomValidity("Please enter the purpose of the appointment.");
+                isValid = false;
+            }
+            if (reason.value.trim() === "") {
+                reason.setCustomValidity("Please provide a reason for the appointment.");
+                isValid = false;
+            }
+            if (appointmentDate.value.trim() === "") {
+                appointmentDate.setCustomValidity("Please select an appointment date.");
+                isValid = false;
+            }
+            if (appointmentTime.value.trim() === "") {
+                appointmentTime.setCustomValidity("Please select a time for the appointment.");
+                isValid = false;
             }
 
-            // If all fields are filled, allow form submission
-            return true;
+            // If any field is invalid, prevent form submission
+            if (!isValid) {
+                event.preventDefault();
+            }
+
+            // Return true if all fields are valid
+            return isValid;
         }
     </script>
 </body>
