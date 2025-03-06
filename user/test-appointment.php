@@ -200,6 +200,9 @@ include '../includes/head.php';
                             <div class="p-2 pb-3 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
                             </div>
+                            <div class="p-3" id="available_time">
+
+                            </div>
                             <?php
                             if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
                             ?>
@@ -327,8 +330,10 @@ include '../includes/head.php';
             var endDay;
             var startTime = "00:00:00";
             var endTime = "00:00:00";
-            var full_dates = [];
+            var rawendTime = "00:00:00";
             var request_btn = document.getElementById('request');
+            var full_dates = [];
+            var doctor_id;
 
             reinitializeFlatpickr();
 
@@ -340,6 +345,7 @@ include '../includes/head.php';
                     startTime = "00:00:00";
                     endTime = "00:00:00";
                     full_dates = [];
+                    doctor_id = "";
 
                     document.getElementById('appointment_time').value = '';
                     reinitializeFlatpickr();
@@ -351,16 +357,16 @@ include '../includes/head.php';
                     endDay = selectedOption.getAttribute("data-endday");
                     startTime = selectedOption.getAttribute("data-starttime");
                     endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                    rawendTime = selectedOption.getAttribute("data-endtime");
+                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+                    doctor_id = selectedOption.getAttribute("data-doctorid");
 
-                    get_full_dates(startTime, selectedOption.getAttribute("data-endtime"), function(updatedFullDates) {
-                        full_dates = updatedFullDates;
-                        reinitializeFlatpickr();
-                        request_btn.removeAttribute('disabled'); // Ensure it's enabled
-                    });
+                    reinitializeFlatpickr();
+                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
 
-            function getDisabledDays($startDay, $endDay, $full_dates) {
+            function getDisabledDays(startDay, endDay) {
                 const daysMap = {
                     "Sunday": 0,
                     "Monday": 1,
@@ -381,12 +387,8 @@ include '../includes/head.php';
                         let threeDaysLater = new Date();
                         threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
 
+
                         if (date < threeDaysLater) return true; // Disable next 3 days
-
-                        if (full_dates.includes(date.toISOString().split('T')[0])) return true; // Disable fully booked dates
-
-                        console.log("Checking date:", date.toISOString().split('T')[0]);
-                        console.log("Full dates:", full_dates);
 
                         if (start <= end) {
                             return !(day >= start && day <= end);
@@ -403,7 +405,13 @@ include '../includes/head.php';
                     altInput: true,
                     altFormat: "F j, Y",
                     inline: true,
-                    disable: getDisabledDays(startDay, endDay, full_dates),
+                    disable: [
+                        ...full_dates, // Directly disable full dates
+                        ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
+                    ],
+                    onChange: function(selectedDates, dateStr, instance) {
+                        available_time(dateStr, doctor_id, startTime, rawendTime);
+                    }
                 });
 
                 flatpickr("#appointment_time", {
@@ -419,6 +427,8 @@ include '../includes/head.php';
                 });
             }
 
+
+
             new TomSelect("#doctor_id", {
                 sortField: {
                     field: "text",
@@ -427,20 +437,21 @@ include '../includes/head.php';
             });
         });
 
-        function get_full_dates(start_wt, end_wt, callback) {
+        function available_time(date, doctor_id, start, end) {
             $.ajax({
-                url: '../handlers/appointment.get_full_dates.php',
+                url: '../handlers/appointment.get_date_available_time.php',
                 type: 'GET',
                 data: {
-                    start_wt: start_wt,
-                    end_wt: end_wt,
+                    date,
+                    doctor_id,
+                    startTime: start,
+                    endTime: end,
                 },
                 success: function(response) {
-                    console.log("Fetched full dates:", response); // Debugging
-                    callback(response);
+                    $('#available_time').html(respose);
                 },
                 error: function(xhr, status, error) {
-                    console.error('Error fetching doctor information:', error);
+                    console.error('Error fetching available time:', error);
                 }
             });
         }
@@ -456,7 +467,6 @@ include '../includes/head.php';
                     },
                     success: function(response) {
                         $('#doctor_info').html(response);
-
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching doctor information:', error);

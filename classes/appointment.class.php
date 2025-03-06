@@ -84,7 +84,7 @@ class Appointment
         FROM appointment ap 
         INNER JOIN patient_info p ON ap.patient_id = p.patient_id 
         INNER JOIN account a ON p.account_id = a.account_id
-        WHERE ap.doctor_id = :doctor_id AND ap.appointment_status = :appointment_status ORDER BY appointment_date DESC, appointment_time DESC;";
+        WHERE ap.doctor_id = :doctor_id AND ap.appointment_status = :appointment_status ORDER BY appointment_date ASC, appointment_time ASC;";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);
@@ -133,16 +133,52 @@ class Appointment
         return $data;
     }
 
-    function get_appointments($doctor_id)
+    function get_full_dates($doctor_id, $start, $end)
     {
-        $sql = "SELECT * FROM appointment WHERE appointment_status = 'Incoming' AND doctor_id = :doctor_id;";
+        $sql = "SELECT appointment_date
+        FROM appointment
+        WHERE appointment_status = 'Incoming'
+        AND doctor_id = :doctor_id
+        AND appointment_time >= :start
+        AND appointment_time < :end
+        GROUP BY appointment_date
+        HAVING COUNT(DISTINCT appointment_time) = 
+            (SELECT COUNT(*) 
+             FROM (SELECT DISTINCT appointment_time FROM appointment 
+                   WHERE appointment_time >= :start 
+                   AND appointment_time < :end) AS time_slots);";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);
+        $query->bindParam(':start', $start);
+        $query->bindParam(':end', $end);
 
         $data = null;
         if ($query->execute()) {
             $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function get_taken_hours($doctor_id, $appointment_date)
+    {
+        $sql = "SELECT appointment_time
+        FROM appointment
+        WHERE appointment_status = 'Incoming'
+        AND doctor_id = :doctor_id
+        AND appointment_date = :appointment_date
+        ORDER BY appointment_time ASC;";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':doctor_id', $doctor_id);
+        $query->bindParam(':appointment_date', $appointment_date);
+
+        $data = [];
+        if ($query->execute()) {
+            $results = $query->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($results as $row) {
+                $data[] = $row['appointment_time']; // Extract just the time
+            }
         }
         return $data;
     }
