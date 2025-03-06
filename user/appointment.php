@@ -502,17 +502,15 @@ include '../includes/head.php';
                 const timecontainer = document.getElementById('time_picker_cont');
                 let appointment_time_alt_field = timecontainer.querySelector('.form-control.input');
 
-                appointment_date_field.setCustomValidity("Please select date of appointment.");
-                appointment_date_alt_field.setCustomValidity("Please select date of appointment.");
-                appointment_time_field.setCustomValidity("Please select time of appointment.");
-                appointment_time_alt_field.setCustomValidity("Please select time of appointment.");
 
                 if (appointment_date_field.value.trim() === "") {
                     event.preventDefault();
+                    appointment_date_alt_field.setCustomValidity("Please select date of appointment.");
                     appointment_date_alt_field.reportValidity();
                 }
                 if (appointment_time_field.value.trim() === "") {
                     event.preventDefault();
+                    appointment_time_alt_field.setCustomValidity("Please select time of appointment.");
                     appointment_time_alt_field.reportValidity();
                 }
             });
