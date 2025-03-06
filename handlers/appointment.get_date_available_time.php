@@ -3,14 +3,35 @@ require_once('../classes/appointment.class.php');
 $appointment = new Appointment();
 
 $takenHours = $appointment->get_taken_hours($_GET['doctor_id'], $_GET['date']);
+$startTime = $_GET['startTime'];
+$endTime = $_GET['endTime'];
 
-if (!$takenHours) {
-    $takenHours = []; // Ensure it always returns an array
+function getAvailableTimes($startTime, $endTime, $takenHours, $interval = 30)
+{
+    $availableTimes = [];
+    $currentTime = strtotime($startTime);
+    $endTimestamp = strtotime($endTime);
+
+    while ($currentTime <= $endTimestamp) {
+        $timeSlot = date("H:i", $currentTime);
+
+        // Check if the time is not in taken hours
+        if (!in_array($timeSlot, $takenHours)) {
+            $availableTimes[] = $timeSlot;
+        }
+
+        // Move to the next time slot
+        $currentTime = strtotime("+$interval minutes", $currentTime);
+    }
+
+    return $availableTimes;
 }
 
-$formattedHours = array_map(function ($time) {
-    return (int)explode(":", $time)[0]; // Extract and convert hour to integer
-}, $takenHours);
+$availableTime = getAvailableTimes($startTime, $endTime, $takenHours);
 
-header('Content-Type: application/json'); // Force JSON response
-echo json_encode($formattedHours);
+
+foreach ($availableTime as $time) {
+?>
+    <p class="text-muted"><?= date("h:i A", strtotime($time)) ?></p>
+<?
+}

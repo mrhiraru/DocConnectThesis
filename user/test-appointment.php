@@ -200,8 +200,8 @@ include '../includes/head.php';
                             <div class="p-2 pb-3 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
                             </div>
-                            <div>
-                                cololol
+                            <div class="p-3" id="available_time">
+
                             </div>
                             <?php
                             if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
@@ -425,34 +425,19 @@ include '../includes/head.php';
                 });
             }
 
-            function reinitializeFlatpickrTime(disabled_hours) {
-
-                flatpickr("#appointment_time", {
-                    enableTime: true,
-                    noCalendar: true,
-                    dateFormat: "H:i:s",
-                    altInput: true,
-                    altFormat: "h:i K",
-                    inline: true,
-                    minuteIncrement: 60,
-                    minTime: startTime,
-                    maxTime: endTime
-                });
-            }
-
             function available_time(date, doctor_id) {
                 $.ajax({
                     url: '../handlers/appointment.get_date_available_time.php',
                     type: 'GET',
                     data: {
                         date,
-                        doctor_id
+                        doctor_id,
+                        startTime: startTime,
+                        endTime: endTime,
                     },
                     dataType: 'json',
                     success: function(response) {
-                        let disabled_hours = response;
-
-                        reinitializeFlatpickrTime(disabled_hours);
+                        $('#available_time').html(respose);
                     },
                     error: function(xhr, status, error) {
                         console.error('Error fetching doctor information:', error);
