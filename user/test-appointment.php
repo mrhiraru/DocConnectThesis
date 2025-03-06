@@ -452,9 +452,10 @@ include '../includes/head.php';
         }
 
         function addOneHour(time) {
-            let [hours, minutes] = time.split(":").map(Number);
+            let [hours, minutes] = time.split(":").slice(0, 2).map(Number); // Extract only HH and MM
             hours = (hours === 23) ? 0 : hours + 1; // Handle midnight wrap-around
-            return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+
+            return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:00`;
         }
 
         function available_time(date, doctor_id, start, end) {
