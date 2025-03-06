@@ -421,6 +421,11 @@ include '../includes/head.php';
             }
 
             function reinitializeFlatpickrTime(disabled_hours) {
+
+                if (!Array.isArray(disabled_hours)) {
+                    console.error("disabled_hours is not an array:", disabled_hours);
+                    return;
+                }
                 flatpickr("#appointment_time", {
                     enableTime: true,
                     noCalendar: true,
