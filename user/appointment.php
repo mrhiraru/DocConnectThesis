@@ -508,11 +508,11 @@ include '../includes/head.php';
                     event.preventDefault();
                     reason_field.reportValidity();
                 }
-                if (!appointment_date_alt_field.checkValidity()) {
+                if (!appointment_date_field.checkValidity()) {
                     event.preventDefault();
                     appointment_date_alt_field.reportValidity();
                 }
-                if (!appointment_time_alt_field.checkValidity()) {
+                if (!appointment_time_field.checkValidity()) {
                     event.preventDefault();
                     appointment_time_alt_field.reportValidity();
                 }
