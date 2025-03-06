@@ -424,11 +424,6 @@ include '../includes/head.php';
 
             function reinitializeFlatpickrTime(disabled_hours) {
 
-                if (!Array.isArray(disabled_hours)) {
-                    console.error("disabled_hours is not an array:", disabled_hours);
-                    return;
-                }
-
                 flatpickr("#appointment_time", {
                     enableTime: true,
                     noCalendar: true,
@@ -439,13 +434,30 @@ include '../includes/head.php';
                     minuteIncrement: 60,
                     minTime: startTime,
                     maxTime: endTime,
-                    disable: disabled_hours.map(hour => {
-                        return {
-                            from: `${String(hour).padStart(2, "0")}:00:00`,
-                            to: `${String(hour).padStart(2, "0")}:59:59`
-                        };
-                    })
+                    onReady: function(selectedDates, dateStr, instance) {
+                        disableSpecificHours(instance, disable_hours);
+                    },
+                    onOpen: function(selectedDates, dateStr, instance) {
+                        disableSpecificHours(instance, disable_hours);
+                    },
                 });
+            }
+
+            function disableSpecificHours(instance, disable_hours) {
+                setTimeout(() => {
+                    let disabledHours = [1, 2, 11, 15]; // Define disabled hours
+                    let timeList = instance.timeContainer.querySelectorAll(".flatpickr-time input");
+
+                    if (timeList) {
+                        timeList.forEach(input => {
+                            let hour = parseInt(input.value.split(":")[0], 10); // Extract hour from time value
+                            if (disabledHours.includes(hour)) {
+                                input.disabled = true; // Disable the specific hour
+                                input.style.opacity = "0.5"; // Optional: Make it visually disabled
+                            }
+                        });
+                    }
+                }, 10);
             }
 
             function available_time(date, doctor_id) {
@@ -458,8 +470,6 @@ include '../includes/head.php';
                     },
                     dataType: 'json',
                     success: function(response) {
-                        console.log("Raw Response:", response); // Debug JSON response
-
                         let disabled_hours = response;
 
                         reinitializeFlatpickrTime(disabled_hours);
