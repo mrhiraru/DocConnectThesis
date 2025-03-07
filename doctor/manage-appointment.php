@@ -472,6 +472,84 @@ include '../includes/head.php';
             }
         });
     });
+
+    function set_value(selectedRadio) {
+        if (selectedRadio === null) {
+
+            document.getElementById('appointment_time').value = null;
+            let timecontainer = document.getElementById('time_picker_cont');
+
+            let appointmentInput = timecontainer.querySelector('.form-control.input');
+            appointmentInput.value = "SELECT TIME";
+        } else {
+            let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
+            let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
+
+            document.getElementById('appointment_time').value = selectedTime;
+
+            let timecontainer = document.getElementById('time_picker_cont');
+
+            let appointmentInput = timecontainer.querySelector('.form-control.input');
+            appointmentInput.value = formattedTime + " - " + addOneHour(selectedTime);
+        }
+    }
+
+    function addOneHour(time) {
+        let [hours, minutes] = time.split(":").map(Number); // Extract HH and MM
+
+        hours = (hours + 1) % 24; // Add one hour and wrap around if it exceeds 23
+
+        let period = hours >= 12 ? "PM" : "AM"; // Determine AM or PM
+        let formattedHours = hours % 12 || 12; // Convert 24-hour to 12-hour format
+
+        return `${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
+    }
+
+    function available_time(date, doctor_id, start, end) {
+        $.ajax({
+            url: '../handlers/appointment.get_date_available_time.php',
+            type: 'GET',
+            data: {
+                date,
+                doctor_id,
+                startTime: start,
+                endTime: end,
+            },
+            success: function(response) {
+                $('#available_time').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching available time:', error);
+            }
+        });
+    }
+
+    function show_doctor_info(account_id) {
+
+        if (account_id) {
+            $.ajax({
+                url: '../handlers/appointment.show_doctor_info.php',
+                type: 'GET',
+                data: {
+                    account_id: account_id
+                },
+                success: function(response) {
+                    $('#doctor_info').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching doctor information:', error);
+                }
+            });
+        } else {
+            $('#doctor_info').html("<p class='text-center text-muted m-0 p-0'>No doctor selected.</p>");
+        }
+    }
+
+    function subtractOneHour(time) {
+        let [hours, minutes] = time.split(":").map(Number);
+        hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+    }
 </script>
 
 <?php
