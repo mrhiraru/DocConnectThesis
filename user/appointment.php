@@ -168,7 +168,7 @@ include '../includes/head.php';
                 </div>
                 <div class="mb-3">
                     <label for="reason" class="form-label text-black-50">Reason:</label>
-                    <textarea class="form-control bg-light fs-6 mb-3 border  border-outline-dark" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."></textarea>
+                    <textarea class="form-control bg-light fs-6 mb-3 border  border-outline-dark" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."><?= (isset($_POST['reason'])) ? $_POST['reason'] : '' ?></textarea>
                     <?php
                     if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
                     ?>
@@ -349,7 +349,18 @@ include '../includes/head.php';
                 var selectedOption = doctorSelect.options[doctorSelect.selectedIndex];
 
                 if (selectedOption && selectedOption.hasAttribute("data-accountid")) { // Check if the option exists and has the attribute
+
+                    startDay = selectedOption.getAttribute("data-startday");
+                    endDay = selectedOption.getAttribute("data-endday");
+                    startTime = selectedOption.getAttribute("data-starttime");
+                    endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                    rawendTime = selectedOption.getAttribute("data-endtime");
+                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+                    doctor_id = selectedOption.getAttribute("data-doctorid");
+
                     show_doctor_info(selectedOption.getAttribute("data-accountid"));
+                    reinitializeFlatpickr();
+                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
                 }
             }
 
@@ -365,7 +376,7 @@ include '../includes/head.php';
 
                     document.getElementById('appointment_time').value = '';
                     show_doctor_info(null);
-                    reinitializeFlatpickr();
+
                     request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
                 } else {
                     let selectedOption = this.options[this.selectedIndex];
@@ -381,9 +392,9 @@ include '../includes/head.php';
                     show_doctor_info(selectedOption.getAttribute('data-accountid'));
                     reinitializeFlatpickr();
 
-                    purpose_field.setCustomValidity("Please select the purpose of appointment.");
-                    reason_field.setCustomValidity("Please provide a reason for the appointment.");
-                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
+                    // purpose_field.setCustomValidity("Please select the purpose of appointment.");
+                    // reason_field.setCustomValidity("Please provide a reason for the appointment.");
+                    // request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
 
@@ -458,33 +469,33 @@ include '../includes/head.php';
 
             // START form submit validation 
 
-            purpose_field.addEventListener("change", function() {
-                if (purpose_field.value.trim() === "") {
-                    purpose_field.setCustomValidity("Please select the purpose of appointment.");
-                } else {
-                    purpose_field.setCustomValidity("");
-                }
-            });
+            // purpose_field.addEventListener("change", function() {
+            //     if (purpose_field.value.trim() === "") {
+            //         purpose_field.setCustomValidity("Please select the purpose of appointment.");
+            //     } else {
+            //         purpose_field.setCustomValidity("");
+            //     }
+            // });
 
-            reason_field.addEventListener("change", function() {
-                if (reason_field.value.trim() === "") {
-                    reason_field.setCustomValidity("Please provide a reason for the appointment.");
-                } else {
-                    reason_field.setCustomValidity("");
-                }
-            });
+            // reason_field.addEventListener("change", function() {
+            //     if (reason_field.value.trim() === "") {
+            //         reason_field.setCustomValidity("Please provide a reason for the appointment.");
+            //     } else {
+            //         reason_field.setCustomValidity("");
+            //     }
+            // });
 
 
-            form.addEventListener("submit", function(event) {
-                if (!purpose_field.checkValidity()) {
-                    event.preventDefault();
-                    purpose_field.reportValidity();
-                }
-                if (!reason_field.checkValidity()) {
-                    event.preventDefault();
-                    reason_field.reportValidity();
-                }
-            });
+            // form.addEventListener("submit", function(event) {
+            //     if (!purpose_field.checkValidity()) {
+            //         event.preventDefault();
+            //         purpose_field.reportValidity();
+            //     }
+            //     if (!reason_field.checkValidity()) {
+            //         event.preventDefault();
+            //         reason_field.reportValidity();
+            //     }
+            // });
         });
 
         function set_value(selectedRadio) {
