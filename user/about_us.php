@@ -27,7 +27,7 @@ include '../includes/head.php';
 
   <style>
     .about-header {
-      background: url('../assets/images/bg-1.png') no-repeat center center/cover;
+      background: url('../assets/images/bg-3.jpg') no-repeat center center/cover;
       color: white;
       padding: 125px 0;
       text-align: center;
