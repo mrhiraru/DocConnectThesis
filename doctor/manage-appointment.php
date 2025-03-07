@@ -66,15 +66,12 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="mb-3">
-                                <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
+                                <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
+                                <textarea id="purpose" name="purpose" class="form-control bg-light border border-dark" rows="" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required readonly><?= $record['purpose'] ?></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reason" class="form-label text-black-50">Reason</label>
                                 <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required readonly><?= $record['reason'] ?></textarea>
-                                <?php
-                                if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
-                                ?>
-                                    <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
-                                <?php
-                                }
-                                ?>
                             </div>
                             <div class="mb-3">
                                 <p class="">

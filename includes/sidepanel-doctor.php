@@ -45,7 +45,7 @@
                     Chats
                 </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item d-none">
                 <a class="nav-link text-dark <?= $notification ?>" href="../doctor/notifications">
                     <i class='bx bx-bell me-2'></i>
                     Notification
