@@ -335,9 +335,9 @@ include '../includes/head.php';
     document.addEventListener("DOMContentLoaded", function() {
         var startDay = '<?= $_SESSION['start_day'] ?>';
         var endDay = '<?= $_SESSION['end_day'] ?>';
-        var startTime = "00:00:00";
-        var endTime = "00:00:00";
-        var rawendTime = "00:00:00";
+        var startTime = '<?= $_SESSION['start_wt'] ?>';
+        var endTime = subtractOneHour(selectedOption.getAttribute("<?= $_SESSION['end_wt'] ?>"));
+        var rawendTime = '<?= $_SESSION['end_wt'] ?>';
         var request_btn = document.getElementById('request');
         var full_dates = [];
         var doctor_id;
