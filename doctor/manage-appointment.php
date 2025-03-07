@@ -60,7 +60,7 @@ include '../includes/head.php';
     }
 </style>
 
-<body onload="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)">
+<body>
     <?php
     require_once('../includes/header-doctor.php');
     ?>
