@@ -394,7 +394,7 @@ include '../includes/head.php';
 
                     // purpose_field.setCustomValidity("Please select the purpose of appointment.");
                     // reason_field.setCustomValidity("Please provide a reason for the appointment.");
-                    // request_btn.removeAttribute('disabled'); // Ensure it's enabled
+                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
 
