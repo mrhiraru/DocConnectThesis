@@ -340,7 +340,9 @@ $fullDates = array_map(function ($date) {
 if (in_array($record['appointment_date'], $fullDates)) {
     $key = array_search($record['appointment_date'], $fullDates);
     unset($fullDates[$key]);
+    $fullDates = array_values($fullDates);
 }
+
 $formattedDates = implode(', ', $fullDates);
 ?>
 <script>
