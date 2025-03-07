@@ -129,8 +129,8 @@ include '../includes/head.php';
                         <?php
                         if ($record['appointment_status'] == "Incoming") {
 
-                            $appointment_datetime = $record['appointment_date'] . ' ' . $record['appointment_time'];
-                            $current_datetime = date('Y-m-d H:i:s'); // Get current date and time
+                            $appointment_datetime = date('Y-m-d H:i:s', strtotime($record['appointment_date'] . ' ' . $record['appointment_time']));
+                            $current_datetime = date('Y-m-d H:i:s');
 
                             $disable_button = ($appointment_datetime != $current_datetime) ? 'disabled' : '';
                         ?>
