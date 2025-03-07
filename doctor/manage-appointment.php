@@ -337,8 +337,8 @@ $fullDates = array_map(function ($date) {
     return date('Y-m-d', strtotime($date['appointment_date']));
 }, $appArray);
 
-if (in_array($record['appointment_date'], $fullDates)) {
-    $key = array_search($record['appointment_date'], $fullDates);
+if (in_array(date('Y-m-d', strtotime($$record['appointment_date'])), $fullDates)) {
+    $key = array_search(date('Y-m-d', strtotime($$record['appointment_date'])), $fullDates);
     unset($fullDates[$key]);
     $fullDates = array_values($fullDates);
 }
