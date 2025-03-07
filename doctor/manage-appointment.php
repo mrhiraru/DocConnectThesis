@@ -429,7 +429,7 @@ $formattedDates = implode(', ', $fullDates);
                 minuteIncrement: 60,
                 minTime: startTime,
                 maxTime: endTime,
-                defaultDate: defaultAppointmentTime + "0"
+                defaultDate: defaultAppointmentTime
             });
         }
     });

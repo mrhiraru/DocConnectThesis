@@ -440,6 +440,9 @@ include '../includes/head.php';
                     onChange: function(selectedDates, dateStr, instance) {
                         available_time(dateStr, doctor_id, startTime, endTime);
                         set_value(null);
+                    },
+                    onReady: function(selectedDates, dateStr, instance) {
+                        available_time(dateStr, doctor_id, startTime, endTime);
                     }
                 });
 
