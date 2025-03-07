@@ -832,32 +832,36 @@ class Account
         $queryMedicalConditions->execute();
         $medicalConditions = $queryMedicalConditions->fetchAll(PDO::FETCH_COLUMN);
 
+        $conditionCounts = array_fill_keys($medicalConditions, 0);
+
+        $sqlDiagnoses = "SELECT diagnosis FROM appointment WHERE diagnosis IS NOT NULL AND diagnosis != ''";
+        $queryDiagnoses = $db->prepare($sqlDiagnoses);
+        $queryDiagnoses->execute();
+        $diagnoses = $queryDiagnoses->fetchAll(PDO::FETCH_COLUMN);
+
+        // count ng diagnosis each
+        foreach ($diagnoses as $diagnosis) {
+            //pang separate
+            $conditions = array_map('trim', explode(',', $diagnosis));
+
+            foreach ($conditions as $condition) {
+                if (isset($conditionCounts[$condition])) {
+                    $conditionCounts[$condition]++;
+                }
+            }
+        }
+
         $healthConcernLabels = [];
         $healthConcernData = [];
-
-        foreach ($medicalConditions as $condition) {
-            $sqlConditionCount = "SELECT COUNT(*) as count 
-                                  FROM appointment 
-                                  WHERE diagnosis LIKE :condition";
-            $queryConditionCount = $db->prepare($sqlConditionCount);
-            $queryConditionCount->execute(['condition' => "%$condition%"]);
-            $count = $queryConditionCount->fetch(PDO::FETCH_ASSOC)['count'];
-
+        foreach ($conditionCounts as $condition => $count) {
             if ($count > 0) {
                 $healthConcernLabels[] = $condition;
                 $healthConcernData[] = $count;
             }
         }
 
-        $sqlTopConcern = "SELECT diagnosis, COUNT(*) as count 
-                          FROM appointment 
-                          WHERE diagnosis IS NOT NULL AND diagnosis != '' 
-                          GROUP BY diagnosis 
-                          ORDER BY count DESC 
-                          LIMIT 1";
-        $queryTopConcern = $db->prepare($sqlTopConcern);
-        $queryTopConcern->execute();
-        $topConcern = $queryTopConcern->fetch(PDO::FETCH_ASSOC);
+        arsort($conditionCounts);
+        $topConcern = key($conditionCounts) ?? 'No data';
 
         $sqlSeasonalTrends = "SELECT DATE_FORMAT(appointment_date, '%Y-%m') as month, COUNT(*) as count 
                               FROM appointment 
@@ -868,7 +872,7 @@ class Account
         $seasonalTrends = $querySeasonalTrends->fetchAll(PDO::FETCH_ASSOC);
 
         return [
-            'topConcern' => $topConcern['diagnosis'] ?? 'No data',
+            'topConcern' => $topConcern,
             'seasonalTrends' => $seasonalTrends,
             'healthConcernLabels' => $healthConcernLabels,
             'healthConcernData' => $healthConcernData
