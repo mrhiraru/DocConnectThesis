@@ -416,7 +416,11 @@ $formattedDates = implode(', ', $fullDates);
                     available_time(dateStr, doctor_id, startTime, endTime);
                     set_value(null);
                 },
-                defaultDate: defaultAppointmentDate
+                defaultDate: defaultAppointmentDate,
+                onReady: function(selectedDates, dateStr, instance) {
+                    available_time(dateStr, doctor_id, startTime, endTime);
+                }
+                // ended here onready of page show the time buttons
             });
 
             flatpickr("#appointment_time", {
