@@ -355,7 +355,7 @@ $formattedDates = implode(', ', $fullDates);
         let defaultAppointmentDate = "<?= $record['appointment_date'] ?>";
 
         let datecontainer = document.getElementById('date_picker_cont');
-        let appointmentdate = timecontainer.querySelector('.form-control.input');
+        let appointmentdate = datecontainer.querySelector('.form-control.input');
 
         let timecontainer = document.getElementById('time_picker_cont');
         let appointmenttime = timecontainer.querySelector('.form-control.input');
