@@ -151,7 +151,7 @@ include '../includes/head.php';
                 <div class="mb-3">
                     <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
                     <select id="purpose" name="purpose" class="form-select bg-light border border-outline-dark">
-                        <option value="" disabled <?= !isset($_POST['purpose']) ? 'selected' : '' ?>>Select a purpose</option>
+                        <option value="" disabled>Select a purpose</option>
                         <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
                         <option value="Follow-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
                         <option value="Medical Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
@@ -360,7 +360,7 @@ include '../includes/head.php';
 
                     show_doctor_info(selectedOption.getAttribute("data-accountid"));
                     reinitializeFlatpickr();
-                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
+                    request_btn.removeAttribute('disabled'); // Ensure it's disabled
                 }
             }
 
