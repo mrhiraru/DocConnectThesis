@@ -121,45 +121,35 @@ include '../includes/head.php';
                                     </div>
                                 </div>
 
-                            </div>
-                            <?php //Schedule Conflict Checker
-                            //$date_schedule = $appointment_class->get_appointment_schedules($_SESSION['doctor_id'], $record['appointment_time']);
-                            //$conflict = $appointment_class->check_availability($_SESSION['doctor_id'], $record['appointment_date'], $record['appointment_time'], $record['appointment_id']);
-                            ?>
-                            <div id="schedules" class="table-responsive">
-
-
-
-                            </div>
-                            <hr class="my-3 opacity-25">
-                            <div class="m-0 p-0 text-end">
-                                <?php
-                                if ($record['appointment_status'] == 'Pending') {
-                                ?>
-                                    <button type="button" class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#declineModal">Decline</button>
-                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Confirm</button>
-                                <?php
-                                } else if ($record['appointment_status'] == 'Incoming') {
-                                ?>
-                                    <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
-                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
-                                <?php
-                                } else if ($record['appointment_status'] == 'Ongoing') {
-                                ?>
-                                    <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
-                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
-                                <?php
-                                } else if ($record['appointment_status'] == 'Completed') {
-                                ?>
-                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">New Appointment</button>
-                                <?php
-                                } else if ($record['appointment_status'] == 'Cancelled') {
-                                ?>
-                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Reschedule</button>
-                                <?php
-                                }
-                                ?>
-                            </div>
+                                <hr class="my-3 opacity-25">
+                                <div class="m-0 p-0 text-end">
+                                    <?php
+                                    if ($record['appointment_status'] == 'Pending') {
+                                    ?>
+                                        <button type="button" class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#declineModal">Decline</button>
+                                        <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Confirm</button>
+                                    <?php
+                                    } else if ($record['appointment_status'] == 'Incoming') {
+                                    ?>
+                                        <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
+                                        <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
+                                    <?php
+                                    } else if ($record['appointment_status'] == 'Ongoing') {
+                                    ?>
+                                        <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
+                                        <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
+                                    <?php
+                                    } else if ($record['appointment_status'] == 'Completed') {
+                                    ?>
+                                        <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">New Appointment</button>
+                                    <?php
+                                    } else if ($record['appointment_status'] == 'Cancelled') {
+                                    ?>
+                                        <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Reschedule</button>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
                         </form>
                     </div>
                 </div>
@@ -307,123 +297,146 @@ include '../includes/head.php';
 </html>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-
-        const appointment_date = document.getElementById("appointment_date");
-        var startDay = appointment_date.dataset.startday;
-        var endDay = appointment_date.dataset.endday;
-
-        function validate_date() {
-            const minDate = new Date();
-            const maxDate = new Date(minDate);
-            maxDate.setMonth(maxDate.getMonth() + 1);
-
-            appointment_date.min = formatDate(minDate);
-            appointment_date.max = formatDate(maxDate);
-
-            // Helper function to format date as YYYY-MM-DD
-            function formatDate(date) {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
-
-            // Helper function to get all allowed days in a weekly cycle
-            function getAllowedDaysRange(startDay, endDay) {
-                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                const startIdx = daysOfWeek.indexOf(startDay);
-                const endIdx = daysOfWeek.indexOf(endDay);
-
-                // Create allowed days array that cycles through the week
-                const allowedDays = [];
-                for (let i = startIdx; i !== endIdx + 1; i = (i + 1) % 7) {
-                    allowedDays.push(daysOfWeek[i]);
-                }
-
-                return allowedDays;
-            }
-
-            // Get the allowed days for the specified range
-            const allowedDays = getAllowedDaysRange(startDay, endDay);
-
-            // Validate the selected date
-
-            const selectedDate = new Date(appointment_date.value);
-            const dayName = selectedDate.toLocaleDateString("en-US", {
-                weekday: 'long'
-            });
-
-
-            if (!allowedDays.includes(dayName)) {
-                // Set a custom validity message
-                appointment_date.setCustomValidity("Please select a valid day from " + startDay + " to " + endDay + ".");
-            } else {
-                // Clear any previous custom validity message
-                appointment_date.setCustomValidity("");
-            }
-        }
-
-        appointment_date.addEventListener("change", function(event) {
-            validate_date();
-        });
+    document.addEventListener("DOMContentLoaded", function() {
+        var startDay;
+        var endDay;
+        var startTime = "00:00:00";
+        var endTime = "00:00:00";
+        var rawendTime = "00:00:00";
+        var request_btn = document.getElementById('request');
+        var full_dates = [];
+        var doctor_id;
 
         const form = document.getElementById('appointmentForm');
-        form.addEventListener("submit", function(event) {
-            if (!appointment_date.checkValidity()) {
-                event.preventDefault(); // Prevent submission if the input is invalid
-                appointment_date.reportValidity(); // Show tooltip if invalid
+        const purpose_field = document.getElementById('purpose');
+        const reason_field = document.getElementById('reason');
+
+        reinitializeFlatpickr();
+
+        var doctorSelect = document.getElementById("doctor_id");
+
+        if (doctorSelect) { // Check if the element exists
+            var selectedOption = doctorSelect.options[doctorSelect.selectedIndex];
+
+            if (selectedOption && selectedOption.hasAttribute("data-accountid")) { // Check if the option exists and has the attribute
+
+                startDay = selectedOption.getAttribute("data-startday");
+                endDay = selectedOption.getAttribute("data-endday");
+                startTime = selectedOption.getAttribute("data-starttime");
+                endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                rawendTime = selectedOption.getAttribute("data-endtime");
+                full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+                doctor_id = selectedOption.getAttribute("data-doctorid");
+
+                show_doctor_info(selectedOption.getAttribute("data-accountid"));
+                reinitializeFlatpickr();
+                request_btn.removeAttribute('disabled'); // Ensure it's disabled
             }
-        });
-
-    });
-
-    // Round the time to the nearest half-hour
-    function roundTimeToNearestHalfHour(time) {
-        let [hours, minutes] = time.split(":");
-        minutes = parseInt(minutes);
-
-        if (minutes < 15) {
-            minutes = "00";
-        } else if (minutes < 45) {
-            minutes = "30";
-        } else {
-            minutes = "00";
-            hours = (parseInt(hours) + 1).toString().padStart(2, '0');
         }
 
-        return `${hours.padStart(2, '0')}:${minutes}`;
-    }
+        document.getElementById("doctor_id").addEventListener("change", function() {
+            if (!this.value) { // Check if no doctor is selected
 
-    document.getElementById("appointment_time").addEventListener("input", function() {
-        let inputTime = this.value;
-        let roundedTime = roundTimeToNearestHalfHour(inputTime);
-        this.value = roundedTime;
-    });
+                startDay = "";
+                endDay = "";
+                startTime = "00:00:00";
+                endTime = "00:00:00";
+                full_dates = [];
+                doctor_id = "";
 
-    function get_date_schedule(doctor_id, appointment_id) {
-        $.ajax({
-            url: '../handlers/appointment.get_date_schedule.php',
-            type: 'GET',
-            data: {
-                doctor_id: doctor_id,
-                appointment_date: $('#appointment_date').val(),
-                appointment_time: $('#appointment_time').val(),
-                appointment_id: appointment_id,
-                start_day: $('#appointment_date').data('startday'),
-                end_day: $('#appointment_date').data('endday'),
-                start_wt: $('#appointment_time').attr('min'),
-                end_wt: $('#appointment_time').attr('max'),
+                document.getElementById('appointment_time').value = '';
+                show_doctor_info(null);
 
-            },
-            success: function(response) {
-                $('#schedules').html(response);
-            },
-            error: function(xhr, status, error) {
-                console.error('Error sending message:', error);
+                request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
+            } else {
+                let selectedOption = this.options[this.selectedIndex];
+
+                startDay = selectedOption.getAttribute("data-startday");
+                endDay = selectedOption.getAttribute("data-endday");
+                startTime = selectedOption.getAttribute("data-starttime");
+                endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                rawendTime = selectedOption.getAttribute("data-endtime");
+                full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+                doctor_id = selectedOption.getAttribute("data-doctorid");
+
+                show_doctor_info(selectedOption.getAttribute('data-accountid'));
+                reinitializeFlatpickr();
+
+                // purpose_field.setCustomValidity("Please select the purpose of appointment.");
+                // reason_field.setCustomValidity("Please provide a reason for the appointment.");
+                request_btn.removeAttribute('disabled'); // Ensure it's enabled
             }
         });
-    }
+
+        function getDisabledDays(startDay, endDay) {
+            const daysMap = {
+                "Sunday": 0,
+                "Monday": 1,
+                "Tuesday": 2,
+                "Wednesday": 3,
+                "Thursday": 4,
+                "Friday": 5,
+                "Saturday": 6
+            };
+
+            let start = daysMap[startDay];
+            let end = daysMap[endDay];
+
+            return [
+                function(date) {
+                    let day = date.getDay();
+                    let today = new Date();
+                    let threeDaysLater = new Date();
+                    threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
+
+
+                    if (date < threeDaysLater) return true; // Disable next 3 days
+
+                    if (start <= end) {
+                        return !(day >= start && day <= end);
+                    } else {
+                        return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
+                    }
+                }
+            ]; // Wrapped inside an array
+        }
+
+        function reinitializeFlatpickr() {
+            flatpickr("#appointment_date", {
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "F j, Y",
+                inline: true,
+                disable: [
+                    ...full_dates, // Directly disable full dates
+                    ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
+                ],
+                onChange: function(selectedDates, dateStr, instance) {
+                    available_time(dateStr, doctor_id, startTime, rawendTime);
+                    set_value(null);
+                }
+            });
+
+            flatpickr("#appointment_time", {
+                enableTime: false,
+                noCalendar: true,
+                dateFormat: "H:i:s",
+                altInput: true,
+                altFormat: "h:i K",
+                inline: true,
+                minuteIncrement: 60,
+                minTime: startTime,
+                maxTime: endTime,
+            });
+        }
+
+        new TomSelect("#doctor_id", {
+            sortField: {
+                field: "text",
+                direction: "asc"
+            }
+        });
+    });
 </script>
 
 <?php
