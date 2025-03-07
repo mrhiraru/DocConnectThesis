@@ -359,6 +359,7 @@ $formattedDates = implode(', ', $fullDates);
 
 
         let defaultAppointmentDate = "<?= $record['appointment_date'] ?>";
+        let defaultAppointmentTime = "<?= $record['appointment_time'] ?>";
 
         let datecontainer = document.getElementById('date_picker_cont');
         let appointmentdate = datecontainer.querySelector('.form-control.input');
@@ -428,6 +429,7 @@ $formattedDates = implode(', ', $fullDates);
                 minuteIncrement: 60,
                 minTime: startTime,
                 maxTime: endTime,
+                defaultDate: defaultAppointmentTime
             });
         }
     });
