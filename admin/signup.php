@@ -13,44 +13,31 @@ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 1) {
 $account = new Account();
 
 if (isset($_SESSION['user_role']) || $account->check_for_admin(0)) {
-  header('location: ./login.php'); // change the location later
+  header('location: ./login.php'); // Redirect to login if admin already exists
 }
 
 if (isset($_POST['signup'])) {
 
-  $account->email = htmlentities($_POST['email']);
+  $account->email = htmlentities($_POST['username']); // Use username instead of email
   $account->password = htmlentities($_POST['password']);
-  $account->firstname = ucfirst(strtolower(htmlentities($_POST['firstname'])));
-  if (isset($_POST['middlename'])) {
-    $account->middlename = ucfirst(strtolower(htmlentities($_POST['middlename'])));
-  } else {
-    $account->middlename = '';
-  }
-  $account->lastname = ucfirst(strtolower(htmlentities($_POST['lastname'])));
   $account->user_role = 0; // user_role (0 = admin, 1 = doc, 2 = mod, 3 user)
 
   if (
-    validate_field($account->email) &&
-    validate_field($account->password) &&
-    validate_field($account->firstname) &&
-    validate_field($account->lastname) &&
-    validate_password($account->password) &&
-    validate_cpw($account->password, $_POST['confirm-password']) &&
-    validate_email($account->email) == 'success' && !$account->is_email_exist() &&
-    validate_wmsu_email($account->email)
+    validate_field($account->email) && // Validate username
+    validate_field($account->password) && // Validate password
+    validate_password($account->password) && // Validate password strength
+    validate_cpw($account->password, $_POST['confirm-password']) && // Confirm password match
+    !$account->is_email_exist() // Check if username already exists
   ) {
     if ($account->add_admin()) {
       $success = 'success';
     } else {
-      echo 'An error occured while adding in the database.';
+      echo 'An error occurred while adding the admin to the database.';
     }
   } else {
     $success = 'failed';
   }
 }
-
-
-
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +62,7 @@ function getCurrentPage()
 
           <div class="card-body">
             <form action="" method="post">
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-12 col-md-4 mb-3">
                   <label for="firstname" class="form-label">First Name</label>
                   <input type="text" class="form-control" id="firstname" name="firstname" required placeholder="first name" value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : '' ?>">
@@ -102,29 +89,21 @@ function getCurrentPage()
                   }
                   ?>
                 </div>
-              </div>
+              </div> -->
 
               <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" required placeholder="Enter your email" value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" required placeholder="Enter your username" value="<?= isset($_POST['username']) ? $_POST['username'] : '' ?>">
                 <?php
                 $new_account = new Account();
-                if (isset($_POST['email'])) {
-                  $new_account->email = htmlentities($_POST['email']);
+                if (isset($_POST['username'])) {
+                  $new_account->email = htmlentities($_POST['username']);
                 } else {
                   $new_account->email = '';
                 }
-                if (isset($_POST['email']) && strcmp(validate_email($_POST['email']), 'success') != 0) {
+                if ($new_account->is_email_exist() && $_POST['username'] && $success !== 'success') {
                 ?>
-                  <p class="text-dark m-0 ps-2"><?= validate_email($_POST['email']) ?></p>
-                <?php
-                } else if (($new_account->is_email_exist() && $_POST['email']) && $success !== 'success') {
-                ?>
-                  <p class="text-dark m-0 ps-2">Email you've entered already exist.</p>
-                <?php
-                } else if (isset($_POST['email']) && !validate_wmsu_email($_POST['email'])) {
-                ?>
-                  <p class="text-dark m-0 ps-2">You must use wmsu email.</p>
+                  <p class="text-dark m-0 ps-2">Username already exists.</p>
                 <?php
                 }
                 ?>
@@ -159,31 +138,31 @@ function getCurrentPage()
     </div>
   </div>
   <?php
-if (isset($_POST['signup']) && $success == 'success') {
-?>
-  <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="myModalLabel">Account is successfully created!</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row d-flex">
-            <div class="col-12 text-center">
-              <a href="./login.php" class="text-decoration-none text-dark">
-                <p class="m-0 text-primary fw-bold">Login to verify your account.</p>
-              </a>
+  if (isset($_POST['signup']) && $success == 'success') {
+  ?>
+    <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalLabel">Account is successfully created!</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row d-flex">
+              <div class="col-12 text-center">
+                <a href="./login.php" class="text-decoration-none text-dark">
+                  <p class="m-0 text-primary fw-bold">Login to verify your account.</p>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-<?php
-}
-?>
-<script src="../js/main.js"></script>
+  <?php
+  }
+  ?>
+  <script src="../js/main.js"></script>
 </body>
 
 </html>

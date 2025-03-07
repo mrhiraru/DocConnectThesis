@@ -70,17 +70,16 @@ class Account
 
     function add_admin()
     {
-        $sql = "INSERT INTO account (email, password, firstname, middlename, lastname, user_role) VALUES (:email, :password, :firstname, :middlename, :lastname, :user_role);";
-
+        $sql = "INSERT INTO account (email, password, user_role, verification_status) VALUES (:email, :password, :user_role, :verification_status);";
+    
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
         $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
         $query->bindParam(':password', $hashedPassword);
-        $query->bindParam(':firstname', $this->firstname);
-        $query->bindParam(':middlename', $this->middlename);
-        $query->bindParam(':lastname', $this->lastname);
         $query->bindParam(':user_role', $this->user_role);
-
+        $verification_status = 'Verified'; //set na agad "verified"
+        $query->bindParam(':verification_status', $verification_status);
+    
         if ($query->execute()) {
             return true;
         } else {
