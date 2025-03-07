@@ -348,6 +348,7 @@ $formattedDates = implode(', ', $fullDates);
         var rawendTime = "<?= $_SESSION['end_wt'] ?>";
         //var request_btn = document.getElementById('request');
         var full_dates = "<?= $formattedDates ?>";
+        console.log(full_dates);
         var doctor_id = "<?= $_SESSION['doctor_id'] ?>";
 
         const form = document.getElementById('appointmentForm');
