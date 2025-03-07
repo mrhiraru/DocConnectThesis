@@ -252,7 +252,7 @@ include '../includes/head.php';
   <section id="about" class="padding-medium mt-xl-5 py-2">
     <div class="container mb-4 pt-2">
       <div class="row align-items-stretch justify-content-center mt-xl-5">
-        <div class="col-md-6 mt-5 mt-md-0 px-4 px-lg-0 d-flex flex-column">
+        <div class="col-md-6 mt-3 my-md-5 px-4 me-0 m-md-4 px-lg-0 d-flex flex-column">
           <div class="mb-3">
             <p class="text-secondary">Learn more about us</p>
             <h2 class="display-6 fw-semibold">Your Health, Anytime, Anywhere</h2>
@@ -276,7 +276,7 @@ include '../includes/head.php';
           <a href="./about_us" class="btn bg-green px-5 py-3 mt-4 link-light" style="width: fit-content;">Learn more</a>
         </div>
         <div class="col-md-4 d-flex align-items-stretch">
-          <img src="../assets/images/billboard-img3.jpg" alt="img" class="img-thumbnail img-fluid rounded-3 shadow-lg w-100" style="object-fit: cover; border-image: fill 0 linear-gradient(to right, #ad2634, #00000000);">
+          <img src="../assets/images/billboard-img3.jpg" alt="img" class="img-thumbnail img-fluid rounded-3 shadow-lg w-100" style="object-fit: cover;">
         </div>
       </div>
     </div>

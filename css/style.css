@@ -773,10 +773,6 @@ main.col-md-9 {
 		flex-direction: column-reverse;
 	}
 
-	section#about img {
-		margin-bottom: -125px;
-	}
-
   section.main {
     border-image: fill 0 linear-gradient(to top, #ad2634, #00000000);
   }
