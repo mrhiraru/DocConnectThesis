@@ -340,7 +340,7 @@ include '../includes/head.php';
         var rawendTime = "<?= $_SESSION['end_wt'] ?>";
         //var request_btn = document.getElementById('request');
         var full_dates = [];
-        var doctor_id;
+        var doctor_id = "<?= $_SESSION['doctor_id'] ?>";
 
         const form = document.getElementById('appointmentForm');
         const purpose_field = document.getElementById('purpose');
