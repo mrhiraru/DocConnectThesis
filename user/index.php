@@ -276,7 +276,7 @@ include '../includes/head.php';
           <a href="./about_us" class="btn bg-green px-5 py-3 mt-4 link-light" style="width: fit-content;">Learn more</a>
         </div>
         <div class="col-md-4 d-flex align-items-stretch">
-          <img src="../assets/images/billboard-img3.jpg" alt="img" class="img-thumbnail img-fluid rounded-3 shadow-lg w-100" style="object-fit: cover;">
+          <img src="../assets/images/billboard-img3.jpg" alt="img" class="img-thumbnail img-fluid rounded-3 shadow-lg w-100" style="object-fit: cover; border-image: fill 0 linear-gradient(to right, #ad2634, #00000000);">
         </div>
       </div>
     </div>
