@@ -338,7 +338,7 @@ include '../includes/head.php';
         var startTime = '<?= $_SESSION['start_wt'] ?>';
         var endTime = subtractOneHour(selectedOption.getAttribute("<?= $_SESSION['end_wt'] ?>"));
         var rawendTime = '<?= $_SESSION['end_wt'] ?>';
-        var request_btn = document.getElementById('request');
+        //var request_btn = document.getElementById('request');
         var full_dates = [];
         var doctor_id;
 
