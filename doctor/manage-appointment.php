@@ -24,6 +24,41 @@ $appointment = 'active';
 include '../includes/head.php';
 
 ?>
+<style>
+    .datepicker-container {
+        display: flex;
+        justify-content: center;
+        /* Horizontally center */
+        align-items: center;
+        /* Vertically center (if needed) */
+        width: 100%;
+        /* Ensure it takes full width */
+    }
+
+    .flatpickr-calendar {
+        margin: auto;
+        /* Center the calendar */
+    }
+
+    .flatpickr-time .flatpickr-hour,
+    .flatpickr-time .flatpickr-minute {
+        pointer-events: none;
+        /* Prevent users from manually changing the hour */
+    }
+
+    /* Hide all arrows by default */
+    .flatpickr-time .numInputWrapper span.arrowUp,
+    .flatpickr-time .numInputWrapper span.arrowDown {
+        display: none;
+    }
+
+    /* Show only the arrows for the minutes input */
+    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowUp,
+    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowDown {
+        display: inline-block !important;
+        /* Make minute arrows visible */
+    }
+</style>
 
 <body onload="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)">
     <?php
@@ -298,8 +333,8 @@ include '../includes/head.php';
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var startDay;
-        var endDay;
+        var startDay = '<?= $_SESSION['start_day'] ?>';
+        var endDay = '<?= $_SESSION['end_day'] ?>';
         var startTime = "00:00:00";
         var endTime = "00:00:00";
         var rawendTime = "00:00:00";
