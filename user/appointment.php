@@ -189,7 +189,7 @@ include '../includes/head.php';
                             <?php
                             if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                             ?>
-                                <p class="text-danger small mt-1">Select a valid appointment date.</p>
+                                <p class="text-danger small mt-1">Please select date of appointment.</p>
                             <?php
                             }
                             ?>
@@ -208,7 +208,7 @@ include '../includes/head.php';
                             <?php
                             if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
                             ?>
-                                <p class="text-danger small mt-1">Select a valid appointment time.</p>
+                                <p class="text-danger small mt-1">Please select time of appointment.</p>
                             <?php
                             }
                             ?>
@@ -342,6 +342,16 @@ include '../includes/head.php';
             const reason_field = document.getElementById('reason');
 
             reinitializeFlatpickr();
+
+            var doctorSelect = document.getElementById("doctor_id");
+
+            if (doctorSelect) { // Check if the element exists
+                var selectedOption = doctorSelect.options[doctorSelect.selectedIndex];
+
+                if (selectedOption && selectedOption.hasAttribute("data-accountid")) { // Check if the option exists and has the attribute
+                    show_doctor_info(selectedOption.getAttribute("data-accountid"));
+                }
+            }
 
             document.getElementById("doctor_id").addEventListener("change", function() {
                 if (!this.value) { // Check if no doctor is selected
