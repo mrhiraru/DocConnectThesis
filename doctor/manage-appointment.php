@@ -84,29 +84,43 @@ include '../includes/head.php';
                                                                         } ?>"><?= $record['appointment_status'] ?></span>
                                 </p>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                                    <input type="date" id="appointment_date" name="appointment_date" data-startday="<?= $_SESSION['start_day'] ?>" data-endday="<?= $_SESSION['end_day'] ?>" min="<?php echo date('Y-m-d'); ?>" value="<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" onchange="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                                    <?php
-                                    if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
-                                    ?>
-                                        <p class="text-dark m-0 ps-2">Select appointment date.</p>
-                                    <?php
-                                    }
-                                    ?>
+                            <div class="container mt-4">
+                                <div class="row g-3">
+                                    <!-- Date Picker -->
+                                    <div class="col-lg-6" id="date_picker_cont">
+                                        <label for="appointment_date" class="form-label text-secondary fw-semibold">Select Date</label>
+                                        <div class="p-2 border rounded bg-light shadow-sm">
+                                            <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT DATE" required readonly>
+                                        </div>
+                                        <?php
+                                        if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
+                                        ?>
+                                            <p class="text-danger small mt-1">Please select date of appointment.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+
+                                    <!-- Time Picker -->
+                                    <div class="col-lg-6" id="time_picker_cont">
+                                        <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
+                                        <div class="p-2 pb-3 border rounded bg-light shadow-sm">
+                                            <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
+                                            <div class="row row-cols-2 g-3 p-3" id="available_time">
+
+                                            </div>
+                                        </div>
+
+                                        <?php
+                                        if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
+                                        ?>
+                                            <p class="text-danger small mt-1">Please select time of appointment.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="appointment_time" class="form-label text-black-50">Select Time</label>
-                                    <input type="time" id="appointment_time" name="appointment_time" step="1800" min="<?= $_SESSION['start_wt'] ?>" max="<?= $_SESSION['end_wt'] ?>" value="<?= $record['appointment_time'] ?>" onchange="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                                    <?php
-                                    if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
-                                    ?>
-                                        <p class="text-dark m-0 ps-2">Select appointment time.</p>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
+
                             </div>
                             <?php //Schedule Conflict Checker
                             //$date_schedule = $appointment_class->get_appointment_schedules($_SESSION['doctor_id'], $record['appointment_time']);
