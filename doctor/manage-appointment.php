@@ -409,7 +409,7 @@ $formattedDates = implode(', ', $fullDates);
                     available_time(dateStr, doctor_id, startTime, endTime);
                     set_value(null);
                 },
-                defaultDate: defaultAppointmentDate
+                minDate: defaultAppointmentDate
             });
 
             flatpickr("#appointment_time", {
