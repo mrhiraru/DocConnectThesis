@@ -351,9 +351,14 @@ $formattedDates = implode(', ', $fullDates);
         console.log(full_dates);
         var doctor_id = "<?= $_SESSION['doctor_id'] ?>";
 
-        const form = document.getElementById('appointmentForm');
-        const purpose_field = document.getElementById('purpose');
-        const reason_field = document.getElementById('reason');
+
+        let defaultAppointmentDate = "<?= $record['appointment_date'] ?>";
+
+        let datecontainer = document.getElementById('date_picker_cont');
+        let appointmentdate = timecontainer.querySelector('.form-control.input');
+
+        let timecontainer = document.getElementById('time_picker_cont');
+        let appointmenttime = timecontainer.querySelector('.form-control.input');
 
         reinitializeFlatpickr();
 
@@ -403,7 +408,8 @@ $formattedDates = implode(', ', $fullDates);
                 onChange: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime);
                     set_value(null);
-                }
+                },
+                defaultDate: defaultAppointmentDate
             });
 
             flatpickr("#appointment_time", {

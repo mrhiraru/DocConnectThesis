@@ -337,10 +337,6 @@ include '../includes/head.php';
             var full_dates = [];
             var doctor_id;
 
-            const form = document.getElementById('appointmentForm');
-            const purpose_field = document.getElementById('purpose');
-            const reason_field = document.getElementById('reason');
-
             reinitializeFlatpickr();
 
             var doctorSelect = document.getElementById("doctor_id");
