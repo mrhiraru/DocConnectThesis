@@ -141,13 +141,13 @@ class Appointment
         WHERE appointment_status = 'Incoming'
         AND doctor_id = :doctor_id
         AND appointment_time >= :start
-        AND appointment_time <= :end
+        AND appointment_time < :end
         GROUP BY appointment_date
         HAVING COUNT(DISTINCT appointment_time) = 
             (SELECT COUNT(*) 
              FROM (SELECT DISTINCT appointment_time FROM appointment 
                    WHERE appointment_time >= :start 
-                   AND appointment_time <= :end) AS time_slots);";
+                   AND appointment_time < :end) AS time_slots);";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':doctor_id', $doctor_id);

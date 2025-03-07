@@ -392,7 +392,7 @@ include '../includes/head.php';
                     ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
-                    available_time(dateStr, doctor_id, startTime, rawendTime);
+                    available_time(dateStr, doctor_id, startTime, endTime);
                     set_value(null);
                 }
             });
