@@ -52,10 +52,8 @@ function getCurrentPage()
 
     <div class="row mx-1 mx-md-4 justify-content-center align-items-center">
       <div class="col-md-6 d-flex flex-column align-items-center justify-content-center">
-        <!-- <i class='bx bx-map-alt fs-3 text-danger'></i> Campus Map Icon -->
         <div class="d-flex justify-content-center w-100 h-100 shadow-lg">
-          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7921.61518569353!2d122.05236037770997!3d6.913594200000012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x325041dd7a24816f%3A0x51af215fb64cc81a!2sWestern%20Mindanao%20State%20University!5e0!3m2!1sen!2sph!4v1723525384757!5m2!1sen!2sph"
-            width="100%" height="450" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          <iframe src="<?= $record['campus_map_url'] ?>" width="100%" height="450" style="border:0;" allowfullscreen="true" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
           </iframe>
         </div>
       </div>
@@ -72,6 +70,10 @@ function getCurrentPage()
         <div class="d-flex flex-column align-items-center justify-content-center border-bottom border-2">
           <i class='bx bx-envelope fs-3 text-danger'></i> <!-- Email Icon -->
           <p class="fs-5 mb-2"><?= $record['campus_email'] ?></p>
+        </div>
+        <div class="d-flex flex-column align-items-center justify-content-center border-bottom border-2">
+          <i class='bx bx-user fs-3 text-danger'></i> <!-- Moderator Icon -->
+          <p class="fs-5 mb-2"><?= $campus->get_moderator_name($record['moderator_id']) ?></p>
         </div>
       </div>
     </div>
