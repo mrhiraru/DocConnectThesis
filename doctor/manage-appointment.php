@@ -409,13 +409,6 @@ include '../includes/head.php';
                 maxTime: endTime,
             });
         }
-
-        new TomSelect("#doctor_id", {
-            sortField: {
-                field: "text",
-                direction: "asc"
-            }
-        });
     });
 
     function set_value(selectedRadio) {
