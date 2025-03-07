@@ -336,7 +336,7 @@ include '../includes/head.php';
         var startDay = '<?= $_SESSION['start_day'] ?>';
         var endDay = '<?= $_SESSION['end_day'] ?>';
         var startTime = '<?= $_SESSION['start_wt'] ?>';
-        var endTime = subtractOneHour(selectedOption.getAttribute("<?= $_SESSION['end_wt'] ?>"));
+        var endTime = subtractOneHour("<?= $_SESSION['end_wt'] ?>");
         var rawendTime = '<?= $_SESSION['end_wt'] ?>';
         //var request_btn = document.getElementById('request');
         var full_dates = [];
