@@ -462,27 +462,6 @@ include '../includes/head.php';
         });
     }
 
-    function show_doctor_info(account_id) {
-
-        if (account_id) {
-            $.ajax({
-                url: '../handlers/appointment.show_doctor_info.php',
-                type: 'GET',
-                data: {
-                    account_id: account_id
-                },
-                success: function(response) {
-                    $('#doctor_info').html(response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error fetching doctor information:', error);
-                }
-            });
-        } else {
-            $('#doctor_info').html("<p class='text-center text-muted m-0 p-0'>No doctor selected.</p>");
-        }
-    }
-
     function subtractOneHour(time) {
         let [hours, minutes] = time.split(":").map(Number);
         hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
