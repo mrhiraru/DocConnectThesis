@@ -196,13 +196,13 @@ include '../includes/head.php';
           ?>
             <p class="text-dark m-0 ps-2">Email you've entered already exist.</p>
           <?php
-          } // else if (isset($_POST['email']) && !validate_wmsu_email($_POST['email'])) {
-          // 
+          } else if (isset($_POST['email']) && !validate_wmsu_email($_POST['email'])) {
+
           ?>
-          <!-- <p class="text-dark m-0 ps-2">You must use wmsu email.</p> -->
+            <p class="text-dark m-0 ps-2">You must use wmsu email.</p>
           <?php
-          // }
-          // 
+          }
+
           ?>
         </div>
         <div class="row row-cols-1 row-cols-md-2 w-100">
