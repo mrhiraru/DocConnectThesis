@@ -349,6 +349,10 @@ body.sidepanel-open {
   #users .bx {
     font-size: 35px;
   }
+
+  .page-container {
+    margin: 0 5px;
+  }
 }
 
 @media screen and (max-width: 991px) {

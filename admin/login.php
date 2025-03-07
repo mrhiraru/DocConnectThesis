@@ -13,7 +13,7 @@ require_once("../tools/functions.php");
 if (isset($_POST['login'])) {
   $account = new Account();
 
-  $account->email = htmlentities($_POST['email']);
+  $account->email = htmlentities($_POST['username']); // Change from email to username
   $account->password = htmlentities($_POST['password']);
   if ($account->sign_in_account()) {
     $_SESSION['user_role'] = $account->user_role;
@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
       header('location: ./index.php');
     }
   } else {
-    $error = 'Login failed: Invalid email or password.';
+    $error = 'Login failed: Invalid username or password.';
   }
 }
 ?>
@@ -61,8 +61,8 @@ function getCurrentPage()
           <div class="card-body">
             <form action="" method="post">
               <div class="mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required value="<?= isset($_POST['email']) ? $_POST['email'] : '' ?>">
+                <label for="username" class="form-label">Username</label> <!-- Changed from email to username -->
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required value="<?= isset($_POST['username']) ? $_POST['username'] : '' ?>"> <!-- Changed from email to username -->
               </div>
               <div class="mb-1">
                 <label for="password" class="form-label">Password</label>
@@ -85,10 +85,6 @@ function getCurrentPage()
               <input type="submit" class="btn btn-primary text-light w-100" name="login" value="Login">
             </form>
           </div>
-
-          <!-- <div class="card-footer text-center">
-            <small class="text-muted">Don't have an account? <a href="./signup">Signup here</a></small>
-          </div> -->
         </div>
       </div>
     </div>

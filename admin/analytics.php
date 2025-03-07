@@ -52,7 +52,7 @@ $doctorTrends = $doctorStats['doctorTrends'];
 
 $healthStats = $account->fetch_health_concerns_and_trends();
 $topConcern = $healthStats['topConcern'];
-$seasonalTrends = $healthStats['seasonalTrends'];
+$topConcernMonth = $healthStats['topConcernMonth'];
 $healthConcernLabels = $healthStats['healthConcernLabels'];
 $healthConcernData = $healthStats['healthConcernData'];
 ?>
@@ -78,8 +78,8 @@ function getCurrentPage()
       <h2 class="text-center my-4">Analytics & Reports</h2>
 
       <!-- User Statistics -->
-      <div class="row mb-4">
-        <div class="col-lg-5">
+      <div class="row mb-lg-4">
+        <div class="col-lg-5 mb-3 mb-lg-0">
           <div class="card h-100">
             <div class="card-header">
               <h4 class="card-title">User Statistics</h4>
@@ -96,7 +96,7 @@ function getCurrentPage()
           </div>
         </div>
         <!-- Appointment Insights -->
-        <div class="col-lg-7">
+        <div class="col-lg-7 mb-3 mb-lg-0">
           <div class="card h-100">
             <div class="card-header">
               <h4 class="card-title">Doctor Activity</h4>
@@ -114,7 +114,7 @@ function getCurrentPage()
 
       <div class="row mb-4">
         <!-- Appointment Insights -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 mb-3 mb-lg-0">
           <div class="card h-100">
             <div class="card-header">
               <h4 class="card-title">Appointment Insights</h4>
@@ -131,7 +131,7 @@ function getCurrentPage()
           </div>
         </div>
         <!-- Health Concerns & Trends -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 mb-3 mb-lg-0">
           <div class="card h-100">
             <div class="card-header">
               <h4 class="card-title">Health Concerns & Trends</h4>
@@ -141,6 +141,7 @@ function getCurrentPage()
               <h4 class="card-title">Health Overview</h4>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Top Health Concern: <strong id="topConcern"></strong></li>
+                <li class="list-group-item">Top Health Concern This Month: <strong id="topConcernMonth"></strong></li>
                 <!-- <li class="list-group-item">Seasonal Trends: <strong id="seasonalTrends"></strong></li> -->
               </ul>
             </div>
@@ -250,6 +251,9 @@ function getCurrentPage()
       });
 
       // Health Concerns & Trends Chart
+      document.getElementById("topConcern").textContent = <?php echo json_encode($topConcern); ?>;
+      document.getElementById("topConcernMonth").textContent = <?php echo json_encode($topConcernMonth); ?>;
+
       new Chart(document.getElementById("healthConcernsChart"), {
         type: "doughnut",
         data: {
@@ -260,8 +264,6 @@ function getCurrentPage()
           }]
         }
       });
-
-      document.getElementById("topConcern").textContent = <?php echo json_encode($topConcern); ?>;
       // document.getElementById("seasonalTrends").textContent = "Seasonal trends data available";
 
       // System Performance Chart

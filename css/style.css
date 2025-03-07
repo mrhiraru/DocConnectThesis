@@ -158,7 +158,7 @@ section.main {
   align-items: center;
   justify-content: center;
 	border-image: fill 0 linear-gradient(to right, #ad2634, #00000000);
-  background: url(../assets/images/bg-1.png) no-repeat;
+  background: url(../assets/images/bg-3.jpg) no-repeat;
   background-attachment: fixed;
   background-size: cover;
   background-position: center;
@@ -771,10 +771,6 @@ main.col-md-9 {
 
 	section#about .row {
 		flex-direction: column-reverse;
-	}
-
-	section#about img {
-		margin-bottom: -125px;
 	}
 
   section.main {
