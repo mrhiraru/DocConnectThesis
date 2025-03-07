@@ -834,19 +834,33 @@ class Account
 
         $conditionCounts = array_fill_keys($medicalConditions, 0);
 
-        $sqlDiagnoses = "SELECT diagnosis FROM appointment WHERE diagnosis IS NOT NULL AND diagnosis != ''";
+        $sqlDiagnoses = "SELECT diagnosis, appointment_date FROM appointment WHERE diagnosis IS NOT NULL AND diagnosis != ''";
         $queryDiagnoses = $db->prepare($sqlDiagnoses);
         $queryDiagnoses->execute();
-        $diagnoses = $queryDiagnoses->fetchAll(PDO::FETCH_COLUMN);
+        $diagnoses = $queryDiagnoses->fetchAll(PDO::FETCH_ASSOC);
 
+        $currentMonthConditionCounts = array_fill_keys($medicalConditions, 0);
+        $currentMonth = date('Y-m');
         // count ng diagnosis each
-        foreach ($diagnoses as $diagnosis) {
+        foreach ($diagnoses as $row) {
+            $diagnosis = $row['diagnosis'];
+            $appointmentDate = $row['appointment_date'];
+
             //pang separate
             $conditions = array_map('trim', explode(',', $diagnosis));
-
+            // total lng 
             foreach ($conditions as $condition) {
                 if (isset($conditionCounts[$condition])) {
                     $conditionCounts[$condition]++;
+                }
+            }
+
+            // total sa current month
+            if (date('Y-m', strtotime($appointmentDate)) === $currentMonth) {
+                foreach ($conditions as $condition) {
+                    if (isset($currentMonthConditionCounts[$condition])) {
+                        $currentMonthConditionCounts[$condition]++;
+                    }
                 }
             }
         }
@@ -863,6 +877,9 @@ class Account
         arsort($conditionCounts);
         $topConcern = key($conditionCounts) ?? 'No data';
 
+        arsort($currentMonthConditionCounts);
+        $topConcernMonth = key($currentMonthConditionCounts) ?? 'No data';
+
         $sqlSeasonalTrends = "SELECT DATE_FORMAT(appointment_date, '%Y-%m') as month, COUNT(*) as count 
                               FROM appointment 
                               GROUP BY month 
@@ -873,6 +890,7 @@ class Account
 
         return [
             'topConcern' => $topConcern,
+            'topConcernMonth' => $topConcernMonth,
             'seasonalTrends' => $seasonalTrends,
             'healthConcernLabels' => $healthConcernLabels,
             'healthConcernData' => $healthConcernData
