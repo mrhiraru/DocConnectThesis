@@ -330,13 +330,17 @@ include '../includes/head.php';
 </body>
 
 </html>
-<?=
+<?php
 $appArray = $appointment_class->get_full_dates($_SESSION['doctor_id'], $_SESSION['start_wt'], $_SESSION['end_wt']);
 
 $fullDates = array_map(function ($date) {
     return date('Y-m-d', strtotime($date['appointment_date']));
 }, $appArray);
 
+if (in_array($record['appointment_date'], $fullDates)) {
+    $key = array_search($record['appointment_date'], $fullDates);
+    unset($fullDates[$key]);
+}
 $formattedDates = implode(', ', $fullDates);
 ?>
 <script>
