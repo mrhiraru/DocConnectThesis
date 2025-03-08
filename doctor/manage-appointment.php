@@ -24,8 +24,43 @@ $appointment = 'active';
 include '../includes/head.php';
 
 ?>
+<style>
+    .datepicker-container {
+        display: flex;
+        justify-content: center;
+        /* Horizontally center */
+        align-items: center;
+        /* Vertically center (if needed) */
+        width: 100%;
+        /* Ensure it takes full width */
+    }
 
-<body onload="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)">
+    .flatpickr-calendar {
+        margin: auto;
+        /* Center the calendar */
+    }
+
+    .flatpickr-time .flatpickr-hour,
+    .flatpickr-time .flatpickr-minute {
+        pointer-events: none;
+        /* Prevent users from manually changing the hour */
+    }
+
+    /* Hide all arrows by default */
+    .flatpickr-time .numInputWrapper span.arrowUp,
+    .flatpickr-time .numInputWrapper span.arrowDown {
+        display: none;
+    }
+
+    /* Show only the arrows for the minutes input */
+    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowUp,
+    .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowDown {
+        display: inline-block !important;
+        /* Make minute arrows visible */
+    }
+</style>
+
+<body>
     <?php
     require_once('../includes/header-doctor.php');
     ?>
@@ -66,15 +101,12 @@ include '../includes/head.php';
                             </div>
                             <hr class="my-3 opacity-25">
                             <div class="mb-3">
-                                <label for="reason" class="form-label text-black-50">Purpose of Appointment</label>
+                                <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
+                                <textarea id="purpose" name="purpose" class="form-control bg-light border border-dark" rows="" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required readonly><?= $record['purpose'] ?></textarea>
+                            </div>
+                            <div class="mb-3">
+                                <label for="reason" class="form-label text-black-50">Reason</label>
                                 <textarea id="reason" name="reason" class="form-control bg-light border border-dark" rows="" placeholder="Describe the reason for your appointment (e.g., symptoms, check-up, follow-up)" required readonly><?= $record['reason'] ?></textarea>
-                                <?php
-                                if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
-                                ?>
-                                    <p class="text-dark m-0 ps-2">Enter reason for appointment.</p>
-                                <?php
-                                }
-                                ?>
                             </div>
                             <div class="mb-3">
                                 <p class="">
@@ -87,68 +119,72 @@ include '../includes/head.php';
                                                                         } ?>"><?= $record['appointment_status'] ?></span>
                                 </p>
                             </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <label for="appointment_date" class="form-label text-black-50">Select Date</label>
-                                    <input type="date" id="appointment_date" name="appointment_date" data-startday="<?= $_SESSION['start_day'] ?>" data-endday="<?= $_SESSION['end_day'] ?>" min="<?php echo date('Y-m-d'); ?>" value="<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" onchange="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
+                            <div class="container mt-4">
+                                <div class="row g-3">
+                                    <!-- Date Picker -->
+                                    <div class="col-lg-6" id="date_picker_cont">
+                                        <label for="appointment_date" class="form-label text-secondary fw-semibold">Select Date</label>
+                                        <div class="p-2 border rounded bg-light shadow-sm">
+                                            <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT DATE" required readonly>
+                                        </div>
+                                        <?php
+                                        if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
+                                        ?>
+                                            <p class="text-danger small mt-1">Please select date of appointment.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+
+                                    <!-- Time Picker -->
+                                    <div class="col-lg-6" id="time_picker_cont">
+                                        <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
+                                        <div class="p-2 pb-3 border rounded bg-light shadow-sm">
+                                            <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
+                                            <div class="row row-cols-2 g-3 p-3" id="available_time">
+
+                                            </div>
+                                        </div>
+
+                                        <?php
+                                        if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
+                                        ?>
+                                            <p class="text-danger small mt-1">Please select time of appointment.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+
+                                <hr class="my-3 opacity-25">
+                                <div class="m-0 p-0 text-end">
                                     <?php
-                                    if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
+                                    if ($record['appointment_status'] == 'Pending') {
                                     ?>
-                                        <p class="text-dark m-0 ps-2">Select appointment date.</p>
+                                        <button type="button" class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#declineModal">Decline</button>
+                                        <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Confirm</button>
+                                    <?php
+                                    } else if ($record['appointment_status'] == 'Incoming') {
+                                    ?>
+                                        <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
+                                        <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
+                                    <?php
+                                    } else if ($record['appointment_status'] == 'Ongoing') {
+                                    ?>
+                                        <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
+                                        <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
+                                    <?php
+                                    } else if ($record['appointment_status'] == 'Completed') {
+                                    ?>
+                                        <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">New Appointment</button>
+                                    <?php
+                                    } else if ($record['appointment_status'] == 'Cancelled') {
+                                    ?>
+                                        <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Reschedule</button>
                                     <?php
                                     }
                                     ?>
                                 </div>
-                                <div class="col-md-6">
-                                    <label for="appointment_time" class="form-label text-black-50">Select Time</label>
-                                    <input type="time" id="appointment_time" name="appointment_time" step="1800" min="<?= $_SESSION['start_wt'] ?>" max="<?= $_SESSION['end_wt'] ?>" value="<?= $record['appointment_time'] ?>" onchange="get_date_schedule(<?= $_SESSION['doctor_id'] ?>, <?= $record['appointment_id'] ?>)" class="form-control fs-6 px-2 py-1 bg-light border border-dark" required>
-                                    <?php
-                                    if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
-                                    ?>
-                                        <p class="text-dark m-0 ps-2">Select appointment time.</p>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-                            </div>
-                            <?php //Schedule Conflict Checker
-                            //$date_schedule = $appointment_class->get_appointment_schedules($_SESSION['doctor_id'], $record['appointment_time']);
-                            //$conflict = $appointment_class->check_availability($_SESSION['doctor_id'], $record['appointment_date'], $record['appointment_time'], $record['appointment_id']);
-                            ?>
-                            <div id="schedules" class="table-responsive">
-
-
-
-                            </div>
-                            <hr class="my-3 opacity-25">
-                            <div class="m-0 p-0 text-end">
-                                <?php
-                                if ($record['appointment_status'] == 'Pending') {
-                                ?>
-                                    <button type="button" class="btn btn-danger text-light" data-bs-toggle="modal" data-bs-target="#declineModal">Decline</button>
-                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Confirm</button>
-                                <?php
-                                } else if ($record['appointment_status'] == 'Incoming') {
-                                ?>
-                                    <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
-                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
-                                <?php
-                                } else if ($record['appointment_status'] == 'Ongoing') {
-                                ?>
-                                    <button type="submit" class="btn btn-danger text-light" id="cancel" name="cancel">Cancel</button>
-                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">Reschedule</button>
-                                <?php
-                                } else if ($record['appointment_status'] == 'Completed') {
-                                ?>
-                                    <button type="submit" class="btn btn-success text-light" id="reschedule" name="reschedule">New Appointment</button>
-                                <?php
-                                } else if ($record['appointment_status'] == 'Cancelled') {
-                                ?>
-                                    <button type="submit" class="btn btn-success text-light" id="confirm" name="confirm">Reschedule</button>
-                                <?php
-                                }
-                                ?>
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -294,124 +330,165 @@ include '../includes/head.php';
 </body>
 
 </html>
+<?php
+$appArray = $appointment_class->get_full_dates($_SESSION['doctor_id'], $_SESSION['start_wt'], $_SESSION['end_wt']);
 
+$fullDates = array_map(function ($date) {
+    return date('Y-m-d', strtotime($date['appointment_date']));
+}, $appArray);
+
+if (in_array(date('Y-m-d', strtotime($record['appointment_date'])), $fullDates)) {
+    $key = array_search(date('Y-m-d', strtotime($record['appointment_date'])), $fullDates);
+    unset($fullDates[$key]);
+    $fullDates = array_values($fullDates);
+}
+
+$formattedDates = implode(', ', $fullDates);
+?>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener("DOMContentLoaded", function() {
+        var startDay = "<?= $_SESSION['start_day'] ?>";
+        var endDay = "<?= $_SESSION['end_day'] ?>";
+        var startTime = "<?= $_SESSION['start_wt'] ?>";
+        var endTime = subtractOneHour("<?= $_SESSION['end_wt'] ?>");
+        var rawendTime = "<?= $_SESSION['end_wt'] ?>";
+        //var request_btn = document.getElementById('request');
+        var full_dates = "<?= $formattedDates ?>".split(', ');
+        console.log(full_dates);
+        var doctor_id = "<?= $_SESSION['doctor_id'] ?>";
 
-        const appointment_date = document.getElementById("appointment_date");
-        var startDay = appointment_date.dataset.startday;
-        var endDay = appointment_date.dataset.endday;
 
-        function validate_date() {
-            const minDate = new Date();
-            const maxDate = new Date(minDate);
-            maxDate.setMonth(maxDate.getMonth() + 1);
+        let defaultAppointmentDate = "<?= $record['appointment_date'] ?>";
+        let defaultAppointmentTime = "<?= $record['appointment_time'] ?>";
 
-            appointment_date.min = formatDate(minDate);
-            appointment_date.max = formatDate(maxDate);
+        let datecontainer = document.getElementById('date_picker_cont');
+        let appointmentdate = datecontainer.querySelector('.form-control.input');
 
-            // Helper function to format date as YYYY-MM-DD
-            function formatDate(date) {
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}-${month}-${day}`;
-            }
+        let timecontainer = document.getElementById('time_picker_cont');
+        let appointmenttime = timecontainer.querySelector('.form-control.input');
 
-            // Helper function to get all allowed days in a weekly cycle
-            function getAllowedDaysRange(startDay, endDay) {
-                const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-                const startIdx = daysOfWeek.indexOf(startDay);
-                const endIdx = daysOfWeek.indexOf(endDay);
+        reinitializeFlatpickr();
 
-                // Create allowed days array that cycles through the week
-                const allowedDays = [];
-                for (let i = startIdx; i !== endIdx + 1; i = (i + 1) % 7) {
-                    allowedDays.push(daysOfWeek[i]);
+        function getDisabledDays(startDay, endDay) {
+            const daysMap = {
+                "Sunday": 0,
+                "Monday": 1,
+                "Tuesday": 2,
+                "Wednesday": 3,
+                "Thursday": 4,
+                "Friday": 5,
+                "Saturday": 6
+            };
+
+            let start = daysMap[startDay];
+            let end = daysMap[endDay];
+
+            return [
+                function(date) {
+                    let day = date.getDay();
+                    let today = new Date();
+                    let threeDaysLater = new Date();
+                    threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
+
+
+                    if (date < threeDaysLater) return true; // Disable next 3 days
+
+                    if (start <= end) {
+                        return !(day >= start && day <= end);
+                    } else {
+                        return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
+                    }
                 }
+            ]; // Wrapped inside an array
+        }
 
-                return allowedDays;
-            }
-
-            // Get the allowed days for the specified range
-            const allowedDays = getAllowedDaysRange(startDay, endDay);
-
-            // Validate the selected date
-
-            const selectedDate = new Date(appointment_date.value);
-            const dayName = selectedDate.toLocaleDateString("en-US", {
-                weekday: 'long'
+        function reinitializeFlatpickr() {
+            flatpickr("#appointment_date", {
+                dateFormat: "Y-m-d",
+                altInput: true,
+                altFormat: "F j, Y",
+                inline: true,
+                disable: [
+                    ...full_dates, // Directly disable full dates
+                    ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
+                ],
+                onChange: function(selectedDates, dateStr, instance) {
+                    available_time(dateStr, doctor_id, startTime, endTime);
+                    set_value(null);
+                },
+                defaultDate: defaultAppointmentDate
             });
 
-
-            if (!allowedDays.includes(dayName)) {
-                // Set a custom validity message
-                appointment_date.setCustomValidity("Please select a valid day from " + startDay + " to " + endDay + ".");
-            } else {
-                // Clear any previous custom validity message
-                appointment_date.setCustomValidity("");
-            }
+            flatpickr("#appointment_time", {
+                enableTime: false,
+                noCalendar: true,
+                dateFormat: "H:i:s",
+                altInput: true,
+                altFormat: "h:i K",
+                inline: true,
+                minuteIncrement: 60,
+                minTime: startTime,
+                maxTime: endTime,
+                defaultDate: defaultAppointmentTime
+            });
         }
-
-        appointment_date.addEventListener("change", function(event) {
-            validate_date();
-        });
-
-        const form = document.getElementById('appointmentForm');
-        form.addEventListener("submit", function(event) {
-            if (!appointment_date.checkValidity()) {
-                event.preventDefault(); // Prevent submission if the input is invalid
-                appointment_date.reportValidity(); // Show tooltip if invalid
-            }
-        });
-
     });
 
-    // Round the time to the nearest half-hour
-    function roundTimeToNearestHalfHour(time) {
-        let [hours, minutes] = time.split(":");
-        minutes = parseInt(minutes);
+    function set_value(selectedRadio) {
+        if (selectedRadio === null) {
 
-        if (minutes < 15) {
-            minutes = "00";
-        } else if (minutes < 45) {
-            minutes = "30";
+            document.getElementById('appointment_time').value = null;
+            let timecontainer = document.getElementById('time_picker_cont');
+
+            let appointmentInput = timecontainer.querySelector('.form-control.input');
+            appointmentInput.value = "SELECT TIME";
         } else {
-            minutes = "00";
-            hours = (parseInt(hours) + 1).toString().padStart(2, '0');
-        }
+            let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
+            let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
 
-        return `${hours.padStart(2, '0')}:${minutes}`;
+            document.getElementById('appointment_time').value = selectedTime;
+
+            let timecontainer = document.getElementById('time_picker_cont');
+
+            let appointmentInput = timecontainer.querySelector('.form-control.input');
+            appointmentInput.value = formattedTime + " - " + addOneHour(selectedTime);
+        }
     }
 
-    document.getElementById("appointment_time").addEventListener("input", function() {
-        let inputTime = this.value;
-        let roundedTime = roundTimeToNearestHalfHour(inputTime);
-        this.value = roundedTime;
-    });
+    function addOneHour(time) {
+        let [hours, minutes] = time.split(":").map(Number); // Extract HH and MM
 
-    function get_date_schedule(doctor_id, appointment_id) {
+        hours = (hours + 1) % 24; // Add one hour and wrap around if it exceeds 23
+
+        let period = hours >= 12 ? "PM" : "AM"; // Determine AM or PM
+        let formattedHours = hours % 12 || 12; // Convert 24-hour to 12-hour format
+
+        return `${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
+    }
+
+    function available_time(date, doctor_id, start, end) {
         $.ajax({
-            url: '../handlers/appointment.get_date_schedule.php',
+            url: '../handlers/appointment.get_date_available_time.php',
             type: 'GET',
             data: {
-                doctor_id: doctor_id,
-                appointment_date: $('#appointment_date').val(),
-                appointment_time: $('#appointment_time').val(),
-                appointment_id: appointment_id,
-                start_day: $('#appointment_date').data('startday'),
-                end_day: $('#appointment_date').data('endday'),
-                start_wt: $('#appointment_time').attr('min'),
-                end_wt: $('#appointment_time').attr('max'),
-
+                date,
+                doctor_id,
+                startTime: start,
+                endTime: end,
             },
             success: function(response) {
-                $('#schedules').html(response);
+                $('#available_time').html(response);
             },
             error: function(xhr, status, error) {
-                console.error('Error sending message:', error);
+                console.error('Error fetching available time:', error);
             }
         });
+    }
+
+    function subtractOneHour(time) {
+        let [hours, minutes] = time.split(":").map(Number);
+        hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
+        return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
     }
 </script>
 

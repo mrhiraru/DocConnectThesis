@@ -150,8 +150,8 @@ include '../includes/head.php';
                 <hr>
                 <div class="mb-3">
                     <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
-                    <select id="purpose" name="purpose" class="form-select bg-light border border-outline-dark">
-                        <option value="" disabled <?= !isset($_POST['purpose']) ? 'selected' : '' ?>>Select a purpose</option>
+                    <select id="purpose" name="purpose" class="form-select bg-light border border-outline-dark text-secondary">
+                        <option value=""></option>
                         <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
                         <option value="Follow-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up") ? 'selected' : '' ?>>Follow-up</option>
                         <option value="Medical Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
@@ -167,8 +167,8 @@ include '../includes/head.php';
                     ?>
                 </div>
                 <div class="mb-3">
-                    <label for="reason" class="form-label text-black-50">Reason:</label>
-                    <textarea class="form-control bg-light fs-6 mb-3 border  border-outline-dark" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."></textarea>
+                    <label for="reason" class="form-label text-black-50">Reason</label>
+                    <textarea class="form-control bg-light fs-6 mb-3 border  border-outline-dark text-secondary" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."><?= (isset($_POST['reason'])) ? $_POST['reason'] : '' ?></textarea>
                     <?php
                     if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
                     ?>
@@ -189,7 +189,7 @@ include '../includes/head.php';
                             <?php
                             if (isset($_POST['appointment_date']) && !validate_field($_POST['appointment_date'])) {
                             ?>
-                                <p class="text-danger small mt-1">Select a valid appointment date.</p>
+                                <p class="text-danger small mt-1">Please select date of appointment.</p>
                             <?php
                             }
                             ?>
@@ -208,7 +208,7 @@ include '../includes/head.php';
                             <?php
                             if (isset($_POST['appointment_time']) && !validate_field($_POST['appointment_time'])) {
                             ?>
-                                <p class="text-danger small mt-1">Select a valid appointment time.</p>
+                                <p class="text-danger small mt-1">Please select time of appointment.</p>
                             <?php
                             }
                             ?>
@@ -337,11 +337,28 @@ include '../includes/head.php';
             var full_dates = [];
             var doctor_id;
 
-            const form = document.getElementById('appointmentForm');
-            const purpose_field = document.getElementById('purpose');
-            const reason_field = document.getElementById('reason');
-
             reinitializeFlatpickr();
+
+            var doctorSelect = document.getElementById("doctor_id");
+
+            if (doctorSelect) { // Check if the element exists
+                var selectedOption = doctorSelect.options[doctorSelect.selectedIndex];
+
+                if (selectedOption && selectedOption.hasAttribute("data-accountid")) { // Check if the option exists and has the attribute
+
+                    startDay = selectedOption.getAttribute("data-startday");
+                    endDay = selectedOption.getAttribute("data-endday");
+                    startTime = selectedOption.getAttribute("data-starttime");
+                    endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
+                    rawendTime = selectedOption.getAttribute("data-endtime");
+                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
+                    doctor_id = selectedOption.getAttribute("data-doctorid");
+
+                    show_doctor_info(selectedOption.getAttribute("data-accountid"));
+                    reinitializeFlatpickr();
+                    request_btn.removeAttribute('disabled'); // Ensure it's disabled
+                }
+            }
 
             document.getElementById("doctor_id").addEventListener("change", function() {
                 if (!this.value) { // Check if no doctor is selected
@@ -355,7 +372,7 @@ include '../includes/head.php';
 
                     document.getElementById('appointment_time').value = '';
                     show_doctor_info(null);
-                    reinitializeFlatpickr();
+
                     request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
                 } else {
                     let selectedOption = this.options[this.selectedIndex];
@@ -371,8 +388,8 @@ include '../includes/head.php';
                     show_doctor_info(selectedOption.getAttribute('data-accountid'));
                     reinitializeFlatpickr();
 
-                    purpose_field.setCustomValidity("Please select the purpose of appointment.");
-                    reason_field.setCustomValidity("Please provide a reason for the appointment.");
+                    // purpose_field.setCustomValidity("Please select the purpose of appointment.");
+                    // reason_field.setCustomValidity("Please provide a reason for the appointment.");
                     request_btn.removeAttribute('disabled'); // Ensure it's enabled
                 }
             });
@@ -421,8 +438,11 @@ include '../includes/head.php';
                         ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
                     ],
                     onChange: function(selectedDates, dateStr, instance) {
-                        available_time(dateStr, doctor_id, startTime, rawendTime);
+                        available_time(dateStr, doctor_id, startTime, endTime);
                         set_value(null);
+                    },
+                    onReady: function(selectedDates, dateStr, instance) {
+                        available_time(dateStr, doctor_id, startTime, endTime);
                     }
                 });
 
@@ -448,33 +468,33 @@ include '../includes/head.php';
 
             // START form submit validation 
 
-            purpose_field.addEventListener("change", function() {
-                if (purpose_field.value.trim() === "") {
-                    purpose_field.setCustomValidity("Please select the purpose of appointment.");
-                } else {
-                    purpose_field.setCustomValidity("");
-                }
-            });
+            // purpose_field.addEventListener("change", function() {
+            //     if (purpose_field.value.trim() === "") {
+            //         purpose_field.setCustomValidity("Please select the purpose of appointment.");
+            //     } else {
+            //         purpose_field.setCustomValidity("");
+            //     }
+            // });
 
-            reason_field.addEventListener("change", function() {
-                if (reason_field.value.trim() === "") {
-                    reason_field.setCustomValidity("Please provide a reason for the appointment.");
-                } else {
-                    reason_field.setCustomValidity("");
-                }
-            });
+            // reason_field.addEventListener("change", function() {
+            //     if (reason_field.value.trim() === "") {
+            //         reason_field.setCustomValidity("Please provide a reason for the appointment.");
+            //     } else {
+            //         reason_field.setCustomValidity("");
+            //     }
+            // });
 
 
-            form.addEventListener("submit", function(event) {
-                if (!purpose_field.checkValidity()) {
-                    event.preventDefault();
-                    purpose_field.reportValidity();
-                }
-                if (!reason_field.checkValidity()) {
-                    event.preventDefault();
-                    reason_field.reportValidity();
-                }
-            });
+            // form.addEventListener("submit", function(event) {
+            //     if (!purpose_field.checkValidity()) {
+            //         event.preventDefault();
+            //         purpose_field.reportValidity();
+            //     }
+            //     if (!reason_field.checkValidity()) {
+            //         event.preventDefault();
+            //         reason_field.reportValidity();
+            //     }
+            // });
         });
 
         function set_value(selectedRadio) {
