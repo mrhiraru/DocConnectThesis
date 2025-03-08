@@ -9,7 +9,10 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
+require_once('../classes/doctorDashboard.class.php');
 
+$dashboard = new Dashboard();
+$overviewData = $dashboard->fetchOverviewData();
 ?>
 
 <!DOCTYPE html>
@@ -31,8 +34,8 @@ include '../includes/head.php';
             ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 bg-light">
                 <div class="container my-4">
+                    <!-- Overview Cards -->
                     <div class="row">
-                        <!-- Overview Cards -->
                         <div class="col-md-4 col-12 d-flex align-items-stretch mb-4">
                             <div class="card overview border-0 text-start d-flex justify-content-center p-3 w-100">
                                 <div class="d-flex flex-sm-row flex-md-column flex-lg-row justify-content-center align-items-center">
@@ -43,7 +46,7 @@ include '../includes/head.php';
                                     </div>
                                     <div class="card-body p-0">
                                         <p class="card-title mb-0">Total Patients</p>
-                                        <p class="card-text display-6 mb-0">2000+</p>
+                                        <p class="card-text display-6 mb-0"><?php echo $overviewData['total_patients']; ?></p>
                                         <p class="text-muted">Till Today</p>
                                     </div>
                                 </div>
@@ -60,8 +63,8 @@ include '../includes/head.php';
                                     </div>
                                     <div class="card-body p-0">
                                         <p class="card-title mb-0">Today Patients</p>
-                                        <p class="card-text display-6 mb-0">68</p>
-                                        <p class="text-muted">Sep 18 2021</p>
+                                        <p class="card-text display-6 mb-0"><?php echo $overviewData['today_patients']; ?></p>
+                                        <p class="text-muted"><?php echo date('M d Y'); ?></p>
                                     </div>
                                 </div>
                             </div>
@@ -77,8 +80,8 @@ include '../includes/head.php';
                                     </div>
                                     <div class="card-body p-0">
                                         <p class="card-title mb-0">Today Appointments</p>
-                                        <p class="card-text display-6 mb-0">85</p>
-                                        <p class="text-muted">Sep 18 2021</p>
+                                        <p class="card-text display-6 mb-0"><?php echo $overviewData['today_appointments']; ?></p>
+                                        <p class="text-muted"><?php echo date('M d Y'); ?></p>
                                     </div>
                                 </div>
                             </div>
