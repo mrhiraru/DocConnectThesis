@@ -13,7 +13,7 @@ $takenHours = array_map(function ($time) {
     return date("H:i:s", strtotime($time));
 }, $appointment->get_taken_hours($doctorId, $date));
 
-if (in_array(date('Y-m-d', strtotime($record['appointment_date'])), $takenHours)) {
+if (in_array(date('H:i:s', strtotime($appointment_time)), $takenHours)) {
     $key = array_search(date('H:i:s', strtotime($appointment_time)), $takenHours);
     unset($takenHours[$key]);
     $takenHours = array_values($takenHours);
