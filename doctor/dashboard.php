@@ -293,17 +293,7 @@ include '../includes/head.php';
                         </div>
                     </div>
 
-                    <!-- CALENDAR -->
-                    <div class="row" id="calendar">
-                        <div class="col-md-12 mb-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Calendar - December 2021</h5>
-                                    <div id="calendar"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
             </main>
         </div>
@@ -349,7 +339,6 @@ include '../includes/head.php';
             }
         });
     </script>
-    <script src="../js/calender.js"></script>
 
 </body>
 
