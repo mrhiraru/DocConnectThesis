@@ -165,7 +165,7 @@ class Appointment
     {
         $sql = "SELECT appointment_time
         FROM appointment
-        WHERE appointment_status = 'Incoming'
+        WHERE (appointment_status = 'Incoming' OR appointment_status = 'Pending')
         AND doctor_id = :doctor_id
         AND appointment_date = :appointment_date
         ORDER BY appointment_time ASC;";
