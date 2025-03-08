@@ -484,6 +484,15 @@ $formattedDates = implode(', ', $fullDates);
             },
             success: function(response) {
                 $('#available_time').html(response);
+                let selectedTime = selectedRadio.value; // Get time in HH:MM:SS format
+                let formattedTime = selectedRadio.nextElementSibling.textContent.split(" - ")[0]; // Extract AM/PM format
+
+                document.getElementById('appointment_time').value = selectedTime;
+
+                let timecontainer = document.getElementById('time_picker_cont');
+
+                let appointmentInput = timecontainer.querySelector('.form-control.input');
+                appointmentInput.value = formattedTime + " - " + addOneHour(selectedTime);
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching available time:', error);
