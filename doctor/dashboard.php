@@ -110,9 +110,9 @@ include '../includes/head.php';
                                         </div>
                                         <?php if ($nextPatient): ?>
                                             <div class="d-flex flex-column flex-md-row align-items-center">
-                                                <img src="../assets/images/66f5b7cd6432c4.31527220.jpg" class="rounded-circle" alt="Patient Image" style="width: 80px; height: 80px; object-fit: cover;">
+                                                <img src="<?php echo !empty($nextPatient['account_image']) ? '../assets/images/' . $nextPatient['account_image'] : '../assets/images/profilenono.jpeg'; ?>" class="rounded-circle" alt="Patient Image" style="width: 80px; height: 80px; object-fit: cover;">
                                                 <div class="ms-3">
-                                                    <strong class="mb-0"><?php echo $nextPatient['firstname'] . ' ' . $nextPatient['lastname']; ?></strong>
+                                                    <h6 class="mb-0"><?php echo $nextPatient['firstname'] . ' ' . $nextPatient['lastname']; ?></h6>
                                                     <p class="text-muted mb-0"><?php echo isset($nextPatient['purpose']) ? $nextPatient['purpose'] : 'No purpose specified'; ?></p>
                                                 </div>
                                                 <div class="ms-3">
@@ -123,8 +123,8 @@ include '../includes/head.php';
                                             <hr>
                                             <div class="row row-cols-2 row-cols-md-3 mb-3">
                                                 <div class="col">
-                                                    <strong>D.O.B</strong>
-                                                    <p class="text-muted"><?php echo $nextPatient['birthdate']; ?></p>
+                                                    <strong>Birthdate</strong>
+                                                    <p class="text-muted"><?php echo (new DateTime($nextPatient['birthdate']))->format('F j, Y'); ?></p>
                                                 </div>
                                                 <div class="col">
                                                     <strong>Sex</strong>
@@ -140,11 +140,11 @@ include '../includes/head.php';
                                                 </div>
                                                 <div class="col">
                                                     <strong>Last Appointment</strong>
-                                                    <p class="text-muted"><?php echo $nextPatient['appointment_date']; ?></p>
+                                                    <p class="text-muted"><?php echo (new DateTime($nextPatient['appointment_date']))->format('F j, Y'); ?></p>
                                                 </div>
                                                 <div class="col">
                                                     <strong>Reg. Date</strong>
-                                                    <p class="text-muted"><?php echo $nextPatient['is_created']; ?></p>
+                                                    <p class="text-muted"><?php echo (new DateTime($nextPatient['is_created']))->format('F j, Y'); ?></p>
                                                 </div>
                                             </div>
                                             <hr>
@@ -158,7 +158,7 @@ include '../includes/head.php';
                                                 ?>
                                             </div>
                                             <div class="d-flex justify-content-start">
-                                                <a href="#" class="btn btn-primary me-3 d-flex align-items-center text-light">
+                                                <a href="./patient-files?account_id<? $nextPatient['account_id'] ?>" class="btn btn-primary me-3 d-flex align-items-center text-light">
                                                     <i class="bx bx-file me-2"></i>Document
                                                 </a>
                                                 <a href="./chats" class="btn btn-outline-primary me-3 d-flex align-items-center">

@@ -81,7 +81,7 @@ class Dashboard
     {
         $db = $this->db->connect();
     
-        $sql = "SELECT a.*, p.*, acc.firstname, acc.lastname, acc.gender, acc.birthdate 
+        $sql = "SELECT a.*, p.*, acc.firstname, acc.lastname, acc.gender, acc.birthdate, acc.account_image 
                 FROM appointment a 
                 JOIN patient_info p ON a.patient_id = p.patient_id 
                 JOIN account acc ON p.account_id = acc.account_id 
