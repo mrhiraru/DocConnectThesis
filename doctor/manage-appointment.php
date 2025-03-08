@@ -479,6 +479,8 @@ $formattedDates = implode(', ', $fullDates);
                 doctor_id,
                 startTime: start,
                 endTime: end,
+                appointment_time: defaultAppointmentTime
+
             },
             success: function(response) {
                 $('#available_time').html(response);

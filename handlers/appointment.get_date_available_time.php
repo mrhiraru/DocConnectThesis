@@ -6,11 +6,18 @@ $doctorId = $_GET['doctor_id'];
 $date = $_GET['date'];
 $startTime = $_GET['startTime']; // Expected format: HH:MM:SS
 $endTime = $_GET['endTime']; // Expected format: HH:MM:SS
+$appointment_time = $_GET['appointment_time'];
 
 // Ensure taken hours are in HH:MM:SS format
 $takenHours = array_map(function ($time) {
     return date("H:i:s", strtotime($time));
 }, $appointment->get_taken_hours($doctorId, $date));
+
+if (in_array(date('Y-m-d', strtotime($record['appointment_date'])), $takenHours)) {
+    $key = array_search(date('H:i:s', strtotime($appointment_time)), $takenHours);
+    unset($takenHours[$key]);
+    $takenHours = array_values($takenHours);
+}
 
 function getAvailableTimes($startTime, $endTime, $takenHours, $interval = 60)
 {
