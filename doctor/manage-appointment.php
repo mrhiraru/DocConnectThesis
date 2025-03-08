@@ -485,6 +485,8 @@ $formattedDates = implode(', ', $fullDates);
             },
             success: function(response) {
                 $('#available_time').html(response);
+                let selectedRadio = document.querySelector('input[name="time"]:checked');
+                set_value(selectedRadio);
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching available time:', error);
