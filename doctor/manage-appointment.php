@@ -417,7 +417,7 @@ $formattedDates = implode(', ', $fullDates);
                     set_value(null);
                 },
                 defaultDate: defaultAppointmentDate,
-                onOpen: function(selectedDates, dateStr, instance) {
+                onReady: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime);
                 }
                 // ended here onready of page show the time buttons
