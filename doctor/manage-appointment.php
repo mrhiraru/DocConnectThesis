@@ -413,12 +413,12 @@ $formattedDates = implode(', ', $fullDates);
                     ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
-                    available_time(dateStr, doctor_id, startTime, endTime);
+                    available_time(dateStr, doctor_id, startTime, endTime, defaultAppointmentTime);
                     set_value(null);
                 },
                 defaultDate: defaultAppointmentDate,
                 onReady: function(selectedDates, dateStr, instance) {
-                    available_time(dateStr, doctor_id, startTime, endTime);
+                    available_time(dateStr, doctor_id, startTime, endTime, defaultAppointmentTime);
                 }
                 // ended here onready of page show the time buttons
             });
@@ -470,7 +470,7 @@ $formattedDates = implode(', ', $fullDates);
         return `${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
     }
 
-    function available_time(date, doctor_id, start, end) {
+    function available_time(date, doctor_id, start, end, defaultAppointmentTime) {
         $.ajax({
             url: '../handlers/appointment.get_date_available_time.php',
             type: 'GET',
