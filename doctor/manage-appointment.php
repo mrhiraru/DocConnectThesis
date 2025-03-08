@@ -417,8 +417,13 @@ $formattedDates = implode(', ', $fullDates);
                     set_value(null);
                 },
                 defaultDate: defaultAppointmentDate,
-                onReady: function(selectedDates, dateStr, instance) {
-                    available_time(dateStr, doctor_id, startTime, endTime);
+                onReady: async function(selectedDates, dateStr, instance) {
+
+                    let appointment_time = "<?= $record['appointment_time'] ?>";
+                    await available_time(dateStr, doctor_id, startTime, endTime);
+
+                    let selectedRadio = document.querySelector('input[name="time"]:checked');
+                    set_value(selectedRadio);
                 }
                 // ended here onready of page show the time buttons
             });
@@ -470,7 +475,7 @@ $formattedDates = implode(', ', $fullDates);
         return `${String(formattedHours).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${period}`;
     }
 
-    function available_time(date, doctor_id, start, end, defaultAppointmentTime) {
+    function available_time(date, doctor_id, start, end) {
         $.ajax({
             url: '../handlers/appointment.get_date_available_time.php',
             type: 'GET',
@@ -478,13 +483,11 @@ $formattedDates = implode(', ', $fullDates);
                 date,
                 doctor_id,
                 startTime: start,
-                endTime: end
-
+                endTime: end,
+                appointment_time: appointment_time
             },
             success: function(response) {
                 $('#available_time').html(response);
-                let selectedRadio = document.querySelector('input[name="time"]:checked');
-                set_value(selectedRadio);
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching available time:', error);
