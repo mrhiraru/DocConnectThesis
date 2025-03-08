@@ -44,7 +44,7 @@ $availableTime = getAvailableTimes($startTime, $endTime, $takenHours, 60);
 
 foreach ($availableTime as $index => $time) {
 ?>
-    <input type="radio" class="btn-check" name="time" id="time<?= $index ?>" autocomplete="off" value="<?= $time ?> <?= ($appointment_time == $time) ? 'checked' : '' ?>" onchange="set_value(this)">
+    <input type="radio" class="btn-check" name="time" id="time<?= $index ?>" autocomplete="off" value="<?= $time ?>" <?= ($appointment_time == $time) ? 'checked' : '' ?> onchange="set_value(this)">
     <label class="btn btn-sm btn-outline-secondary m-0 shadow-sm" for="time<?= $index ?>"><?= date("h:i A", strtotime($time)) . " - " . date("h:i A", strtotime($time . ' +1 hour')) ?></label>
 <?php
 }
