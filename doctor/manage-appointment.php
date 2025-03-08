@@ -413,12 +413,12 @@ $formattedDates = implode(', ', $fullDates);
                     ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
-                    available_time(dateStr, doctor_id, startTime, endTime, defaultAppointmentTime);
+                    available_time(dateStr, doctor_id, startTime, endTime);
                     set_value(null);
                 },
                 defaultDate: defaultAppointmentDate,
                 onReady: function(selectedDates, dateStr, instance) {
-                    available_time(dateStr, doctor_id, startTime, endTime, defaultAppointmentTime);
+                    available_time(dateStr, doctor_id, startTime, endTime);
                 }
                 // ended here onready of page show the time buttons
             });
@@ -478,8 +478,7 @@ $formattedDates = implode(', ', $fullDates);
                 date,
                 doctor_id,
                 startTime: start,
-                endTime: end,
-                appointment_time: defaultAppointmentTime
+                endTime: end
 
             },
             success: function(response) {
