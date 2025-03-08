@@ -13,6 +13,8 @@ require_once('../classes/doctorDashboard.class.php');
 
 $dashboard = new Dashboard();
 $overviewData = $dashboard->fetchOverviewData();
+$chartData = $dashboard->fetchPatientSummaryChartData();
+$nextPatient = $dashboard->fetchNextPatientDetails();
 ?>
 
 <!DOCTYPE html>
@@ -106,64 +108,66 @@ include '../includes/head.php';
                                         <div class="text-center mb-3">
                                             <h5 class="text-primary">Next Patient Details</h5>
                                         </div>
-                                        <div class="d-flex flex-column flex-md-row align-items-center">
-                                            <img src="../assets/images/profilenono.jpeg" class="rounded-circle" alt="Patient Image" style="width: 80px; height: 80px; object-fit: cover;">
-                                            <div class="ms-3">
-                                                <h6 class="mb-0">Sanath Deo</h6>
-                                                <p class="text-muted mb-0">Health Checkup</p>
+                                        <?php if ($nextPatient): ?>
+                                            <div class="d-flex flex-column flex-md-row align-items-center">
+                                                <img src="../assets/images/66f5b7cd6432c4.31527220.jpg" class="rounded-circle" alt="Patient Image" style="width: 80px; height: 80px; object-fit: cover;">
+                                                <div class="ms-3">
+                                                    <strong class="mb-0"><?php echo $nextPatient['firstname'] . ' ' . $nextPatient['lastname']; ?></strong>
+                                                    <p class="text-muted mb-0"><?php echo isset($nextPatient['purpose']) ? $nextPatient['purpose'] : 'No purpose specified'; ?></p>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <strong>Patient ID</strong>
+                                                    <p class="text-muted mb-0"><?php echo $nextPatient['patient_id']; ?></p>
+                                                </div>
                                             </div>
-                                            <div class=" ms-3">
-                                                <strong>Patient ID</strong>
-                                                <p class="text-muted mb-0">0220092020005</p>
+                                            <hr>
+                                            <div class="row row-cols-2 row-cols-md-3 mb-3">
+                                                <div class="col">
+                                                    <strong>D.O.B</strong>
+                                                    <p class="text-muted"><?php echo $nextPatient['birthdate']; ?></p>
+                                                </div>
+                                                <div class="col">
+                                                    <strong>Sex</strong>
+                                                    <p class="text-muted"><?php echo $nextPatient['gender']; ?></p>
+                                                </div>
+                                                <div class="col">
+                                                    <strong>Weight</strong>
+                                                    <p class="text-muted"><?php echo $nextPatient['weight']; ?> Kg</p>
+                                                </div>
+                                                <div class="col">
+                                                    <strong>Height</strong>
+                                                    <p class="text-muted"><?php echo $nextPatient['height']; ?> cm</p>
+                                                </div>
+                                                <div class="col">
+                                                    <strong>Last Appointment</strong>
+                                                    <p class="text-muted"><?php echo $nextPatient['appointment_date']; ?></p>
+                                                </div>
+                                                <div class="col">
+                                                    <strong>Reg. Date</strong>
+                                                    <p class="text-muted"><?php echo $nextPatient['is_created']; ?></p>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <hr>
-                                        <div class="row row-cols-2 row-cols-md-3 mb-3">
-                                            <div class="col">
-                                                <strong>D.O.B</strong>
-                                                <p class="text-muted">15 January 1989</p>
+                                            <hr>
+                                            <h6>Patient History</h6>
+                                            <div class="d-flex mb-3">
+                                                <?php
+                                                $diagnoses = explode(',', $nextPatient['diagnosis']);
+                                                foreach ($diagnoses as $diagnosis):
+                                                    echo '<span class="badge bg-warning text-dark me-2">' . trim($diagnosis) . '</span>';
+                                                endforeach;
+                                                ?>
                                             </div>
-                                            <div class="col">
-                                                <strong>Sex</strong>
-                                                <p class="text-muted">Male</p>
+                                            <div class="d-flex justify-content-start">
+                                                <a href="#" class="btn btn-primary me-3 d-flex align-items-center text-light">
+                                                    <i class="bx bx-file me-2"></i>Document
+                                                </a>
+                                                <a href="./chats" class="btn btn-outline-primary me-3 d-flex align-items-center">
+                                                    <i class="bx bx-chat me-2"></i>Chat
+                                                </a>
                                             </div>
-                                            <div class="col">
-                                                <strong>Weight</strong>
-                                                <p class="text-muted">59 Kg</p>
-                                            </div>
-                                            <div class="col">
-                                                <strong>Hight</strong>
-                                                <p class="text-muted">172 cm</p>
-                                            </div>
-                                            <div class="col">
-                                                <strong>Last Appointment</strong>
-                                                <p class="text-muted">15 Dec - 2021</p>
-                                            </div>
-                                            <div class="col">
-                                                <strong>Reg. Date</strong>
-                                                <p class="text-muted">10 Dec 2021</p>
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-                                        <h6>Patient History</h6>
-                                        <div class="d-flex mb-3">
-                                            <span class="badge bg-warning text-dark me-2">Asthma</span>
-                                            <span class="badge bg-primary text-light me-2">Hypertension</span>
-                                            <span class="badge bg-danger text-light">Fever</span>
-                                        </div>
-                                        <div class="d-flex justify-content-start">
-                                            <a href="#" class="btn btn-primary me-3 d-flex align-items-center text-light">
-                                                <i class="bx bx-phone me-2 text"></i>(308) 555-0102
-                                            </a>
-                                            <a href="#" class="btn btn-outline-primary me-3 d-flex align-items-center">
-                                                <i class="bx bx-file me-2"></i>Document
-                                            </a>
-                                            <a href="./chats" class="btn btn-outline-primary me-3 d-flex align-items-center">
-                                                <i class="bx bx-chat me-2"></i>Chat
-                                            </a>
-                                        </div>
+                                        <?php else: ?>
+                                            <p>No upcoming appointments.</p>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -296,7 +300,6 @@ include '../includes/head.php';
 
     <!-- Chart.js script for pie chart -->
     <script src="../js/calender.js"></script>
-    <script src="../js/dashboard-donutChart.js"></script>
 
 </body>
 

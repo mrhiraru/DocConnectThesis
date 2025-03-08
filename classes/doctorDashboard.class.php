@@ -58,5 +58,42 @@ class Dashboard
             'today_appointments' => $this->fetchTodayAppointments()
         ];
     }
+
+    public function fetchPatientSummaryChartData()
+    {
+        $db = $this->db->connect();
+
+        // Example: Fetch number of appointments by diagnosis
+        $sql = "SELECT diagnosis, COUNT(*) as count 
+                FROM appointment 
+                WHERE diagnosis IS NOT NULL AND diagnosis != '' 
+                GROUP BY diagnosis 
+                ORDER BY count DESC 
+                LIMIT 5";
+        $query = $db->prepare($sql);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function fetchNextPatientDetails()
+    {
+        $db = $this->db->connect();
+    
+        $sql = "SELECT a.*, p.*, acc.firstname, acc.lastname, acc.gender, acc.birthdate 
+                FROM appointment a 
+                JOIN patient_info p ON a.patient_id = p.patient_id 
+                JOIN account acc ON p.account_id = acc.account_id 
+                WHERE a.appointment_date >= CURDATE() 
+                AND a.is_deleted = 0 
+                ORDER BY a.appointment_date ASC 
+                LIMIT 1";
+        $query = $db->prepare($sql);
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+    
+        return $result;
+    }
 }
 ?>
