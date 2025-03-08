@@ -80,7 +80,7 @@ class Dashboard
     public function fetchNextPatientDetails()
     {
         $db = $this->db->connect();
-    
+
         $sql = "SELECT a.*, p.*, acc.firstname, acc.lastname, acc.gender, acc.birthdate, acc.account_image 
                 FROM appointment a 
                 JOIN patient_info p ON a.patient_id = p.patient_id 
@@ -92,8 +92,43 @@ class Dashboard
         $query = $db->prepare($sql);
         $query->execute();
         $result = $query->fetch(PDO::FETCH_ASSOC);
-    
+
+        return $result;
+    }
+
+    public function fetchTodayAppointmentsDetails()
+    {
+        $db = $this->db->connect();
+
+        $sql = "SELECT a.*, p.*, acc.firstname, acc.lastname, acc.account_image 
+            FROM appointment a 
+            JOIN patient_info p ON a.patient_id = p.patient_id 
+            JOIN account acc ON p.account_id = acc.account_id 
+            WHERE DATE(a.appointment_date) = CURDATE() 
+            AND a.is_deleted = 0 
+            ORDER BY a.appointment_time ASC";
+        $query = $db->prepare($sql);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
+    }
+
+    public function fetchAppointmentRequests()
+    {
+        $db = $this->db->connect();
+
+        $sql = "SELECT a.*, p.*, acc.firstname, acc.lastname, acc.account_image 
+            FROM appointment a 
+            JOIN patient_info p ON a.patient_id = p.patient_id 
+            JOIN account acc ON p.account_id = acc.account_id 
+            WHERE a.appointment_status = 'Pending' 
+            AND a.is_deleted = 0 
+            ORDER BY a.appointment_date ASC";
+        $query = $db->prepare($sql);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
         return $result;
     }
 }
-?>

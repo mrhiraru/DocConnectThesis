@@ -15,6 +15,8 @@ $dashboard = new Dashboard();
 $overviewData = $dashboard->fetchOverviewData();
 $chartData = $dashboard->fetchPatientSummaryChartData();
 $nextPatient = $dashboard->fetchNextPatientDetails();
+$todayAppointments = $dashboard->fetchTodayAppointmentsDetails();
+$appointmentRequests = $dashboard->fetchAppointmentRequests();
 
 // Prepare labels and data for the chart
 $chartLabels = [];
@@ -192,50 +194,41 @@ include '../includes/head.php';
                             <div class="card border-primary flex-fill">
                                 <div class="card-body">
                                     <h5 class="card-title text-primary">Today Appointment</h5>
-
                                     <hr>
-
                                     <table class="table table-borderless">
                                         <thead>
                                             <tr>
                                                 <th>Patient</th>
-                                                <th>Name/Diagnosis</th>
+                                                <th>Name/ Purpose</th>
                                                 <th>Time</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><img src="../assets/images/defualt_profile.png" class="rounded-circle" alt="M.J. Mical" height="40"></td>
-                                                <td>
-                                                    <strong class="text-primary">M.J. Mical</strong><br>
-                                                    <small>Health Checkup</small>
-                                                </td>
-                                                <td><span class="badge bg-info">On Going</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="../assets/images/profilenono.jpeg" class="rounded-circle" alt="Sanath Deo" height="40"></td>
-                                                <td>
-                                                    <strong class="text-primary">Sanath Deo</strong><br>
-                                                    <small>Health Checkup</small>
-                                                </td>
-                                                <td>12:30 PM</td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="https://via.placeholder.com/40" class="rounded-circle" alt="Loeara Phanj" height="40"></td>
-                                                <td>
-                                                    <strong class="text-primary">Loeara Phanj</strong><br>
-                                                    <small>Report</small>
-                                                </td>
-                                                <td>01:00 PM</td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="https://via.placeholder.com/40" class="rounded-circle" alt="Komola Haris" height="40"></td>
-                                                <td>
-                                                    <strong class="text-primary">Komola Haris</strong><br>
-                                                    <small>Common Cold</small>
-                                                </td>
-                                                <td>01:30 PM</td>
-                                            </tr>
+                                            <?php if (!empty($todayAppointments)): ?>
+                                                <?php foreach ($todayAppointments as $appointment): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="<?php echo !empty($appointment['account_image']) ? '../assets/images/' . $appointment['account_image'] : '../assets/images/defualt_profile.png'; ?>"
+                                                                class="rounded-circle" alt="Patient Image" height="40">
+                                                        </td>
+                                                        <td>
+                                                            <strong class="text-primary"><?php echo $appointment['firstname'] . ' ' . $appointment['lastname']; ?></strong><br>
+                                                            <small><?php echo $appointment['purpose']; ?></small>
+                                                        </td>
+                                                        <td>
+                                                            <?php if ($appointment['appointment_status'] === 'On Going'): ?>
+                                                                <span class="badge bg-info">On Going</span>
+                                                            <?php else: ?>
+                                                                <?php echo date('h:i A', strtotime($appointment['appointment_time'])); ?>
+                                                            <?php endif; ?>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="3" class="text-center">No appointments today.</td>
+                                                </tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                     <a href="#" class="text-primary">See All</a>
@@ -247,44 +240,38 @@ include '../includes/head.php';
                         <div class="col-lg-6 mb-4 d-flex">
                             <div class="card w-100 h-100 border-primary">
                                 <div class="card-body">
-                                    <h5 class="card-title text-primary">Appointmen request</h5>
-
+                                    <h5 class="card-title text-primary">Appointment Request</h5>
                                     <hr>
-
                                     <table class="table table-borderless">
                                         <tbody>
-                                            <tr>
-                                                <td><img src="https://via.placeholder.com/40" class="rounded-circle" alt="M.J. Mical" height="40"></td>
-                                                <td>
-                                                    <strong class="text-primary">M.J. Mical</strong><br>
-                                                    <small>Cold</small>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-end">
-                                                        <i class='bx bx-check text-light btn btn-success py-1 px-2 mx-1'></i>
-                                                        <i class='bx bxs-x-circle text-light btn btn-primary py-1 px-2 mx-1'></i>
-                                                        <a href="./chats">
-                                                            <i class='bx bxs-message-dots text-light btn btn-info py-1 px-2 mx-1'></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td><img src="https://via.placeholder.com/40" class="rounded-circle" alt="Sanath Deo" height="40"></td>
-                                                <td>
-                                                    <strong class="text-primary">Sanath Deo</strong><br>
-                                                    <small>Health Checkup</small>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex justify-content-end">
-                                                        <i class='bx bx-check text-light btn btn-success py-1 px-2 mx-1'></i>
-                                                        <i class='bx bxs-x-circle text-light btn btn-primary py-1 px-2 mx-1'></i>
-                                                        <a href="./chats">
-                                                            <i class='bx bxs-message-dots text-light btn btn-info py-1 px-2 mx-1'></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            <?php if (!empty($appointmentRequests)): ?>
+                                                <?php foreach ($appointmentRequests as $request): ?>
+                                                    <tr>
+                                                        <td>
+                                                            <img src="<?php echo !empty($request['account_image']) ? '../assets/images/' . $request['account_image'] : 'https://via.placeholder.com/40'; ?>"
+                                                                class="rounded-circle" alt="Patient Image" height="40">
+                                                        </td>
+                                                        <td>
+                                                            <strong class="text-primary"><?php echo $request['firstname'] . ' ' . $request['lastname']; ?></strong><br>
+                                                            <small><?php echo $request['diagnosis']; ?></small>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex justify-content-end">
+                                                                <a href="./manage-appointment.php?appointment_id=<?php echo $request['appointment_id']; ?>">
+                                                                    <i class='bx bx-edit text-light btn btn-warning py-1 px-2 mx-1'></i>
+                                                                </a>
+                                                                <a href="./chats?account_id=<?php echo $request['account_id']; ?>">
+                                                                    <i class='bx bxs-message-dots text-light btn btn-info py-1 px-2 mx-1'></i>
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            <?php else: ?>
+                                                <tr>
+                                                    <td colspan="3" class="text-center">No appointment requests.</td>
+                                                </tr>
+                                            <?php endif; ?>
                                         </tbody>
                                     </table>
                                     <a href="#" class="text-primary">See All</a>
