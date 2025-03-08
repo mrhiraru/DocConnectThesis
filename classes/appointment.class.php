@@ -41,7 +41,7 @@ class Appointment
 
         if ($query->execute()) {
             return true;
-        } else { 
+        } else {
             return false;
         }
     }
@@ -228,14 +228,13 @@ class Appointment
 
     function update_appointment()
     {
-        $sql = "UPDATE appointment SET appointment_date=:appointment_date, appointment_time=:appointment_time, estimated_end=:estimated_end, reason=:reason, appointment_link=:appointment_link, event_id=:event_id, appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
+        $sql = "UPDATE appointment SET appointment_date=:appointment_date, appointment_time=:appointment_time, estimated_end=:estimated_end, appointment_link=:appointment_link, event_id=:event_id, appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':appointment_id', $this->appointment_id);
         $query->bindParam(':appointment_date', $this->appointment_date);
         $query->bindParam(':appointment_time', $this->appointment_time);
         $query->bindParam(':estimated_end', $this->estimated_end);
-        $query->bindParam(':reason', $this->reason);
         $query->bindParam(':appointment_link', $this->appointment_link);
         $query->bindParam(':appointment_status', $this->appointment_status);
         $query->bindParam(':event_id', $this->event_id);
@@ -264,13 +263,12 @@ class Appointment
 
     function reschedule_appointment()
     {
-        $sql = "UPDATE appointment SET appointment_date=:appointment_date, appointment_time=:appointment_time, estimated_end=:estimated_end, reason=:reason, appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
+        $sql = "UPDATE appointment SET appointment_date=:appointment_date, appointment_time=:appointment_time, estimated_end=:estimated_end, appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':appointment_date', $this->appointment_date);
         $query->bindParam(':appointment_time', $this->appointment_time);
         $query->bindParam(':estimated_end', $this->estimated_end);
-        $query->bindParam(':reason', $this->reason);
         $query->bindParam(':appointment_id', $this->appointment_id);
         $query->bindParam(':appointment_status', $this->appointment_status);
 

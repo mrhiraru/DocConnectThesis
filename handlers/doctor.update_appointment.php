@@ -11,7 +11,6 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment->appointment_time = htmlentities($_POST['appointment_time']);
     $appointment->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment->appointment_time)));
-    $appointment->reason = htmlentities($_POST['reason']);
     $appointment->appointment_link = htmlentities($_POST['link']);
     $appointment->event_id = htmlentities($_POST['event_id']);
     $appointment->appointment_status = "Incoming";
@@ -21,7 +20,6 @@ if (isset($_POST['confirm'])) {
         validate_field($appointment->appointment_id &&
             $appointment->appointment_date &&
             $appointment->appointment_time &&
-            $appointment->reason &&
             $appointment->appointment_link && $appointment->event_id &&
             $appointment->appointment_status)
     ) {
@@ -55,14 +53,12 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment->appointment_time = htmlentities($_POST['appointment_time']);
     $appointment->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment->appointment_time)));
-    $appointment->reason = htmlentities($_POST['reason']);
     $appointment->appointment_status = "Incoming";
 
     if (
         validate_field($appointment->appointment_id &&
             $appointment->appointment_date &&
             $appointment->appointment_time &&
-            $appointment->reason &&
             $appointment->appointment_status)
     ) {
         if ($appointment->reschedule_appointment()) {
