@@ -419,7 +419,7 @@ $formattedDates = implode(', ', $fullDates);
                 defaultDate: defaultAppointmentDate,
                 onReady: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime);
-                    
+
                 }
                 // ended here onready of page show the time buttons
             });
@@ -479,7 +479,9 @@ $formattedDates = implode(', ', $fullDates);
                 date,
                 doctor_id,
                 startTime: start,
-                endTime: end
+                endTime: end,
+                appointment_time: "<?= $record['appointment_time'] ?>",
+                appointment_date: "<?= $record['appointment_date'] ?>"
             },
             success: function(response) {
                 $('#available_time').html(response);
