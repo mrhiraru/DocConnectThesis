@@ -203,7 +203,7 @@ include '../includes/head.php';
                     <div class="row d-flex">
                         <div class="col-12 text-center">
                             <a href="./manage-appointment.php?appointment_id=<?= $_GET['appointment_id'] ?>" class="text-decoration-none text-dark">
-                                <p class="m-0 text-primary fw-bold">Reauthenticate</p>
+                                <p class="m-0 text-primary fw-bold">Try Again.</p>
                             </a>
                         </div>
                     </div>
