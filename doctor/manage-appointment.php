@@ -417,13 +417,9 @@ $formattedDates = implode(', ', $fullDates);
                     set_value(null);
                 },
                 defaultDate: defaultAppointmentDate,
-                onReady: async function(selectedDates, dateStr, instance) {
-
+                onReady: function(selectedDates, dateStr, instance) {
                     let appointment_time = "<?= $record['appointment_time'] ?>";
-                    await available_time(dateStr, doctor_id, startTime, endTime);
-
-                    let selectedRadio = document.querySelector('input[name="time"]:checked');
-                    set_value(selectedRadio);
+                    available_time(dateStr, doctor_id, startTime, endTime);
                 }
                 // ended here onready of page show the time buttons
             });
