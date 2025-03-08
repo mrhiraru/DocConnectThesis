@@ -419,8 +419,6 @@ $formattedDates = implode(', ', $fullDates);
                 defaultDate: defaultAppointmentDate,
                 onReady: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime, defaultAppointmentTime);
-                    let selectedRadio = document.querySelector('input[name="time"]:checked');
-                    set_value(selectedRadio);
                 }
                 // ended here onready of page show the time buttons
             });
@@ -486,7 +484,8 @@ $formattedDates = implode(', ', $fullDates);
             },
             success: function(response) {
                 $('#available_time').html(response);
-
+                let selectedRadio = document.querySelector('input[name="time"]:checked');
+                set_value(selectedRadio);
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching available time:', error);
