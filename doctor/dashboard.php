@@ -15,6 +15,17 @@ $dashboard = new Dashboard();
 $overviewData = $dashboard->fetchOverviewData();
 $chartData = $dashboard->fetchPatientSummaryChartData();
 $nextPatient = $dashboard->fetchNextPatientDetails();
+
+// Prepare labels and data for the chart
+$chartLabels = [];
+$chartValues = [];
+
+if (!empty($chartData)) {
+    foreach ($chartData as $item) {
+        $chartLabels[] = $item['diagnosis']; // Labels for the chart (e.g., diagnosis names)
+        $chartValues[] = $item['count']; // Data for the chart (e.g., number of patients)
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -96,7 +107,7 @@ include '../includes/head.php';
                             <div class="col-lg-6 d-flex">
                                 <div class="card bg-transparent border-0 flex-fill">
                                     <div class="card-body">
-                                        <h5 class="card-title">Patients Summary September 2024</h5>
+                                        <h5 class="card-title">Patients Summary <?php echo date('F Y'); ?></h5>
                                         <canvas id="patientSummaryChart" width="350" height="350"></canvas>
                                     </div>
                                 </div>
@@ -297,8 +308,47 @@ include '../includes/head.php';
             </main>
         </div>
     </div>
+    <!-- Chart.js Script -->
+    <script>
+        const chartLabels = <?php echo json_encode($chartLabels); ?>;
+        const chartData = <?php echo json_encode($chartValues); ?>;
 
-    <!-- Chart.js script for pie chart -->
+        const ctx = document.getElementById('patientSummaryChart').getContext('2d');
+        const patientSummaryChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: chartLabels,
+                datasets: [{
+                    label: 'Number of Patients',
+                    data: chartData,
+                    backgroundColor: [
+                        'rgba(220, 53, 69, 0.2)',
+                        'rgba(33, 191, 115, 0.2)',
+                        'rgba(0, 127, 79, 0.2)',
+                        'rgba(255, 255, 15, 0.2)',
+                        'rgba(220, 53, 69, 0.2)',
+                        'rgba(33, 191, 115, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(220, 53, 69, 1)',
+                        'rgba(33, 191, 115, 1)',
+                        'rgba(0, 127, 79, 1)',
+                        'rgb(255, 255, 15)',
+                        'rgba(220, 53, 69, 1)',
+                        'rgba(33, 191, 115, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
     <script src="../js/calender.js"></script>
 
 </body>
