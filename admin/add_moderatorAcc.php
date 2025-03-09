@@ -86,8 +86,9 @@ function getCurrentPage()
               ?>
             </div>
             <div class="form-input">
+              <label for="campus_id" class="form-label">Campus</label>
               <select class="form-select my-2" aria-label="Campus" name="campus_id" required>
-                <option selected>Campus</option>
+                <option selected>Select campus</option>
                 <?php
                 $campus = new Campus();
                 $campusArray = $campus->show_campus();
