@@ -85,6 +85,27 @@ function getCurrentPage()
               }
               ?>
             </div>
+            <div class="form-input">
+              <select class="form-select my-2" aria-label="Campus" name="campus_id" required>
+                <option selected>Campus</option>
+                <?php
+                $campus = new Campus();
+                $campusArray = $campus->show_campus();
+                foreach ($campusArray as $item) {
+                ?>
+                  <option value="<?= $item['campus_id'] ?>" <?= (isset($_POST['campus_id']) && $_POST['campus_id'] == $item['campus_id']) ? 'selected' : '' ?>><?= $item['campus_name'] ?></option>
+                <?php
+                }
+                ?>
+              </select>
+              <?php
+              if (isset($_POST['campus_id']) && !validate_field($_POST['campus_id'])) {
+              ?>
+                <p class="text-dark m-0 ps-2">Campus is required.</p>
+              <?php
+              }
+              ?>
+            </div>
             <div class="mb-3">
               <label for="password" class="form-label">Password</label>
               <input type="password" class="form-control" id="password" name="password" required placeholder="Enter your password" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
