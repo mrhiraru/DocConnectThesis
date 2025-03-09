@@ -22,7 +22,7 @@ if (isset($_POST['login'])) {
     $_SESSION['email'] = $account->email;
     $_SESSION['campus_id'] = $account->campus_id;
 
-    if ($_SESSION['user_role'] == 3) {
+    if ($_SESSION['user_role'] == 2) {
       header('location: ./index.php');
     }
   } else {

@@ -28,7 +28,7 @@ $usersPerCampusPerYear = $account->fetch_users_per_campus_per_year();
 
 <html lang="en">
 <?php
-$title = 'Admin | Dashboard';
+$title = 'Moderator | Dashboard';
 include './includes/admin_head.php';
 function getCurrentPage()
 {
