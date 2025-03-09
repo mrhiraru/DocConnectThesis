@@ -81,35 +81,75 @@ include '../includes/head.php';
     .datepicker-container {
         display: flex;
         justify-content: center;
-        /* Horizontally center */
         align-items: center;
-        /* Vertically center (if needed) */
         width: 100%;
-        /* Ensure it takes full width */
     }
 
     .flatpickr-calendar {
         margin: auto;
-        /* Center the calendar */
+        width: 100%;
+        max-width: 300px; /* Adjust as needed */
     }
 
     .flatpickr-time .flatpickr-hour,
     .flatpickr-time .flatpickr-minute {
         pointer-events: none;
-        /* Prevent users from manually changing the hour */
     }
 
-    /* Hide all arrows by default */
     .flatpickr-time .numInputWrapper span.arrowUp,
     .flatpickr-time .numInputWrapper span.arrowDown {
         display: none;
     }
 
-    /* Show only the arrows for the minutes input */
     .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowUp,
     .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowDown {
         display: inline-block !important;
-        /* Make minute arrows visible */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .flatpickr-calendar {
+            max-width: 100%;
+        }
+
+        .flatpickr-input {
+            width: 100%;
+            font-size: 16px; /* Larger font for better readability on mobile */
+        }
+
+        .flatpickr-calendar .flatpickr-months {
+            font-size: 14px; /* Adjust month and year font size */
+        }
+
+        .flatpickr-calendar .flatpickr-weekdays {
+            font-size: 12px; /* Adjust weekday font size */
+        }
+
+        .flatpickr-calendar .flatpickr-day {
+            height: 30px; /* Adjust day cell height */
+            width: 10px;
+            line-height: 30px; /* Center day text vertically */
+        }
+
+        .flatpickr-calendar .flatpickr-innerContainer {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 376px) {
+        .flatpickr-calendar .dayContainer,
+        .flatpickr-calendar .flatpickr-days {
+            width: 275.875px;
+            min-width: 275px;
+        }
+    }
+
+    @media (max-width: 321px) {
+        .flatpickr-calendar .dayContainer,
+        .flatpickr-calendar .flatpickr-days {
+            width: 220.875px;
+            min-width: 220px;
+        }
     }
 </style>
 
@@ -120,7 +160,7 @@ include '../includes/head.php';
 
     <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
         <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
-            <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-3 m-0 mb-4 mb-md-0">
+            <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-2 p-md-3 m-0 mb-4 mb-md-0">
                 <div class="row d-flex justify-content-between align-items-center">
                     <div class="col-6 text-start">
                         <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Form</p>
@@ -181,7 +221,7 @@ include '../includes/head.php';
                 <div class="container mt-4">
                     <div class="row g-3">
                         <!-- Date Picker -->
-                        <div class="col-lg-6" id="date_picker_cont">
+                        <div class="col-12 col-lg-6" id="date_picker_cont">
                             <label for="appointment_date" class="form-label text-secondary fw-semibold">Select Date</label>
                             <div class="p-2 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_date" name="appointment_date" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT DATE" required readonly>
@@ -196,12 +236,11 @@ include '../includes/head.php';
                         </div>
 
                         <!-- Time Picker -->
-                        <div class="col-lg-6" id="time_picker_cont">
+                        <div class="col-12 col-lg-6" id="time_picker_cont">
                             <label for="appointment_time" class="form-label text-secondary fw-semibold">Select Time</label>
                             <div class="p-2 pb-3 border rounded bg-light shadow-sm">
                                 <input type="text" id="appointment_time" name="appointment_time" class="form-control border-0 text-center fs-6 mb-3 border border-dark" placeholder="SELECT TIME" required readonly>
                                 <div class="row row-cols-2 g-3 p-3" id="available_time">
-
                                 </div>
                             </div>
 
@@ -214,7 +253,6 @@ include '../includes/head.php';
                             ?>
                         </div>
                     </div>
-
                 </div>
 
                 <hr class="my-2">
