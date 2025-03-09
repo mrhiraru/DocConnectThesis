@@ -7,7 +7,7 @@ $(document).ready(function() {
     pageLength: 10,
     columnDefs: [
       {
-        targets: [3, 4, 5, 6, 7], // Columns without sorting
+        targets: [1, 2, 3, 4], // Columns without sorting
         orderable: false
       }
     ]
