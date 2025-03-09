@@ -28,7 +28,7 @@
     </a>
 
     <div class="d-flex align-items-center justify-content-between">
-      <div class="dropdown me-3">
+      <div class="dropdown me-3 d-none">
         <a href="<?php echo getCurrentPage() == 'notifications.php' ? '#' : 'notifications.php'; ?>" 
            class="notification dropdown-toggle text-decoration-none text-dark 
            <?php echo getCurrentPage() == 'notifications.php' ? 'disabled no-hover' : ''; ?>" 
@@ -106,8 +106,8 @@
       <div class="dropdown text-end">
         <a href="#" class="acc d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <div class="d-flex align-items-center">
-            <img src="./../assets/images/profilenono.jpeg" alt="mdo" width="32" height="32" class="rounded-circle border border-2 border-light me-2">
-            <h6 class="m-0 text-light d-none d-md-block"><?= $_SESSION['email'] ?></h6>
+            <img src="../../assets/images/default_profile.png" alt="mdo" width="32" height="32" class="rounded-circle border border-2 border-light me-2">
+            <h6 class="m-0 text-light d-none d-md-block">Moderator</h6>
           </div>
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="profileDropddown">
