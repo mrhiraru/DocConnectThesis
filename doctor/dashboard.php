@@ -17,6 +17,8 @@ $chartData = $dashboard->fetchPatientSummaryChartData();
 $nextPatient = $dashboard->fetchNextPatientDetails();
 $todayAppointments = $dashboard->fetchTodayAppointmentsDetails();
 $appointmentRequests = $dashboard->fetchAppointmentRequests();
+$calendarEvents = $dashboard->fetchCalendarEvents();
+
 
 // Prepare labels and data for the chart
 $chartLabels = [];
@@ -285,7 +287,7 @@ include '../includes/head.php';
                         <div class="col-md-12 mb-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Calendar - December 2021</h5>
+                                    <h5 class="card-title">Calendar - <?php echo date('F Y'); ?></h5>
                                     <div id="calendar"></div>
                                 </div>
                             </div>
@@ -336,7 +338,40 @@ include '../includes/head.php';
             }
         });
     </script>
-    <script src="../js/calender.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: window.innerWidth < 768 ? 'listWeek' : 'dayGridMonth',
+                themeSystem: 'Lux',
+                editable: true,
+                selectable: true,
+                timeZone: 'UTC', // Set the timezone to match your PHP script
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                events: <?php echo json_encode($calendarEvents); ?>, // Pass the events array
+                eventClick: function(info) {
+                    if (info.event.url) {
+                        window.open(info.event.url, '_blank'); // Open URL in a new tab
+                        info.jsEvent.preventDefault(); // Prevent default behavior
+                    }
+                },
+                windowResize: function(view) {
+                    if (window.innerWidth < 768) {
+                        calendar.changeView('listWeek');
+                    } else {
+                        calendar.changeView('dayGridMonth');
+                    }
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
 
 </body>
 

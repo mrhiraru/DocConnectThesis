@@ -131,4 +131,36 @@ class Dashboard
 
         return $result;
     }
+
+    public function fetchCalendarEvents()
+    {
+        $db = $this->db->connect();
+
+        $sql = "SELECT a.appointment_id, a.appointment_date, a.appointment_time, a.purpose, 
+                       acc.firstname, acc.lastname, acc.account_image 
+                FROM appointment a 
+                JOIN patient_info p ON a.patient_id = p.patient_id 
+                JOIN account acc ON p.account_id = acc.account_id 
+                WHERE a.is_deleted = 0 
+                ORDER BY a.appointment_date ASC";
+        $query = $db->prepare($sql);
+        $query->execute();
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $events = [];
+        foreach ($result as $row) {
+
+            $events[] = [
+                'title' => $row['firstname'] . ' ' . $row['lastname'] . ' - ' . $row['purpose'],
+                'url' => './manage-appointment.php?appointment_id=' . $row['appointment_id'],
+                'start' => $row['appointment_date'] . 'T' . $row['appointment_time']
+            ];
+        }
+
+        echo "<pre>";
+        print_r($events);
+        echo "</pre>";
+
+        return $events;
+    }
 }
