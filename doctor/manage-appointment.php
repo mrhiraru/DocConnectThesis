@@ -28,35 +28,75 @@ include '../includes/head.php';
     .datepicker-container {
         display: flex;
         justify-content: center;
-        /* Horizontally center */
         align-items: center;
-        /* Vertically center (if needed) */
         width: 100%;
-        /* Ensure it takes full width */
     }
 
     .flatpickr-calendar {
         margin: auto;
-        /* Center the calendar */
+        width: 100%;
+        max-width: 300px; /* Adjust as needed */
     }
 
     .flatpickr-time .flatpickr-hour,
     .flatpickr-time .flatpickr-minute {
         pointer-events: none;
-        /* Prevent users from manually changing the hour */
     }
 
-    /* Hide all arrows by default */
     .flatpickr-time .numInputWrapper span.arrowUp,
     .flatpickr-time .numInputWrapper span.arrowDown {
         display: none;
     }
 
-    /* Show only the arrows for the minutes input */
     .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowUp,
     .flatpickr-time .numInputWrapper .flatpickr-minute~span.arrowDown {
         display: inline-block !important;
-        /* Make minute arrows visible */
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .flatpickr-calendar {
+            max-width: 100%;
+        }
+
+        .flatpickr-input {
+            width: 100%;
+            font-size: 16px; /* Larger font for better readability on mobile */
+        }
+
+        .flatpickr-calendar .flatpickr-months {
+            font-size: 14px; /* Adjust month and year font size */
+        }
+
+        .flatpickr-calendar .flatpickr-weekdays {
+            font-size: 12px; /* Adjust weekday font size */
+        }
+
+        .flatpickr-calendar .flatpickr-day {
+            height: 30px; /* Adjust day cell height */
+            width: 10px;
+            line-height: 30px; /* Center day text vertically */
+        }
+
+        .flatpickr-calendar .flatpickr-innerContainer {
+            justify-content: center;
+        }
+    }
+
+    @media (max-width: 376px) {
+        .flatpickr-calendar .dayContainer,
+        .flatpickr-calendar .flatpickr-days {
+            width: 275.875px;
+            min-width: 275px;
+        }
+    }
+
+    @media (max-width: 321px) {
+        .flatpickr-calendar .dayContainer,
+        .flatpickr-calendar .flatpickr-days {
+            width: 220.875px;
+            min-width: 220px;
+        }
     }
 </style>
 
