@@ -20,8 +20,9 @@ if (isset($_POST['login'])) {
     $_SESSION['account_id'] = $account->account_id;
     $_SESSION['verification_status'] = $account->verification_status;
     $_SESSION['email'] = $account->email;
+    $_SESSION['campus_id'] = $account->campus_id;
 
-    if ($_SESSION['user_role'] == 0) {
+    if ($_SESSION['user_role'] == 3) {
       header('location: ./index.php');
     }
   } else {
