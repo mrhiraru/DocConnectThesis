@@ -56,7 +56,6 @@ function getCurrentPage()
           <th scope="col" width="3%">#</th>
           <th scope="col">Campus</th>
           <th scope="col">Username</th>
-          <th scope="col">Password</th>
           <th scope="col" width="5%">Action</th>
         </tr>
       </thead>
@@ -70,7 +69,6 @@ function getCurrentPage()
             <td><?= $counter ?></td>
             <td><?= $item['campus_name'] ?></td>
             <td><?= $item['email'] ?></td>
-            <td><?= $item['password'] ?></td>
             <td class="d-flex justify-content-around align-items-center text-center">
               <a href="./add_staffAcc?= $item['acc-id'] ?>" title="View Details">
                 <i class='bx bx-edit-alt'></i>

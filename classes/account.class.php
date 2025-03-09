@@ -400,7 +400,7 @@ class Account
 
     function add_mod()
     {
-        $sql = "INSERT INTO account (email, password, user_role, campus_id) VALUES (:email, :password, :user_role, :campus_id);";
+        $sql = "INSERT INTO account (email, password, user_role, campus_id, verification_status) VALUES (:email, :password, :user_role, :campus_id, :verification_status);";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':email', $this->email);
@@ -408,6 +408,7 @@ class Account
         $query->bindParam(':password', $hashedPassword);
         $query->bindParam(':user_role', $this->user_role);
         $query->bindParam(':campus_id', $this->campus_id);
+        $query->bindParam(':verification_status', $this->verification_status);
 
         if ($query->execute()) {
             return true;

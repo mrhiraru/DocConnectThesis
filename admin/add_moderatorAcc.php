@@ -23,6 +23,7 @@ if (isset($_POST['add'])) {
   }
   $account->password = htmlentities($_POST['password']);
   $account->user_role = 2; // user_role (0 = admin, 1 = doc, 2 = mod, 3 user)
+  $account->verification_status = 'Verified';
 
   if (
     validate_field($account->email) && // Validate username
