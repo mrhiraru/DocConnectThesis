@@ -54,12 +54,9 @@ function getCurrentPage()
       <thead>
         <tr>
           <th scope="col" width="3%">#</th>
-          <th scope="col">Name</th>
-          <th scope="col">Position</th>
-          <th scope="col">Gender</th>
-          <th scope="col">Phone No.</th>
-          <th scope="col">Email</th>
-          <th scope="col">Verification Status</th>
+          <th scope="col">Campus</th>
+          <th scope="col">Username</th>
+          <th scope="col">Password</th>
           <th scope="col" width="5%">Action</th>
         </tr>
       </thead>
@@ -71,12 +68,9 @@ function getCurrentPage()
         ?>
           <tr>
             <td><?= $counter ?></td>
-            <td><?= (isset($item['middlename'])) ? ucwords(strtolower($item['firstname'] . ' ' . $item['middlename'] . ' ' . $item['lastname'])) : ucwords(strtolower($item['firstname'] . ' ' . $item['lastname'])) ?> </td>
             <td><?= $item['campus_name'] ?></td>
-            <td><?= $item['gender'] ?></td>
-            <td><?= maskPhone($item['contact']) ?></td>
-            <td><?= maskEmail($item['email']) ?></td>
-            <td class="text-dark"><?= $item['verification_status'] ?></td>
+            <td><?= $item['email'] ?></td>
+            <td><?= $item['password'] ?></td>
             <td class="d-flex justify-content-around align-items-center text-center">
               <a href="./add_staffAcc?= $item['acc-id'] ?>" title="View Details">
                 <i class='bx bx-edit-alt'></i>
