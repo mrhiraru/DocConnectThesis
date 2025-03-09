@@ -12,12 +12,7 @@
         Users
       </a>
     </li>
-    <li>
-      <a href="./campus" class="nav-link <?php echo getCurrentPage() == 'campus.php' ? 'active' : 'link-dark'; ?>">
-        <i class='bx bx-buildings me-2' ></i>
-        Campuses
-      </a>
-    </li>
+    
     <li>
       <a href="./appointment" class="nav-link <?php echo getCurrentPage() == 'appointment.php' ? 'active' : 'link-dark'; ?>">
         <i class='bx bx-calendar me-2' ></i>
@@ -42,11 +37,6 @@
         Staff
       </a>
     </li> -->
-    <li>
-      <a href="./privacyPolicy" class="nav-link <?php echo getCurrentPage() == 'settings.php' ? 'active' : 'link-dark'; ?>">
-        <i class='bx bx-cog me-2' ></i>
-        Settings
-      </a>
-    </li>
+    
   </ul>
 </div>
