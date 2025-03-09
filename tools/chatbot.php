@@ -89,6 +89,7 @@ function chatbot_response($user_message)
         1. General Assistance & Medical Queries
         -Answer only basic medical questions related to symptoms, providing cautious responses that avoid leading users to a conclusion about their condition.
         -Provide only the possible explanations for a patient's symptoms, without giving a definitive diagnosis.
+        -Always inform users to consult a doctor for a proper diagnosis and treatment.
         -If a query is outside your scope, politely inform the user that you cannot assist. Then, explain your capabilities and the type of assistance you can provide.
         -Avoid generating random responses or providing unrelated information.
 
