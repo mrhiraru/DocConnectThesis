@@ -15,37 +15,21 @@ $account = new Account();
 
 if (isset($_POST['add'])) {
 
-  $account->email = htmlentities($_POST['email']);
+  $account->email = htmlentities($_POST['username']); // Use username instead of email
   $account->password = htmlentities($_POST['password']);
-  $account->firstname = ucfirst(strtolower(htmlentities($_POST['firstname'])));
-  if (isset($_POST['middlename'])) {
-    $account->middlename = ucfirst(strtolower(htmlentities($_POST['middlename'])));
-  } else {
-    $account->middlename = '';
-  }
-  $account->campus_id = htmlentities($_POST['campus']);
-  $account->gender = htmlentities($_POST['gender']);
-  $account->contact = htmlentities($_POST['contact']);
-  $account->lastname = ucfirst(strtolower(htmlentities($_POST['lastname'])));
-  $account->user_role = 2; // user_role (0 = admin, 1 = mod, 2 = user)
+  $account->user_role = 2; // user_role (0 = admin, 1 = doc, 2 = mod, 3 user)
 
   if (
-    validate_field($account->email) &&
-    validate_field($account->password) &&
-    validate_field($account->firstname) &&
-    validate_field($account->lastname) &&
-    validate_password($account->gender) &&
-    validate_field($account->contact) &&
-    validate_password($account->campus_id) &&
-    validate_password($account->password) &&
-    validate_cpw($account->password, $_POST['confirm-password']) &&
-    validate_email($account->email) == 'success' && !$account->is_email_exist() &&
-    validate_wmsu_email($account->email)
+    validate_field($account->email) && // Validate username
+    validate_field($account->password) && // Validate password
+    validate_password($account->password) && // Validate password strength
+    validate_cpw($account->password, $_POST['confirm-password']) && // Confirm password match
+    !$account->is_email_exist() // Check if username already exists
   ) {
-    if ($account->add_mod()) {
+    if ($account->add_admin()) {
       $success = 'success';
     } else {
-      echo 'An error occured while adding in the database.';
+      echo 'An error occurred while adding the admin to the database.';
     }
   } else {
     $success = 'failed';
@@ -123,7 +107,6 @@ function getCurrentPage()
               }
               ?>
             </div>
-            <input type="submit" class="btn btn-primary text-light w-100" name="signup" value="Sign Up">
             <div class="d-flex justify-content-end mt-3">
               <a href="./moderatorsAcc" class="btn btn-secondary me-2 link-light">Cancel</a>
               <button type="submit" class="btn btn-primary link-light" name="add">Add</button>
