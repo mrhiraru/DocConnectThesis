@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 3) {
-  header('location: ../logout.php?from=3');
+if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 2) {
+  header('location: ../logout.php?from=2');
 } else if (isset($_SESSION['user_role'])) {
   header('location: ./index.php');
 }
