@@ -1,8 +1,8 @@
 <?php
 session_start();
 
-if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 0) {
-  header('location: ../logout.php?from=0');
+if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 3) {
+  header('location: ../logout.php?from=3');
 } else if (isset($_SESSION['user_role'])) {
   header('location: ./index.php');
 }
@@ -41,7 +41,7 @@ if (isset($_POST['login'])) {
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$title = 'Admin | Login';
+$title = 'Moderator | Login';
 include './includes/admin_head.php';
 function getCurrentPage()
 {
@@ -55,7 +55,7 @@ function getCurrentPage()
       <div class="col-12 col-md-6">
         <div class="card shadow-lg">
           <div class="card-header text-center">
-            <h4>Admin Login</h4>
+            <h4>Moderator Login</h4>
           </div>
 
           <div class="card-body">
