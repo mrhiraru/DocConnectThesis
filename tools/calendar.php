@@ -227,9 +227,9 @@
         });
     }
 
-    async function update_event(event_id, appointment_id, reason, date, time, patient_email, doctor_email) {
+    async function update_event(event_id, appointment_id, purpose, date, time, patient_email, doctor_email) {
         var title = 'Docconnect Consultation: ' + appointment_id;
-        var description = reason;
+        var description = purpose;
         var appointment_date_time = `${date}T${time}`;
 
         var start_dt = new Date(appointment_date_time);
@@ -325,13 +325,13 @@
                         confirm: $('#confirm').val(),
                         appointment_date: $('#appointment_date').val(),
                         appointment_time: $('#appointment_time').val(),
-                        reason: $("#reason").val(),
+                        purpose: $("#purpose").val(),
                         email: $('#email').text(),
                         link: null,
                         event_id: null,
                     };
 
-                    var created_event = await new_event(formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+                    var created_event = await new_event(formData.appointment_id, formData.purpose, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
                     formData.link = created_event.hangoutLink;
                     formData.event_id = created_event.eventId;
 
@@ -368,13 +368,13 @@
                         reschedule: $('#reschedule').val(),
                         appointment_date: $('#appointment_date').val(),
                         appointment_time: $('#appointment_time').val(),
-                        reason: $("#reason").val(),
+                        purpose: $("#purpose").val(),
                         email: $('#email').text(),
                         link: '<?= $record['appointment_link'] ?>',
                         event_id: '<?= $record['event_id'] ?>'
                     };
 
-                    var updated_event = await update_event(formData.event_id, formData.appointment_id, formData.reason, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
+                    var updated_event = await update_event(formData.event_id, formData.appointment_id, formData.purpose, formData.appointment_date, formData.appointment_time, formData.email, doctorEmail);
 
                     if (updated_event.updated) {
                         $.ajax({

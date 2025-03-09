@@ -293,6 +293,7 @@ include '../includes/head.php';
                             </div>
                         </div>
                     </div>
+                    
                 </div>
             </main>
         </div>
@@ -336,6 +337,34 @@ include '../includes/head.php';
                     }
                 }
             }
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: window.innerWidth < 768 ? 'listWeek' : 'dayGridMonth',
+                themeSystem: 'Lux',
+                editable: true,
+                selectable: true,
+                timeZone: 'UTC',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                events: <?php echo json_encode($calendarEvents); ?>,
+
+                windowResize: function(view) {
+                    if (window.innerWidth < 768) {
+                        calendar.changeView('listWeek');
+                    } else {
+                        calendar.changeView('dayGridMonth');
+                    }
+                }
+            });
+
+            calendar.render();
         });
     </script>
     <script>

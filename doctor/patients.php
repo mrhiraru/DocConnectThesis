@@ -61,10 +61,8 @@ include '../includes/head.php';
                                         <a href="./chats.php?account_id=<?= $item['account_id']  ?>"><i class='bx bx-chat'></i> Chat</a>
                                     </div>
                                     <div>
-                                        <a href=""><i class='bx bx-calendar'></i> Set Schedule</a>
-                                        <span class="float-end">
-                                            <a href=""><i class='bx bx-video'></i> Join Meeting:</a> <?= date("F j, Y", strtotime($name[3])) . " " . $name[1] ?>
-                                        </span>
+                                        <a href="./patient-appointment?account_id=<?= $item['account_id']  ?>"><i class='bx bx-calendar'></i>Appointments</a>
+
                                     </div>
                                 </div>
                             </div>

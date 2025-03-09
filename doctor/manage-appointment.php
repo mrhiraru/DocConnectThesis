@@ -203,7 +203,7 @@ include '../includes/head.php';
                     <div class="row d-flex">
                         <div class="col-12 text-center">
                             <a href="./manage-appointment.php?appointment_id=<?= $_GET['appointment_id'] ?>" class="text-decoration-none text-dark">
-                                <p class="m-0 text-primary fw-bold">Reauthenticate</p>
+                                <p class="m-0 text-primary fw-bold">Try Again.</p>
                             </a>
                         </div>
                     </div>
@@ -354,7 +354,6 @@ $formattedDates = implode(', ', $fullDates);
         var rawendTime = "<?= $_SESSION['end_wt'] ?>";
         //var request_btn = document.getElementById('request');
         var full_dates = "<?= $formattedDates ?>".split(', ');
-        console.log(full_dates);
         var doctor_id = "<?= $_SESSION['doctor_id'] ?>";
 
 
@@ -416,7 +415,12 @@ $formattedDates = implode(', ', $fullDates);
                     available_time(dateStr, doctor_id, startTime, endTime);
                     set_value(null);
                 },
-                defaultDate: defaultAppointmentDate
+                defaultDate: defaultAppointmentDate,
+                onReady: function(selectedDates, dateStr, instance) {
+                    available_time(dateStr, doctor_id, startTime, endTime);
+
+                }
+                // ended here onready of page show the time buttons
             });
 
             flatpickr("#appointment_time", {
@@ -475,9 +479,13 @@ $formattedDates = implode(', ', $fullDates);
                 doctor_id,
                 startTime: start,
                 endTime: end,
+                appointment_time: "<?= $record['appointment_time'] ?>",
+                appointment_date: "<?= $record['appointment_date'] ?>"
             },
             success: function(response) {
                 $('#available_time').html(response);
+                let selectedRadio = document.querySelector('input[name="time"]:checked');
+                set_value(selectedRadio);
             },
             error: function(xhr, status, error) {
                 console.error('Error fetching available time:', error);
