@@ -60,7 +60,7 @@ class Account
                 $this->verification_status = $accountData['verification_status'];
                 $this->account_image = $accountData['account_image'];
                 $this->address = $accountData['address'];
-
+                $this->campus_id = $accountData['campus_id'];
                 return true;
             }
         }

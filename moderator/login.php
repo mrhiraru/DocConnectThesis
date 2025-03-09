@@ -20,14 +20,6 @@ if (isset($_POST['login'])) {
     $_SESSION['account_id'] = $account->account_id;
     $_SESSION['verification_status'] = $account->verification_status;
     $_SESSION['email'] = $account->email;
-    if (isset($account->middlename)) {
-      $_SESSION['fullname'] = ucwords(strtolower($account->firstname . ' ' . $account->middlename . ' ' . $account->lastname));
-    } else {
-      $_SESSION['fullname'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
-    }
-    $_SESSION['firstname'] = $account->firstname;
-    $_SESSION['middlename'] = $account->middlename;
-    $_SESSION['lastname'] = $account->lastname;
 
     if ($_SESSION['user_role'] == 0) {
       header('location: ./index.php');
