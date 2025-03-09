@@ -13,8 +13,7 @@ if (!isset($from)) {
     } else if ($temp_role == 1) {
         header('location: ./doctor/login.php');
     } else if ($temp_role == 2) {
-        // moderator sana kaso wala pa
-        header('location: ./user/login.php');
+        header('location: ./moderator/login.php');
     } else if ($temp_role == 3) {
         header('location: ./user/login.php');
     }
@@ -24,8 +23,7 @@ if (!isset($from)) {
     } else if ($from == 1) {
         header('location: ./doctor/login.php');
     } else if ($from == 2) {
-        // moderator sana kaso wala pa
-        header('location: ./user/login.php');
+        header('location: ./moderator/login.php');
     } else if ($from == 3) {
         header('location: ./user/login.php');
     }
