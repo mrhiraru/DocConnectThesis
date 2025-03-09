@@ -347,19 +347,14 @@ include '../includes/head.php';
                 themeSystem: 'Lux',
                 editable: true,
                 selectable: true,
-                timeZone: 'UTC', // Set the timezone to match your PHP script
+                timeZone: 'UTC',
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
                     right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
                 },
-                events: <?php echo json_encode($calendarEvents); ?>, // Pass the events array
-                eventClick: function(info) {
-                    if (info.event.url) {
-                        window.open(info.event.url, '_blank'); // Open URL in a new tab
-                        info.jsEvent.preventDefault(); // Prevent default behavior
-                    }
-                },
+                events: <?php echo json_encode($calendarEvents); ?>,
+
                 windowResize: function(view) {
                     if (window.innerWidth < 768) {
                         calendar.changeView('listWeek');

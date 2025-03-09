@@ -149,17 +149,14 @@ class Dashboard
 
         $events = [];
         foreach ($result as $row) {
+            $appointmentDate = date('Y-m-d', strtotime($row['appointment_date']));
 
             $events[] = [
                 'title' => $row['firstname'] . ' ' . $row['lastname'] . ' - ' . $row['purpose'],
                 'url' => './manage-appointment.php?appointment_id=' . $row['appointment_id'],
-                'start' => $row['appointment_date'] . 'T' . $row['appointment_time']
+                'start' => $appointmentDate . 'T' . $row['appointment_time']
             ];
         }
-
-        echo "<pre>";
-        print_r($events);
-        echo "</pre>";
 
         return $events;
     }
