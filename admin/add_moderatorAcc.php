@@ -16,6 +16,11 @@ $account = new Account();
 if (isset($_POST['add'])) {
 
   $account->email = htmlentities($_POST['username']); // Use username instead of email
+  if (isset($_POST['campus_id'])) {
+    $account->campus_id = htmlentities($_POST['campus_id']);
+  } else {
+    $account->campus_id = '';
+  }
   $account->password = htmlentities($_POST['password']);
   $account->user_role = 2; // user_role (0 = admin, 1 = doc, 2 = mod, 3 user)
 
@@ -23,10 +28,9 @@ if (isset($_POST['add'])) {
     validate_field($account->email) && // Validate username
     validate_field($account->password) && // Validate password
     validate_password($account->password) && // Validate password strength
-    validate_cpw($account->password, $_POST['confirm-password']) && // Confirm password match
-    !$account->is_email_exist() // Check if username already exists
+    validate_cpw($account->password, $_POST['confirm-password']) // Confirm password match // Check if username already exists
   ) {
-    if ($account->add_admin()) {
+    if ($account->add_mod()) {
       $success = 'success';
     } else {
       echo 'An error occurred while adding the admin to the database.';
