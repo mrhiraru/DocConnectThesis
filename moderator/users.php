@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
@@ -11,19 +11,21 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 ?>
 
 <html lang="en">
-<?php 
-  $title = 'Admin | Users';
-	include './includes/admin_head.php';
-  function getCurrentPage() {
-    return basename($_SERVER['PHP_SELF']);
-  }
+<?php
+$title = 'Admin | Users';
+include './includes/admin_head.php';
+function getCurrentPage()
+{
+  return basename($_SERVER['PHP_SELF']);
+}
 ?>
+
 <body>
-  <?php 
-    require_once ('./includes/admin_header.php');
+  <?php
+  require_once('./includes/admin_header.php');
   ?>
-  <?php 
-    require_once ('./includes/admin_sidepanel.php');
+  <?php
+  require_once('./includes/admin_sidepanel.php');
   ?>
 
   <section id="users" class="page-container">
@@ -35,7 +37,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
           <li class="list-group-item my-2 p-2 border-0 w-75">
             <div class="row align-items-center justify-content-center">
               <div class="col-2 p-0">
-                <i class='bx bx-user-pin text-danger' ></i>
+                <i class='bx bx-user-pin text-danger'></i>
               </div>
               <div class="col-9 text-start w-75">
                 <p class="fs-3 mb-0">Doctors Accounts</p>
@@ -62,22 +64,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
             </div>
           </li>
         </a>
-
-        <a href="./moderatorsAcc" class="d-flex justify-content-center">
-          <li class="list-group-item my-2 p-2 border-0 w-75">
-            <div class="row align-items-center justify-content-center">
-              <div class="col-2 p-0">
-                <i class='bx bx-group text-danger'></i>
-              </div>
-              <div class="col-9 text-start w-75">
-                <p class="fs-3 mb-0">Moderator Accounts</p>
-              </div>
-              <div class="col-1 p-0">
-                <i class='bx bx-chevron-right fs-1'></i>
-              </div>
-            </div>
-          </li>
-        </a>
       </ul>
     </div>
 
@@ -85,4 +71,5 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   </section>
 
 </body>
+
 </html>
