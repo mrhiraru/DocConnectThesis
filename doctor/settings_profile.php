@@ -125,7 +125,7 @@ include '../includes/head.php';
           <div class="card-body">
 
             <form method="post" action="" enctype="multipart/form-data">
-              <div class="d-flex align-items-center mx-4 mb-4">
+              <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
                 <!-- Profile Picture -->
                 <div class="campus-pic align-items-end">
                   <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
@@ -142,7 +142,7 @@ include '../includes/head.php';
                   <input id="file" type="file" name="account_image" accept=".jpg, .jpeg, .png" required onchange="validateFile(event)">
                 </div>
                 <!-- <button class="btn btn-primary btn-md d-block mx-2 text-light" id="upload_profile" type="button">Upload New</button> -->
-                <input type="submit" class="btn btn-primary text-light ms-3" name="save_image" value="Save Image">
+                <input type="submit" class="btn btn-primary text-light ms-0 mx-lg-3" name="save_image" value="Save Image">
               </div>
             </form>
 

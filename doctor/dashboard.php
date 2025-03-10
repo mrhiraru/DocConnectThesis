@@ -118,19 +118,19 @@ include '../includes/head.php';
                             </div>
 
                             <div class="col-lg-6 d-flex">
-                                <div class="card next_patient border-0 w-100 m-4">
+                                <div class="card next_patient border-0 w-100 m-0 m-lg-4">
                                     <div class="card-body">
                                         <div class="text-center mb-3">
                                             <h5 class="text-primary">Next Patient Details</h5>
                                         </div>
                                         <?php if ($nextPatient): ?>
                                             <div class="d-flex flex-column flex-md-row align-items-center">
-                                                <img src="<?php echo !empty($nextPatient['account_image']) ? '../assets/images/' . $nextPatient['account_image'] : '../assets/images/profilenono.jpeg'; ?>" class="rounded-circle" alt="Patient Image" style="width: 80px; height: 80px; object-fit: cover;">
-                                                <div class="ms-3">
+                                                <img src="<?php echo !empty($nextPatient['account_image']) ? '../assets/images/' . $nextPatient['account_image'] : '../assets/images/profilenono.jpeg'; ?>" class="rounded-1 mb-2 mb-lg-0" alt="Patient Image" style="width: 80px; height: 80px; object-fit: cover;">
+                                                <div class="ms-0 ms-lg-3 text-center">
                                                     <h6 class="mb-0"><?php echo $nextPatient['firstname'] . ' ' . $nextPatient['lastname']; ?></h6>
                                                     <p class="text-muted mb-0"><?php echo isset($nextPatient['purpose']) ? $nextPatient['purpose'] : 'No purpose specified'; ?></p>
                                                 </div>
-                                                <div class="ms-3">
+                                                <div class="ms-0 ms-lg-3 text-center">
                                                     <strong>Patient ID</strong>
                                                     <p class="text-muted mb-0"><?php echo $nextPatient['patient_id']; ?></p>
                                                 </div>
@@ -233,7 +233,7 @@ include '../includes/head.php';
                                             <?php endif; ?>
                                         </tbody>
                                     </table>
-                                    <a href="#" class="text-primary">See All</a>
+                                    <a href="./appointment" class="text-primary">See All</a>
                                 </div>
                             </div>
                         </div>
@@ -276,7 +276,7 @@ include '../includes/head.php';
                                             <?php endif; ?>
                                         </tbody>
                                     </table>
-                                    <a href="#" class="text-primary">See All</a>
+                                    <a href="./appointment" class="text-primary">See All</a>
                                 </div>
                             </div>
                         </div>
