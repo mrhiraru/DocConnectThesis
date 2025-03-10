@@ -13,9 +13,7 @@ $account = new Account();
 $userStats = $account->fetch_user_statistics();
 $roleData = [];
 $roleLabels = [
-  0 => "Admins",
   1 => "Doctors",
-  2 => "Moderators",
   3 => "Students",
   4 => "Alumni",
   5 => "Employees",
@@ -196,7 +194,7 @@ function getCurrentPage()
       new Chart(document.getElementById("userStatsChart"), {
         type: "bar",
         data: {
-          labels: ["Admins", "Doctors", "Moderators", "Students", "Alumni", "Employees", "Faculties", "Dependents"],
+          labels: ["Doctors", "Students", "Alumni", "Employees", "Faculties", "Dependents"],
           datasets: [{
             label: "Total Users",
             data: userStatsData,
