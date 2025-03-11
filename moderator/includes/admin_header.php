@@ -107,7 +107,7 @@
         <a href="#" class="acc d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <div class="d-flex align-items-center">
             <img src="../../assets/images/default_profile.png" alt="mdo" width="32" height="32" class="rounded-circle border border-2 border-light me-2">
-            <h6 class="m-0 text-light d-none d-md-block"><?= $_SESSION['campus_name'] ?> Moderator</h6>
+            <h6 class="m-0 text-light d-none d-md-block"><?= $_SESSION['campus_name'] ?></h6>
           </div>
         </a>
         <ul class="dropdown-menu text-small" aria-labelledby="profileDropddown">
