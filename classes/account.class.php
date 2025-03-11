@@ -66,6 +66,32 @@ class Account
         }
     }
 
+    function sign_in_mod()
+    {
+        $sql = "SELECT a.*, c.* FROM account a INNER JOIN campus c ON a.campus_id = c.campus_id WHERE a.email = :email LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':email', $this->email);
+
+        if ($query->execute()) {
+            $accountData = $query->fetch(PDO::FETCH_ASSOC);
+
+            if ($accountData && password_verify($this->password, $accountData['password'])) {
+                $this->account_id = $accountData['account_id'];
+                $this->user_role = $accountData['user_role'];
+                $this->firstname = $accountData['firstname'];
+                $this->middlename = $accountData['middlename'];
+                $this->lastname = $accountData['lastname'];
+                $this->email = $accountData['email'];
+                $this->verification_status = $accountData['verification_status'];
+                $this->account_image = $accountData['account_image'];
+                $this->address = $accountData['address'];
+                $this->campus_id = $accountData['campus_id'];
+                $this->campus_name = $accountData['campus_name'];
+                return true;
+            }
+        }
+    }
+
     // admin functions begin
 
     function add_admin()
