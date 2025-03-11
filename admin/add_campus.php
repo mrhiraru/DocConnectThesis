@@ -22,7 +22,7 @@ if (isset($_POST['save'])) {
   $campus->email = htmlentities($_POST['username']);
   $campus->verification_status = "Verified";
   $campus->user_role = 2;
-  $account->password = htmlentities($_POST['password']);
+  $campus->password = htmlentities($_POST['password']);
 
   $uploaddir = '../assets/images/';
   $uploadname = $_FILES[htmlentities('campus_profile')]['name'];
