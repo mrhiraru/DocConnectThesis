@@ -146,7 +146,7 @@ function getCurrentPage()
               }
               ?>
             </div>
-            <h6 class="text-center mb-2">Campus Admin Credentials</h6>
+            <h6 class="text-center mt-2">Campus Admin Credentials</h6>
             <div class="form-group mb-2">
               <label for="username">Username</label>
               <input type="text" class="form-control" id="username" name="username" placeholder="" value="<?= isset($_POST['username']) ? $_POST['username'] : '' ?>">
