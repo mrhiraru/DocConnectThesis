@@ -25,7 +25,7 @@ $chartValues = [];
 if (!empty($chartData)) {
     foreach ($chartData as $item) {
         $chartLabels[] = $item['diagnosis'];
-        $chartValues[] = $item['count']; 
+        $chartValues[] = $item['count'];
     }
 }
 ?>
@@ -128,10 +128,10 @@ include '../includes/head.php';
                                                     <h6 class="mb-0"><?php echo $nextPatient['firstname'] . ' ' . $nextPatient['lastname']; ?></h6>
                                                     <p class="text-muted mb-0"><?php echo isset($nextPatient['purpose']) ? $nextPatient['purpose'] : 'No purpose specified'; ?></p>
                                                 </div>
-                                                <div class="ms-0 ms-lg-3 text-center">
+                                                <!-- <div class="ms-0 ms-lg-3 text-center">
                                                     <strong>Patient ID</strong>
                                                     <p class="text-muted mb-0"><?php echo $nextPatient['patient_id']; ?></p>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <hr>
                                             <div class="row row-cols-2 row-cols-md-3 mb-3">
@@ -291,7 +291,7 @@ include '../includes/head.php';
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </main>
         </div>
@@ -332,6 +332,13 @@ include '../includes/head.php';
                 scales: {
                     y: {
                         beginAtZero: true
+                    }
+                },
+                onClick: function(evt, elements) {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        const diagnosis = chartLabels[index];
+                        window.location.href = `./diagnosis_appointments.php?diagnosis=${encodeURIComponent(diagnosis)}`;
                     }
                 }
             }

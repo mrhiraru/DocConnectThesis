@@ -62,21 +62,21 @@ class Dashboard
     public function fetchPatientSummaryChartData()
     {
         $db = $this->db->connect();
-    
+
         $sql = "SELECT diagnosis 
                 FROM appointment 
                 WHERE diagnosis IS NOT NULL AND diagnosis != ''";
         $query = $db->prepare($sql);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
-    
+
         $conditionCounts = [];
-    
+
         foreach ($result as $row) {
             $diagnosis = $row['diagnosis'];
-            
+
             $conditions = array_map('trim', explode(',', $diagnosis));
-            
+
             foreach ($conditions as $condition) {
                 if (!empty($condition)) {
                     if (isset($conditionCounts[$condition])) {
@@ -87,9 +87,9 @@ class Dashboard
                 }
             }
         }
-    
+
         arsort($conditionCounts);
-    
+
         $chartData = [];
         foreach ($conditionCounts as $condition => $count) {
             $chartData[] = [
@@ -97,9 +97,9 @@ class Dashboard
                 'count' => $count
             ];
         }
-    
+
         $chartData = array_slice($chartData, 0, 5);
-    
+
         return $chartData;
     }
 
@@ -185,5 +185,23 @@ class Dashboard
         }
 
         return $events;
+    }
+
+    public function fetchAppointmentsByDiagnosis($diagnosis)
+    {
+        $db = $this->db->connect();
+
+        $sql = "SELECT a.*, p.*, acc.firstname, acc.lastname, acc.email, acc.contact 
+                FROM appointment a 
+                JOIN patient_info p ON a.patient_id = p.patient_id 
+                JOIN account acc ON p.account_id = acc.account_id 
+                WHERE a.diagnosis LIKE :diagnosis 
+                AND a.is_deleted = 0 
+                ORDER BY a.appointment_date DESC";
+        $query = $db->prepare($sql);
+        $query->execute(['diagnosis' => '%' . $diagnosis . '%']);
+        $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        return $result;
     }
 }
