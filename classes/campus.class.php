@@ -9,6 +9,10 @@ class Campus
     public $campus_contact;
     public $campus_email;
     public $campus_profile;
+    public $email;
+    public $password;
+    public $user_role;
+    public $verification_status;
 
     protected $db;
 
@@ -19,9 +23,12 @@ class Campus
 
     function add_campus()
     {
+        $connect = $this->db->connect();
+        $connect->beginTransaction();
+
         $sql = "INSERT INTO campus (campus_profile, campus_name, campus_address, campus_contact, campus_email) VALUES (:campus_profile, :campus_name, :campus_address, :campus_contact, :campus_email);";
 
-        $query = $this->db->connect()->prepare($sql);
+        $query = $connect->prepare($sql);
         $query->bindParam(':campus_profile', $this->campus_profile);
         $query->bindParam(':campus_name', $this->campus_name);
         $query->bindParam(':campus_address', $this->campus_address);
@@ -29,8 +36,27 @@ class Campus
         $query->bindParam(':campus_email', $this->campus_email);
 
         if ($query->execute()) {
-            return true;
+            $last_product_id = $connect->lastInsertId();
+
+            $sec_sql = "INSERT INTO account (email, password, user_role, campus_id, verification_status) VALUES (:email, :password, :user_role, :campus_id, :verification_status);";
+
+            $sec_query = $connect->prepare($sec_sql);
+            $sec_query->bindParam(':email', $this->email);
+            $hashedPassword = password_hash($this->password, PASSWORD_DEFAULT);
+            $sec_query->bindParam(':password', $hashedPassword);
+            $sec_query->bindParam(':user_role', $this->user_role);
+            $sec_query->bindParam(':campus_id', $last_product_id);
+            $sec_query->bindParam(':verification_status', $this->verification_status);
+
+            if ($sec_query->execute()) {
+                $connect->commit();
+                return true;
+            } else {
+                $connect->rollBack();
+                return false;
+            }
         } else {
+            $connect->rollBack();
             return false;
         }
     }
@@ -57,4 +83,3 @@ class Campus
         return $data;
     }
 }
-?>

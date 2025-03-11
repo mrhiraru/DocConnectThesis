@@ -19,6 +19,11 @@ if (isset($_POST['save'])) {
   $campus->campus_address = htmlentities($_POST['campus_address']);
   $campus->campus_email = htmlentities($_POST['campus_email']);
 
+  $campus->email = htmlentities($_POST['username']);
+  $campus->verification_status = "Verified";
+  $campus->user_role = 2;
+  $account->password = htmlentities($_POST['password']);
+
   $uploaddir = '../assets/images/';
   $uploadname = $_FILES[htmlentities('campus_profile')]['name'];
   $uploadext = explode('.', $uploadname);
@@ -37,7 +42,11 @@ if (isset($_POST['save'])) {
         validate_field($campus->campus_name) &&
         validate_field($campus->campus_contact) &&
         validate_field($campus->campus_email) &&
-        validate_field($campus->campus_address)
+        validate_field($campus->campus_address) &&
+        validate_field($campus->email) && // Validate username
+        validate_field($campus->password) && // Validate password
+        validate_password($campus->password) && // Validate password strength
+        validate_cpw($campus->password, $_POST['confirm-password']) // Confirm password match // Check if username already exists
       ) {
         if ($campus->add_campus()) {
           $success = 'success';
@@ -59,7 +68,7 @@ if (isset($_POST['save'])) {
 
 <html lang="en">
 <?php
-$title = 'Campuses | Campus A';
+$title = 'Admin | Add Campus';
 include './includes/admin_head.php';
 function getCurrentPage()
 {
