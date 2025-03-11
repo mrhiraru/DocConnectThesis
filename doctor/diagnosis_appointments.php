@@ -25,30 +25,7 @@ $title = 'Diagnosis Appointments';
 $dashboard = 'active';
 include '../includes/head.php';
 ?>
-<style>
-    /* Custom button styling */
-    .dt-buttons .btn-primary {
-        color: #0d6efd !important; /* text-primary color */
-        background-color: transparent !important;
-        border-color: #0d6efd !important;
-    }
 
-    .dt-buttons .btn-primary:hover {
-        color: #fff !important; /* text-light color on hover */
-        background-color: #0d6efd !important;
-    }
-
-    .dt-buttons .btn-light {
-        color: #f8f9fa !important; /* text-light color */
-        background-color: transparent !important;
-        border-color: #f8f9fa !important;
-    }
-
-    .dt-buttons .btn-light:hover {
-        color: #000 !important; /* Dark text on hover */
-        background-color: #f8f9fa !important;
-    }
-</style>
 <body>
     <?php
     require_once('../includes/header-doctor.php');
@@ -90,7 +67,31 @@ include '../includes/head.php';
                 </div>
             </main>
         </div>
-    </div>
+    </div>=
+
+    <style>
+        .dt-buttons{
+            margin-bottom: 5px;
+        }
+
+        .dt-buttons .btn {
+            background-color: #dc3545 !important;
+            color: white !important;
+            border: none !important;
+        }
+
+        .dt-buttons .btn:hover {
+            background-color: #c82333 !important;
+            color: white !important;
+        }
+
+        .dt-buttons .btn:focus,
+        .dt-buttons .btn:active {
+            background-color: #bd2130 !important;
+            color: white !important;
+            box-shadow: none !important;
+        }
+    </style>
 
     <script>
         $(document).ready(function() {
