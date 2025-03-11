@@ -98,7 +98,7 @@ include '../includes/head.php';
                                     <?php
                                     } else if ($record['appointment_status'] == "Completed") {
                                     ?>
-                                        <a href="" class="btn btn-danger text-white mb-3">
+                                        <a href="" class="btn btn-danger text-white mb-3 d-none">
                                             <i class='bx bxs-edit align-middle fs-5 me-1'></i>
                                             New Appointment
                                         </a>
