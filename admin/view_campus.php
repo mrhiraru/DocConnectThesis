@@ -35,7 +35,7 @@ function getCurrentPage()
     <div class="d-flex justify-content-between align-items-center">
       <a href="./campus" class="btn btn-secondary text-white"><i class='bx bx-chevron-left'></i></a>
       <h1 class="text-center m-0"><?= $record['campus_name'] ?></h1>
-      <a href="edit_campus" class="btn btn-primary text-white">Edit</a>
+      <a href="edit_campus?campus_id=<?= $_GET['campus_id'] ?>" class="btn btn-primary text-white">Edit</a>
     </div>
 
     <div class="d-flex justify-content-center w-100 h-50 mt-3 mb-5">
