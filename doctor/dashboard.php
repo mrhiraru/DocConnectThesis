@@ -19,15 +19,13 @@ $todayAppointments = $dashboard->fetchTodayAppointmentsDetails();
 $appointmentRequests = $dashboard->fetchAppointmentRequests();
 $calendarEvents = $dashboard->fetchCalendarEvents();
 
-
-// Prepare labels and data for the chart
 $chartLabels = [];
 $chartValues = [];
 
 if (!empty($chartData)) {
     foreach ($chartData as $item) {
-        $chartLabels[] = $item['diagnosis']; // Labels for the chart (e.g., diagnosis names)
-        $chartValues[] = $item['count']; // Data for the chart (e.g., number of patients)
+        $chartLabels[] = $item['diagnosis'];
+        $chartValues[] = $item['count']; 
     }
 }
 ?>
@@ -173,9 +171,9 @@ include '../includes/head.php';
                                                 ?>
                                             </div>
                                             <div class="d-flex justify-content-start">
-                                                <a href="./patient-files?account_id=<?php echo $nextPatient['account_id']; ?>" class="btn btn-primary me-3 d-flex align-items-center text-light">
+                                                <!-- <a href="./patient-files?account_id=<?php echo $nextPatient['account_id']; ?>" class="btn btn-primary me-3 d-flex align-items-center text-light">
                                                     <i class="bx bx-file me-2"></i>Document
-                                                </a>
+                                                </a> -->
                                                 <a href="./chats?account_id=<?php echo $nextPatient['account_id']; ?>" class="btn btn-outline-primary me-3 d-flex align-items-center">
                                                     <i class="bx bx-chat me-2"></i>Chat
                                                 </a>

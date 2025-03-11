@@ -62,19 +62,45 @@ class Dashboard
     public function fetchPatientSummaryChartData()
     {
         $db = $this->db->connect();
-
-        // Example: Fetch number of appointments by diagnosis
-        $sql = "SELECT diagnosis, COUNT(*) as count 
+    
+        $sql = "SELECT diagnosis 
                 FROM appointment 
-                WHERE diagnosis IS NOT NULL AND diagnosis != '' 
-                GROUP BY diagnosis 
-                ORDER BY count DESC 
-                LIMIT 5";
+                WHERE diagnosis IS NOT NULL AND diagnosis != ''";
         $query = $db->prepare($sql);
         $query->execute();
         $result = $query->fetchAll(PDO::FETCH_ASSOC);
-
-        return $result;
+    
+        $conditionCounts = [];
+    
+        foreach ($result as $row) {
+            $diagnosis = $row['diagnosis'];
+            
+            $conditions = array_map('trim', explode(',', $diagnosis));
+            
+            foreach ($conditions as $condition) {
+                if (!empty($condition)) {
+                    if (isset($conditionCounts[$condition])) {
+                        $conditionCounts[$condition]++;
+                    } else {
+                        $conditionCounts[$condition] = 1;
+                    }
+                }
+            }
+        }
+    
+        arsort($conditionCounts);
+    
+        $chartData = [];
+        foreach ($conditionCounts as $condition => $count) {
+            $chartData[] = [
+                'diagnosis' => $condition,
+                'count' => $count
+            ];
+        }
+    
+        $chartData = array_slice($chartData, 0, 5);
+    
+        return $chartData;
     }
 
     public function fetchNextPatientDetails()
