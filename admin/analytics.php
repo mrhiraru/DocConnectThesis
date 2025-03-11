@@ -133,7 +133,7 @@ function getCurrentPage()
               <h4 class="card-title">Appointment Overview</h4>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
-                <li class="list-group-item">Average Duration: <strong id="avgDuration"></strong></li>
+                <li class="list-group-item d-none">Average Duration: <strong id="avgDuration"></strong></li>
                 <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
               </ul>
             </div>
@@ -206,7 +206,7 @@ function getCurrentPage()
               </div>
 
               <!-- Bar Chart for Diagnosis Trends -->
-              <canvas id="diagnosisTrendsChart" style="max-height: 400px;"></canvas>
+              <canvas id="diagnosisTrendsChart" style="max-height: 300px;"></canvas>
             </div>
           </div>
         </div>
