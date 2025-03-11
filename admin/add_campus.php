@@ -180,7 +180,7 @@ function getCurrentPage()
             </div>
             <div class="form-group">
               <label for="confirm-password">Confirm Password</label>
-              <input type="-password" class="form-control" id="confirm-password" name="confirm-password" placeholder="" value="<?= isset($_POST['confirm-password']) ? $_POST['confirm-password'] : '' ?>">
+              <input type="password" class="form-control" id="confirm-password" name="confirm-password" placeholder="" value="<?= isset($_POST['confirm-password']) ? $_POST['confirm-password'] : '' ?>">
               <?php
               if (isset($_POST['password']) && isset($_POST['confirm-password']) && !validate_cpw($_POST['password'], $_POST['confirm-password'])) {
               ?>
