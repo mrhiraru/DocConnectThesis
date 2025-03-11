@@ -893,4 +893,51 @@ class Account
             'healthConcernData' => $healthConcernData
         ];
     }
+
+    function fetch_diagnosis_trends($month = null, $year = null)
+    {
+        $db = $this->db->connect();
+
+        $sql = "SELECT DATE_FORMAT(appointment_date, '%Y-%m') as month, diagnosis, COUNT(*) as count 
+                FROM appointment 
+                WHERE diagnosis IS NOT NULL AND diagnosis != ''";
+
+        if ($month && $year) {
+            $sql .= " AND DATE_FORMAT(appointment_date, '%Y-%m') = :month_year";
+            $params = ['month_year' => "$year-$month"];
+        } elseif ($year) {
+            $sql .= " AND YEAR(appointment_date) = :year";
+            $params = ['year' => $year];
+        } else {
+            $params = [];
+        }
+
+        $sql .= " GROUP BY month, diagnosis ORDER BY month";
+
+        $query = $db->prepare($sql);
+        $query->execute($params);
+        $diagnosisTrends = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $sqlConditions = "SELECT medcon_name FROM medical_condition";
+        $queryConditions = $db->prepare($sqlConditions);
+        $queryConditions->execute();
+        $medicalConditions = $queryConditions->fetchAll(PDO::FETCH_COLUMN);
+
+        $conditionCounts = array_fill_keys($medicalConditions, 0);
+
+        foreach ($diagnosisTrends as $row) {
+            $diagnosis = $row['diagnosis'];
+            $conditions = array_map('trim', explode(',', $diagnosis));
+            foreach ($conditions as $condition) {
+                if (isset($conditionCounts[$condition])) {
+                    $conditionCounts[$condition] += $row['count'];
+                }
+            }
+        }
+
+        return [
+            'diagnosisTrends' => $diagnosisTrends,
+            'conditionCounts' => $conditionCounts
+        ];
+    }
 }

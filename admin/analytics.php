@@ -55,6 +55,15 @@ $topConcern = $healthStats['topConcern'];
 $topConcernMonth = $healthStats['topConcernMonth'];
 $healthConcernLabels = $healthStats['healthConcernLabels'];
 $healthConcernData = $healthStats['healthConcernData'];
+
+// Fetch diagnosis trends data
+$year = isset($_GET['year']) ? $_GET['year'] : null;
+$month = isset($_GET['month']) ? $_GET['month'] : null;
+$diagnosisTrends = $account->fetch_diagnosis_trends($month, $year);
+
+// Encode the data as JSON
+$diagnosisTrendsJson = json_encode($diagnosisTrends);
+
 ?>
 
 <html lang="en">
@@ -133,7 +142,7 @@ function getCurrentPage()
         <!-- Health Concerns & Trends -->
         <div class="col-lg-6 mb-3 mb-lg-0">
           <div class="card h-100">
-            <div class="card-header">
+            <div class="card-header bg-primary text-white">
               <h4 class="card-title">Health Concerns & Trends</h4>
             </div>
             <div class="card-body">
@@ -144,6 +153,67 @@ function getCurrentPage()
                 <li class="list-group-item">Top Health Concern This Month: <strong id="topConcernMonth"></strong></li>
                 <!-- <li class="list-group-item">Seasonal Trends: <strong id="seasonalTrends"></strong></li> -->
               </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Diagnosis Trends -->
+      <div class="row mb-4">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Diagnosis Trends</h4>
+            </div>
+            <div class="card-body">
+              <div class="row mb-3">
+                <div class="col-md-3">
+                  <label for="yearSelect">Select Year:</label>
+                  <select id="yearSelect" class="form-control">
+                    <?php
+                    $currentYear = date('Y');
+                    for ($i = $currentYear; $i >= $currentYear - 5; $i--) {
+                      echo "<option value='$i'>$i</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <label for="monthSelect">Select Month:</label>
+                  <select id="monthSelect" class="form-control">
+                    <option value="">All Months</option>
+                    <?php
+                    $months = [
+                      '01' => 'January',
+                      '02' => 'February',
+                      '03' => 'March',
+                      '04' => 'April',
+                      '05' => 'May',
+                      '06' => 'June',
+                      '07' => 'July',
+                      '08' => 'August',
+                      '09' => 'September',
+                      '10' => 'October',
+                      '11' => 'November',
+                      '12' => 'December'
+                    ];
+                    foreach ($months as $key => $month) {
+                      echo "<option value='$key'>$month</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
+              </div>
+
+              <table id="diagnosisTrendsTable" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Medical Condition</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -281,6 +351,78 @@ function getCurrentPage()
 
       // document.getElementById("serverUptime").textContent = "99.8%";
       // document.getElementById("errorRate").textContent = "0.5%";
+
+      const yearSelect = document.getElementById('yearSelect');
+      const monthSelect = document.getElementById('monthSelect');
+      const diagnosisTrendsTableBody = document.querySelector('#diagnosisTrendsTable tbody');
+
+      const diagnosisTrends = <?php echo $diagnosisTrendsJson; ?>;
+
+      function updateDiagnosisTrendsTable(conditionCounts) {
+        diagnosisTrendsTableBody.innerHTML = '';
+
+        for (const [condition, count] of Object.entries(conditionCounts)) {
+          if (count > 0) {
+            const row = document.createElement('tr');
+            const conditionCell = document.createElement('td');
+            const countCell = document.createElement('td');
+
+            conditionCell.textContent = condition;
+            countCell.textContent = count;
+
+            row.appendChild(conditionCell);
+            row.appendChild(countCell);
+            diagnosisTrendsTableBody.appendChild(row);
+          }
+        }
+      }
+
+      yearSelect.addEventListener('change', () => {
+        const year = yearSelect.value;
+        const month = monthSelect.value;
+        fetchDiagnosisTrends(year, month);
+      });
+
+      monthSelect.addEventListener('change', () => {
+        const year = yearSelect.value;
+        const month = monthSelect.value;
+        fetchDiagnosisTrends(year, month);
+      });
+
+      function fetchDiagnosisTrends(year, month) {
+        const filteredData = diagnosisTrends.diagnosisTrends.filter(item => {
+          const itemYear = item.month.substring(0, 4);
+          const itemMonth = item.month.substring(5, 7);
+
+          if (year && month) {
+            return itemYear === year && itemMonth === month;
+          } else if (year) {
+            return itemYear === year;
+          } else {
+            return true;
+          }
+        });
+
+        const conditionCounts = {
+          ...diagnosisTrends.conditionCounts
+        };
+        for (const condition in conditionCounts) {
+          conditionCounts[condition] = 0; // Reset counts
+        }
+
+        filteredData.forEach(item => {
+          const conditions = item.diagnosis.split(',').map(cond => cond.trim());
+          conditions.forEach(condition => {
+            if (conditionCounts[condition] !== undefined) {
+              conditionCounts[condition] += item.count;
+            }
+          });
+        });
+
+        updateDiagnosisTrendsTable(conditionCounts);
+      }
+
+      fetchDiagnosisTrends(yearSelect.value, monthSelect.value);
     });
   </script>
 
