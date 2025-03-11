@@ -68,8 +68,8 @@ function getCurrentPage()
           <th scope="col">Phone No.</th>
           <th scope="col">Date of Birth</th>
           <th scope="col">Specialties</th>
+          <th scope="col">Working Days</th>
           <th scope="col">Working Hours</th>
-          <th scope="col">Number of Patients</th>
 
           <th scope="col" width="7%">Action</th>
         </tr>
@@ -88,11 +88,11 @@ function getCurrentPage()
             <td><?= $item['gender'] ?></td>
             <td><?= maskPhone($item['contact']) ?></td>
             <td><?= date('F j Y', strtotime($item['birthdate'])) ?></td>
-            <td><?= "no data" //$item['specialties'] 
+            <td><?= $item['specialty']
                 ?></td>
-            <td><?= "no data" //$item['work-hour'] 
+            <td><?= $item['start_day'] . ' to ' . $item['end_day']
                 ?></td>
-            <td><?= "no data" //$item['no.patients'] 
+            <td><?= date('h:i A', strtotime($item['start_wt'])) . ' - ' . date('h:i A', strtotime($item['end_wt']))
                 ?></td>
 
             <td class="text-center">
