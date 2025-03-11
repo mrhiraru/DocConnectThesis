@@ -171,9 +171,9 @@ function getCurrentPage()
               <label for="password">Password</label>
               <input type="password" class="form-control" id="password" name="password" placeholder="" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
               <?php
-              if (isset($_POST['password']) && !validate_field($_POST['password'])) {
+              if (isset($_POST['password']) && validate_password($_POST['password']) !== "success") {
               ?>
-                <p class="text-dark m-0 ps-2">Password is required.</p>
+                <p class="text-dark m-0 ps-2"><?= validate_password($_POST['password']) ?></p>
               <?php
               }
               ?>
@@ -182,9 +182,9 @@ function getCurrentPage()
               <label for="confirm-password">Confirm Password</label>
               <input type="-password" class="form-control" id="confirm-password" name="confirm-password" placeholder="" value="<?= isset($_POST['confirm-password']) ? $_POST['confirm-password'] : '' ?>">
               <?php
-              if (isset($_POST['confirm-password']) && !validate_field($_POST['confirm-password'])) {
+              if (isset($_POST['password']) && isset($_POST['confirm-password']) && !validate_cpw($_POST['password'], $_POST['confirm-password'])) {
               ?>
-                <p class="text-dark m-0 ps-2">Confirm password is required.</p>
+                <p class="text-dark m-0 ps-2">Password did not match.</p>
               <?php
               }
               ?>
