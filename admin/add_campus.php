@@ -146,6 +146,39 @@ function getCurrentPage()
               }
               ?>
             </div>
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" name="username" placeholder="" value="<?= isset($_POST['username']) ? $_POST['username'] : '' ?>">
+              <?php
+              if (isset($_POST['username']) && !validate_field($_POST['username'])) {
+              ?>
+                <p class="text-dark m-0 ps-2">Username is required.</p>
+              <?php
+              }
+              ?>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
+              <?php
+              if (isset($_POST['password']) && !validate_field($_POST['password'])) {
+              ?>
+                <p class="text-dark m-0 ps-2">Password is required.</p>
+              <?php
+              }
+              ?>
+            </div>
+            <div class="form-group">
+              <label for="confirm-password">Confirm Password</label>
+              <input type="confirm-password" class="form-control" id="confirm-password" name="confirm-password" placeholder="" value="<?= isset($_POST['confirm-password']) ? $_POST['confirm-password'] : '' ?>">
+              <?php
+              if (isset($_POST['confirm-password']) && !validate_field($_POST['confirm-password'])) {
+              ?>
+                <p class="text-dark m-0 ps-2">Confirm password is required.</p>
+              <?php
+              }
+              ?>
+            </div>
 
             <!-- Save and Cancel Buttons -->
             <div class="d-flex justify-content-end mt-3">
