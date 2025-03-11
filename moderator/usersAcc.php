@@ -74,7 +74,7 @@ function getCurrentPage()
       <tbody>
         <?php
         $counter = 1;
-        $accountArray = $account->show_user();
+        $accountArray = $account->show_user_campus($_SESSION['campus_id']);
         foreach ($accountArray as $item) {
         ?>
           <tr>
@@ -85,7 +85,8 @@ function getCurrentPage()
             <td><?= $item['gender'] ?></td>
             <td><?= maskPhone($item['contact']) ?></td>
             <td><?= $item['birthdate'] ?></td>
-            <td><?= "No Data" //$item['no.ofApp'] ?></td>
+            <td><?= "No Data" //$item['no.ofApp'] 
+                ?></td>
 
             <td class="d-flex justify-content-around align-items-center text-center">
               <a href="./viewUserAcc?account_id=<?= $item['account_id'] ?>" title="View Details">

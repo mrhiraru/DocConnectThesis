@@ -537,6 +537,18 @@ class Account
         return $data;
     }
 
+    function show_user_campus($campus_id)
+    {
+        $sql = "SELECT a.*, c.campus_id, c.campus_name FROM account a INNER JOIN campus c ON a.campus_id = c.campus_id WHERE user_role = 3 AND campus_id = :campus_id AND a.is_deleted != 1 ORDER BY account_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':campus_id', $campus_id);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function sign_in_user()
     {
         $sql = "SELECT a.*, p.*, c.campus_name FROM account a INNER JOIN patient_info p ON a.account_id = p.account_id INNER JOIN campus c ON c.campus_id = a.campus_id WHERE email = :email LIMIT 1;";
