@@ -67,6 +67,17 @@ include '../includes/head.php';
                                                 <label for="result" class="form-label">Consultation Result:</label>
                                                 <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['result'] ?></textarea>
                                             </div>
+                                            <?php
+                                            if (isset($record['diagnosis'])) {
+                                            ?>
+                                                <div class="col-12 mb-3">
+                                                    <label for="result" class="form-label">Medical Condition/s:</label>
+                                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+
                                             <div class="col-12">
                                                 <label for="comment" class="form-label">Note:</label>
                                                 <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
