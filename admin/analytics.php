@@ -165,6 +165,7 @@ function getCurrentPage()
               <h4 class="card-title">Diagnosis Trends</h4>
             </div>
             <div class="card-body">
+              <!-- Dropdowns for selecting year and month -->
               <div class="row mb-3">
                 <div class="col-md-3">
                   <label for="yearSelect">Select Year:</label>
@@ -204,16 +205,8 @@ function getCurrentPage()
                 </div>
               </div>
 
-              <table id="diagnosisTrendsTable" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th>Medical Condition</th>
-                    <th>Count</th>
-                  </tr>
-                </thead>
-                <tbody>
-                </tbody>
-              </table>
+              <!-- Bar Chart for Diagnosis Trends -->
+              <canvas id="diagnosisTrendsChart" style="max-height: 400px;"></canvas>
             </div>
           </div>
         </div>
@@ -354,40 +347,49 @@ function getCurrentPage()
 
       const yearSelect = document.getElementById('yearSelect');
       const monthSelect = document.getElementById('monthSelect');
-      const diagnosisTrendsTableBody = document.querySelector('#diagnosisTrendsTable tbody');
+      const diagnosisTrendsChartCanvas = document.getElementById('diagnosisTrendsChart');
+      let diagnosisTrendsChart;
 
       const diagnosisTrends = <?php echo $diagnosisTrendsJson; ?>;
 
-      function updateDiagnosisTrendsTable(conditionCounts) {
-        diagnosisTrendsTableBody.innerHTML = '';
+      function updateDiagnosisTrendsChart(conditionCounts) {
+        const labels = [];
+        const data = [];
 
         for (const [condition, count] of Object.entries(conditionCounts)) {
           if (count > 0) {
-            const row = document.createElement('tr');
-            const conditionCell = document.createElement('td');
-            const countCell = document.createElement('td');
-
-            conditionCell.textContent = condition;
-            countCell.textContent = count;
-
-            row.appendChild(conditionCell);
-            row.appendChild(countCell);
-            diagnosisTrendsTableBody.appendChild(row);
+            labels.push(condition);
+            data.push(count);
           }
         }
+
+        if (diagnosisTrendsChart) {
+          diagnosisTrendsChart.destroy();
+        }
+
+        diagnosisTrendsChart = new Chart(diagnosisTrendsChartCanvas, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Diagnosis Count',
+              data: data,
+              backgroundColor: ["#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#2196F3", "#9C27B0"],
+              borderColor: '#0D47A100',
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            },
+            responsive: true,
+            maintainAspectRatio: false,
+          }
+        });
       }
-
-      yearSelect.addEventListener('change', () => {
-        const year = yearSelect.value;
-        const month = monthSelect.value;
-        fetchDiagnosisTrends(year, month);
-      });
-
-      monthSelect.addEventListener('change', () => {
-        const year = yearSelect.value;
-        const month = monthSelect.value;
-        fetchDiagnosisTrends(year, month);
-      });
 
       function fetchDiagnosisTrends(year, month) {
         const filteredData = diagnosisTrends.diagnosisTrends.filter(item => {
@@ -419,8 +421,20 @@ function getCurrentPage()
           });
         });
 
-        updateDiagnosisTrendsTable(conditionCounts);
+        updateDiagnosisTrendsChart(conditionCounts);
       }
+
+      yearSelect.addEventListener('change', () => {
+        const year = yearSelect.value;
+        const month = monthSelect.value;
+        fetchDiagnosisTrends(year, month);
+      });
+
+      monthSelect.addEventListener('change', () => {
+        const year = yearSelect.value;
+        const month = monthSelect.value;
+        fetchDiagnosisTrends(year, month);
+      });
 
       fetchDiagnosisTrends(yearSelect.value, monthSelect.value);
     });
