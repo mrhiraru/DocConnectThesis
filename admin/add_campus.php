@@ -18,7 +18,6 @@ if (isset($_POST['save'])) {
   $campus->campus_contact = htmlentities($_POST['campus_contact']);
   $campus->campus_address = htmlentities($_POST['campus_address']);
   $campus->campus_email = htmlentities($_POST['campus_email']);
-  $campus->moderator_id = htmlentities($_POST['moderator_id']);
 
   $uploaddir = '../assets/images/';
   $uploadname = $_FILES[htmlentities('campus_profile')]['name'];
@@ -146,19 +145,6 @@ function getCurrentPage()
               <?php
               }
               ?>
-            </div>
-
-            <div class="form-group">
-              <label for="moderator">Moderator</label>
-              <select class="form-control" id="moderator" name="moderator_id">
-                <option value="">Select Moderator</option>
-                <?php
-                $moderators = $campus->get_moderators();
-                foreach ($moderators as $moderator) {
-                  echo "<option value='{$moderator['user_id']}'>{$moderator['username']}</option>";
-                }
-                ?>
-              </select>
             </div>
 
             <!-- Save and Cancel Buttons -->
