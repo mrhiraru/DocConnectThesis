@@ -71,10 +71,6 @@ function getCurrentPage()
           <i class='bx bx-envelope fs-3 text-danger'></i> <!-- Email Icon -->
           <p class="fs-5 mb-2"><?= $record['campus_email'] ?></p>
         </div>
-        <div class="d-flex flex-column align-items-center justify-content-center border-bottom border-2">
-          <i class='bx bx-user fs-3 text-danger'></i> <!-- Moderator Icon -->
-          <p class="fs-5 mb-2"><?= $campus->get_moderator_name($record['moderator_id']) ?></p>
-        </div>
       </div>
     </div>
 
