@@ -45,7 +45,7 @@ if (isset($_POST['add'])) {
 
 <html lang="en">
 <?php
-$title = 'Campuses | Add Staff';
+$title = 'Campuses | Add Campus Admin';
 include './includes/admin_head.php';
 function getCurrentPage()
 {
@@ -69,7 +69,7 @@ function getCurrentPage()
       <div class="col-12 col-md-8">
         <form method="post" action="">
           <div class="border shadow p-3 mb-5 bg-body rounded">
-            <h3 class="text-center">Add Moderator</h3>
+            <h3 class="text-center">Add Campus Admin</h3>
 
             <hr class="my-3 mx-4">
 

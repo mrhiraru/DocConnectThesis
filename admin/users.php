@@ -70,7 +70,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
                 <i class='bx bx-group text-danger'></i>
               </div>
               <div class="col-9 text-start w-75">
-                <p class="fs-3 mb-0">Moderator Accounts</p>
+                <p class="fs-3 mb-0">Campus Admin Accounts</p>
               </div>
               <div class="col-1 p-0">
                 <i class='bx bx-chevron-right fs-1'></i>
