@@ -15,7 +15,7 @@ $appointment_array = $account->get_appointments_with_doctors_and_patients();
 
 <html lang="en">
 <?php
-$title = 'Campuses | View User';
+$title = 'Admin | Appointments';
 include './includes/admin_head.php';
 function getCurrentPage()
 {
