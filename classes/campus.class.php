@@ -74,7 +74,7 @@ class Campus
 
     function view_campus($campus_id)
     {
-        $sql = "SELECT * FROM campus WHERE campus_id = :campus_id and is_deleted != 1";
+        $sql = "SELECT * FROM campus c  WHERE campus_id = :campus_id and is_deleted != 1";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':campus_id', $campus_id);
         if ($query->execute()) {
