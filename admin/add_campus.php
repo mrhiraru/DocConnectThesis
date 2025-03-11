@@ -135,7 +135,7 @@ function getCurrentPage()
               }
               ?>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
               <label for="email">Email address</label>
               <input type="email" class="form-control" id="email" name="campus_email" placeholder="name@example.com" value="<?= isset($_POST['campus_email']) ? $_POST['campus_email'] : '' ?>">
               <?php
@@ -146,7 +146,8 @@ function getCurrentPage()
               }
               ?>
             </div>
-            <div class="form-group">
+            <h6 class="text-center mb-2">Campus Admin Credentials</h6>
+            <div class="form-group mb-2">
               <label for="username">Username</label>
               <input type="text" class="form-control" id="username" name="username" placeholder="" value="<?= isset($_POST['username']) ? $_POST['username'] : '' ?>">
               <?php
@@ -157,7 +158,7 @@ function getCurrentPage()
               }
               ?>
             </div>
-            <div class="form-group">
+            <div class="form-group mb-2">
               <label for="password">Password</label>
               <input type="password" class="form-control" id="password" name="password" placeholder="" value="<?= isset($_POST['password']) ? $_POST['password'] : '' ?>">
               <?php
