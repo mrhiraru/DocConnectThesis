@@ -15,12 +15,13 @@ if (isset($_POST['login'])) {
 
   $account->email = htmlentities($_POST['username']); // Change from email to username
   $account->password = htmlentities($_POST['password']);
-  if ($account->sign_in_account()) {
+  if ($account->sign_in_mod()) {
     $_SESSION['user_role'] = $account->user_role;
     $_SESSION['account_id'] = $account->account_id;
     $_SESSION['verification_status'] = $account->verification_status;
     $_SESSION['email'] = $account->email;
     $_SESSION['campus_id'] = $account->campus_id;
+    $_SESSION['campus_name'] = $account->campus_name;
 
     if ($_SESSION['user_role'] == 2) {
       header('location: ./index.php');
