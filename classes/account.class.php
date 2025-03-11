@@ -539,7 +539,7 @@ class Account
 
     function show_user_campus($campus_id)
     {
-        $sql = "SELECT a.*, c.campus_id, c.campus_name FROM account a INNER JOIN campus c ON a.campus_id = c.campus_id WHERE user_role = 3 AND campus_id = :campus_id AND a.is_deleted != 1 ORDER BY account_id ASC;";
+        $sql = "SELECT a.*, c.campus_id, c.campus_name FROM account a INNER JOIN campus c ON a.campus_id = c.campus_id WHERE user_role = 3 AND a.campus_id = :campus_id AND a.is_deleted != 1 ORDER BY account_id ASC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':campus_id', $campus_id);
         $data = null;
