@@ -170,12 +170,16 @@ include '../includes/head.php';
                                                 endforeach;
                                                 ?>
                                             </div>
+                                            <hr>
                                             <div class="d-flex justify-content-start">
                                                 <!-- <a href="./patient-files?account_id=<?php echo $nextPatient['account_id']; ?>" class="btn btn-primary me-3 d-flex align-items-center text-light">
                                                     <i class="bx bx-file me-2"></i>Document
                                                 </a> -->
                                                 <a href="./chats?account_id=<?php echo $nextPatient['account_id']; ?>" class="btn btn-outline-primary me-3 d-flex align-items-center">
                                                     <i class="bx bx-chat me-2"></i>Chat
+                                                </a>
+                                                <a href="./appointment-view?account_id=<?php echo $nextPatient['account_id']; ?>&appointment_id=<?php echo $nextPatient['appointment_id']; ?>" class="btn btn-primary me-3 d-flex align-items-center">
+                                                    <i class="bx bx-chat me-2"></i>View Appointment
                                                 </a>
                                             </div>
                                         <?php else: ?>
@@ -246,7 +250,7 @@ include '../includes/head.php';
                                         <tbody>
                                             <?php if (!empty($appointmentRequests)): ?>
                                                 <?php foreach ($appointmentRequests as $request): ?>
-                                                    <tr>
+                                                    <tr>z
                                                         <td>
                                                             <img src="<?php echo !empty($request['account_image']) ? '../assets/images/' . $request['account_image'] : 'https://via.placeholder.com/40'; ?>"
                                                                 class="rounded-circle" alt="Patient Image" height="40">
