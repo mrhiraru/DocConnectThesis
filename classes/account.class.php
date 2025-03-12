@@ -756,31 +756,27 @@ class Account
     function fetch_user_statistics()
     {
         $db = $this->db->connect();
-
-        // Fetch user roles and their counts
-        $sqlRoles = "SELECT user_role, COUNT(*) as count FROM account GROUP BY user_role";
+    
+        $sqlRoles = "SELECT user_role, COUNT(*) as count FROM account WHERE user_role NOT IN (0, 2, 7) GROUP BY user_role";
         $queryRoles = $db->prepare($sqlRoles);
         $queryRoles->execute();
         $roleData = $queryRoles->fetchAll(PDO::FETCH_ASSOC);
-
-        // Fetch total number of users
-        $sqlTotal = "SELECT COUNT(*) as total FROM account";
+    
+        $sqlTotal = "SELECT COUNT(*) as total FROM account WHERE user_role NOT IN (0, 2, 7)";
         $queryTotal = $db->prepare($sqlTotal);
         $queryTotal->execute();
         $totalUsers = $queryTotal->fetch(PDO::FETCH_ASSOC)['total'];
-
-        // Fetch active users (based on last login in the last 30 days)
-        $sqlActive = "SELECT COUNT(*) as active FROM account WHERE last_login >= NOW() - INTERVAL 30 DAY";
+    
+        $sqlActive = "SELECT COUNT(*) as active FROM account WHERE last_login >= NOW() - INTERVAL 30 DAY AND user_role NOT IN (0, 2, 7)";
         $queryActive = $db->prepare($sqlActive);
         $queryActive->execute();
         $activeUsers = $queryActive->fetch(PDO::FETCH_ASSOC)['active'];
-
-        // Fetch new signups (assuming 'created_at' column and counting users registered in the last 30 days)
-        $sqlNew = "SELECT COUNT(*) as new_signups FROM account WHERE is_created >= NOW() - INTERVAL 30 DAY";
+    
+        $sqlNew = "SELECT COUNT(*) as new_signups FROM account WHERE is_created >= NOW() - INTERVAL 30 DAY AND user_role NOT IN (0, 2, 7)";
         $queryNew = $db->prepare($sqlNew);
         $queryNew->execute();
         $newSignups = $queryNew->fetch(PDO::FETCH_ASSOC)['new_signups'];
-
+    
         return [
             'roles' => $roleData,
             'totalUsers' => $totalUsers,

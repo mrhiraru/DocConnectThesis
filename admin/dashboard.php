@@ -108,8 +108,8 @@ function getCurrentPage()
               <h5>Appointment Overview</h5>
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
-                <li class="list-group-item">Average Duration: <strong id="avgDuration"></strong></li>
-                <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
+                <li class="list-group-item d-none">Average Duration: <strong id="avgDuration"></strong></li>
+                <li class="list-group-item d-none">No-Show Rate: <strong id="noShowRate"></strong></li>
               </ul>
             </div>
 

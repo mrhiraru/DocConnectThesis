@@ -13,14 +13,11 @@ $account = new Account();
 $userStats = $account->fetch_user_statistics();
 $roleData = [];
 $roleLabels = [
-  0 => "Admins",
   1 => "Doctors",
-  2 => "Moderators",
   3 => "Students",
   4 => "Alumni",
   5 => "Employees",
-  6 => "Faculties",
-  7 => "Dependents"
+  6 => "Faculties"
 ];
 
 // Initialize role data with zero values
@@ -259,11 +256,11 @@ function getCurrentPage()
       new Chart(document.getElementById("userStatsChart"), {
         type: "bar",
         data: {
-          labels: ["Admins", "Doctors", "Moderators", "Students", "Alumni", "Employees", "Faculties", "Dependents"],
+          labels: ["Doctors", "Students", "Alumni", "Employees", "Faculties"],
           datasets: [{
             label: "Total Users",
             data: userStatsData,
-            backgroundColor: ["#4CAF50", "#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800", "#2196F3", "#9C27B0"]
+            backgroundColor: ["#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800"]
           }]
         }
       });
