@@ -762,6 +762,11 @@ class Account
         $queryRoles->execute();
         $roleData = $queryRoles->fetchAll(PDO::FETCH_ASSOC);
     
+        $sqlRoleSpecific = "SELECT role, COUNT(*) as count FROM account WHERE user_role = 3 AND role IN ('Student', 'Alumni', 'Employee', 'Faculty') GROUP BY role";
+        $queryRoleSpecific = $db->prepare($sqlRoleSpecific);
+        $queryRoleSpecific->execute();
+        $roleSpecificData = $queryRoleSpecific->fetchAll(PDO::FETCH_ASSOC);
+    
         $sqlTotal = "SELECT COUNT(*) as total FROM account WHERE user_role NOT IN (0, 2, 7)";
         $queryTotal = $db->prepare($sqlTotal);
         $queryTotal->execute();
@@ -779,6 +784,7 @@ class Account
     
         return [
             'roles' => $roleData,
+            'roleSpecific' => $roleSpecificData,
             'totalUsers' => $totalUsers,
             'activeUsers' => $activeUsers,
             'newSignups' => $newSignups

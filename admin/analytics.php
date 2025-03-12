@@ -14,20 +14,27 @@ $userStats = $account->fetch_user_statistics();
 $roleData = [];
 $roleLabels = [
   1 => "Doctors",
-  3 => "Students",
-  4 => "Alumni",
-  5 => "Employees",
-  6 => "Faculties"
+  'Student' => "Students",
+  'Alumni' => "Alumni",
+  'Employee' => "Employees",
+  'Faculty' => "Faculties"
 ];
 
 // Initialize role data with zero values
-$roleCounts = array_fill(0, count($roleLabels), 0);
+$roleCounts = array_fill_keys(array_keys($roleLabels), 0);
 
 // Assign fetched values to the correct role index
 foreach ($userStats['roles'] as $row) {
   $roleIndex = intval($row['user_role']);
   if (isset($roleLabels[$roleIndex])) {
     $roleCounts[$roleIndex] = intval($row['count']);
+  }
+}
+
+foreach ($userStats['roleSpecific'] as $row) {
+  $role = $row['role'];
+  if (isset($roleLabels[$role])) {
+    $roleCounts[$role] = intval($row['count']);
   }
 }
 
@@ -247,20 +254,24 @@ function getCurrentPage()
       var activeUsers = <?php echo json_encode($activeUsers); ?>;
       var newSignups = <?php echo json_encode($newSignups); ?>;
 
-      // Update text content with real data
       document.getElementById("totalUsers").textContent = totalUsers;
       document.getElementById("activeUsers").textContent = activeUsers;
       document.getElementById("newSignups").textContent = newSignups;
 
-      // User Statistics Chart
       new Chart(document.getElementById("userStatsChart"), {
         type: "bar",
         data: {
           labels: ["Doctors", "Students", "Alumni", "Employees", "Faculties"],
           datasets: [{
             label: "Total Users",
-            data: userStatsData,
-            backgroundColor: ["#8BC34A", "#CDDC39", "#FFEB3B", "#FFC107", "#FF9800"]
+            data: [
+              userStatsData[1],
+              userStatsData['Student'],
+              userStatsData['Alumni'],
+              userStatsData['Employee'],
+              userStatsData['Faculty']
+            ],
+            backgroundColor: ["#8BC34A", "#FFEB3B", "#03A9F4", "#9C27B0", "#FF5722"] // Adjust colors as needed
           }]
         }
       });
