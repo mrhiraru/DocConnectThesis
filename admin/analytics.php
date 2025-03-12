@@ -90,77 +90,6 @@ function getCurrentPage()
     <div class="container-fluid">
       <h2 class="text-center my-4">Analytics & Reports</h2>
 
-      <!-- User Statistics -->
-      <div class="row mb-lg-4">
-        <div class="col-lg-5 mb-3 mb-lg-0">
-          <div class="card h-100">
-            <div class="card-header">
-              <h4 class="card-title">User Statistics</h4>
-            </div>
-            <div class="card-body">
-              <canvas id="userStatsChart"></canvas>
-              <h4 class="card-title">User Overview</h4>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Total Users: <strong id="totalUsers"></strong></li>
-                <li class="list-group-item">Active Users (Monthly): <strong id="activeUsers"></strong></li>
-                <li class="list-group-item">New Signups: <strong id="newSignups"></strong></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Appointment Insights -->
-        <div class="col-lg-7 mb-3 mb-lg-0">
-          <div class="card h-100">
-            <div class="card-header">
-              <h4 class="card-title">Doctor Activity</h4>
-            </div>
-            <div class="card-body">
-              <canvas id="doctorActivityChart"></canvas>
-              <h4 class="card-title">Doctor Overview</h4>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Active Doctors: <strong id="activeDoctors"></strong></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row mb-4">
-        <!-- Appointment Insights -->
-        <div class="col-lg-6 mb-3 mb-lg-0">
-          <div class="card h-100">
-            <div class="card-header">
-              <h4 class="card-title">Appointment Insights</h4>
-            </div>
-            <div class="card-body">
-              <canvas id="appointmentChart"></canvas>
-              <h4 class="card-title">Appointment Overview</h4>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
-                <li class="list-group-item d-none">Average Duration: <strong id="avgDuration"></strong></li>
-                <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- Health Concerns & Trends -->
-        <div class="col-lg-6 mb-3 mb-lg-0">
-          <div class="card h-100">
-            <div class="card-header bg-primary text-white">
-              <h4 class="card-title">Health Concerns & Trends</h4>
-            </div>
-            <div class="card-body">
-              <canvas id="healthConcernsChart"></canvas>
-              <h4 class="card-title">Health Overview</h4>
-              <ul class="list-group list-group-flush">
-                <li class="list-group-item">Top Health Concern: <strong id="topConcern"></strong></li>
-                <li class="list-group-item">Top Health Concern This Month: <strong id="topConcernMonth"></strong></li>
-                <!-- <li class="list-group-item">Seasonal Trends: <strong id="seasonalTrends"></strong></li> -->
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
       <!-- Diagnosis Trends -->
       <div class="row mb-4">
         <div class="col-lg-12">
@@ -211,6 +140,78 @@ function getCurrentPage()
 
               <!-- Bar Chart for Diagnosis Trends -->
               <canvas id="diagnosisTrendsChart" style="max-height: 300px;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- User Statistics -->
+      <div class="row mb-lg-4">
+        <div class="col-lg-5 mb-3 mb-lg-0">
+          <div class="card h-100">
+            <div class="card-header">
+              <h4 class="card-title">User Statistics</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="userStatsChart"></canvas>
+              <h4 class="card-title">User Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Users: <strong id="totalUsers"></strong></li>
+                <li class="list-group-item">Active Users (Monthly): <strong id="activeUsers"></strong></li>
+                <li class="list-group-item">New Signups: <strong id="newSignups"></strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Appointment Insights -->
+        <div class="col-lg-7 mb-3 mb-lg-0">
+          <div class="card h-100">
+            <div class="card-header">
+              <h4 class="card-title">Doctor Activity</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="doctorActivityChart"></canvas>
+              <h4 class="card-title">Doctor Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Active Doctors: <strong id="activeDoctors"></strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb-4 d-none">
+        <!-- Appointment Insights -->
+        <div class="col-lg-6 mb-3 mb-lg-0">
+          <div class="card h-100">
+            <div class="card-header">
+              <h4 class="card-title">Appointment Insights</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="appointmentChart"></canvas>
+              <h4 class="card-title">Appointment Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Total Appointments: <strong id="totalAppointments"></strong></li>
+                <li class="list-group-item d-none">Average Duration: <strong id="avgDuration"></strong></li>
+                <li class="list-group-item">No-Show Rate: <strong id="noShowRate"></strong></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Health Concerns & Trends -->
+        <div class="col-lg-6 mb-3 mb-lg-0">
+          <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+              <h4 class="card-title">Health Concerns & Trends</h4>
+            </div>
+            <div class="card-body">
+              <canvas id="healthConcernsChart"></canvas>
+              <h4 class="card-title">Health Overview</h4>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Top Health Concern: <strong id="topConcern"></strong></li>
+                <li class="list-group-item">Top Health Concern This Month: <strong id="topConcernMonth"></strong></li>
+                <!-- <li class="list-group-item">Seasonal Trends: <strong id="seasonalTrends"></strong></li> -->
+              </ul>
             </div>
           </div>
         </div>
