@@ -178,7 +178,7 @@ include '../includes/head.php';
                                                 <a href="./chats?account_id=<?php echo $nextPatient['account_id']; ?>" class="btn btn-outline-primary me-3 d-flex align-items-center">
                                                     <i class="bx bx-chat me-2"></i>Chat
                                                 </a>
-                                                <a href="./appointment-view?account_id=<?php echo $nextPatient['account_id']; ?>&appointment_id=<?php echo $nextPatient['appointment_id']; ?>" class="btn btn-primary me-3 d-flex align-items-center">
+                                                <a href="./appointment-view?account_id=<?php echo $nextPatient['account_id']; ?>&appointment_id=<?php echo $nextPatient['appointment_id']; ?>" class="btn btn-primary me-3 d-flex align-items-center text-light">
                                                     <i class="bx bx-chat me-2"></i>View Appointment
                                                 </a>
                                             </div>
