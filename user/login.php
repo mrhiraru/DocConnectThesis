@@ -449,6 +449,7 @@ include '../includes/head.php';
 
   <script src="../js/login.js"></script>
   <script src="../js/main.js"></script>
+  <script src="../js/viewHideTogglePassword.js"></script>
 
   <script>
     function formatPhoneNumber(input) {
