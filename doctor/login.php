@@ -10,6 +10,48 @@ if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 1) {
 require_once '../tools/functions.php';
 require_once '../classes/account.class.php';
 
+if (!isset($_SESSION['user_role']) && isset($_COOKIE['remember_me'])) {
+  $account = new Account();
+  $account_id = $account->validateRememberMeToken($_COOKIE['remember_me']);
+  if ($account_id) {
+    $account->account_id = $account_id;
+    if ($account->sign_in_doctor()) {
+      $_SESSION['user_role'] = $account->user_role;
+      $_SESSION['account_id'] = $account->account_id;
+      $_SESSION['verification_status'] = $account->verification_status;
+      $_SESSION['email'] = $account->email;
+      if (isset($account->middlename)) {
+        $_SESSION['fullname'] = ucwords(strtolower($account->firstname . ' ' . $account->middlename . ' ' . $account->lastname));
+      } else {
+        $_SESSION['fullname'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
+      }
+      $_SESSION['firstname'] = $account->firstname;
+      $_SESSION['middlename'] = $account->middlename;
+      $_SESSION['lastname'] = $account->lastname;
+      $_SESSION['gender'] = $account->gender;
+      $_SESSION['address'] = $account->address;
+      $_SESSION['birthdate'] = $account->birthdate;
+      $_SESSION['campus_id'] = $account->campus_id;
+      $_SESSION['contact'] = $account->contact;
+      $_SESSION['specialty'] = $account->specialty;
+      $_SESSION['start_wt'] = $account->start_wt;
+      $_SESSION['end_wt'] = $account->end_wt;
+      $_SESSION['start_day'] = $account->start_day;
+      $_SESSION['end_day'] = $account->end_day;
+      $_SESSION['bio'] = $account->bio;
+      $_SESSION['account_image'] = $account->account_image;
+      $_SESSION['doctor_id'] = $account->doctor_id;
+
+      if ($_SESSION['user_role'] == 1) {
+        header('location: ./index.php');
+        exit();
+      }
+    }
+  } else {
+    setcookie('remember_me', '', time() - 3600, "/");
+  }
+}
+
 if (isset($_POST['login'])) {
   $account = new Account();
 
@@ -42,13 +84,27 @@ if (isset($_POST['login'])) {
     $_SESSION['account_image'] = $account->account_image;
     $_SESSION['doctor_id'] = $account->doctor_id;
 
-    if ($_SESSION['user_role'] == 2) {
+    if (isset($_POST['remember-me'])) {
+      $token = $account->createRememberMeToken($account->account_id);
+      if ($token) {
+        setcookie('remember_me', $token, time() + (30 * 24 * 60 * 60), "/"); // 30 days
+      }
+    }
+
+    if ($_SESSION['user_role'] == 1) {
       header('location: ./index.php');
     }
   } else {
     $error = 'Login failed: Invalid email or password.';
   }
 }
+
+if (isset($_COOKIE['remember_me'])) {
+  $account = new Account();
+  $account->deleteRememberMeToken($_COOKIE['remember_me']);
+  setcookie('remember_me', '', time() - 3600, "/");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -80,8 +136,12 @@ include '../includes/head.php';
                   <i class='bx bx-show text-dark position-absolute toggle-password' data-target="password"></i>
                 </div>
               </div>
-              <div class="mb-3 text-end">
-                <a href="#" class="text-primary">Forgot Password?</a>
+              <div class="d-flex justify-content-between w-100 mt-3">
+                <div class="form-check mb-3">
+                  <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me" <?= isset($_COOKIE['email']) ? 'checked' : '' ?>>
+                  <label class="form-check-label" for="remember-me">Remember Me</label>
+                </div>
+                <a href="#" class="text-end m-0 mb-3">Forgot your password?</a>
               </div>
               <?php
               if (isset($_POST['login']) && isset($error)) {
