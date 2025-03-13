@@ -1,28 +1,6 @@
 <?php
 session_start();
 
-// if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['login'])) {
-//   $email = $_POST['login-email'];
-//   $password = $_POST['login-password'];
-
-//   // palitan mo to sa actual authentication logic, hnd ko alam ano ilagay dto...
-//   if ($email == "test@example.com" && $password == "password123") {
-//     $_SESSION['user'] = $email;
-
-//     // Check kapag 'Remember Me' is selected
-//     if (isset($_POST['remember-me'])) {
-//       setcookie("email", $email, time() + (86400 * 30), "/"); // 30 days expiration
-//     } else {
-//       setcookie("email", "", time() - 3600, "/"); // Delete cookie kapag unchecked
-//     }
-
-//     header("Location: dashboard.php");
-//     exit();
-//   } else {
-//     $error = "Invalid email or password.";
-//   }
-// }
-
 if (isset($_SESSION['user_role']) && $_SESSION['user_role'] != 3) {
   header('location: ../logout.php?from=3');
 } else if (isset($_SESSION['user_role'])) {

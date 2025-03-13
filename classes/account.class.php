@@ -756,32 +756,32 @@ class Account
     function fetch_user_statistics()
     {
         $db = $this->db->connect();
-    
+
         $sqlRoles = "SELECT user_role, COUNT(*) as count FROM account WHERE user_role NOT IN (0, 2, 7) GROUP BY user_role";
         $queryRoles = $db->prepare($sqlRoles);
         $queryRoles->execute();
         $roleData = $queryRoles->fetchAll(PDO::FETCH_ASSOC);
-    
+
         $sqlRoleSpecific = "SELECT role, COUNT(*) as count FROM account WHERE user_role = 3 AND role IN ('Student', 'Alumni', 'Employee', 'Faculty') GROUP BY role";
         $queryRoleSpecific = $db->prepare($sqlRoleSpecific);
         $queryRoleSpecific->execute();
         $roleSpecificData = $queryRoleSpecific->fetchAll(PDO::FETCH_ASSOC);
-    
+
         $sqlTotal = "SELECT COUNT(*) as total FROM account WHERE user_role NOT IN (0, 2, 7)";
         $queryTotal = $db->prepare($sqlTotal);
         $queryTotal->execute();
         $totalUsers = $queryTotal->fetch(PDO::FETCH_ASSOC)['total'];
-    
+
         $sqlActive = "SELECT COUNT(*) as active FROM account WHERE last_login >= NOW() - INTERVAL 30 DAY AND user_role NOT IN (0, 2, 7)";
         $queryActive = $db->prepare($sqlActive);
         $queryActive->execute();
         $activeUsers = $queryActive->fetch(PDO::FETCH_ASSOC)['active'];
-    
+
         $sqlNew = "SELECT COUNT(*) as new_signups FROM account WHERE is_created >= NOW() - INTERVAL 30 DAY AND user_role NOT IN (0, 2, 7)";
         $queryNew = $db->prepare($sqlNew);
         $queryNew->execute();
         $newSignups = $queryNew->fetch(PDO::FETCH_ASSOC)['new_signups'];
-    
+
         return [
             'roles' => $roleData,
             'roleSpecific' => $roleSpecificData,
