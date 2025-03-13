@@ -13,6 +13,46 @@ require_once("../tools/functions.php");
 
 $account = new Account();
 
+if (!isset($_SESSION['user_role']) && isset($_COOKIE['remember_me'])) {
+  $account = new Account();
+  $account_id = $account->validateRememberMeToken($_COOKIE['remember_me']);
+  if ($account_id) {
+    $account->account_id = $account_id;
+    if ($account->sign_in_user()) {
+      $_SESSION['user_role'] = $account->user_role;
+      $_SESSION['account_id'] = $account->account_id;
+      $_SESSION['verification_status'] = $account->verification_status;
+      $_SESSION['email'] = $account->email;
+      if (isset($account->middlename)) {
+        $_SESSION['fullname'] = ucwords(strtolower($account->firstname . ' ' . $account->middlename . ' ' . $account->lastname));
+      } else {
+        $_SESSION['fullname'] = ucwords(strtolower($account->firstname . ' ' . $account->lastname));
+      }
+      $_SESSION['firstname'] = $account->firstname;
+      $_SESSION['middlename'] = $account->middlename;
+      $_SESSION['lastname'] = $account->lastname;
+      $_SESSION['gender'] = $account->gender;
+      $_SESSION['birthdate'] = $account->birthdate;
+      $_SESSION['campus_id'] = $account->campus_id;
+      $_SESSION['contact'] = $account->contact;
+      $_SESSION['address'] = $account->address;
+      $_SESSION['patient_id'] = $account->patient_id;
+      $_SESSION['account_image'] = $account->account_image;
+      $_SESSION['campus_name'] = $account->campus_name;
+      $_SESSION['height'] = $account->height;
+      $_SESSION['weight'] = $account->weight;
+      $_SESSION['role'] = $account->role;
+
+      if ($_SESSION['user_role'] == 3) {
+        header('location: ./index.php');
+        exit();
+      }
+    }
+  } else {
+    setcookie('remember_me', '', time() - 3600, "/");
+  }
+}
+
 if (isset($_POST['signup'])) {
 
   $account->email = htmlentities($_POST['email']);
@@ -98,14 +138,26 @@ if (isset($_POST['signup'])) {
     $_SESSION['weight'] = $account->weight;
     $_SESSION['role'] = $account->role;
 
-
     if ($_SESSION['user_role'] == 3) {
+      if (isset($_POST['remember-me'])) {
+        $token = $account->createRememberMeToken($account->account_id);
+        if ($token) {
+          setcookie('remember_me', $token, time() + (30 * 24 * 60 * 60), "/");
+        }
+      }
       header('location: ./index.php');
     }
   } else {
     $error = 'Login failed: Invalid email or password.';
   }
 }
+
+if (isset($_COOKIE['remember_me'])) {
+  $account = new Account();
+  $account->deleteRememberMeToken($_COOKIE['remember_me']);
+  setcookie('remember_me', '', time() - 3600, "/");
+}
+
 ?>
 
 

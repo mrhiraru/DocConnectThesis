@@ -4,7 +4,6 @@ session_start();
 $temp_role = isset($_SESSION['user_role']) ?  $_SESSION['user_role'] : null;
 $from = isset($_GET['from']) ? $_GET['from'] : null;
 
-
 session_destroy();
 
 if (!isset($from)) {

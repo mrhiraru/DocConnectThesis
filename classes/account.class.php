@@ -66,6 +66,48 @@ class Account
         }
     }
 
+    function createRememberMeToken($account_id)
+    {
+        $token = bin2hex(random_bytes(32)); // Generate a secure token
+        $expires_at = date('Y-m-d H:i:s', strtotime('+30 days')); // Token expires in 30 days
+
+        $sql = "INSERT INTO remember_me_tokens (account_id, token, expires_at) VALUES (:account_id, :token, :expires_at);";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $account_id);
+        $query->bindParam(':token', $token);
+        $query->bindParam(':expires_at', $expires_at);
+
+        if ($query->execute()) {
+            return $token;
+        } else {
+            return false;
+        }
+    }
+
+    function validateRememberMeToken($token)
+    {
+        $sql = "SELECT * FROM remember_me_tokens WHERE token = :token AND expires_at > NOW();";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':token', $token);
+
+        if ($query->execute()) {
+            $tokenData = $query->fetch(PDO::FETCH_ASSOC);
+            if ($tokenData) {
+                return $tokenData['account_id'];
+            }
+        }
+        return false;
+    }
+
+    function deleteRememberMeToken($token)
+    {
+        $sql = "DELETE FROM remember_me_tokens WHERE token = :token;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':token', $token);
+
+        return $query->execute();
+    }
+
     function sign_in_mod()
     {
         $sql = "SELECT a.*, c.* FROM account a INNER JOIN campus c ON a.campus_id = c.campus_id WHERE a.email = :email LIMIT 1;";
