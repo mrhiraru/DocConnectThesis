@@ -6,8 +6,8 @@ $doctorId = $_GET['doctor_id'];
 $date = $_GET['date']; // selected date
 $startTime = $_GET['startTime']; // Expected format: HH:MM:SS
 $endTime = $_GET['endTime']; // Expected format: HH:MM:SS
-//$appointment_time = $_GET['appointment_time'];
-//$appointment_date = $_GET['appointment_date']; // default date
+$appointment_time = isset($_GET['appointment_time']) ? $_GET['appointment_time'] : null; // default time
+$appointment_date = isset($_GET['appointment_date']) ? $_GET['aapointment_date'] : null; // default date
 
 // Ensure taken hours are in HH:MM:SS format
 $takenHours = array_map(function ($time) {
