@@ -250,7 +250,7 @@ include '../includes/head.php';
                                         <tbody>
                                             <?php if (!empty($appointmentRequests)): ?>
                                                 <?php foreach ($appointmentRequests as $request): ?>
-                                                    <tr>z
+                                                    <tr>
                                                         <td>
                                                             <img src="<?php echo !empty($request['account_image']) ? '../assets/images/' . $request['account_image'] : 'https://via.placeholder.com/40'; ?>"
                                                                 class="rounded-circle" alt="Patient Image" height="40">
