@@ -371,7 +371,7 @@ include '../includes/head.php';
   <?php
   }
   ?>
-  <script src="../js/doctor/settings_profile.js"></script>
+  <!-- <script src="../js/doctor/settings_profile.js"></script> -->
   <script src="../js/main.js"></script>
   <script src="../js/imageChange.js"></script>
   <script>
