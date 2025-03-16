@@ -96,7 +96,7 @@ function getCurrentPage()
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
             <div class="d-flex flex-row align-items-center">
                 <h5 class="card-title">About Section</h5>
-                <i id="chevronIcon" class='bx bxs-chevron-down ms-2'></i>
+                <i id="chevronIconAbout" class='bx bxs-chevron-down ms-2'></i>
             </div>
         </button>
         <hr class="mt-1 mb-2">
@@ -158,7 +158,10 @@ function getCurrentPage()
         </div>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#secondSection" aria-expanded="false" aria-controls="secondSection">
-            <h5 class="card-title">Technology and Innovation</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Technology and Innovation</h5>
+                <i id="chevronIconTech" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="secondSection">
@@ -204,6 +207,24 @@ function getCurrentPage()
     </section>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // About Section
+            const aboutButton = document.querySelector('[data-bs-target="#aboutSection"]');
+            const chevronIconAbout = document.getElementById('chevronIconAbout');
+
+            aboutButton.addEventListener('click', function() {
+                chevronIconAbout.classList.toggle('rotate-180');
+            });
+
+            // Technology and Innovation Section
+            const techButton = document.querySelector('[data-bs-target="#secondSection"]');
+            const chevronIconTech = document.getElementById('chevronIconTech');
+
+            techButton.addEventListener('click', function() {
+                chevronIconTech.classList.toggle('rotate-180');
+            });
+        });
+        
         function addVision() {
             const visionList = document.querySelector('ul:has(input[name="visions[]"])');
             const newVision = document.createElement('li');
@@ -219,17 +240,6 @@ function getCurrentPage()
             newMission.innerHTML = `<input type="text" class="form-control" name="missions[]">`;
             missionList.appendChild(newMission);
         }
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const button = document.querySelector('[data-bs-target="#aboutSection"]');
-            const chevronIcon = document.getElementById('chevronIcon');
-
-            button.addEventListener('click', function() {
-                chevronIcon.classList.toggle('rotate-180');
-            });
-        });
     </script>
 
 </body>
