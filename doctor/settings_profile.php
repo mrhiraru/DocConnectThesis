@@ -62,7 +62,7 @@ if (isset($_POST['save_image'])) {
 
   $account->account_id = $_SESSION['account_id'];
 
-  $uploaddir = '../assets/gallery/';
+  $uploaddir = '../assets/images/';
   $uploadname = $_FILES[htmlentities('account_image')]['name'];
   $uploadext = explode('.', $uploadname);
   $uploadnewext = strtolower(end($uploadext));
