@@ -3,24 +3,24 @@
     <div class="row h-100 justify-content-center align-items-center text-center">
       <div class="col-lg-8">
         <div class="footer-content">
-          <a href="./index.php" class="d-flex align-items-center justify-content-center text-dark text-decoration-none mb-2">
+          <a href="./" class="d-flex align-items-center justify-content-center text-dark text-decoration-none mb-2">
             <img src="../assets/images/logo.png" alt="Logo" style="height: 40px;">
             <h1 class="fs-4 link-primary m-0 d-name">Doc<span class="link-dark mx-0">Connect</span></h1>
           </a>
           <p class="small mb-2">DocConnect offers free telecommunication health services to all university students. Stay healthy and take advantage of this convenient way to receive care.</p>
           <h6 class="small mb-2">Normal Road, Baliwasan, 7000 Zamboanga City</h6>
           <h6 class="small mb-3">+63 123 456 7890<span> | </span>+63 123 456 7890</h6>
-          <div class="contact-social">
+          <div class="contact-social d-flex justify-content-center">
             <ul class="list-inline mb-0">
               <li class="list-inline-item"><a class="hover-target btn btn-outline-secondary rounded-circle" href="#">
-                  <i class='bx bxl-facebook'></i>
-                </a></li>
+                <i class='bx bxl-facebook'></i>
+              </a></li>
               <li class="list-inline-item"><a class="hover-target btn btn-outline-secondary rounded-circle" href="#">
-                  <i class='bx bxl-gmail'></i>
-                </a></li>
+                <i class='bx bxl-gmail'></i>
+              </a></li>
               <!-- <li class="list-inline-item"><a class="hover-target btn btn-outline-secondary rounded-circle" href="#">
-                  <i class='bx bxl-messenger'></i>
-                </a></li> -->
+                <i class='bx bxl-messenger'></i>
+              </a></li> -->
             </ul>
           </div>
         </div>
