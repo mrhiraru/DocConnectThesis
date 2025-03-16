@@ -165,6 +165,11 @@ section.main {
   margin: 0;
 }
 
+.button:hover {
+  letter-spacing: 1px;
+  transition: linear .1s;
+}
+
 /* PAGE CONTAINER */
 .page-container {
   margin-top: 77px;

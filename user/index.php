@@ -273,7 +273,7 @@ include '../includes/head.php';
             <i class='bx bxs-check-circle c-red'></i>
             <p class="ps-3 m-0">Empowering students with tools and resources for better health management.</p>
           </div>
-          <a href="./about_us" class="btn bg-green px-5 py-3 mt-4 link-light" style="width: fit-content;">Learn more</a>
+          <a href="./about_us" class="btn bg-green px-3 py-1 mt-4 link-light button" style="width: fit-content;">Learn more</a>
         </div>
         <div class="col-md-4 d-flex align-items-stretch">
           <img src="../assets/images/billboard-img3.jpg" alt="img" class="img-thumbnail img-fluid rounded-3 shadow-lg w-100" style="object-fit: cover;">
