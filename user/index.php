@@ -116,7 +116,7 @@ include '../includes/head.php';
                     Skip the waiting room, consult with healthcare professionals online! Receive expert medical advice, book convenient appointments, and get follow-up care for effective health management.
                   </p>
                 </div>
-                <a href="./services#one" class="w-100 btn btn-outline-primary">Read More</a>
+                <a href="./services#one" class="w-100 btn btn-outline-primary hover-light">Read More</a>
               </div>
             </div>
           </div>
@@ -133,7 +133,7 @@ include '../includes/head.php';
                     Stay in control of your health with cutting-edge tools. Track health metrics, receive instant alerts, and share data securely with your doctor for accurate treatment plans.
                   </p>
                 </div>
-                <a href="./services#two" class="w-100 btn btn-outline-primary">Read More</a>
+                <a href="./services#two" class="w-100 btn btn-outline-primary hover-light">Read More</a>
               </div>
             </div>
           </div>
@@ -150,7 +150,7 @@ include '../includes/head.php';
                     Access mental health resources anytime, anywhere. Speak with professional counselors, join therapy sessions, and get 24/7 crisis support.
                   </p>
                 </div>
-                <a href="./services#three" class="w-100 btn btn-outline-primary">Read More</a>
+                <a href="./services#three" class="w-100 btn btn-outline-primary hover-light">Read More</a>
               </div>
             </div>
           </div>

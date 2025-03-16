@@ -130,6 +130,10 @@ section#services {
   min-height: 50vh !important;
 }
 
+.hover-light:hover {
+  color: var(--white);
+}
+
 * {
   font-family: 'Nunito', sans-serif;
   font-weight: 500;
