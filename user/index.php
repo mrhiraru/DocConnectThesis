@@ -46,10 +46,10 @@ include '../includes/head.php';
   <section id="features" class="mt-xl-5 mx-5">
     <div class="p-3 pb-md-4 mx-auto text-center">
       <p class="fs-5 text-muted text-uppercase mx-5">Key Features</p>
-      <h1 class="display-6 fw-normal">Experience the Benefits of <br> Our Telecommunication Health Services</h1>
+      <h1 class="fs-3 fw-normal">Experience the Benefits of <br> Our Telecommunication Health Services</h1>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-4">
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4">
       <div class="col p-0 mb-3">
         <div class="card mx-3 mb-sm-3 rounded-3 shadow-sm h-100">
           <div class="card-body d-flex flex-column justify-content-between shadow-sm">
@@ -104,7 +104,7 @@ include '../includes/head.php';
         <h1 class="display-6 fw-normal">Telecommunication Health Services <br> for Your Convenience</h1>
       </div>
 
-      <div class="row row-cols-1 row-cols-md-3">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
         <div class="col mb-4">
           <div class="d-flex flex-column h-100">
             <img src="../assets/images/services/expert_medical_advice.png" alt="Virtual Consultations" class="rounded-2 shadow-lg w-100 object-fit-cover" style="height: 250px;">
