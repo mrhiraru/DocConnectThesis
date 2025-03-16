@@ -32,9 +32,9 @@
           </div>
           <!-- Additional Links -->
           <div class="additional-links">
-            <a href="../public/FAQs" class="text-dark text-decoration-none small me-3">FAQs</a>
-            <a href="../public/privacy-policy" class="text-dark text-decoration-none small me-3">Privacy Policy</a>
-            <a href="../public/terms-of-service" class="text-dark text-decoration-none small">Terms of Service</a>
+            <a href="../public/FAQs" target="_blank" class="text-dark text-decoration-none small me-3">FAQs</a>
+            <a href="../public/privacy-policy" target="_blank" class="text-dark text-decoration-none small me-3">Privacy Policy</a>
+            <a href="../public/terms-of-service" target="_blank" class="text-dark text-decoration-none small">Terms of Service</a>
           </div>
         </div>
       </div>
