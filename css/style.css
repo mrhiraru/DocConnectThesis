@@ -807,6 +807,12 @@ main.col-md-9 {
     color: inherit; 
   }
 
+  footer {
+    height: 50vh; 
+    min-height: 200px; 
+    max-height: 50vh;
+  }
+
   /*------------------|
   | DOCTOR'S PAGE CSS |
   |------------------*/
