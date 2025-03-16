@@ -166,8 +166,8 @@ include '../includes/head.php';
       <p class="fs-5 text-muted">Bridging the gap between distance and healthcare accessibility.</p>
     </div>
 
-    <div class="row mb-3">
-      <div class="col-sm-12 col-md-8">
+    <div class="row mb-3 d-flex justify-content-center">
+      <div class="col-10">
         <div class="row row-cols-1 row-cols-md-2">
           <div class="col mb-4">
             <div class="border border-success shadow-sm rounded-2 p-3 h-100 d-flex flex-column">
@@ -227,25 +227,11 @@ include '../includes/head.php';
         </div>
       </div>
 
-      <div class="col-sm-12 col-md-4 mb-4">
-        <div class="d-flex flex-column justify-content-between bg-primary p-3 rounded-2 h-100 text-white">
-          <div>
-            <h4>Opening Hours</h4>
-            <p class="fs-6 text-white">Our telemedicine services are available throughout the week to ensure you receive timely medical care.</p>
-            <div class="d-flex justify-content-between border-bottom mb-2">
-              <p class="mb-2">Mon - Fri</p>
-              <p class="mb-2">7:00 AM - 6:00 PM</p>
-            </div>
-            <div class="d-flex justify-content-between border-bottom mb-2">
-              <p class="mb-2">Sat - Sun</p>
-              <p class="mb-2">7:00 AM - 4:00 PM</p>
-            </div>
-          </div>
-          <div>
-            <a href="./appointment" type="button" class="w-100 btn btn-lg btn-outline-light mt-2">Book Appointment</a>
-          </div>
-        </div>
-      </div>
+    </div>
+    <div class="mb-5 text-center">
+      <hr class="my-3 c-red rounded-5" style="height: 5px;">
+      <p>Our telemedicine services are available throughout the week to ensure you receive timely medical care.</p>
+      <a href="./appointment" class="btn btn-primary text-light px-4 py-2 mt-3">Schedule a Appointment</a>
     </div>
   </section>
 
