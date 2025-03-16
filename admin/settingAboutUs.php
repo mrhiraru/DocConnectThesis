@@ -84,18 +84,23 @@ function getCurrentPage()
         <h6 class="text-start mb-4 text-muted">Icon Class: <a href="https://boxicons.com/" target="_blank">Boxicons.com</a></h6>
 
         <?php if (isset($_SESSION['message'])): ?>
-            <div class="alert alert-success"><?php echo $_SESSION['message']; unset($_SESSION['message']); ?></div>
+            <div class="alert alert-success"><?php echo $_SESSION['message'];
+                                                unset($_SESSION['message']); ?></div>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+            <div class="alert alert-danger"><?php echo $_SESSION['error'];
+                                            unset($_SESSION['error']); ?></div>
         <?php endif; ?>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
-            <h5 class="card-title">About Section</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">About Section</h5>
+                <i id="chevronIcon" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
-        <div class="collapse show" id="aboutSection">
+        <div class="collapse" id="aboutSection">
             <div class="card mb-3 w-100">
                 <div class="card-body">
                     <form class="row" method="POST" enctype="multipart/form-data">
@@ -120,7 +125,7 @@ function getCurrentPage()
                                             </li>
                                         <?php endforeach; ?>
                                     </ul>
-                                    <button type="button" class="btn btn-success btn-sm" onclick="addVision()">Add Vision</button>
+                                    <button type="button" class="btn btn-success btn-sm text-light" onclick="addVision()">Add Vision</button>
                                 </div>
                                 <div class="col">
                                     <h3>Our Mission:</h3>
@@ -131,7 +136,7 @@ function getCurrentPage()
                                             </li>
                                         <?php endforeach; ?>
                                     </ul>
-                                    <button type="button" class="btn btn-success btn-sm" onclick="addMission()">Add Mission</button>
+                                    <button type="button" class="btn btn-success btn-sm text-light" onclick="addMission()">Add Mission</button>
                                 </div>
                             </div>
                         </div>
@@ -214,6 +219,17 @@ function getCurrentPage()
             newMission.innerHTML = `<input type="text" class="form-control" name="missions[]">`;
             missionList.appendChild(newMission);
         }
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const button = document.querySelector('[data-bs-target="#aboutSection"]');
+            const chevronIcon = document.getElementById('chevronIcon');
+
+            button.addEventListener('click', function() {
+                chevronIcon.classList.toggle('rotate-180');
+            });
+        });
     </script>
 
 </body>

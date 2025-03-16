@@ -89,6 +89,7 @@ hr {
 .dropdown-toggle::after {
   display: none;
 }
+
 /* .notification.dropdown-toggle::after {
   display: none;
 }
@@ -96,6 +97,11 @@ hr {
 .acc.dropdown-toggle::after {
   color: var(--white);
 } */
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 0.3s ease; /* Smooth transition */
+}
 
 * {
   font-family: 'Nunito', sans-serif;
