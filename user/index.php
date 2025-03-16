@@ -43,7 +43,7 @@ include '../includes/head.php';
     </div>
   </section>
 
-  <section id="features" class="mt-xl-5 mx-5">
+  <section id="features" class="mt-xl-5 mx-2 mx-mg-5">
     <div class="p-3 pb-md-4 mx-auto text-center">
       <p class="fs-5 text-muted text-uppercase mx-5">Key Features</p>
       <h1 class="fs-3 fw-normal">Experience the Benefits of <br> Our Telecommunication Health Services</h1>
@@ -160,7 +160,7 @@ include '../includes/head.php';
   </section>
 
 
-  <section id="info" class="padding-medium mt-xl-5 mx-5">
+  <section id="info" class="padding-medium mt-xl-5 mx-2 mx-mg-5">
     <div class="p-3 pb-md-4 mx-auto text-center">
       <h1 class="display-4 fw-normal">Telemedicine</h1>
       <p class="fs-5 text-muted">Bridging the gap between distance and healthcare accessibility.</p>
@@ -172,12 +172,12 @@ include '../includes/head.php';
           <div class="col mb-4">
             <div class="border border-success shadow-sm rounded-2 p-3 h-100 d-flex flex-column">
               <div class="row">
-                <div class="col-4 d-flex align-items-start justify-content-center">
+                <div class="col-12 col-lg-4 mb-3 mb-lg-0 d-flex align-items-start justify-content-center">
                   <i class='bx bxs-phone-call p-3 bg-green text-white rounded-1 fs-3'></i>
                 </div>
-                <div class="col-8">
-                  <h3 class="fw-normal">Doctor on Call</h3>
-                  <p class="fs-6 text-muted">Get instant access to licensed doctors anytime, anywhere. Consult via phone or video calls for expert medical advice and treatment recommendations.</p>
+                <div class="col-12 col-lg-8">
+                  <h3 class="fw-normal text-center">Doctor on Call</h3>
+                  <p class="fs-6 text-muted text-center">Get instant access to licensed doctors anytime, anywhere. Consult via phone or video calls for expert medical advice and treatment recommendations.</p>
                 </div>
               </div>
             </div>
