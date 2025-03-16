@@ -236,7 +236,7 @@ include '../includes/head.php';
                 <!-- DAPAT TEXT INPUT WITH SUGGEWSTION -->
                 <div class="col-12 col-md-6 mb-3">
                   <label for="contact" class="form-label">Contact</label>
-                  <input type="text" class="form-control" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" placeholder="Contact No." maxlength="13" pattern="09\d{2} \d{3} \d{4}" oninput="formatPhoneNumber(this)" required value="<?= isset($_POST['contact']) ? $_POST['contact'] : '' ?>">
+                  <input type="text" class="form-control" id="contact" name="contact" inputmode="numeric" title="Format: 09XX XXX XXXX" placeholder="Contact No." maxlength="13" pattern="09\d{2} \d{3} \d{4}" oninput="formatPhoneNumber(this)" required value="<?= (isset($_POST['contact'])) ? $_POST['contact'] : $_SESSION['contact'] ?> ">
                   <?php
                   if (isset($_POST['contact']) && !validate_field($_POST['contact'])) {
                   ?>
