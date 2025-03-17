@@ -49,6 +49,8 @@ $message = new Message();
     $('#chatForm').on('submit', function(e) {
       e.preventDefault();
 
+      $('#send').prop('disabled', true);
+
       const formData = {
         send: $('#send').val(),
         account_id: $('#account_id').val(),
@@ -61,6 +63,7 @@ $message = new Message();
         data: formData,
         success: function(response) {
           $('#message').val('');
+          $('#send').prop('disabled', false);
         },
         error: function(xhr, status, error) {
           console.error('Error sending message:', error);
