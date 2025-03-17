@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
+  header('location: ../user/verification.php');
+} else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 1) {
+  header('location: ./index.php');
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -8,23 +19,23 @@ include '../includes/head.php';
 
 <body>
   <?php
-    require_once('../includes/header-doctor.php');
+  require_once('../includes/header-doctor.php');
   ?>
 
   <div class="container-fluid">
     <div class="row">
-      <?php 
-        require_once('../includes/sidepanel-doctor.php');
+      <?php
+      require_once('../includes/sidepanel-doctor.php');
       ?>
-      
+
 
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
           <h1 class="h2">Account Settings</h1>
         </div>
 
-        <?php 
-          require_once('../includes/doctorSetting_Nav.php')
+        <?php
+        require_once('../includes/doctorSetting_Nav.php')
         ?>
 
         <div class="card bg-body-tertiary mb-4">
@@ -55,9 +66,9 @@ include '../includes/head.php';
               </div>
 
               <div class="form-check mb-3">
-                  <input type="checkbox" class="form-check-input" id="togglePassword">
-                  <label for="togglePassword" class="form-check-label" id="togglePasswordLabel">Show Password</label>
-                </div>
+                <input type="checkbox" class="form-check-input" id="togglePassword">
+                <label for="togglePassword" class="form-check-label" id="togglePasswordLabel">Show Password</label>
+              </div>
 
               <!-- Controls for data sharing and patient data visibility -->
               <!-- <div class="row">
