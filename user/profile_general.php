@@ -272,7 +272,7 @@ include '../includes/head.php';
             <div class="col-md-12">
               <div class="card bg-body-tertiary mb-4 mb-md-0">
                 <div class="card-body">
-                  <h5 class="text-green mb-3">Immunization <span class="float-end fs-6"><a href="./add_immunization.php" class="btn btn-primary btn-sm text-light">Add Immunization</a></span></h5>
+                  <h5 class="text-green mb-3">Immunization <span class="float-end fs-6"><a href="./add_immu.php" class="btn btn-primary btn-sm text-light">Add Immunization</a></span></h5>
                   <hr>
                   <?php
                   $immu = new Immunization();
