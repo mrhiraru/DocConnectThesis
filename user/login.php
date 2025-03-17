@@ -452,6 +452,20 @@ include '../includes/head.php';
   <script src="../js/viewHideTogglePassword.js"></script>
 
   <script>
+    document.querySelectorAll('.toggle-password').forEach(icon => {
+      icon.addEventListener('click', function() {
+        let target = document.getElementById(this.dataset.target);
+
+        if (target.type === "password") {
+          target.type = "text";
+          this.classList.replace('bx-show', 'bx-hide'); // Switch to "hide" icon
+        } else {
+          target.type = "password";
+          this.classList.replace('bx-hide', 'bx-show'); // Switch to "show" icon
+        }
+      });
+    });
+
     function formatPhoneNumber(input) {
       let value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
       if (value.startsWith("09")) {

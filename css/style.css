@@ -846,3 +846,41 @@ main.col-md-9 {
   }
   /* ----------DASHBOARD------------- */
 }
+
+/* FAQs Section */
+.faq-section {
+  background-color: var(--white);
+}
+
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-item {
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.faq-question {
+  background-color: var(--white);
+  border: 1px solid #ddd;
+  transition: all 0.3s ease;
+}
+
+.faq-question:hover {
+  background-color: #f8f9fa;
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: #f9f9f9;
+}
+
+.faq-answer p {
+  margin: 0;
+}
