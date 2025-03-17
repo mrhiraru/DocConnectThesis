@@ -54,6 +54,8 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
     $('#chatForm').on('submit', function(e) {
       e.preventDefault();
 
+      $('#send').prop('disabled', true);
+
       const formData = {
         send: $('#send').val(),
         sender_id: $('#sender_id').val(),
@@ -67,6 +69,7 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
         data: formData,
         success: function(response) {
           $('#message').val('');
+          $('#send').prop('disabled', false);
         },
         error: function(xhr, status, error) {
           console.error('Error sending message:', error);
