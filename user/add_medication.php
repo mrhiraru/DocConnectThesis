@@ -64,7 +64,7 @@ include '../includes/head.php';
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <i class='bx bx-user text-primary display-6 me-2'></i>
-                                <h5 class="mb-0">Add Medical History</h5>
+                                <h5 class="mb-0">Add Medication</h5>
                             </div>
                             <hr class="mt-2 mb-3" style="height: 2.5px;">
                             <form id="profileForm" action="" method="post" enctype="multipart/form-data">
@@ -73,7 +73,7 @@ include '../includes/head.php';
                                         <!-- ---NAME--- -->
                                         <div class="row mb-3">
                                             <div class="col-12 mb-3 mb-md-0">
-                                                <label for="medname" class="form-label text-black-50">Medical Condition</label>
+                                                <label for="medname" class="form-label text-black-50">Medication Name</label>
                                                 <input type="text" class="form-control bg-light border border-dark" id="medname" name="medname" value="<?= isset($_POST['medname']) ? $_POST['medname'] : '' ?>" required>
                                                 <?php
                                                 if (isset($_POST['medname']) && !validate_field($_POST['medname'])) {
@@ -96,7 +96,7 @@ include '../includes/head.php';
                                             </div>
                                             <div class="col-12">
                                                 <label for="frequency" class="form-label text-black-50">Frequency</label>
-                                                <input type="text" class="form-control bg-light border border-dark" id="frequency" name="frequency"  value="<?= isset($_POST['frequency']) ? $_POST['frequency'] : '' ?>" required>
+                                                <input type="text" class="form-control bg-light border border-dark" id="frequency" name="frequency" value="<?= isset($_POST['frequency']) ? $_POST['frequency'] : '' ?>" required>
                                                 <?php
                                                 if (isset($_POST['frequency']) && !validate_field($_POST['frequency'])) {
                                                 ?>

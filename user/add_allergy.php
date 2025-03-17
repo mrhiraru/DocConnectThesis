@@ -63,7 +63,7 @@ include '../includes/head.php';
                         <div class="card-body">
                             <div class="d-flex align-items-center">
                                 <i class='bx bx-user text-primary display-6 me-2'></i>
-                                <h5 class="mb-0">Add allergyical History</h5>
+                                <h5 class="mb-0">Add Allergy</h5>
                             </div>
                             <hr class="mt-2 mb-3" style="height: 2.5px;">
                             <form id="profileForm" action="" method="post" enctype="multipart/form-data">
