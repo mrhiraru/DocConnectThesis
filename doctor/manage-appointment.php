@@ -35,7 +35,8 @@ include '../includes/head.php';
     .flatpickr-calendar {
         margin: auto;
         width: 100%;
-        max-width: 300px; /* Adjust as needed */
+        max-width: 300px;
+        /* Adjust as needed */
     }
 
     .flatpickr-time .flatpickr-hour,
@@ -61,21 +62,26 @@ include '../includes/head.php';
 
         .flatpickr-input {
             width: 100%;
-            font-size: 16px; /* Larger font for better readability on mobile */
+            font-size: 16px;
+            /* Larger font for better readability on mobile */
         }
 
         .flatpickr-calendar .flatpickr-months {
-            font-size: 14px; /* Adjust month and year font size */
+            font-size: 14px;
+            /* Adjust month and year font size */
         }
 
         .flatpickr-calendar .flatpickr-weekdays {
-            font-size: 12px; /* Adjust weekday font size */
+            font-size: 12px;
+            /* Adjust weekday font size */
         }
 
         .flatpickr-calendar .flatpickr-day {
-            height: 30px; /* Adjust day cell height */
+            height: 30px;
+            /* Adjust day cell height */
             width: 10px;
-            line-height: 30px; /* Center day text vertically */
+            line-height: 30px;
+            /* Center day text vertically */
         }
 
         .flatpickr-calendar .flatpickr-innerContainer {
@@ -84,6 +90,7 @@ include '../includes/head.php';
     }
 
     @media (max-width: 376px) {
+
         .flatpickr-calendar .dayContainer,
         .flatpickr-calendar .flatpickr-days {
             width: 275.875px;
@@ -92,6 +99,7 @@ include '../includes/head.php';
     }
 
     @media (max-width: 321px) {
+
         .flatpickr-calendar .dayContainer,
         .flatpickr-calendar .flatpickr-days {
             width: 220.875px;
@@ -447,9 +455,13 @@ $formattedDates = implode(', ', $fullDates);
                 altInput: true,
                 altFormat: "F j, Y",
                 inline: true,
+                enable: [
+                    "<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" // Enable specific date
+                ],
                 disable: [
                     ...full_dates, // Directly disable full dates
-                    ...getDisabledDays(startDay, endDay) // Function for disabling other conditions
+                    ...getDisabledDays(startDay, endDay)
+                    // Function for disabling other conditions
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime);
