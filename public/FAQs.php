@@ -23,6 +23,10 @@ include '../includes/head.php';
   ?>
 
   <style>
+    .faq-section {
+      min-height: 100vh;
+    }
+
     #searchInput {
       width: 25%;
     }
