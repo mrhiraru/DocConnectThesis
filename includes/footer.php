@@ -4,7 +4,7 @@
       <!-- First Column -->
       <div class="col-lg-7">
         <div class="footer-content">
-          <a href="./" class="d-flex align-items-center justify-content-center text-dark text-decoration-none mb-2">
+          <a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/' : './'; ?>" class="d-flex align-items-center justify-content-center text-dark text-decoration-none mb-2">
             <img src="../assets/images/logo.png" alt="Logo" style="height: 40px;">
             <h1 class="fs-4 link-primary m-0 d-name">Doc<span class="link-dark mx-0">Connect</span></h1>
           </a>
@@ -32,7 +32,7 @@
           </div>
           <!-- Additional Links -->
           <div class="additional-links">
-            <a href="../public/FAQs" target="_blank" class="text-dark text-decoration-none small me-3">FAQs</a>
+            <a href="../public/FAQs" class="text-dark text-decoration-none small me-3">FAQs</a>
             <a href="../public/privacy-policy" target="_blank" class="text-dark text-decoration-none small me-3">Privacy Policy</a>
             <a href="../public/terms-of-service" target="_blank" class="text-dark text-decoration-none small">Terms of Service</a>
           </div>

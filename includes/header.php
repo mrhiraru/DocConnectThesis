@@ -16,13 +16,13 @@
 				<p class="m-0 text-dark d-block d-lg-none text-center"><?= $_SESSION['fullname'] ?></p>
 			</li>
 			<hr class="dropdown-divider mx-2 mt-1">
-			<li><a class="dropdown-item" href="./profile_general.php">Profile</a></li>
-			<li><a class="dropdown-item" href="./chat_user.php">Chat</a></li>
+			<li><a class="dropdown-item" href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/profile_general.php' : './profile_general'; ?>">Profile</a></li>
+			<li><a class="dropdown-item" href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/chat_user.php' : './chat_user'; ?>">Chat</a></li>
 			<hr class="dropdown-divider mx-2 mt-1">
 			<li><a class="dropdown-item" href="../logout">Logout</a></li>
 		</ul>
 
-		<a class="navbar-brand d-flex align-items-center text-dark text-decoration-none" href="./index">
+		<a class="navbar-brand d-flex align-items-center text-dark text-decoration-none" href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/' : './'; ?>">
 			<img src="../assets/images/logo.png" alt="Logo" height="35">
 			<h1 class="fs-4 link-primary m-0 d-name">Doc<span class="link-dark">Connect</span></h1>
 		</a>
@@ -33,12 +33,12 @@
 
 		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 			<ul class="navbar-nav users_nav mb-2 mb-lg-0 header nav nav-pills">
-				<li class="nav-item"><a href="./about_us" class="nav-link text-primary d-flex justify-content-center <?= $about ?>"><span class="text">About Us</span></a></li>
-				<li class="nav-item"><a href="./services" class="nav-link text-primary d-flex justify-content-center <?= $services ?>"><span class="text">Services</span></a></li>
-				<li class="nav-item"><a href="./doctors" class="nav-link text-primary d-flex justify-content-center <?= $doctors ?>"><span class="text">Our Doctors</span></a></li>
-				<li class="nav-item"><a href="./appointment" class="nav-link text-primary d-flex justify-content-center	<?= $appointment ?>"><span class="text">Appointment</span></a></li>
-				<li class="nav-item"><a href="./contact" class="nav-link text-primary d-flex justify-content-center	<?= $contact ?>"><span class="text">Contact</span></a></li>
-				<li class="nav-item"><a href="./login" class="nav-link px-3 rounded-1 ms-0 ms-md-2 bg-green text-white <?= isset($_SESSION['user_role']) ? "d-none" : 'd-block' ?>" aria-current="page">Login</a></li>
+				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/about_us' : './about_us'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $about ?>"><span class="text">About Us</span></a></li>
+				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/services' : './services'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $services ?>"><span class="text">Services</span></a></li>
+				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/doctors' : './doctors'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $doctors ?>"><span class="text">Our Doctors</span></a></li>
+				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/appointment' : './appointment'; ?>" class="nav-link text-primary d-flex justify-content-center	<?= $appointment ?>"><span class="text">Appointment</span></a></li>
+				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/contact' : './contact'; ?>" class="nav-link text-primary d-flex justify-content-center	<?= $contact ?>"><span class="text">Contact</span></a></li>
+				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/login' : './login'; ?>" class="nav-link px-3 rounded-1 ms-0 ms-md-2 bg-green text-white <?= isset($_SESSION['user_role']) ? "d-none" : 'd-block' ?>" aria-current="page">Login</a></li>
 
 				<li class="nav-item dropdown d-none <?= isset($_SESSION['user_role']) ? "d-lg-flex" : 'd-none' ?> align-items-center border-start ms-2">
 					<a href="#" class="acc d-block link-dark text-decoration-none dropdown-toggle ms-2" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -57,8 +57,8 @@
 							<p class="m-0 mx-2 text-dark d-block text-center text-green fw-bold"><?= $_SESSION['fullname'] ?></p>
 						<li>
 							<hr class="dropdown-divider mx-2 mt-1">
-						<li><a class="dropdown-item" href="./profile_general.php">Profile</a></li>
-						<li><a class="dropdown-item" href="./chat_user.php">Chat</a></li>
+						<li><a class="dropdown-item" href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/profile_general.php' : './profile_general'; ?>">Profile</a></li>
+						<li><a class="dropdown-item" href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/chat_user.php' : './chat_user'; ?>">Chat</a></li>
 
 						<hr class="dropdown-divider mx-2 mt-1">
 
