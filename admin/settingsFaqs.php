@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['error'] = 'Failed to delete FAQ.';
         }
     }
-    header('location: settingsFaqs.php');
+    header('location: settingsFaqs');
     exit();
 }
 
@@ -57,9 +57,9 @@ function getCurrentPage()
 
     <section id="userPage" class="page-container">
         <?php
-        $aboutUs = 'active';
-        $aAboutUs = 'page';
-        $cAboutUs = 'text-dark';
+        $activeFaqs = 'active';
+        $aFaqs = 'page';
+        $cFaqs = 'text-dark';
 
         include './includes/adminSettings_nav.php';
         ?>
