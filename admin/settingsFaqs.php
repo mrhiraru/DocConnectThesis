@@ -10,8 +10,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 require_once('../classes/faqs.class.php');
 
 $faq = new FAQ();
+$faqs = $faq->getFAQs();
 
-// Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['add_faq'])) {
         if ($faq->addFAQ($_POST['question'], $_POST['answer'])) {
@@ -32,22 +32,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['error'] = 'Failed to delete FAQ.';
         }
     }
-    header('location: admin_faqs.php');
+    header('location: settingsFaqs.php');
     exit();
 }
 
-$faqs = $faq->getFAQs();
 ?>
-
-<!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <?php
-    $title = 'Admin | FAQs';
-    include './includes/admin_head.php';
-    ?>
-</head>
+<?php
+$title = 'Admin | FAQs';
+include './includes/admin_head.php';
+function getCurrentPage()
+{
+    return basename($_SERVER['PHP_SELF']);
+}
+?>
 
 <body>
     <?php
@@ -58,6 +56,13 @@ $faqs = $faq->getFAQs();
     ?>
 
     <section id="userPage" class="page-container">
+        <?php
+        $aboutUs = 'active';
+        $aAboutUs = 'page';
+        $cAboutUs = 'text-dark';
+
+        include './includes/adminSettings_nav.php';
+        ?>
         <h1 class="text-start mb-3">Manage FAQs</h1>
 
         <?php if (isset($_SESSION['message'])): ?>
@@ -154,6 +159,7 @@ $faqs = $faq->getFAQs();
             });
         });
     </script>
+
 </body>
 
 </html>
