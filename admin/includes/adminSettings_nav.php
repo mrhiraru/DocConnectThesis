@@ -6,6 +6,7 @@
         <li class="breadcrumb-item <?= $privacyPolicy ?>" aria-current="<?= $aPrivacyPolicy ?>"><a href="./privacyPolicy" class="<?= $cPrivacyPolicy ?>">Privacy Policy</a></li>
         <li class="breadcrumb-item <?= $termsOfServices ?>" aria-current="<?= $aTermsOfServices ?>"><a href="./termsOfServices" class="<?= $cTermsOfServices ?>">Terms of Services</a></li>
         <li class="breadcrumb-item <?= $aboutUs ?>" aria-current="<?= $aAboutUs ?>"><a href="./settingAboutUs" class="<?= $cAboutUs ?>">About us</a></li>
+        <li class="breadcrumb-item <?= $aboutUs ?>" aria-current="<?= $aAboutUs ?>"><a href="./settingsFaqs" class="<?= $cAboutUs ?>">About us</a></li>
       </ol>
     </nav>
   </div>
