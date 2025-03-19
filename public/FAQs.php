@@ -5,6 +5,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ../user/verification.php');
 }
 
+require_once('../classes/faqs.class.php');
+$faq = new FAQ();
+$faqs = $faq->getFAQs();
 ?>
 
 <!DOCTYPE html>
@@ -28,45 +31,19 @@ include '../includes/head.php';
       </div>
 
       <div class="faq-container">
-        <!-- FAQ Item 1 -->
-        <div class="faq-item mb-3">
-          <button class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center p-3" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
-            <span>What is DocConnect?</span>
-            <span class="icon fs-5">+</span>
-          </button>
-          <div class="collapse" id="faq1">
-            <div class="p-3 bg-light rounded-bottom">
-              <p class="mb-0">DocConnect is a platform that offers free telecommunication health services to university students. It allows students to consult with healthcare professionals remotely.</p>
+        <?php foreach ($faqs as $faq): ?>
+          <div class="faq-item mb-3">
+            <button class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center p-3 border border-1 border-black" type="button" data-bs-toggle="collapse" data-bs-target="#faq<?php echo $faq['id']; ?>" aria-expanded="false" aria-controls="faq<?php echo $faq['id']; ?>">
+              <span><?php echo htmlspecialchars($faq['question']); ?></span>
+              <span class="icon fs-5">+</span>
+            </button>
+            <div class="collapse" id="faq<?php echo $faq['id']; ?>">
+              <div class="p-3 bg-light rounded-bottom">
+                <p class="mb-0"><?php echo htmlspecialchars($faq['answer']); ?></p>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- FAQ Item 2 -->
-        <div class="faq-item mb-3">
-          <button class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center p-3" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
-            <span>How do I sign up for DocConnect?</span>
-            <span class="icon fs-5">+</span>
-          </button>
-          <div class="collapse" id="faq2">
-            <div class="p-3 bg-light rounded-bottom">
-              <p class="mb-0">To sign up, visit our website and click on the "Sign Up" button. Follow the instructions to create your account.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- FAQ Item 3 -->
-        <div class="faq-item mb-3">
-          <button class="btn btn-light w-100 text-start d-flex justify-content-between align-items-center p-3" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
-            <span>Is DocConnect free?</span>
-            <span class="icon fs-5">+</span>
-          </button>
-          <div class="collapse" id="faq3">
-            <div class="p-3 bg-light rounded-bottom">
-              <p class="mb-0">Yes, DocConnect is completely free for all university students.</p>
-            </div>
-          </div>
-        </div>
-
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
