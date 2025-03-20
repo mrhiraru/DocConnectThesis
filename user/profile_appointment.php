@@ -48,7 +48,7 @@ include '../includes/head.php';
                 <table class="table table-striped" id="eventsTable">
                   <thead>
                     <tr>
-                      <th></th>
+                      <th>#</th>
                       <th>Doctor</th>
                       <th>Date & Time</th>
                       <th>Status</th>
