@@ -108,6 +108,39 @@ class Account
         return $query->execute();
     }
 
+    function change_password($old_password, $new_password, $confirm_password)
+    {
+        $sql = "SELECT password FROM account WHERE account_id = :account_id LIMIT 1;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':account_id', $this->account_id);
+        if ($query->execute()) {
+            $accountData = $query->fetch(PDO::FETCH_ASSOC);
+
+            if ($accountData && password_verify($old_password, $accountData['password'])) {
+                if ($new_password === $confirm_password) {
+                    $hashedPassword = password_hash($new_password, PASSWORD_DEFAULT);
+
+                    $update_sql = "UPDATE account SET password = :password WHERE account_id = :account_id;";
+                    $update_query = $this->db->connect()->prepare($update_sql);
+                    $update_query->bindParam(':password', $hashedPassword);
+                    $update_query->bindParam(':account_id', $this->account_id);
+
+                    if ($update_query->execute()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     function sign_in_mod()
     {
         $sql = "SELECT a.*, c.* FROM account a INNER JOIN campus c ON a.campus_id = c.campus_id WHERE a.email = :email LIMIT 1;";

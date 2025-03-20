@@ -14,79 +14,19 @@ require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 
 $account_class = new Account();
-if (isset($_POST['saveAccount'])) {
-  $account_class->account_id = $_SESSION['account_id'];
+$account_class->account_id = $_SESSION['account_id'];
 
-  $account_class->firstname = $_POST['first_name'] ?? '';
-  $account_class->middlename = $_POST['middle_name'] ?? '';
-  $account_class->lastname = $_POST['last_name'] ?? '';
-  $account_class->gender = $_POST['gender'] ?? '';
-  $account_class->email = $_POST['email'] ?? '';
-  $account_class->contact = $_POST['Phone_No'] ?? '';
-  $account_class->birthdate = $_POST['birthdate'] ?? '';
-  $account_class->address = $_POST['address'] ?? '';
+if (isset($_POST['change_password'])) {
+  $old_password = $_POST['old_password'];
+  $new_password = $_POST['new_password'];
+  $confirm_password = $_POST['confirm_new_password'];
 
-  if (
-    validate_field($account_class->firstname) &&
-    validate_field($account_class->middlename) &&
-    validate_field($account_class->lastname) &&
-    validate_field($account_class->gender) &&
-    validate_field($account_class->email) &&
-    validate_field($account_class->contact) &&
-    validate_field($account_class->birthdate) &&
-    validate_field($account_class->address)
-  ) {
-    if ($account_class->update_user_info()) {
-      $success = 'success';
-
-      $_SESSION['firstname'] = $account_class->firstname;
-      $_SESSION['middlename'] = $account_class->middlename;
-      $_SESSION['lastname'] = $account_class->lastname;
-      $_SESSION['gender'] = $account_class->gender;
-      $_SESSION['email'] = $account_class->email;
-      $_SESSION['address'] = $account_class->address;
-      $_SESSION['birthdate'] = $account_class->birthdate;
-      $_SESSION['contact'] = $account_class->contact;
-    } else {
-      echo 'An error occured while adding in the database.';
-    }
+  if ($account_class->change_password($old_password, $new_password, $confirm_password)) {
+    $success = 'Password changed successfully.';
   } else {
-    $success = 'failed';
+    $success = 'Failed to change password. Please check your old password and ensure the new passwords match.';
   }
 }
-
-if (isset($_POST['save_image'])) {
-
-  $account_class->account_id = $_SESSION['account_id'];
-
-  $uploaddir = '../assets/images/';
-  $uploadname = $_FILES[htmlentities('account_image')]['name'];
-  $uploadext = explode('.', $uploadname);
-  $uploadnewext = strtolower(end($uploadext));
-  $allowed = array('jpg', 'jpeg', 'png');
-
-  if (in_array($uploadnewext, $allowed)) {
-
-    $uploadenewname = uniqid('', true) . "." . $uploadnewext;
-    $uploadfile = $uploaddir . $uploadenewname;
-
-    if (move_uploaded_file($_FILES[htmlentities('account_image')]['tmp_name'], $uploadfile)) {
-      $account_class->account_image = $uploadenewname;
-
-      if ($account_class->save_image()) {
-        $_SESSION['account_image'] = $account_class->account_image;
-        $success = 'success';
-      } else {
-        echo 'An error occured while adding in the database.';
-      }
-    } else {
-      $success = 'failed';
-    }
-  } else {
-    $success = 'failed';
-  }
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -123,7 +63,7 @@ include '../includes/head.php';
                 <h4 class="mb-0">Password</h4>
               </div>
               <hr class="my-2" style="height: 2.5px;">
-              <form action="#.php" method="post">
+              <form action="profile_privacy.php" method="post">
                 <div class="row mb-3">
                   <div class="col-md-8 mb-3 mb-md-0">
                     <label for="oldPassword" class="form-label text-black-50">Old Password</label>
@@ -131,7 +71,7 @@ include '../includes/head.php';
                   </div>
                   <div class="col-md-8 mb-3 mb-md-0">
                     <label for="newPassword" class="form-label text-black-50">New Password</label>
-                    <input type="password" class="form-control bg-light border border-dark" id="newPassword" name="new_password">
+                    <input type="password" class="form-control bg-light border border-dark" id="newPassword" name="new_password" required>
                   </div>
                   <div class="col-md-8">
                     <label for="confirmNewPassword" class="form-label text-black-50">Confirm New Password</label>
@@ -145,7 +85,7 @@ include '../includes/head.php';
                 </div>
 
                 <div class="text-end">
-                  <input type="submit" id="saveAccount" class="btn btn-primary text-light" name="saveAccount" value="Save Changes">
+                  <input type="submit" class="btn btn-primary text-light" name="change_password" value="Change Password">
                 </div>
               </form>
 
