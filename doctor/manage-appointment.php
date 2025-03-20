@@ -457,42 +457,9 @@ $formattedDates = implode(', ', $fullDates);
                 inline: true,
 
                 disable: [
-                    function(date) {
-                        let formattedDate = flatpickr.formatDate(date, "Y-m-d");
-
-                        // Exclude defaultDate from being disabled
-                        if (formattedDate === flatpickr.formatDate(defaultAppointmentDate, "Y-m-d")) return false;
-
-                        let today = new Date();
-                        let threeDaysLater = new Date();
-                        threeDaysLater.setDate(today.getDate() + 3); // Disable next 3 days
-
-                        if (date < threeDaysLater) return true; // Disable next 3 days
-
-                        // Check if the date is in full_dates
-                        if (full_dates.includes(formattedDate)) return true;
-
-                        // Get disabled days
-                        let day = date.getDay();
-                        let daysMap = {
-                            "Sunday": 0,
-                            "Monday": 1,
-                            "Tuesday": 2,
-                            "Wednesday": 3,
-                            "Thursday": 4,
-                            "Friday": 5,
-                            "Saturday": 6
-                        };
-
-                        let start = daysMap[startDay];
-                        let end = daysMap[endDay];
-
-                        if (start <= end) {
-                            return !(day >= start && day <= end);
-                        } else {
-                            return !(day >= start || day <= end); // Handles wrap-around (e.g., Friday to Monday)
-                        }
-                    }
+                    ...full_dates, // Directly disable full dates
+                    ...getDisabledDays(startDay, endDay)
+                    // Function for disabling other conditions
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime);
