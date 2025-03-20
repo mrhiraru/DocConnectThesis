@@ -405,7 +405,7 @@ $formattedDates = implode(', ', $fullDates);
         var doctor_id = "<?= $_SESSION['doctor_id'] ?>";
 
 
-        let defaultAppointmentDate = "<?= $record['appointment_date'] ?>";
+        let defaultAppointmentDate = "<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>";
         let defaultAppointmentTime = "<?= $record['appointment_time'] ?>";
 
         let datecontainer = document.getElementById('date_picker_cont');
