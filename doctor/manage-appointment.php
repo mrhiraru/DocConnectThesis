@@ -461,7 +461,7 @@ $formattedDates = implode(', ', $fullDates);
                         let formattedDate = flatpickr.formatDate(date, "Y-m-d");
 
                         // Exclude defaultDate from being disabled
-                        if (formattedDate === defaultAppointmentDate) return false;
+                        if (formattedDate === flatpickr.formatDate(defaultAppointmentDate, "Y-m-d")) return false;
 
                         let today = new Date();
                         let threeDaysLater = new Date();
