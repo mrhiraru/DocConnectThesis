@@ -73,7 +73,7 @@ include '../includes/head.php';
                         if (!empty($hisArray)) {
                             foreach ($hisArray as $item) {
                         ?>
-                                <p class="m-0 p-0 fs-6 text-dark">- <?= $item['his_condition'] ?> (<?= $record['diagnosis_date'] ?>)</p>
+                                <p class="m-0 p-0 fs-6 text-dark">- <?= $item['his_condition'] ?> (<?= $item['diagnosis_date'] ?>)</p>
 
                             <?php
                             }
