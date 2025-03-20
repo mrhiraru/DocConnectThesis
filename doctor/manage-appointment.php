@@ -455,13 +455,14 @@ $formattedDates = implode(', ', $fullDates);
                 altInput: true,
                 altFormat: "F j, Y",
                 inline: true,
-                enable: [
-                    "<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" // Enable specific date
-                ],
+
                 disable: [
                     ...full_dates, // Directly disable full dates
                     ...getDisabledDays(startDay, endDay)
                     // Function for disabling other conditions
+                ],
+                enable: [
+                    "<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" // Enable specific date
                 ],
                 onChange: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime);
