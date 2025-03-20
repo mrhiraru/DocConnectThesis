@@ -457,11 +457,12 @@ $formattedDates = implode(', ', $fullDates);
                 inline: true,
 
                 disable: [
-                    ...full_dates, // Directly disable full dates
-                    ...getDisabledDays(startDay, endDay)
-                    // Function for disabling other conditions
+                    function(date) {
+                        let formattedDate = flatpickr.formatDate(date, "Y-m-d");
+                        return formattedDate !== "<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>" &&
+                            (full_dates.includes(formattedDate) || getDisabledDays(startDay, endDay).includes(formattedDate));
+                    }
                 ],
-                enable: "<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>",
                 onChange: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime);
                     set_value(null);
