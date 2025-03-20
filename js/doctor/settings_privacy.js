@@ -1,3 +1,18 @@
+document.getElementById('togglePassword').addEventListener('change', function() {
+  var oldPassword = document.getElementById('oldPass');
+  var newPassword = document.getElementById('newPass');
+  var confirmNewPassword = document.getElementById('confirm_newPass');
+
+  if (this.checked) {
+    oldPassword.type = 'text';
+    newPassword.type = 'text';
+    confirmNewPassword.type = 'text';
+  } else {
+    oldPassword.type = 'password';
+    newPassword.type = 'password';
+    confirmNewPassword.type = 'password';
+  }
+});
 
 // -----view|hide password-----
 const togglePassword = document.getElementById('togglePassword');

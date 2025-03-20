@@ -9,24 +9,19 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   exit();
 }
 
-$birthdate = isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : "";
-
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 
 $account_class = new Account();
 $account_class->account_id = $_SESSION['account_id'];
 
-// Handle password change
 if (isset($_POST['change_password'])) {
   $old_password = $_POST['old_password'];
   $new_password = $_POST['new_password'];
   $confirm_password = $_POST['confirm_new_password'];
 
-  // Call the change_password method
   $result = $account_class->change_password($old_password, $new_password, $confirm_password);
 
-  // Set session messages based on the result
   if ($result === "success") {
     $_SESSION['message'] = "Password changed successfully.";
     $_SESSION['message_type'] = "success";
@@ -41,7 +36,6 @@ if (isset($_POST['change_password'])) {
     $_SESSION['message_type'] = "error";
   }
 
-  // Redirect to the same page to display the message
   header('location: profile_privacy.php');
   exit();
 }
