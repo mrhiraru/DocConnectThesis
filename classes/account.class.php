@@ -113,6 +113,7 @@ class Account
         $sql = "SELECT password FROM account WHERE account_id = :account_id LIMIT 1;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_id', $this->account_id);
+
         if ($query->execute()) {
             $accountData = $query->fetch(PDO::FETCH_ASSOC);
 
@@ -126,18 +127,18 @@ class Account
                     $update_query->bindParam(':account_id', $this->account_id);
 
                     if ($update_query->execute()) {
-                        return true;
+                        return "success";
                     } else {
-                        return false;
+                        return "error_db";
                     }
                 } else {
-                    return false;
+                    return "error_mismatch";
                 }
             } else {
-                return false;
+                return "error_old_password";
             }
         } else {
-            return false;
+            return "error_db";
         }
     }
 

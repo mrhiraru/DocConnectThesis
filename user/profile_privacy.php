@@ -3,6 +3,7 @@ session_start();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
   header('location: ../user/verification.php');
+  exit();
 } else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 3) {
   header('location: ../index.php');
   exit();
@@ -16,16 +17,33 @@ require_once('../classes/account.class.php');
 $account_class = new Account();
 $account_class->account_id = $_SESSION['account_id'];
 
+// Handle password change
 if (isset($_POST['change_password'])) {
   $old_password = $_POST['old_password'];
   $new_password = $_POST['new_password'];
   $confirm_password = $_POST['confirm_new_password'];
 
-  if ($account_class->change_password($old_password, $new_password, $confirm_password)) {
-    $success = 'Password changed successfully.';
+  // Call the change_password method
+  $result = $account_class->change_password($old_password, $new_password, $confirm_password);
+
+  // Set session messages based on the result
+  if ($result === "success") {
+    $_SESSION['message'] = "Password changed successfully.";
+    $_SESSION['message_type'] = "success";
+  } elseif ($result === "error_old_password") {
+    $_SESSION['message'] = "Old password is incorrect.";
+    $_SESSION['message_type'] = "error";
+  } elseif ($result === "error_mismatch") {
+    $_SESSION['message'] = "New password and confirm password do not match.";
+    $_SESSION['message_type'] = "error";
   } else {
-    $success = 'Failed to change password. Please check your old password and ensure the new passwords match.';
+    $_SESSION['message'] = "Failed to change password. Please try again.";
+    $_SESSION['message_type'] = "error";
   }
+
+  // Redirect to the same page to display the message
+  header('location: profile_privacy.php');
+  exit();
 }
 ?>
 
@@ -40,7 +58,26 @@ include '../includes/head.php';
   <?php
   require_once('../includes/header.php');
   ?>
+  <style>
+    .alert-custom {
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
 
+    .alert-success {
+      background-color: #d4edda;
+      border-color: #c3e6cb;
+      color: #155724;
+    }
+
+    .alert-error {
+      background-color: #f8d7da;
+      border-color: #f5c6cb;
+      color: #721c24;
+    }
+  </style>
   <section id="profile" class="page-container">
     <div class="container py-5">
 
@@ -54,6 +91,20 @@ include '../includes/head.php';
           $cPrivacy = 'text-dark';
 
           include 'profile_nav.php';
+
+          if (isset($_SESSION['message'])) {
+            $message_type = $_SESSION['message_type'];
+            $message = $_SESSION['message'];
+            unset($_SESSION['message']);
+            unset($_SESSION['message_type']);
+
+            $alert_class = ($message_type === 'success') ? 'alert-success' : 'alert-error';
+            echo "<div class='alert $alert_class alert-custom alert-dismissible fade show' role='alert'>
+                    $message
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                  </div>
+                  ";
+          }
           ?>
 
           <div class="card bg-body-tertiary mb-4">
