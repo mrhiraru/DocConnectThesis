@@ -461,6 +461,7 @@ $formattedDates = implode(', ', $fullDates);
                     ...getDisabledDays(startDay, endDay)
                     // Function for disabling other conditions
                 ],
+                enable: "<?= date('Y-m-d', strtotime($record['appointment_date'])) ?>",
                 onChange: function(selectedDates, dateStr, instance) {
                     available_time(dateStr, doctor_id, startTime, endTime);
                     set_value(null);
