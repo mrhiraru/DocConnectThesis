@@ -73,7 +73,7 @@ include '../includes/head.php';
                         if (!empty($hisArray)) {
                             foreach ($hisArray as $item) {
                         ?>
-                                <p class="m-0 p-0 fs-6 text-dark">- <?= $item['his_condition'] ?> (<?= date('F j, Y', strtotime($record['diagnosis_date'])) ?>)</p>
+                                <p class="m-0 p-0 fs-6 text-dark">- <?= $item['his_condition'] ?> (<?= $record['diagnosis_date'] ?>)</p>
 
                             <?php
                             }
@@ -110,7 +110,7 @@ include '../includes/head.php';
                         if (!empty($medArray)) {
                             foreach ($medArray as $item) {
                         ?>
-                                <p class="m-0 p-0 fs-6 text-dark">- <?= $item['medication_name'] ?>: <?= $item['description'] ?></p>
+                                <p class="m-0 p-0 fs-6 text-dark">- <?= $item['medication_name'] ?>: <?= $item['dosage'] ?>, <?= $item['med_usage'] ?> </p>
                             <?php
                             }
                         } else {
