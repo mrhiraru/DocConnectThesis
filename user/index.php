@@ -14,6 +14,7 @@ require_once('../classes/account.class.php');
 <html lang="en">
 <?php
 $title = 'DocConnect';
+$home = 'active';
 include '../includes/head.php';
 ?>
 

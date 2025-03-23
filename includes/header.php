@@ -33,6 +33,7 @@
 
 		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 			<ul class="navbar-nav users_nav mb-2 mb-lg-0 header nav nav-pills">
+				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/' : './'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $home ?>"><span class="text">Home</span></a></li>
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/about_us' : './about_us'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $about ?>"><span class="text">About Us</span></a></li>
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/services' : './services'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $services ?>"><span class="text">Services</span></a></li>
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/doctors' : './doctors'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $doctors ?>"><span class="text">Our Doctors</span></a></li>
