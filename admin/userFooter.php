@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $_SESSION['error'] = 'Failed to update footer content.';
     }
-    header('location: settingsFooter.php');
+    header('location: userFooter.php');
     exit();
 }
 
@@ -51,7 +51,7 @@ function getCurrentPage()
         $aFooter = 'page';
         $cFooter = 'text-dark';
 
-        include './includes/adminSettings_nav.php';
+        include './includes/adminUserPage_nav.php';
         ?>
 
         <h1 class="text-start mb-3">Footer Settings</h1>
@@ -74,7 +74,7 @@ function getCurrentPage()
             </div>
         </button>
         <hr class="mt-1 mb-2">
-        <div class="collapse" id="footerContentSection">
+        <div class="collapse show" id="footerContentSection">
             <div class="card mb-3 w-100">
                 <div class="card-body">
                     <form method="POST">
