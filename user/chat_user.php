@@ -90,7 +90,6 @@ include '../includes/head.php';
     </div>
   </section>
   <script src="../js/chat.js"></script>
-  <script src="../js/chatbot.js"></script>
 </body>
 
 </html>
