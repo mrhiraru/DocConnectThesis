@@ -492,7 +492,7 @@ class Account
             INNER JOIN doctor_info di ON di.account_id = a.account_id
             INNER JOIN appointment ap ON di.doctor_id = ap.doctor_id
             WHERE ap.patient_id = :patient_id
-            GROUP BY pi.patient_id
+            GROUP BY di.doctor_id
             ORDER BY latest_appointment_date ASC, latest_appointment_time ASC";
 
         $query = $this->db->connect()->prepare($sql);
