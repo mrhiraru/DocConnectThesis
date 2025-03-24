@@ -37,34 +37,40 @@ include '../includes/head.php';
   <!-- Doctors Carousel -->
   <?php
   $doctor = new Account();
-  $doctorArray = $doctor->show_doc();
+  $allDoctors = $doctor->show_doc();
 
+  $today = date('Ymd');
+
+  if (!empty($allDoctors)) {
+    mt_srand($today);
+    shuffle($allDoctors);
+
+    $doctorArray = array_slice($allDoctors, 0, 5);
+  } else {
+    $doctorArray = array();
+  }
   ?>
   <section id="carousel">
     <div id="doctorsCarousel" class="carousel carousel-dark slide" data-bs-ride="carousel" data-bs-touch="true">
       <div class="carousel-indicators">
         <?php
-
         if (!empty($doctorArray)) {
-          foreach ($doctorArray as $item) {
+          foreach ($doctorArray as $index => $item) {
+            $activeClass = ($index === 0) ? 'active' : '';
         ?>
-            <button type="button" data-bs-target="#doctorsCarousel" data-bs-slide-to="<?= $item['account_id'] ?>" class="active" aria-current="true" aria-label="Slide <?= $item['account_id'] ?>"></button>
+            <button type="button" data-bs-target="#doctorsCarousel" data-bs-slide-to="<?= $index ?>" class="<?= $activeClass ?>" aria-label="Slide <?= $index + 1 ?>"></button>
         <?php
           }
         }
         ?>
-
-
-
       </div>
       <div class="carousel-inner">
-        <!-- Doctor 1 -->
-
         <?php
         if (!empty($doctorArray)) {
-          foreach ($doctorArray as $item) {
+          foreach ($doctorArray as $index => $item) {
+            $activeClass = ($index === 0) ? 'active' : '';
         ?>
-            <div class="carousel-item active" data-bs-interval="5000">
+            <div class="carousel-item <?= $activeClass ?>" data-bs-interval="5000">
               <div class="row mx-5 mb-4 align-items-stretch">
                 <div class="col-12 col-lg-5 mb-3 mb-lg-0">
                   <div class="profile-card h-100 me-4">

@@ -286,7 +286,7 @@ function getCurrentPage()
                             </div>
                         </div>
 
-                        <h4 class="mt-4">Opening Hours</h4>
+                        <!-- <h4 class="mt-4">Opening Hours</h4>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label">Weekday Hours</label>
@@ -304,7 +304,7 @@ function getCurrentPage()
                                     <option>9:00 AM - 2:00 PM</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary text-light">Save</button>
                         </div>
