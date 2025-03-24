@@ -44,7 +44,7 @@ include '../includes/head.php';
                         <div class="card-body">
                             <h5 class="card-title mb-2 text-green">My Doctors</h5>
                             <hr>
-                            <div id="patient-container" class="mt-4 mb-3 row row-cols-1 row-cols-md-2 row-cols-lg-3">
+                            <div id="patient-container" class="mx-0 mt-4 mb-3 row row-cols-1 row-cols-md-2 row-cols-lg-3">
                                 <?php
                                 $doctor = new Account();
                                 $doctorArray = $doctor->get_mydoctors($_SESSION['patient_id']);
@@ -70,7 +70,6 @@ include '../includes/head.php';
                                                 </div>
                                                 <div>
                                                     <a href="./patient-appointment?account_id=<?= $item['account_id']  ?>"><i class='bx bx-calendar'></i>Appointments</a>
-
                                                 </div>
                                             </div>
                                         </div>
