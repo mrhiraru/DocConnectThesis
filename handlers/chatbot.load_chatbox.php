@@ -22,9 +22,9 @@ $message = new Message();
       <img src="../assets/images/chatbot_profile.png" alt="Profile" class="rounded-circle me-3" height="40" width="40">
       <span> Chatbot </span>
     </div>
-    <div>
+    <!-- <div>
       <i class='bx bx-dots-horizontal-rounded fs-4'></i>
-    </div>
+    </div> -->
   </div>
 </div>
 <!-- Chat Messages -->

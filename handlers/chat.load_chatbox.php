@@ -27,7 +27,9 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
       <span><?= (isset($record['middlename'])) ? ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname'])) : ucwords(strtolower($record['firstname'] . ' ' . $record['lastname'])) ?></span>
     </div>
     <div>
-      <i class='bx bx-dots-horizontal-rounded fs-4'></i>
+      <a href="../user/doctorsView" class="d-flex">
+        <i class='bx bx-dots-horizontal-rounded fs-4'></i>
+      </a>
     </div>
   </div>
 </div>
