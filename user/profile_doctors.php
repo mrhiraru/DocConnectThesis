@@ -45,7 +45,6 @@ include '../includes/head.php';
                             <h5 class="card-title mb-2 text-green">Appointment List</h5>
                             <hr>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <input type="text" id="search" class="form-control w-50 border-black" placeholder="Search by name">
                                 <div>
                                     <i class='bx bx-list-ul toggle-view p-2 rounded border border-black' data-view="list" style="cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='lightgray'" onmouseout="this.style.backgroundColor='transparent'"></i>
                                     <i class='bx bx-grid-alt toggle-view p-2 rounded border border-black' data-view="grid" style="cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='lightgray'" onmouseout="this.style.backgroundColor='transparent'"></i>
@@ -53,17 +52,17 @@ include '../includes/head.php';
                             </div>
                             <div id="patient-container" class="mt-4 mb-3 row row-cols-1 row-cols-md-2 row-cols-lg-3">
                                 <?php
-                                // $pateint = new Patient();
-                                // $patientArray = $pateint->get_patients($_SESSION['doctor_id']);
+                                $doctor = new Account();
+                                $doctorArray = $doctor->get_mydoctors($_SESSION['patient_id']);
 
-                                // foreach ($patientArray as $item) {
+                                foreach ($doctorArray as $item) {
 
                                 ?>
-                                    <div class="col patient-card p-1" data-name="<?= strtolower($name[0]) ?>">
+                                    <div class="col patient-card p-1">
                                         <div class="card">
-                                            <a class="card-header fs-5" href="./patient-view?account_id=<?= $item['account_id']  ?>">
+                                            <a class="card-header fs-5" href="">
                                                 <p class="text-dark m-0">
-                                                    <?= $item['patient_name'] ?>
+                                                    <?= $item['doctor_name'] ?>
                                                     <img src="<?php if (isset($item['account_image'])) {
                                                                     echo "../assets/images/" . $item['account_image'];
                                                                 } else {
@@ -83,7 +82,7 @@ include '../includes/head.php';
                                         </div>
                                     </div>
                                 <?php
-                                // }
+                                }
                                 ?>
                             </div>
                             </main>
