@@ -42,14 +42,8 @@ include '../includes/head.php';
 
                     <div class="card bg-body-tertiary mb-4">
                         <div class="card-body">
-                            <h5 class="card-title mb-2 text-green">Appointment List</h5>
+                            <h5 class="card-title mb-2 text-green">My Doctors</h5>
                             <hr>
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <i class='bx bx-list-ul toggle-view p-2 rounded border border-black' data-view="list" style="cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='lightgray'" onmouseout="this.style.backgroundColor='transparent'"></i>
-                                    <i class='bx bx-grid-alt toggle-view p-2 rounded border border-black' data-view="grid" style="cursor: pointer; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='lightgray'" onmouseout="this.style.backgroundColor='transparent'"></i>
-                                </div>
-                            </div>
                             <div id="patient-container" class="mt-4 mb-3 row row-cols-1 row-cols-md-2 row-cols-lg-3">
                                 <?php
                                 $doctor = new Account();
@@ -72,7 +66,7 @@ include '../includes/head.php';
                                             </a>
                                             <div class="card-body d-flex flex-column">
                                                 <div>
-                                                    <a href="./chats.php?account_id=<?= $item['account_id']  ?>"><i class='bx bx-chat'></i> Chat</a>
+                                                    <a href="./chat_user.php?account_id=<?= $item['account_id']  ?>"><i class='bx bx-chat'></i>Chat</a>
                                                 </div>
                                                 <div>
                                                     <a href="./patient-appointment?account_id=<?= $item['account_id']  ?>"><i class='bx bx-calendar'></i>Appointments</a>
