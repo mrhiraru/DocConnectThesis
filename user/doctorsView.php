@@ -8,14 +8,11 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 
-// Get doctor ID from URL parameter
 $doctor_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
-// Fetch doctor details
 $doctor = new Account();
 $doctorDetails = $doctor->get_doctor_info_2($doctor_id);
 
-// If doctor not found, redirect to doctors list
 // if (!$doctorDetails) {
 //   header('location: doctors.php');
 //   exit();
@@ -25,10 +22,21 @@ $doctorDetails = $doctor->get_doctor_info_2($doctor_id);
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$title = 'Doctor Profile | ' . $doctorDetails['firstname'] . ' ' . $doctorDetails['lastname'];
-$doctors = 'active';
+// $title = 'Doctor Profile | ' . $doctorDetails['firstname'] . ' ' . $doctorDetails['lastname'];
 include '../includes/head.php';
 ?>
+
+<style>
+    .profile-card {
+        height: 100%;
+    }
+
+    @media (max-width:450px) {
+        .profile-card {
+        height: 300px !important;
+    }
+    }
+</style>
 
 <body>
     <?php require_once('../includes/header.php'); ?>
@@ -44,9 +52,9 @@ include '../includes/head.php';
     </section>
 
     <!-- Doctor Details -->
-    <section class="padding-medium py-5">
+    <section class="padding-medium py-4">
         <div class="container">
-            <div class="row mx-5 mb-4 align-items-stretch">
+            <div class="row mx-3 mx-lg-5 mb-4 align-items-stretch">
                 <div class="col-12 col-lg-5 mb-3 mb-lg-0">
                     <div class="profile-card h-100 me-4">
                         <div class="profile-image">
@@ -91,7 +99,7 @@ include '../includes/head.php';
                                 </div>
                             </div>
 
-                            <div class="card mt-3 bg-light shadow-lg p-3">
+                            <div class="card mb-3 bg-light shadow-lg p-3">
                                 <h4 class="text-primary mb-3">Contact Information</h4>
                                 <div class="mb-2">
                                     <i class="fas fa-envelope me-2 text-green"></i>
@@ -103,16 +111,25 @@ include '../includes/head.php';
                                 </div>
                             </div>
 
-                            <div class="d-flex justify-content-end">
-                                <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
-                                    <i class="fas fa-calendar-check me-2"></i>Book Appointment
-                                </a>
-                                <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
-                                    <i class="fas fa-comments me-2"></i>Start Chat
-                                </a>
-                            </div>
+
                         </div>
                     </div>
+                </div>
+
+                <div class="card px-4 py-2 bg-light shadow-lg my-3">
+                    <h6 class="text-primary">Professional Biography:</h6>
+                    <p class="fw-light fs-6">
+                        <?= !empty($doctorDetails['bio']) ? nl2br(htmlspecialchars($doctorDetails['bio'])) : 'No biography available' ?>
+                    </p>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
+                        <i class="fas fa-calendar-check me-2"></i>Book Appointment
+                    </a>
+                    <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
+                        <i class="fas fa-comments me-2"></i>Start Chat
+                    </a>
                 </div>
             </div>
         </div>
