@@ -165,11 +165,11 @@ include '../includes/head.php';
                     <div class="col-6 text-start">
                         <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Form</p>
                     </div>
-                    <div class="col-6 text-end">
+                    <!-- <div class="col-6 text-end">
                         <button type="button" class="btn btn-sm btn-primary text-light" data-bs-toggle="modal" data-bs-target="#patientDetails">
                             View Patient Details
                         </button>
-                    </div>
+                    </div> -->
                 </div>
 
                 <hr>

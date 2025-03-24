@@ -482,6 +482,29 @@ class Account
         }
     }
 
+    function get_mydoctors($patient_id)
+    {
+        $sql = "SELECT a.*, di.*, COUNT(ap.appointment_id) AS appointment_count, 
+            CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS doctor_name,
+            MAX(ap.appointment_date) AS latest_appointment_date, 
+            MAX(ap.appointment_time) AS latest_appointment_time
+            FROM account a
+            INNER JOIN doctor_info di ON di.account_id = a.account_id
+            INNER JOIN appointment ap ON di.doctor_id = ap.doctor_id
+            WHERE ap.patient_id = :patient_id
+            GROUP BY di.doctor_id
+            ORDER BY latest_appointment_date ASC, latest_appointment_time ASC";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':patient_id', $patient_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
     function get_doctor_info($doctor_id)
     {
         $sql = "SELECT * FROM doctor_info WHERE doctor_id = :doctor_id";
