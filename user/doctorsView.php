@@ -41,16 +41,6 @@ include '../includes/head.php';
 <body>
     <?php require_once('../includes/header.php'); ?>
 
-    <!-- Doctor Profile Section -->
-    <section class="page-container padding-medium pt-3 p-3">
-        <div class="border-primary border-bottom text-center mx-4 mb-3">
-            <h1 class="text-green">Doctor Profile</h1>
-            <p class="fs-5 fw-light">
-                Detailed information about our healthcare professional
-            </p>
-        </div>
-    </section>
-
     <!-- Doctor Details -->
     <section class="padding-medium py-4">
         <div class="container">
