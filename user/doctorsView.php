@@ -70,7 +70,7 @@ include '../includes/head.php';
                 <div class="col-12 col-lg-7">
                     <div class="details h-100">
                         <h2 class="text-green mb-3 fs-2">
-                            DOCTOR NAME
+                            <?= $doctorDetails['doctor_name'] ?>
                         </h2>
 
                         <div class="d-flex flex-column">
@@ -132,7 +132,7 @@ include '../includes/head.php';
                         <i class="fas fa-calendar-check me-2"></i>Book Appointment
                     </a>
                     <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
-                        <i class="fas fa-comments me-2"></i>Start Chat
+                        <i class="fas fa-comments me-2"></i>Chat
                     </a>
                 </div>
             </div>
