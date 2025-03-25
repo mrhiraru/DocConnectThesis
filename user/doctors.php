@@ -132,6 +132,10 @@ include '../includes/head.php';
       </div>
   </section>
 
+  <section class="text-center py-3">
+    <a href="doctorsList.php" class="btn btn-lg btn-outline-primary hover-light p-2">View All Doctors</a>
+  </section>
+
   <section class="specializations padding-medium py-3 text-center bg-light">
     <h2 class="text-green">Our Specializations</h2>
     <p class="fs-5 fw-light">Our team of expert doctors provides care in the following areas:</p>
