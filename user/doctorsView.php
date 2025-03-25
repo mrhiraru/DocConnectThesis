@@ -58,8 +58,8 @@ include '../includes/head.php';
                 <div class="col-12 col-lg-5 mb-3 mb-lg-0">
                     <div class="profile-card h-100 me-4">
                         <div class="profile-image">
-                            <img src="<?php if (isset($item['account_image'])) {
-                                            echo "../assets/images/" . $item['account_image'];
+                            <img src="<?php if (isset($doctorDetails['account_image'])) {
+                                            echo "../assets/images/" . $doctorDetails['account_image'];
                                         } else {
                                             echo "../assets/images/default_profile.png";
                                         } ?>" alt="Doctor Profile Image" class="img-fluid rounded shadow">
