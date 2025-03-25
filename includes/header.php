@@ -1,4 +1,4 @@
-<header class="navbar fixed-top p-2 p-lg-3 navbar-expand-lg navbar-dark bg-white shadow-sm">
+<header class="navbar fixed-top p-2 navbar-expand-lg navbar-dark bg-white shadow-sm">
 	<div class="container-fluid">
 		<!-- Display profile dropdown for mobile if the user is logged in -->
 		<a href="#" class="<?= isset($_SESSION['user_role']) ? "d-sm-block" : "d-none" ?> d-lg-none acc link-dark text-decoration-none dropdown-toggle ms-2" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -34,11 +34,11 @@
 		<div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
 			<ul class="navbar-nav users_nav mb-2 mb-lg-0 header nav nav-pills">
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/' : './'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $home ?>"><span class="text">Home</span></a></li>
-				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/about_us' : './about_us'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $about ?>"><span class="text">About Us</span></a></li>
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/services' : './services'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $services ?>"><span class="text">Services</span></a></li>
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/doctors' : './doctors'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $doctors ?>"><span class="text">Our Doctors</span></a></li>
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/appointment' : './appointment'; ?>" class="nav-link text-primary d-flex justify-content-center	<?= $appointment ?>"><span class="text">Appointment</span></a></li>
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/contact' : './contact'; ?>" class="nav-link text-primary d-flex justify-content-center	<?= $contact ?>"><span class="text">Contact</span></a></li>
+				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/about_us' : './about_us'; ?>" class="nav-link text-primary d-flex justify-content-center <?= $about ?>"><span class="text">About Us</span></a></li>
 				<li class="nav-item"><a href="<?php echo (basename($_SERVER['PHP_SELF']) == 'FAQs.php') ? '../user/login' : './login'; ?>" class="nav-link px-3 rounded-1 ms-0 ms-md-2 bg-green text-white <?= isset($_SESSION['user_role']) ? "d-none" : 'd-block' ?>" aria-current="page">Login</a></li>
 
 				<li class="nav-item dropdown d-none <?= isset($_SESSION['user_role']) ? "d-lg-flex" : 'd-none' ?> align-items-center border-start ms-2">
