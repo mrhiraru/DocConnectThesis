@@ -8,7 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 
-$doctor_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$doctor_id = isset($_GET['id']) ? intval($_GET['id']) : '';
 
 $doctor = new Account();
 $doctorDetails = $doctor->get_doctor_info_2($doctor_id);
@@ -22,7 +22,7 @@ $doctorDetails = $doctor->get_doctor_info_2($doctor_id);
 <!DOCTYPE html>
 <html lang="en">
 <?php
-// $title = 'Doctor Profile | ' . $doctorDetails['firstname'] . ' ' . $doctorDetails['lastname'];
+$title = 'Doctor Profile';
 include '../includes/head.php';
 ?>
 
