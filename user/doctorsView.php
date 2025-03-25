@@ -105,11 +105,11 @@ include '../includes/head.php';
 
                             <div class="card mb-3 bg-light shadow-lg p-3">
                                 <h4 class="text-primary mb-3">Contact Information</h4>
-                                <div class="mb-2">
+                                <div class="mb-2 fw-light">
                                     <i class="fas fa-envelope me-2 text-green"></i>
                                     <span><?= !empty($doctorDetails['email']) ? htmlspecialchars($doctorDetails['email']) : 'Not provided' ?></span>
                                 </div>
-                                <div class="mb-2">
+                                <div class="mb-2 fw-light">
                                     <i class="fas fa-phone me-2 text-green"></i>
                                     <span><?= !empty($doctorDetails['contact']) ? htmlspecialchars($doctorDetails['contact']) : 'Not provided' ?></span>
                                 </div>
