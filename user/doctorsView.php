@@ -33,8 +33,8 @@ include '../includes/head.php';
 
     @media (max-width:450px) {
         .profile-card {
-        height: 300px !important;
-    }
+            height: 300px !important;
+        }
     }
 </style>
 
@@ -58,7 +58,11 @@ include '../includes/head.php';
                 <div class="col-12 col-lg-5 mb-3 mb-lg-0">
                     <div class="profile-card h-100 me-4">
                         <div class="profile-image">
-                            <img src="../assets/images/default_profile.png" alt="Doctor Profile Image" class="img-fluid rounded shadow">
+                            <img src="<?php if (isset($item['account_image'])) {
+                                            echo "../assets/images/" . $item['account_image'];
+                                        } else {
+                                            echo "../assets/images/default_profile.png";
+                                        } ?>" alt="Doctor Profile Image" class="img-fluid rounded shadow">
                         </div>
 
                     </div>
@@ -103,7 +107,7 @@ include '../includes/head.php';
                                 <h4 class="text-primary mb-3">Contact Information</h4>
                                 <div class="mb-2">
                                     <i class="fas fa-envelope me-2 text-green"></i>
-                                    <span>example email</span>
+                                    <span><?= !empty($doctorDetails['email']) ? htmlspecialchars($doctorDetails['email']) : 'Not provided' ?></span>
                                 </div>
                                 <div class="mb-2">
                                     <i class="fas fa-phone me-2 text-green"></i>
