@@ -8,7 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 
-$doctor_id = isset($_GET['id']) ? intval($_GET['id']) : 0;
+$doctor_id = isset($_GET['id']) ? intval($_GET['id']) : '';
 
 $doctor = new Account();
 $doctorDetails = $doctor->get_doctor_info_2($doctor_id);
@@ -22,7 +22,7 @@ $doctorDetails = $doctor->get_doctor_info_2($doctor_id);
 <!DOCTYPE html>
 <html lang="en">
 <?php
-// $title = 'Doctor Profile | ' . $doctorDetails['firstname'] . ' ' . $doctorDetails['lastname'];
+$title = 'Doctor Profile';
 include '../includes/head.php';
 ?>
 
@@ -33,23 +33,13 @@ include '../includes/head.php';
 
     @media (max-width:450px) {
         .profile-card {
-        height: 300px !important;
-    }
+            height: 300px !important;
+        }
     }
 </style>
 
 <body>
     <?php require_once('../includes/header.php'); ?>
-
-    <!-- Doctor Profile Section -->
-    <section class="page-container padding-medium pt-3 p-3">
-        <div class="border-primary border-bottom text-center mx-4 mb-3">
-            <h1 class="text-green">Doctor Profile</h1>
-            <p class="fs-5 fw-light">
-                Detailed information about our healthcare professional
-            </p>
-        </div>
-    </section>
 
     <!-- Doctor Details -->
     <section class="padding-medium py-4">
@@ -58,7 +48,11 @@ include '../includes/head.php';
                 <div class="col-12 col-lg-5 mb-3 mb-lg-0">
                     <div class="profile-card h-100 me-4">
                         <div class="profile-image">
-                            <img src="../assets/images/default_profile.png" alt="Doctor Profile Image" class="img-fluid rounded shadow">
+                            <img src="<?php if (isset($doctorDetails['account_image'])) {
+                                            echo "../assets/images/" . $doctorDetails['account_image'];
+                                        } else {
+                                            echo "../assets/images/default_profile.png";
+                                        } ?>" alt="Doctor Profile Image" class="img-fluid rounded shadow">
                         </div>
 
                     </div>
@@ -66,7 +60,7 @@ include '../includes/head.php';
                 <div class="col-12 col-lg-7">
                     <div class="details h-100">
                         <h2 class="text-green mb-3 fs-2">
-                            DOCTOR NAME
+                            <?= $doctorDetails['doctor_name'] ?>
                         </h2>
 
                         <div class="d-flex flex-column">
@@ -101,11 +95,11 @@ include '../includes/head.php';
 
                             <div class="card mb-3 bg-light shadow-lg p-3">
                                 <h4 class="text-primary mb-3">Contact Information</h4>
-                                <div class="mb-2">
+                                <div class="mb-2 fw-light">
                                     <i class="fas fa-envelope me-2 text-green"></i>
-                                    <span>example email</span>
+                                    <span><?= !empty($doctorDetails['email']) ? htmlspecialchars($doctorDetails['email']) : 'Not provided' ?></span>
                                 </div>
-                                <div class="mb-2">
+                                <div class="mb-2 fw-light">
                                     <i class="fas fa-phone me-2 text-green"></i>
                                     <span><?= !empty($doctorDetails['contact']) ? htmlspecialchars($doctorDetails['contact']) : 'Not provided' ?></span>
                                 </div>
@@ -128,7 +122,7 @@ include '../includes/head.php';
                         <i class="fas fa-calendar-check me-2"></i>Book Appointment
                     </a>
                     <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
-                        <i class="fas fa-comments me-2"></i>Start Chat
+                        <i class="fas fa-comments me-2"></i>Chat
                     </a>
                 </div>
             </div>

@@ -54,7 +54,7 @@ include '../includes/head.php';
                                 ?>
                                     <div class="col patient-card p-1">
                                         <div class="card">
-                                            <a class="card-header fs-5" href="./doctorsView">
+                                            <a class="card-header fs-5" href="./doctorsView?id=<?= $item['account_id'] ?>">
                                                 <p class="text-dark m-0">
                                                     <?= $item['doctor_name'] ?>
                                                     <img src="<?php if (isset($item['account_image'])) {
