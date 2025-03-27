@@ -6,7 +6,13 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
+require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
+
+$doctor_id = isset($_GET['id']) ? intval($_GET['id']) : '';
+
+$doctor = new Account();
+$doctorDetails = $doctor->get_doctor_info_2($doctor_id);
 ?>
 
 <!DOCTYPE html>
@@ -21,15 +27,15 @@ include '../includes/head.php';
     <?php require_once('../includes/header.php'); ?>
 
     <!-- Page Header -->
-    <section class="page-header padding-medium bg-light">
+    <section class="page-container page-header padding-medium bg-light">
         <div class="container">
-            <div class="row align-items-center">
+            <div class="row py-3 align-items-center">
                 <div class="col-md-6">
                     <h1 class="text-green mb-3">Our Medical Team</h1>
                     <p class="lead">Browse our complete list of healthcare professionals ready to serve you.</p>
                 </div>
                 <div class="col-md-6 text-md-end">
-                    <a href="doctors.php" class="btn btn-outline-secondary">Back to Featured Doctors</a>
+                    <a href="doctors.php" class="btn btn-outline-secondary hover-light">Back to Featured Doctors</a>
                 </div>
             </div>
         </div>
