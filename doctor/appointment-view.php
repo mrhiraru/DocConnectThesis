@@ -205,11 +205,11 @@ include '../includes/head.php';
                                     <div class="col-12">
                                         <label for="plan" class="form-label mb-1">Would you like to provide a treatment plan and recommendations?</label>
                                         <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="plan_check" id="Yes_medication" value="Yes_plan" <?= (isset($_POST['plan_check']) && $_POST['plan_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <input class="form-check-input" type="radio" name="plan_check" id="Yes_plan" value="Yes" <?= (isset($_POST['plan_check']) && $_POST['plan_check'] == "Yes") ? "checked" : "" ?> required>
                                             <label class="form-check-label" for="Yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="plan_check" id="No_medication" value="No_plan" <?= (isset($_POST['plan_check']) && $_POST['plan_check'] == "No") ? "checked" : "" ?>>
+                                            <input class="form-check-input" type="radio" name="plan_check" id="No_plan" value="No" <?= (isset($_POST['plan_check']) && $_POST['plan_check'] == "No") ? "checked" : "" ?>>
                                             <label class="form-check-label" for="No">No</label>
                                         </div>
                                     </div>
