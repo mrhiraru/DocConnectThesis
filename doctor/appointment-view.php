@@ -339,8 +339,8 @@ include '../includes/head.php';
                             }
                             ?>
                             <div class="col-12">
-                                <label for="comment" class="form-label">Note:</label>
-                                <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
+                                <label for="comment" class="form-label">Additional Comment:</label>
+                                <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
                             </div>
                         </form>
                     </div>
@@ -371,10 +371,10 @@ include '../includes/head.php';
                     <?php
                     } else if ($record['appointment_status'] == "Completed") {
                     ?>
-                        <!-- <a href="" class="btn btn-danger text-white mb-3">
-                                <i class='bx bxs-edit align-middle fs-5 me-1'></i>
-                                New Appointment
-                            </a> -->
+                        <button class="btn btn-danger text-white mb-3" onclick="">
+                            <i class='bx bx-file align-middle fs-5'></i>
+                            Download Result
+                        </button>
                     <?php
                     }
                     ?>
