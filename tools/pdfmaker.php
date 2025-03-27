@@ -1,5 +1,5 @@
 <script type="module">
-    import pdfMake from "../node_modules/pdfmake/build/pdfmake.js";
+    import * as pdfMake from "../node_modules/pdfmake/build/pdfmake.js";
     import * as pdfFonts from "../node_modules/pdfmake/build/vfs_fonts.js";
 
     // Set the fonts
