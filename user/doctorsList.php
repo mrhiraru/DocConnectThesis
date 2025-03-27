@@ -6,13 +6,11 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 
-$doctor_id = isset($_GET['id']) ? intval($_GET['id']) : '';
-
 $doctor = new Account();
-$doctorDetails = $doctor->get_doctor_info_2($doctor_id);
+$allDoctors = $doctor->get_doctor();
+$availableSpecialties = $doctor->get_available_specialties();
 ?>
 
 <!DOCTYPE html>
@@ -48,20 +46,19 @@ include '../includes/head.php';
                 <div class="col-md-8 mb-3 mb-md-0">
                     <div class="input-group">
                         <input type="text" class="form-control" id="doctorSearch" placeholder="Search by name or specialty...">
-                        <button class="btn btn-primary" type="button" id="searchButton">
-                            <i class="bi bi-search"></i> Search
+                        <button class="btn btn-primary text-light" type="button" id="searchButton">
+                            <i class='bx bx-search'></i>
                         </button>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <select class="form-select" id="specialtyFilter">
                         <option value="">All Specialties</option>
-                        <option value="Cardiology">Cardiology</option>
-                        <option value="Dermatology">Dermatology</option>
-                        <option value="Pediatrics">Pediatrics</option>
-                        <option value="General Medicine">General Medicine</option>
-                        <option value="Mental Health">Mental Health</option>
-                        <option value="Dentistry">Dentistry</option>
+                        <?php foreach ($availableSpecialties as $specialty): ?>
+                            <option value="<?= htmlspecialchars($specialty['specialty']) ?>">
+                                <?= htmlspecialchars($specialty['specialty']) ?>
+                            </option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </div>
@@ -74,166 +71,42 @@ include '../includes/head.php';
             <div class="row mb-4">
                 <div class="col-12">
                     <h3 class="text-primary">Available Doctors</h3>
-                    <p class="text-muted" id="doctorCount">Showing 6 doctors</p>
+                    <p class="text-muted" id="doctorCount">Showing <?= count($allDoctors) ?> doctors</p>
                 </div>
             </div>
 
             <div class="row" id="doctorsContainer">
-                <!-- Doctor Card 1 -->
-                <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-specialty="Cardiology">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-header bg-white border-0 pt-3">
-                            <div class="doctor-image text-center">
-                                <img src="../assets/images/default_profile.png" class="rounded-circle img-thumbnail" alt="Dr. John Smith" style="width: 150px; height: 150px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-green mb-1">Dr. John Smith</h5>
-                            <p class="text-primary mb-2">Cardiology</p>
-                            <p class="text-muted small mb-3">
-                                <i class="bi bi-calendar-week"></i> Monday to Friday<br>
-                                <i class="bi bi-clock"></i> 08:00 AM - 05:00 PM
-                            </p>
-                            <p class="card-text doctor-bio">Specialized in heart-related conditions with over 10 years of experience in cardiovascular treatments and preventive care.</p>
-                        </div>
-                        <div class="card-footer bg-white border-0 pb-3">
-                            <div class="d-flex justify-content-center">
-                                <a href="appointment.php" class="btn btn-sm btn-primary me-2">Book Appointment</a>
-                                <a href="chat_user.php" class="btn btn-sm btn-success">Chat Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Doctor Card 2 -->
-                <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-specialty="Dermatology">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-header bg-white border-0 pt-3">
-                            <div class="doctor-image text-center">
-                                <img src="../assets/images/default_profile.png" class="rounded-circle img-thumbnail" alt="Dr. Sarah Johnson" style="width: 150px; height: 150px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-green mb-1">Dr. Sarah Johnson</h5>
-                            <p class="text-primary mb-2">Dermatology</p>
-                            <p class="text-muted small mb-3">
-                                <i class="bi bi-calendar-week"></i> Tuesday to Saturday<br>
-                                <i class="bi bi-clock"></i> 09:00 AM - 06:00 PM
-                            </p>
-                            <p class="card-text doctor-bio">Skin specialist focusing on acne treatment, eczema, psoriasis, and cosmetic dermatology procedures.</p>
-                        </div>
-                        <div class="card-footer bg-white border-0 pb-3">
-                            <div class="d-flex justify-content-center">
-                                <a href="appointment.php" class="btn btn-sm btn-primary me-2">Book Appointment</a>
-                                <a href="chat_user.php" class="btn btn-sm btn-success">Chat Now</a>
-                            </div>
+                <?php foreach ($allDoctors as $doctor): ?>
+                    <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-specialty="<?= htmlspecialchars($doctor['specialty']) ?>">
+                        <div class="card h-100 shadow-sm border-1">
+                            <a href="doctorsView.php?id=<?= $doctor['account_id'] ?>" class="text-decoration-none">
+                                <div class="card-header bg-white border-0 pt-3">
+                                    <div class="doctor-image text-center">
+                                        <img src="<?php if (isset($doctor['account_image'])) {
+                                                        echo "../assets/images/" . $doctor['account_image'];
+                                                    } else {
+                                                        echo "../assets/images/default_profile.png";
+                                                    } ?>" alt="Doctor Profile Image" class="img-fluid rounded me-3 shadow" height="150" width="150">
+                                    </div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h5 class="card-title text-green mb-1"><?= htmlspecialchars($doctor['doctor_name']) ?></h5>
+                                    <p class="text-primary mb-2"><?= htmlspecialchars($doctor['specialty']) ?></p>
+                                    <p class="text-muted small mb-3">
+                                        <i class="bi bi-calendar-week"></i> <?= htmlspecialchars($doctor['start_day']) ?> to <?= htmlspecialchars($doctor['end_day']) ?><br>
+                                        <i class="bi bi-clock"></i> <?= date('h:i A', strtotime($doctor['start_wt'])) ?> - <?= date('h:i A', strtotime($doctor['end_wt'])) ?>
+                                    </p>
+                                </div>
+                                <div class="card-footer bg-white border-0 pb-3">
+                                    <div class="d-flex justify-content-center">
+                                        <a href="appointment.php?doctor_id=<?= $doctor['account_id'] ?>" class="btn btn-sm btn-primary me-2 text-light">Book Appointment</a>
+                                        <a href="chat_user.php?account_id=<?= $doctor['account_id'] ?>" class="btn btn-sm btn-success text-light">Chat Now</a>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
                     </div>
-                </div>
-
-                <!-- Doctor Card 3 -->
-                <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-specialty="Pediatrics">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-header bg-white border-0 pt-3">
-                            <div class="doctor-image text-center">
-                                <img src="../assets/images/default_profile.png" class="rounded-circle img-thumbnail" alt="Dr. Michael Brown" style="width: 150px; height: 150px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-green mb-1">Dr. Michael Brown</h5>
-                            <p class="text-primary mb-2">Pediatrics</p>
-                            <p class="text-muted small mb-3">
-                                <i class="bi bi-calendar-week"></i> Monday to Thursday<br>
-                                <i class="bi bi-clock"></i> 08:30 AM - 04:30 PM
-                            </p>
-                            <p class="card-text doctor-bio">Pediatrician specializing in newborn care, childhood vaccinations, and treatment of common childhood illnesses.</p>
-                        </div>
-                        <div class="card-footer bg-white border-0 pb-3">
-                            <div class="d-flex justify-content-center">
-                                <a href="appointment.php" class="btn btn-sm btn-primary me-2">Book Appointment</a>
-                                <a href="chat_user.php" class="btn btn-sm btn-success">Chat Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Doctor Card 4 -->
-                <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-specialty="General Medicine">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-header bg-white border-0 pt-3">
-                            <div class="doctor-image text-center">
-                                <img src="../assets/images/default_profile.png" class="rounded-circle img-thumbnail" alt="Dr. Emily Wilson" style="width: 150px; height: 150px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-green mb-1">Dr. Emily Wilson</h5>
-                            <p class="text-primary mb-2">General Medicine</p>
-                            <p class="text-muted small mb-3">
-                                <i class="bi bi-calendar-week"></i> Monday to Friday<br>
-                                <i class="bi bi-clock"></i> 08:00 AM - 05:00 PM
-                            </p>
-                            <p class="card-text doctor-bio">Primary care physician with expertise in diagnosing and treating a wide range of adult health conditions.</p>
-                        </div>
-                        <div class="card-footer bg-white border-0 pb-3">
-                            <div class="d-flex justify-content-center">
-                                <a href="appointment.php" class="btn btn-sm btn-primary me-2">Book Appointment</a>
-                                <a href="chat_user.php" class="btn btn-sm btn-success">Chat Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Doctor Card 5 -->
-                <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-specialty="Mental Health">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-header bg-white border-0 pt-3">
-                            <div class="doctor-image text-center">
-                                <img src="../assets/images/default_profile.png" class="rounded-circle img-thumbnail" alt="Dr. David Lee" style="width: 150px; height: 150px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-green mb-1">Dr. David Lee</h5>
-                            <p class="text-primary mb-2">Mental Health</p>
-                            <p class="text-muted small mb-3">
-                                <i class="bi bi-calendar-week"></i> Wednesday to Sunday<br>
-                                <i class="bi bi-clock"></i> 10:00 AM - 07:00 PM
-                            </p>
-                            <p class="card-text doctor-bio">Psychiatrist specializing in anxiety disorders, depression, and stress management techniques.</p>
-                        </div>
-                        <div class="card-footer bg-white border-0 pb-3">
-                            <div class="d-flex justify-content-center">
-                                <a href="appointment.php" class="btn btn-sm btn-primary me-2">Book Appointment</a>
-                                <a href="chat_user.php" class="btn btn-sm btn-success">Chat Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Doctor Card 6 -->
-                <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-specialty="Dentistry">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="card-header bg-white border-0 pt-3">
-                            <div class="doctor-image text-center">
-                                <img src="../assets/images/default_profile.png" class="rounded-circle img-thumbnail" alt="Dr. Jessica Garcia" style="width: 150px; height: 150px; object-fit: cover;">
-                            </div>
-                        </div>
-                        <div class="card-body text-center">
-                            <h5 class="card-title text-green mb-1">Dr. Jessica Garcia</h5>
-                            <p class="text-primary mb-2">Dentistry</p>
-                            <p class="text-muted small mb-3">
-                                <i class="bi bi-calendar-week"></i> Monday to Saturday<br>
-                                <i class="bi bi-clock"></i> 09:00 AM - 06:00 PM
-                            </p>
-                            <p class="card-text doctor-bio">Dental surgeon specializing in cosmetic dentistry, orthodontics, and preventive oral care.</p>
-                        </div>
-                        <div class="card-footer bg-white border-0 pb-3">
-                            <div class="d-flex justify-content-center">
-                                <a href="appointment.php" class="btn btn-sm btn-primary me-2">Book Appointment</a>
-                                <a href="chat_user.php" class="btn btn-sm btn-success text-light">Chat Now</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>

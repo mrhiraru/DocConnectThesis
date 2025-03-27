@@ -314,6 +314,15 @@ class Account
         return $data;
     }
 
+    function get_available_specialties() {
+        $sql = "SELECT DISTINCT specialty FROM doctor_info WHERE specialty IS NOT NULL AND specialty != '' AND is_deleted = 0";
+        $query = $this->db->connect()->prepare($sql);
+        $data = [];
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 
     function sign_in_doctor()
     {
