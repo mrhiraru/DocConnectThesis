@@ -394,7 +394,7 @@ include '../includes/head.php';
         }
 
         // Add event listeners to both radio buttons
-        medconCheck.forEach(radio => {
+        exmedconCheck.forEach(radio => {
             radio.addEventListener("change", toggleDiagnosisContainer);
         });
     });
