@@ -42,8 +42,17 @@ include '../includes/head.php';
     <?php require_once('../includes/header.php'); ?>
 
     <!-- Doctor Details -->
-    <section class="padding-medium py-4">
-        <main class="mx-4 mt-5 pt-4">
+    <section class="page-container padding-medium py-4">
+        <div class="col-md-6 ms-4 text-md-start">
+        <button onclick="history.back()" class="bg-none d-flex align-items-center" >
+            
+            <p class="btn btn-outline-secondary hover-light d-fex align-items-center">
+                <i class='bx bx-chevron-left'></i>
+                Back
+            </p>
+        </button>
+        </div>
+        <main class="mx-4">
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
