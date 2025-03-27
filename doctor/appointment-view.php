@@ -46,6 +46,30 @@ include '../includes/head.php';
                         <p class="m-0 p-0 fs-6 text-secondary mb">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Link: <a href="<?= $record['appointment_link'] ?>" class="text-primary"><?= $record['appointment_link'] ?></a></p>
                     </div>
+                    <div class="col-12 mb-3">
+                        <div class="col-12 mb-3">
+                            <label for="purpose" class="form-label">Purpose:</label>
+                            <textarea id="purpose" name="purpose" rows="2" cols="50" class="form-control bg-light" required><?= $record['purpose'] ?></textarea>
+                            <?php
+                            if (isset($_POST['purpose']) && !validate_field($_POST['purpose'])) {
+                            ?>
+                                <p class="text-dark m-0 ps-2">Purpose of appointment is required.</p>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="reason" class="form-label">Reason:</label>
+                            <textarea id="reason" name="reason" rows="2" cols="50" class="form-control bg-light" required><?= $record['reason'] ?></textarea>
+                            <?php
+                            if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                            ?>
+                                <p class="text-dark m-0 ps-2">Reason of appointment is required.</p>
+                            <?php
+                            }
+                            ?>
+                        </div>
+                    </div>
                     <?php
                     if ($record['appointment_status'] == "Ongoing") {
                     ?>
