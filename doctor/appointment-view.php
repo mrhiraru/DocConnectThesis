@@ -395,8 +395,11 @@ include '../includes/head.php';
         var allergyInput = $('#allergy');
         if (allergyCheck.val() === "Yes") {
             if (!allergyInput.val().trim()) {
+                allergyInput[0].setCustomValidity("Please specify the allergy.");
                 allergyInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
+            } else {
+                allergyInput[0].setCustomValidity(""); // Reset validation if valid
             }
         }
 
