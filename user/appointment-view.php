@@ -53,71 +53,164 @@ include '../includes/head.php';
                                     <p class="m-0 p-0 fs-5 text-dark fw-semibold text-wrap">
                                         <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                                     </p>
-                                    <p class="m-0 p-0 fs-6 text-secondary">Doctor: <span class="text-dark"><?= $record['doctor_name'] ?></span></p>
-                                    <p class="m-0 p-0 fs-6 text-secondary">Reason: <span class="text-dark"><?= $record['reason'] ?></span></p>
-                                    <p class="m-0 p-0 fs-6 text-secondary mb">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
-                                    <p class="m-0 p-0 fs-6 text-secondary mb-3">Link: <a href="<?= $record['appointment_link'] ?>" class="text-primary"><?= $record['appointment_link'] ?></a></p>
-                                </div>
-                                <?php
-                                if ($record['appointment_status'] == "Completed") {
-                                ?>
-                                    <div class="col-12 mb-3">
-                                        <form action="" class="row" id="resultForm">
-                                            <div class="col-12 mb-3">
-                                                <label for="result" class="form-label">Consultation Result:</label>
-                                                <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['result'] ?></textarea>
-                                            </div>
-                                            <?php
-                                            if (isset($record['diagnosis'])) {
-                                            ?>
-                                                <div class="col-12 mb-3">
-                                                    <label for="result" class="form-label">Medical Condition/s:</label>
-                                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
-
-                                            <div class="col-12">
-                                                <label for="comment" class="form-label">Note:</label>
-                                                <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
-                                            </div>
-                                        </form>
+                                    <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <?php
+                                        if ($record['appointment_status'] == "Ongoing") {
+                                        ?>
+                                            <button class="btn btn-success text-white mb-3 me-2" onclick="join_meeting('<?= $record['appointment_link'] ?>'); return false;">
+                                                <i class='bx bx-video me-2 align-middle fs-5'></i>
+                                                Join Meeting
+                                            </button>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
-                                <?php
-                                }
-                                ?>
-                                <div class="col-12 d-flex justify-content-center">
+                                </div>
+                                <div class="row col-12 mb-3 border-bottom">
+                                    <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
+                                    <div class="col-12 mb-2">
+                                        <label for="name" class="form-label mb-1">Patient Name:</label>
+                                        <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <label for="birthdate" class="form-label mb-1">Birthdate:</label>
+                                        <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <label for="gender" class="form-label mb-1">Gender:</label>
+                                        <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <label for="email" class="form-label mb-1">Email:</label>
+                                        <input id="email" class="form-control bg-light" value="<?= $record['email'] ?>" readonly>
+                                    </div>
+                                    <div class="col-6 mb-2">
+                                        <label for="contact" class="form-label mb-1">Contact:</label>
+                                        <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
+                                    </div>
+                                    <p class="m-0 p-0 fs-6 text-secondary mb-2">Subjective Information</p>
+                                    <div class="col-12 mb-2">
+                                        <label for="purpose" class="form-label mb-1">Purpose:</label>
+                                        <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['purpose'] ?></textarea>
+                                    </div>
+                                    <div class="col-12 mb-2">
+                                        <label for="reason" class="form-label mb-1">Reason:</label>
+                                        <textarea id="reason" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['reason'] ?></textarea>
+                                    </div>
+
                                     <?php
-                                    if ($record['appointment_status'] == "Ongoing") {
+                                    if ($record['appointment_status'] == "Completed") {
                                     ?>
-                                        <button class="btn btn-success text-white mb-3" onclick="join_meeting('<?= $record['appointment_link'] ?>')">
-                                            <i class='bx bx-video me-2 align-middle fs-5'></i>
-                                            Join Meeting
-                                        </button>
-                                    <?php
-                                    } else if ($record['appointment_status'] == "Completed") {
-                                    ?>
-                                        <a href="" class="btn btn-danger text-white mb-3 d-none">
-                                            <i class='bx bxs-edit align-middle fs-5 me-1'></i>
-                                            New Appointment
-                                        </a>
+                                        <div class="col-12 mb-3">
+                                            <form action="" class="row" id="resultForm">
+                                                <div class="col-12 mb-2">
+                                                    <label for="complaint" class="form-label mb-1">Chief Complaint:</label>
+                                                    <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['complaint'] ?></textarea>
+                                                </div>
+                                                <?php
+                                                if (isset($record['medcon_history'])) {
+                                                ?>
+                                                    <div class="col-12 mb-2">
+                                                        <label for="medcon" class="form-label mb-1">Medical History:</label>
+                                                        <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medcon_history'] ?></textarea>
+                                                    </div>
+                                                <?php
+                                                }
+                                                if (isset($record['allergy'])) {
+                                                ?>
+                                                    <div class="col-12 mb-2">
+                                                        <label for="allergy" class="form-label mb-1">Allergies:</label>
+                                                        <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['allergy'] ?></textarea>
+                                                    </div>
+                                                <?php
+                                                }
+                                                if (isset($record['medication'])) {
+                                                ?>
+                                                    <div class="col-12 mb-2">
+                                                        <label for="medication" class="form-label mb-1">Medication:</label>
+                                                        <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medication'] ?></textarea>
+                                                    </div>
+                                                <?php
+                                                }
+                                                ?>
+                                                <p class="m-0 p-0 fs-6 text-secondary mb-2">Objective Information</p>
+                                                <div class="col-12 mb-2">
+                                                    <label for="observation" class="form-label mb-1">Doctor's Observation:</label>
+                                                    <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['observation'] ?></textarea>
+                                                </div>
+                                                <p class="m-0 p-0 fs-6 text-secondary mb-2">Assessment and Plan</p>
+                                                <?php
+                                                if (isset($record['diagnosis'])) {
+                                                ?>
+                                                    <div class="col-12 mb-2">
+                                                        <label for="diagnosis_text" class="form-label mb-1">Medical Condition:</label>
+                                                        <textarea id="diagnosis_text" name="diagnosis_text" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
+                                                    </div>
+                                                <?php
+                                                }
+                                                ?>
+                                                <div class="col-12 mb-3">
+                                                    <label for="assessment" class="form-label">Consultation Assessment:</label>
+                                                    <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['assessment'] ?></textarea>
+                                                </div>
+                                                <?php
+                                                if (isset($record['plan'])) {
+                                                ?>
+                                                    <div class="col-12 mb-2">
+                                                        <label for="plan" class="form-label mb-1">Treatment Plan and Recommendation:</label>
+                                                        <textarea id="plan" name="plan" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['plan'] ?></textarea>
+                                                    </div>
+                                                <?php
+                                                }
+                                                if (isset($record['prescription'])) {
+                                                ?>
+                                                    <div class="col-12 mb-2">
+                                                        <label for="prescription" class="form-label mb-1">Prescription:</label>
+                                                        <textarea id="prescription" name="prescription" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['prescription'] ?></textarea>
+                                                    </div>
+                                                <?php
+                                                }
+                                                if (isset($record['comment'])) {
+                                                ?>
+                                                    <div class="col-12">
+                                                        <label for="comment" class="form-label">Additional Comment:</label>
+                                                        <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
+                                                    </div>
+                                                <?php
+                                                }
+                                                ?>
+                                            </form>
+                                        </div>
                                     <?php
                                     }
                                     ?>
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <?php
+                                        if ($record['appointment_status'] == "Completed") {
+                                        ?>
+                                            <button class="btn btn-danger text-white mb-3" id="download_pdf">
+                                                <i class='bx bx-file align-middle fs-5'></i>
+                                                Download Result
+                                            </button>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </section>
 
     <?php
     require_once('../includes/footer.php');
     ?>
-
+    <?php
+    include_once('../tools/pdfmaker.php');
+    ?>
     <script>
         function join_meeting(url) {
             window.open(url, '_blank', 'width=800,height=600,top=100,left=100,toolbar=no,menubar=no,scrollbars=yes,resizable=yes');
