@@ -22,14 +22,14 @@
                             alignment: 'start',
                             text: 'Western Mindanao State University\nW376+CGQ, Normal Rd, Zamboanga City',
                             style: 'address',
-                            width: '60%',
+                            width: '70%',
                             margin: [0, 15, 0, 15]
                         },
                         {
                             alignment: 'end',
                             text: 'Date: <?= date("l, M d, Y", strtotime($record['appointment_date'])) ?>',
                             style: 'address',
-                            width: '40%',
+                            width: '30%',
                             margin: [0, 15, 0, 15]
                         }
                     ]
@@ -108,17 +108,20 @@
                     text: "<?= $record['complaint'] ?>",
                     margin: [30, 5, 0, 0],
                 },
-                {
+                <?php
+                if ($record['medcon_history'] != null) {
+                ?> {
+                        text: "Medical History: ",
+                        margin: [0, 5, 0, 0],
+                    },
+                    {
 
-                    text: "Medical History: ",
-                    margin: [0, 5, 0, 0],
-                },
-                {
-
-                    text: "<?= $record['medcon_history'] ?>",
-                    margin: [30, 5, 0, 0],
-                },
-                {
+                        text: "<?= $record['medcon_history'] ?>",
+                        margin: [30, 5, 0, 0],
+                    },
+                <?php
+                }
+                ?> {
 
                     text: "Allergy: ",
                     margin: [0, 5, 0, 0],
@@ -222,7 +225,6 @@
                     margin: [30, 5, 0, 0],
                 },
                 {
-
                     text: "Addition Comment:",
                     margin: [0, 5, 0, 0],
                 },
