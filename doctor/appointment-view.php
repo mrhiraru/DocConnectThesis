@@ -380,22 +380,26 @@ include '../includes/head.php';
             });
         }
 
-        const exmedconCheck = document.getElementsByName("exmedcon_check");
-        const medconContainer = document.getElementById("medcon-container");
+        var diagnosis_input = document.getElementById("medcon");
+        if (diagnosis_input) {
 
-        medconContainer.style.display = "none";
+            const exmedconCheck = document.getElementsByName("exmedcon_check");
+            const medconContainer = document.getElementById("medcon-container");
 
-        function toggleDiagnosisContainer() {
-            if (document.getElementById("Yes").checked) {
-                medconContainer.style.display = "block"; // Show if Yes is checked
-            } else {
-                medconContainer.style.display = "none"; // Hide if No is checked
+            medconContainer.style.display = "none";
+
+            function toggleMedconContainer() {
+                if (document.getElementById("Yes").checked) {
+                    medconContainer.style.display = "block"; // Show if Yes is checked
+                } else {
+                    medconContainer.style.display = "none"; // Hide if No is checked
+                }
             }
-        }
 
-        // Add event listeners to both radio buttons
-        exmedconCheck.forEach(radio => {
-            radio.addEventListener("change", toggleDiagnosisContainer);
-        });
+            // Add event listeners to both radio buttons
+            exmedconCheck.forEach(radio => {
+                radio.addEventListener("change", toggleMedconContainer);
+            });
+        }
     });
 </script>
