@@ -162,8 +162,8 @@ include '../includes/head.php';
                                     </div>
                                 </div>
                                 <p class="m-0 p-0 fs-6 text-secondary mb-2">Objective Information</p>
-                                <div class="col-12 mb-3">
-                                    <label for="observation" class="form-label">Doctor's Observation:</label>
+                                <div class="col-12 mb-2">
+                                    <label for="observation" class="form-label mb-1">Doctor's Observation:</label>
                                     <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['observation']) && !validate_field($_POST['observation'])) {
@@ -174,7 +174,7 @@ include '../includes/head.php';
                                     ?>
                                 </div>
                                 <p class="m-0 p-0 fs-6 text-secondary mb-2">Assessment and Plan</p>
-                                <div class="col-12 mb-3">
+                                <div class="col-12 mb-2">
                                     <div class="col-12">
                                         Did you identify any medical conditions during the consultation?
                                         <div class="form-check form-check-inline ms-3">
@@ -187,7 +187,7 @@ include '../includes/head.php';
                                         </div>
                                     </div>
                                     <div class="col-12" id="diagnosis-container">
-                                        <label for="diagnosis" class="form-label">What medical condition does the patient have?</label>
+                                        <label for="diagnosis" class="form-label mb-1">What medical condition does the patient have?</label>
                                         <select class="" name="diagnosis[]" id="diagnosis" multiple required>
                                             <?php
                                             include_once('../handlers/appointment-view.fetch_conditions.php');
@@ -259,7 +259,7 @@ include '../includes/head.php';
                                         ?>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-12 mb-2">
                                     <label for="comment" class="form-label">Addtional Comment:</label>
                                     <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" placeholder=""></textarea>
                                 </div>
