@@ -132,7 +132,7 @@ if (isset($_POST['confirm'])) {
     if ($_POST['medcon_check'] === 'Yes') {
         $appointment->diagnosis = implode(", ", $_POST['diagnosis']);
     } else if ($_POST['medcon_check'] === 'No') {
-        $appointment->diagnosis = "No medical condition";
+        $appointment->diagnosis = null;
     }
 
     $appointment->assessment = htmlentities($_POST['assessment']);
@@ -156,11 +156,12 @@ if (isset($_POST['confirm'])) {
 
 
     if (
-        validate_field($appointment->appointment_id && $appointment->result &&
+        validate_field($appointment->appointment_id && $appointment->complaint &&
+            $appointment->observation && $appointment->assessment &&
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
-            
+
             $success = 'success';
         } else {
             $success = 'failed';

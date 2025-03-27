@@ -15,7 +15,14 @@ class Appointment
     public $reason;
     public $diagnosis;
     public $event_id;
-    public $result;
+    public $complaint;
+    public $medcon_history;
+    public $allergy;
+    public $medication;
+    public $observation;
+    public $assessment;
+    public $plan;
+    public $prescription;
     public $comment;
 
     protected $db;
@@ -332,10 +339,17 @@ class Appointment
 
     function complete_appointment()
     {
-        $sql = "UPDATE appointment SET result=:result, comment=:comment, appointment_status=:appointment_status, diagnosis=:diagnosis WHERE appointment_id = :appointment_id";
+        $sql = "UPDATE appointment SET complaint=:complaint, medcon_history=:medcon_history, allergy=:allergy, medication=:medication, observation=:observation, assessment=:assessment, plan=:plan, prescription=:prescription, comment=:comment, appointment_status=:appointment_status, diagnosis=:diagnosis WHERE appointment_id = :appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':result', $this->result);
+        $query->bindParam(':complaint', $this->complaint);
+        $query->bindParam(':medcon_history', $this->medcon_history);
+        $query->bindParam(':allergy', $this->allergy);
+        $query->bindParam(':medication', $this->medication);
+        $query->bindParam(':observation', $this->observation);
+        $query->bindParam(':assessment', $this->assessment);
+        $query->bindParam(':plan', $this->plan);
+        $query->bindParam(':prescription', $this->prescription);
         $query->bindParam(':comment', $this->comment);
         $query->bindParam(':appointment_status', $this->appointment_status);
         $query->bindParam(':diagnosis', $this->diagnosis);
