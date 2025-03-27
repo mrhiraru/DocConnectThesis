@@ -261,7 +261,32 @@
                     text: 'Signature',
                     margin: [333, 5, 0, 0]
                 }
-            ]
+            ],
+            styles: {
+                header: {
+                    fontSize: 18,
+                    bold: true,
+                    alignment: 'center'
+                },
+                subheader: {
+                    fontSize: 14,
+                    bold: true,
+                    alignment: 'center'
+                },
+                address: {
+                    fontSize: 12,
+                    alignment: 'center'
+                },
+                hoursTitle: {
+                    fontSize: 12,
+                    bold: true,
+                    alignment: 'center'
+                },
+                hours: {
+                    fontSize: 12,
+                    alignment: 'center'
+                }
+            }
         };
     }
 
