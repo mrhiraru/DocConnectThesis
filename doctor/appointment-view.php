@@ -283,6 +283,14 @@ include '../includes/head.php';
                                 </div>
                             <?php
                             }
+                            if (isset($record['allergy'])) {
+                            ?>
+                                <div class="col-12 mb-2" id="medcon-container">
+                                    <label for="allergy" class="form-label mb-1">Allergies:</label>
+                                    <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['allergy'] ?></textarea>
+                                </div>
+                            <?php
+                            }
                             if (isset($record['diagnosis'])) {
                             ?>
                                 <div class="col-12 mb-2">
