@@ -56,8 +56,7 @@ include '../includes/head.php';
                             <label for="contact" class="form-label mb-1">Contact:</label>
                             <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
                         </div>
-                    </div>
-                    <div class="row col-12 mb-3 border-bottom">
+                        <p class="m-0 p-0 fs-6 text-secondary mb-2">Subjective Information</p>
                         <div class="col-12 mb-2">
                             <label for="purpose" class="form-label mb-1">Purpose:</label>
                             <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['purpose'] ?></textarea>
