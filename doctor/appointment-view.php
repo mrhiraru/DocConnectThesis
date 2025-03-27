@@ -318,7 +318,7 @@ include '../includes/head.php';
                             if (isset($record['diagnosis'])) {
                             ?>
                                 <div class="col-12 mb-2">
-                                    <label for="diagnosis_text" class="form-label mb-1">Medical Condition/s:</label>
+                                    <label for="diagnosis_text" class="form-label mb-1">Medical Condition:</label>
                                     <textarea id="diagnosis_text" name="diagnosis_text" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
                                 </div>
                             <?php
@@ -345,11 +345,15 @@ include '../includes/head.php';
                                 </div>
                             <?php
                             }
+                            if (isset($record['comment'])) {
                             ?>
-                            <div class="col-12">
-                                <label for="comment" class="form-label">Additional Comment:</label>
-                                <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
-                            </div>
+                                <div class="col-12">
+                                    <label for="comment" class="form-label">Additional Comment:</label>
+                                    <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
+                                </div>
+                            <?php
+                            }
+                            ?>
                         </form>
                     </div>
                 <?php
