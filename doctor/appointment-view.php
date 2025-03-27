@@ -355,7 +355,7 @@ include '../includes/head.php';
                 console.error('Error starting meeting:', error);
             }
         });
-    }    
+    }
 
     function join_meeting(url) {
         window.open(url, '_blank', 'width=800,height=600,top=100,left=100,toolbar=no,menubar=no,scrollbars=yes,resizable=yes');
@@ -372,6 +372,22 @@ include '../includes/head.php';
         if (exmedconCheck.length === 0) { // If no option is selected
             $('input[name="exmedcon_check"]').get(0).reportValidity();
             return;
+        }
+        var medconInput = $('#medcon');
+        if (!medconInput.val().trim()) {
+            medconInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        }
+
+        var allergyCheck = $('input[name="allergy_check"]:checked');
+        if (allergyCheck.length === 0) { // If no option is selected
+            $('input[name="allergy_check"]').get(0).reportValidity();
+            return;
+        }
+        var allergyInput = $('#allergy');
+        if (!allergyInput.val().trim()) {
+            allergyInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
         }
 
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
