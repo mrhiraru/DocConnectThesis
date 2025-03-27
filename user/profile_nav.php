@@ -5,6 +5,7 @@
         <li class="breadcrumb-item <?= $general ?>" aria-current="<?= $aGeneral ?>"><a href="./profile_general" class="<?= $cGeneral ?>">General</a></li>
         <li class="breadcrumb-item <?= $appointment ?>" aria-current="<?= $aAppointment ?>"><a href="./profile_appointment" class="<?= $cAppointment ?>">Appointment</a></li>
         <li class="breadcrumb-item <?= $doctors ?>" aria-current="<?= $aDoctors ?>"><a href="./profile_doctors" class="<?= $cDoctors ?>">My Doctors</a></li>
+        <li class="breadcrumb-item <?= $files ?>" aria-current="<?= $aFiles ?>"><a href="./profile_files" class="<?= $cFiles ?>">Files</a></li>
         <li class="breadcrumb-item <?= $setting ?>" aria-current="<?= $aSetting ?>"><a href="./profile_settings" class="<?= $cSetting ?>">Settings</a></li>
         <li class="breadcrumb-item <?= $privacy ?>" aria-current="<?= $aPrivacy ?>"><a href="./profile_privacy" class="<?= $cPrivacy ?>">Privacy</a></li>
       </ol>

@@ -42,8 +42,17 @@ include '../includes/head.php';
     <?php require_once('../includes/header.php'); ?>
 
     <!-- Doctor Details -->
-    <section class="padding-medium py-4">
-        <main class="mx-4 mt-5 pt-4">
+    <section class="page-container padding-medium py-4">
+        <div class="col-md-6 ms-4 text-md-start">
+            <button onclick="history.back()" class="bg-none d-flex align-items-center">
+
+                <p class="btn btn-outline-secondary hover-light d-fex align-items-center">
+                    <i class='bx bx-chevron-left'></i>
+                    Back
+                </p>
+            </button>
+        </div>
+        <main class="mx-4">
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
@@ -125,11 +134,14 @@ include '../includes/head.php';
                                 </div>
 
                                 <div class="d-flex justify-content-end">
+                                    <a href="./file_upload" class="btn btn-outline-primary hover-light me-2">
+                                        Send File
+                                    </a>
                                     <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
-                                        <i class="fas fa-calendar-check me-2"></i>Book Appointment
+                                        Book Appointment
                                     </a>
                                     <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
-                                        <i class="fas fa-comments me-2"></i>Chat
+                                        Chat
                                     </a>
                                 </div>
 
@@ -150,7 +162,7 @@ include '../includes/head.php';
                                     <p>"Great experience! The doctor was very professional and addressed all my concerns. Highly recommend."</p>
                                 </div>
                                 <a href="#" class="text-decoration-none">See all reviews</a>
-                            </div> -->
+                            </div>
 
                                 <!-- <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab">
                                 <h6>Professional Experience</h6>
