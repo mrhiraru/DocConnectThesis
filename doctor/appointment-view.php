@@ -119,7 +119,7 @@ include '../includes/head.php';
                                     <div class="col-12">
                                         <label for="allergy" class="form-label mb-1">Does the patient have allergies?</label>
                                         <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="allergy_check" id="Yes_allergy" value="Yes" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <input class="form-check-input" type="radio" name="allergy_check" id="Yes_allergy" value="Yess" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "Yes") ? "checked" : "" ?> required>
                                             <label class="form-check-label" for="Yes_allergy">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
@@ -387,7 +387,7 @@ include '../includes/head.php';
             return;
         }
         var allergyInput = $('#allergy');
-        if (allergyCheck.val() === "Yes") {
+        if (allergyCheck.val() === "Yess") {
             if (!allergyInput.val().trim()) {
                 allergyInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
