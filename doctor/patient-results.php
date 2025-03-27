@@ -44,14 +44,14 @@ include '../includes/head.php';
                                 </p>
                                 <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $item['appointment_status'] ?></span></p>
                             </div>
-                        </div>
-                        <div class="row col-12 mb-3 border-bottom">
-                            <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
-                            <div class="col-12 mb-2">
-                                <label for="name" class="form-label mb-1">Patient Name:</label>
-                                <input id="name" class="form-control bg-light" value="<?= $item['patient_name'] ?>" readonly>
+                            <div class="row col-12 mb-3 border-bottom">
+                                <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
+                                <div class="col-12 mb-2">
+                                    <label for="name" class="form-label mb-1">Patient Name:</label>
+                                    <input id="name" class="form-control bg-light" value="<?= $item['patient_name'] ?>" readonly>
+                                </div>
+
                             </div>
-                            
                         </div>
                     <?php
                     }
