@@ -46,6 +46,10 @@ include '../includes/head.php';
                     <div class="col-12 mb-3">
                         Patient Information
                         <div class="col-12 mb-3">
+                            <label for="name" class="form-label">Patient Name:</label>
+                            <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
+                        </div>
+                        <div class="col-12 mb-3">
                             <label for="purpose" class="form-label">Purpose:</label>
                             <textarea id="purpose" name="purpose" rows="2" cols="50" class="form-control bg-light" required><?= $record['purpose'] ?></textarea>
                             <?php
