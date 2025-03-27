@@ -374,7 +374,7 @@ include '../includes/head.php';
             return;
         }
         var medconInput = $('#medcon');
-        if (exmedconCheck.val() === "Yes_medcon") {
+        if (exmedconCheck.val() === "Yes") {
             if (!medconInput.val().trim()) {
                 medconInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
@@ -387,7 +387,7 @@ include '../includes/head.php';
             return;
         }
         var allergyInput = $('#allergy');
-        if (allergyCheck.val() === "Yes_allergy") {
+        if (allergyCheck.val() === "Yes") {
             if (!allergyInput.val().trim()) {
                 allergyInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
@@ -400,7 +400,7 @@ include '../includes/head.php';
             return;
         }
         var medicationInput = $('#medication');
-        if (medicationCheck.val() === "Yes_medication") {
+        if (medicationCheck.val() === "Yes") {
             if (!medicationInput.val().trim()) {
                 medicationInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
