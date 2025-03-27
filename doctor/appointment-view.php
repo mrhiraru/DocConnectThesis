@@ -379,8 +379,11 @@ include '../includes/head.php';
         var medconInput = $('#medcon');
         if (exmedconCheck.val() === "Yes") {
             if (!medconInput.val().trim()) {
+                medconInput[0].setCustomValidity("Please specify the past or existing medical condition."); // Set custom validation message
                 medconInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
+            } else {
+                medconInput[0].setCustomValidity(""); // Reset validation if valid
             }
         }
 
