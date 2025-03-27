@@ -44,20 +44,20 @@ include '../includes/head.php';
                     </div>
                     <div class="col-12 mb-3">
                         <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
-                        <div class="col-12 mb-1">
-                            <label for="name" class="form-label">Patient Name:</label>
+                        <div class="col-12 mb-2">
+                            <label for="name" class="form-label mb-1">Patient Name:</label>
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-1">
-                            <label for="email" class="form-label">Email:</label>
+                        <div class="col-12 mb-2">
+                            <label for="email" class="form-label mb-1">Email:</label>
                             <input id="email" class="form-control bg-light" value="<?= $record['email'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-1">
-                            <label for="contact" class="form-label">Contact:</label>
+                        <div class="col-12 mb-2">
+                            <label for="contact" class="form-label mb-1">Contact:</label>
                             <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-1">
-                            <label for="purpose" class="form-label">Purpose:</label>
+                        <div class="col-12 mb-2">
+                            <label for="purpose" class="form-label mb-1">Purpose:</label>
                             <textarea id="purpose" name="purpose" rows="2" cols="50" class="form-control bg-light" required><?= $record['purpose'] ?></textarea>
                             <?php
                             if (isset($_POST['purpose']) && !validate_field($_POST['purpose'])) {
