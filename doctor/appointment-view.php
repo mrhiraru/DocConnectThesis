@@ -394,6 +394,19 @@ include '../includes/head.php';
             }
         }
 
+        var medicationCheck = $('input[name="medication_check"]:checked');
+        if (medicationCheck.length === 0) { // If no option is selected
+            $('input[name="medication_check"]').get(0).reportValidity();
+            return;
+        }
+        var medicationInput = $('#medication');
+        if (medicationCheck.val() === "Yes_allergy") {
+            if (!medicationInput.val().trim()) {
+                medicationInput[0].reportValidity(); // Show validation popup
+                return; // Stop execution
+            }
+        }
+
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
         if (medconCheck.length === 0) { // If no option is selected
             $('input[name="medcon_check"]').get(0).reportValidity();
