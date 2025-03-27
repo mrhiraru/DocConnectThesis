@@ -107,10 +107,27 @@ if (isset($_POST['confirm'])) {
         $success = 'failed';
     }
 } else if (isset($_POST['end'])) {
-    $appointment->result = htmlentities($_POST['result']);
-    $appointment->comment = htmlentities($_POST['comment']);
-    $appointment->appointment_id = htmlentities($_POST['appointment_id']);
-    $appointment->appointment_status = 'Completed';
+    $appointment->complaint = htmlentities($_POST['complaint']);
+
+    if ($_POST['exmedcon_check'] === 'Yes') {
+        $appointment->medcon_history = htmlentities($_POST['medcon']);
+    } else if ($_POST['exmedcon_check'] === 'No') {
+        $appointment->medcon_history = "No past or existing medical condition history";
+    }
+
+    if ($_POST['allergy_check'] === 'Yes') {
+        $appointment->allergy = htmlentities($_POST['allergy']);
+    } else if ($_POST['allergy_check'] === 'No') {
+        $appointment->allergy = "No allergies";
+    }
+
+    if ($_POST['medication_check'] === 'Yes') {
+        $appointment->medication = htmlentities($_POST['medication']);
+    } else if ($_POST['allergy_check'] === 'No') {
+        $appointment->medication = "No medication";
+    }
+
+    $appointment->observation = htmlentities($_POST['observation']);
 
     if ($_POST['medcon_check'] === 'Yes') {
         $appointment->diagnosis = implode(", ", $_POST['diagnosis']);
@@ -118,19 +135,32 @@ if (isset($_POST['confirm'])) {
         $appointment->diagnosis = "No medical condition";
     }
 
+    $appointment->assessment = htmlentities($_POST['assessment']);
+
+    if ($_POST['plan_check'] === 'Yes') {
+        $appointment->plan = htmlentities($_POST['plan']);
+    } else if ($_POST['plan_check'] === 'No') {
+        $appointment->plan = null;
+    }
+
+    if ($_POST['prescription_check'] === 'Yes') {
+        $appointment->prescription = htmlentities($_POST['prescription']);
+    } else if ($_POST['prescription_check'] === 'No') {
+        $appointment->prescription = null;
+    }
+
+    $appointment->comment = htmlentities($_POST['comment']);
+    $appointment->appointment_id = htmlentities($_POST['appointment_id']);
+    $appointment->appointment_status = 'Completed';
+
+
+
     if (
         validate_field($appointment->appointment_id && $appointment->result &&
             $appointment->appointment_status)
     ) {
         if ($appointment->complete_appointment()) {
-            // if (isset($_POST['diagnosis'])) {
-            //     foreach ($_POST['diagnosis'] as $key => $med) {
-            //         if (!$medcon->is_medcon_exist($med)) {
-            //             $medcon->medcon_name = $med;
-            //             $medcon->add_medcon();
-            //         }
-            //     }
-            // }
+            
             $success = 'success';
         } else {
             $success = 'failed';
