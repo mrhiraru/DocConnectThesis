@@ -387,9 +387,11 @@ include '../includes/head.php';
             return;
         }
         var allergyInput = $('#allergy');
-        if (!allergyInput.val().trim()) {
-            allergyInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
+        if (allergyCheck.val() === "Yes_allergy") {
+            if (!allergyInput.val().trim()) {
+                allergyInput[0].reportValidity(); // Show validation popup
+                return; // Stop execution
+            }
         }
 
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
