@@ -21,6 +21,12 @@ $doctors = 'active';
 include '../includes/head.php';
 ?>
 
+<style>
+    .card:hover {
+        transform: scale(1.05);
+    }
+</style>
+
 <body>
     <?php require_once('../includes/header.php'); ?>
 
@@ -135,9 +141,13 @@ include '../includes/head.php';
                 doctorCards.forEach(card => {
                     const name = card.querySelector('.card-title').textContent.toLowerCase();
                     const specialty = card.getAttribute('data-specialty').toLowerCase();
-                    const bio = card.querySelector('.doctor-bio').textContent.toLowerCase();
 
-                    const matchesSearch = name.includes(searchTerm) || specialty.includes(searchTerm) || bio.includes(searchTerm);
+                    const bioElement = card.querySelector('.doctor-bio');
+                    const bio = bioElement ? bioElement.textContent.toLowerCase() : '';
+
+                    const matchesSearch = name.includes(searchTerm) ||
+                        specialty.includes(searchTerm) ||
+                        bio.includes(searchTerm);
                     const matchesSpecialty = !specialtyFilter || specialty === specialtyFilter;
 
                     if (matchesSearch && matchesSpecialty) {
