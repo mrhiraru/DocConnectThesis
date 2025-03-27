@@ -67,7 +67,7 @@ include '../includes/head.php';
                         <?php
                         if ($record['appointment_status'] == "Ongoing") {
                         ?>
-                            <form action="" class="row" id="resultForm">
+                            <form action="" class="row m-0 p-0" id="resultForm">
                                 <div class="col-12 mb-2">
                                     <label for="complaint" class="form-label mb-1">Cheif Complaint:</label>
                                     <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required></textarea>
