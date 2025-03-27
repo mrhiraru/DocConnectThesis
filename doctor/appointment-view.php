@@ -355,29 +355,32 @@ include '../includes/head.php';
                 console.error('Error starting meeting:', error);
             }
         });
-    }
+    }    
 
     function join_meeting(url) {
         window.open(url, '_blank', 'width=800,height=600,top=100,left=100,toolbar=no,menubar=no,scrollbars=yes,resizable=yes');
     }
 
     function end_meeting() {
-        var resultInput = $('#result');
-
-        if (!resultInput.val().trim()) {
-            resultInput[0].reportValidity(); // Show validation popup
+        var complaintInput = $('#complaint');
+        if (!complaintInput.val().trim()) {
+            complaintInput[0].reportValidity(); // Show validation popup
             return; // Stop execution
         }
 
-        var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
+        var exmedconCheck = $('input[name="exmedcon_check"]:checked');
+        if (exmedconCheck.length === 0) { // If no option is selected
+            $('input[name="exmedcon_check"]').get(0).reportValidity();
+            return;
+        }
 
+        var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
         if (medconCheck.length === 0) { // If no option is selected
             $('input[name="medcon_check"]').get(0).reportValidity();
             return;
         }
 
         var diagnosisSelect = $('#diagnosis');
-
         if (medconCheck.val() === "Yes") {
             if (diagnosisSelect.val() === null || diagnosisSelect.val().length === 0) {
                 diagnosisSelect.get(0).setCustomValidity("Please enter at least one medical condition."); // Set custom validation message
