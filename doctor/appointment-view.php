@@ -383,7 +383,7 @@ include '../includes/head.php';
                     <?php
                     } else if ($record['appointment_status'] == "Completed") {
                     ?>
-                        <button class="btn btn-danger text-white mb-3" onclick="">
+                        <button class="btn btn-danger text-white mb-3" id="download_pdf">
                             <i class='bx bx-file align-middle fs-5'></i>
                             Download Result
                         </button>
@@ -398,7 +398,9 @@ include '../includes/head.php';
 </body>
 
 </html>
-
+<?php
+include_once('../tools/pdfmaker.php');
+?>
 <script>
     function start_meeting() {
         $.ajax({
