@@ -38,20 +38,34 @@ include '../includes/head.php';
                     foreach ($recordArray as $item) {
                 ?>
                         <div class="p-0 m-0 row border-bottom border-top">
-                            <div class="col-12 pt-2">
-                                <p class="m-0 p-0 fs-5 text-secondary mb-2">Date: <span class="text-dark"><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></span></p>
-                                <p class="m-0 p-0 fs-6 text-secondary">Patient: <span class="text-dark"><?= $item['patient_name'] ?></span></p>
-                                <p class="m-0 p-0 fs-6 text-secondary mb-3">Reason: <span class="text-dark"><?= $item['reason'] ?></span></p>
-                                <div class="col-12 mb-3">
-                                    <div class="col-12 mb-3">
-                                        <label for="result" class="form-label">Result:</label>
-                                        <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required disabled><?= $item['result'] ?></textarea>
-                                    </div>
-                                    <div class="col-12">
-                                        <label for="comment" class="form-label">Note:</label>
-                                        <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" disabled><?= $item['comment'] ?></textarea>
-                                    </div>
-                                </div>
+                            <div class="col-12 mb-3 border-bottom">
+                                <p class="m-0 p-0 fs-5 text-dark fw-semibold text-wrap">
+                                    <?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?>
+                                </p>
+                                <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $item['appointment_status'] ?></span></p>
+                            </div>
+                        </div>
+                        <div class="row col-12 mb-3 border-bottom">
+                            <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
+                            <div class="col-12 mb-2">
+                                <label for="name" class="form-label mb-1">Patient Name:</label>
+                                <input id="name" class="form-control bg-light" value="<?= $item['patient_name'] ?>" readonly>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <label for="birthdate" class="form-label mb-1">Birthdate:</label>
+                                <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($item['birthdate'])) ?>" readonly>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <label for="gender" class="form-label mb-1">Gender:</label>
+                                <input id="gender" class="form-control bg-light" value="<?= $item['gender'] ?>" readonly>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <label for="email" class="form-label mb-1">Email:</label>
+                                <input id="email" class="form-control bg-light" value="<?= $item['email'] ?>" readonly>
+                            </div>
+                            <div class="col-6 mb-2">
+                                <label for="contact" class="form-label mb-1">Contact:</label>
+                                <input id="contact" class="form-control bg-light" value="<?= $item['contact'] ?>" readonly>
                             </div>
                         </div>
                     <?php
