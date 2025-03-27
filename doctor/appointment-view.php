@@ -291,6 +291,14 @@ include '../includes/head.php';
                                 </div>
                             <?php
                             }
+                            if (isset($record['medication'])) {
+                            ?>
+                                <div class="col-12 mb-2">
+                                    <label for="medication" class="form-label mb-1">Medication:</label>
+                                    <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medication'] ?></textarea>
+                                </div>
+                            <?php
+                            }
                             if (isset($record['diagnosis'])) {
                             ?>
                                 <div class="col-12 mb-2">
