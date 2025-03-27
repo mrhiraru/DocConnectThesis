@@ -83,7 +83,7 @@ include '../includes/head.php';
                             <form action="" class="row m-0 p-0" id="resultForm">
                                 <div class="col-12 mb-2">
                                     <label for="complaint" class="form-label mb-1">Cheif Complaint:</label>
-                                    <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required></textarea>
+                                    <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light"></textarea>
                                     <?php
                                     if (isset($_POST['complaint']) && !validate_field($_POST['complaint'])) {
                                     ?>
