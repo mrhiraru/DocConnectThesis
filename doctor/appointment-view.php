@@ -397,7 +397,6 @@ include '../includes/head.php';
             $('input[name="medcon_check"]').get(0).reportValidity();
             return;
         }
-
         var diagnosisSelect = $('#diagnosis');
         if (medconCheck.val() === "Yes") {
             if (diagnosisSelect.val() === null || diagnosisSelect.val().length === 0) {
