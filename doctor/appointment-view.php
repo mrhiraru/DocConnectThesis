@@ -48,11 +48,11 @@ include '../includes/head.php';
                             <label for="name" class="form-label mb-1">Patient Name:</label>
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-2">
+                        <div class="col-6 mb-2">
                             <label for="email" class="form-label mb-1">Email:</label>
                             <input id="email" class="form-control bg-light" value="<?= $record['email'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-2">
+                        <div class="col-6 mb-2">
                             <label for="contact" class="form-label mb-1">Contact:</label>
                             <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
                         </div>
