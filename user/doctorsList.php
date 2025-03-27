@@ -52,9 +52,9 @@ include '../includes/head.php';
                 <div class="col-md-8 mb-3 mb-md-0">
                     <div class="input-group">
                         <input type="text" class="form-control" id="doctorSearch" placeholder="Search by name or specialty...">
-                        <button class="btn btn-primary text-light" type="button" id="searchButton">
+                        <!-- <button class="btn btn-primary text-light" type="button" id="searchButton">
                             <i class='bx bx-search'></i>
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -124,31 +124,22 @@ include '../includes/head.php';
             const doctorCards = document.querySelectorAll('.doctor-card');
             document.getElementById('doctorCount').textContent = `Showing ${doctorCards.length} doctors`;
 
-            document.getElementById('searchButton').addEventListener('click', filterDoctors);
-            document.getElementById('doctorSearch').addEventListener('keyup', function(e) {
-                if (e.key === 'Enter') {
-                    filterDoctors();
-                }
-            });
-
-            document.getElementById('specialtyFilter').addEventListener('change', filterDoctors);
+            const searchInput = document.getElementById('doctorSearch');
+            const searchButton = document.getElementById('searchButton');
+            const specialtyFilter = document.getElementById('specialtyFilter');
 
             function filterDoctors() {
-                const searchTerm = document.getElementById('doctorSearch').value.toLowerCase();
-                const specialtyFilter = document.getElementById('specialtyFilter').value.toLowerCase();
+                const searchTerm = searchInput.value.toLowerCase();
+                const specialtyFilterValue = specialtyFilter.value.toLowerCase();
                 let visibleCount = 0;
 
                 doctorCards.forEach(card => {
                     const name = card.querySelector('.card-title').textContent.toLowerCase();
                     const specialty = card.getAttribute('data-specialty').toLowerCase();
 
-                    const bioElement = card.querySelector('.doctor-bio');
-                    const bio = bioElement ? bioElement.textContent.toLowerCase() : '';
-
                     const matchesSearch = name.includes(searchTerm) ||
-                        specialty.includes(searchTerm) ||
-                        bio.includes(searchTerm);
-                    const matchesSpecialty = !specialtyFilter || specialty === specialtyFilter;
+                        specialty.includes(searchTerm);
+                    const matchesSpecialty = !specialtyFilterValue || specialty === specialtyFilterValue;
 
                     if (matchesSearch && matchesSpecialty) {
                         card.style.display = 'block';
@@ -160,6 +151,10 @@ include '../includes/head.php';
 
                 document.getElementById('doctorCount').textContent = `Showing ${visibleCount} doctors`;
             }
+
+            searchInput.addEventListener('input', filterDoctors);
+            searchButton.addEventListener('click', filterDoctors);
+            specialtyFilter.addEventListener('change', filterDoctors);
         });
     </script>
 </body>
