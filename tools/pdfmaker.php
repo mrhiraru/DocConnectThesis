@@ -3,7 +3,7 @@
     require('../node_modules/pdfmake/build/vfs_fonts.js');
 
     // Set the fonts
-    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+    pdfMake.vfs = pdfMake.vfs;
 
     function download_pdf() {
         var docDefinition = {
