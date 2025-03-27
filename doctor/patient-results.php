@@ -37,7 +37,7 @@ include '../includes/head.php';
                 if (!empty($recordArray)) {
                     foreach ($recordArray as $item) {
                 ?>
-                        <div class="p-0 m-0 row border-bottom border-top">
+                        <div class="p-0 m-0 row border-bottom border-top border-primary">
                             <div class="col-12 mt-3">
                                 <p class="m-0 p-0 fs-5 text-dark fw-semibold text-wrap">
                                     <?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?>
