@@ -125,6 +125,29 @@ include '../includes/head.php';
                                         ?>
                                     </div>
                                 </div>
+                                <div class="col-12 mb-2">
+                                    <div class="col-12">
+                                        <label for="medication" class="form-label mb-1">Is the patient taking any medications?</label>
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="allergy_check" id="Yes_medication" value="Yes" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <label class="form-check-label" for="Yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="allergy_check" id="No_medication" value="No" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "No") ? "checked" : "" ?>>
+                                            <label class="form-check-label" for="No">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" id="medication-container">
+                                        <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify"></textarea>
+                                        <?php
+                                        if (isset($_POST['medication']) && !validate_field($_POST['medication'])) {
+                                        ?>
+                                            <p class="text-dark m-0 ps-2">Medication is required.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
                                 <div class="col-12 mb-3">
                                     <label for="observation" class="form-label">Doctor's Observation:</label>
                                     <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required></textarea>
@@ -445,6 +468,28 @@ include '../includes/head.php';
             // Add event listeners to both radio buttons
             allergyCheck.forEach(radio => {
                 radio.addEventListener("change", toggleAllergyContainer);
+            });
+        }
+
+        var medication_input = document.getElementById("medication");
+        if (medication_input) {
+
+            const medicationCheck = document.getElementsByName("medication_check");
+            const medicationContainer = document.getElementById("medication-container");
+
+            medicationContainer.style.display = "none";
+
+            function toggleMedicationContainer() {
+                if (document.getElementById("Yes_medication").checked) {
+                    medicationContainer.style.display = "block"; // Show if Yes is checked
+                } else {
+                    medicationContainer.style.display = "none"; // Hide if No is checked
+                }
+            }
+
+            // Add event listeners to both radio buttons
+            medicationCheck.forEach(radio => {
+                radio.addEventListener("change", toggleMedicationContainer);
             });
         }
     });
