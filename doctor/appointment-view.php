@@ -40,7 +40,6 @@ include '../includes/head.php';
                         <p class="m-0 p-0 fs-5 text-dark fw-semibold text-wrap">
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
-                        <p class="m-0 p-0 fs-6 text-secondary">Patient: <span class="text-dark"><?= $record['patient_name'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
                     </div>
                     <div class="col-12 mb-3">
@@ -48,6 +47,10 @@ include '../includes/head.php';
                         <div class="col-12 mb-3">
                             <label for="name" class="form-label">Patient Name:</label>
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="contact" class="form-label">Contact:</label>
+                            <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
                         </div>
                         <div class="col-12 mb-3">
                             <label for="purpose" class="form-label">Purpose:</label>
