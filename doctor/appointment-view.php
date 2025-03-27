@@ -42,7 +42,7 @@ include '../includes/head.php';
                         </p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
                     </div>
-                    <div class="row col-12 mb-3">
+                    <div class="row col-12 mb-3 border-bottom">
                         <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
                         <div class="col-12 mb-2">
                             <label for="name" class="form-label mb-1">Patient Name:</label>
@@ -56,6 +56,8 @@ include '../includes/head.php';
                             <label for="contact" class="form-label mb-1">Contact:</label>
                             <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
                         </div>
+                    </div>
+                    <div class="row col-12 mb-3 border-bottom">
                         <div class="col-12 mb-2">
                             <label for="purpose" class="form-label mb-1">Purpose:</label>
                             <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['purpose'] ?></textarea>
