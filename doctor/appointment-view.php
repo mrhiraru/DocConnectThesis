@@ -129,11 +129,11 @@ include '../includes/head.php';
                                     <div class="col-12">
                                         <label for="medication" class="form-label mb-1">Is the patient taking any medications?</label>
                                         <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="allergy_check" id="Yes_medication" value="Yes" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <input class="form-check-input" type="radio" name="medication_check" id="Yes_medication" value="Yes" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "Yes") ? "checked" : "" ?> required>
                                             <label class="form-check-label" for="Yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="allergy_check" id="No_medication" value="No" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "No") ? "checked" : "" ?>>
+                                            <input class="form-check-input" type="radio" name="medication_check" id="No_medication" value="No" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "No") ? "checked" : "" ?>>
                                             <label class="form-check-label" for="No">No</label>
                                         </div>
                                     </div>
