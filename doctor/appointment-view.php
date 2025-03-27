@@ -398,10 +398,13 @@ include '../includes/head.php';
 </body>
 
 </html>
-<?php
-include_once('../tools/pdfmaker.php');
-?>
 <script>
+    import pdfMake from "pdfmake/build/pdfmake";
+    import pdfFonts from "pdfmake/build/vfs_fonts";
+
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+
     function start_meeting() {
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
@@ -781,3 +784,6 @@ include_once('../tools/pdfmaker.php');
         }
     });
 </script>
+<?php
+include_once('../tools/pdfmaker.php');
+?>
