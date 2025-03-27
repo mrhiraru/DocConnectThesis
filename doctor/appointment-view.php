@@ -68,8 +68,8 @@ include '../includes/head.php';
                         if ($record['appointment_status'] == "Ongoing") {
                         ?>
                             <form action="" class="row" id="resultForm">
-                                <div class="col-12 mb-3">
-                                    <label for="complaint" class="form-label">Cheif Complaint:</label>
+                                <div class="col-12 mb-2">
+                                    <label for="complaint" class="form-label mb-1">Cheif Complaint:</label>
                                     <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['complaint']) && !validate_field($_POST['complaint'])) {
@@ -79,26 +79,28 @@ include '../includes/head.php';
                                     }
                                     ?>
                                 </div>
-                                <div class="col-12">
-                                    Does the patient have a past or present medical condition?
-                                    <div class="form-check form-check-inline ms-3">
-                                        <input class="form-check-input" type="radio" name="exmedcon_check" id="Yes" value="Yes" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "Yes") ? "checked" : "" ?> required>
-                                        <label class="form-check-label" for="Yes">Yes</label>
+                                <div class="col-12 mb-2">
+                                    <div class="col-12">
+                                        <label for="diagnosis" class="form-label mb-1">Does the patient have a past or present medical condition?</label>
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="exmedcon_check" id="Yes" value="Yes" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <label class="form-check-label" for="Yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="exmedcon_check" id="No" value="No" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "No") ? "checked" : "" ?>>
+                                            <label class="form-check-label" for="No">No</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="exmedcon_check" id="No" value="No" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "No") ? "checked" : "" ?>>
-                                        <label class="form-check-label" for="No">No</label>
+                                    <div class="col-12" id="medcon-container">
+                                        <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify"></textarea>
+                                        <?php
+                                        if (isset($_POST['medcon']) && !validate_field($_POST['medcon'])) {
+                                        ?>
+                                            <p class="text-dark m-0 ps-2">Existing medical condition is required.</p>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
-                                </div>
-                                <div class="col-12" id="medcon-container">
-                                    <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify"></textarea>
-                                    <?php
-                                    if (isset($_POST['medcon']) && !validate_field($_POST['medcon'])) {
-                                    ?>
-                                        <p class="text-dark m-0 ps-2">Existing medical condition is required.</p>
-                                    <?php
-                                    }
-                                    ?>
                                 </div>
                                 <div class="col-12 mb-3">
                                     <label for="observation" class="form-label">Doctor's Observation:</label>
