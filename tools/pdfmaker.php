@@ -1,6 +1,6 @@
 <script type="module">
-    import * as pdfMake from "../node_modules/pdfmake/build/pdfmake.js";
-    import "../node_modules/pdfmake/build/vfs_fonts.js";
+    var pdfMake = require('../node_modules/pdfmake/build/pdfmake.js');
+    require('../node_modules/pdfmake/build/vfs_fonts.js');
 
     // Set the fonts
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
