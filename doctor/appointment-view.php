@@ -320,7 +320,24 @@ include '../includes/head.php';
                                 <label for="assessment" class="form-label">Consultation Assessment:</label>
                                 <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['assessment'] ?></textarea>
                             </div>
-
+                            <?php
+                            if (isset($record['plan'])) {
+                            ?>
+                                <div class="col-12 mb-2">
+                                    <label for="plan" class="form-label mb-1">Treatment Plan and Recommendation:</label>
+                                    <textarea id="plan" name="plan" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['plan'] ?></textarea>
+                                </div>
+                            <?php
+                            }
+                            if (isset($record['prescription'])) {
+                            ?>
+                                <div class="col-12 mb-2">
+                                    <label for="prescription" class="form-label mb-1">Prescription:</label>
+                                    <textarea id="prescription" name="prescription" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['prescription'] ?></textarea>
+                                </div>
+                            <?php
+                            }
+                            ?>
                             <div class="col-12">
                                 <label for="comment" class="form-label">Note:</label>
                                 <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
