@@ -299,6 +299,13 @@ include '../includes/head.php';
                                 </div>
                             <?php
                             }
+                            ?>
+                            <p class="m-0 p-0 fs-6 text-secondary mb-2">Objective Information</p>
+                            <div class="col-12 mb-2">
+                                <label for="observation" class="form-label mb-1">Doctor's Observation:</label>
+                                <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required><?= $record['observation'] ?></textarea>
+                            </div>
+                            <?php
                             if (isset($record['diagnosis'])) {
                             ?>
                                 <div class="col-12 mb-2">
