@@ -83,11 +83,11 @@ include '../includes/head.php';
                                     <div class="col-12">
                                         <label for="medcon" class="form-label mb-1">Does the patient have past or present medical conditions?</label>
                                         <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="exmedcon_check" id="Yes" value="Yes" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <input class="form-check-input" type="radio" name="exmedcon_check" id="Yes_medcon" value="Yes" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "Yes") ? "checked" : "" ?> required>
                                             <label class="form-check-label" for="Yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="exmedcon_check" id="No" value="No" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "No") ? "checked" : "" ?>>
+                                            <input class="form-check-input" type="radio" name="exmedcon_check" id="No_medcon" value="No" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "No") ? "checked" : "" ?>>
                                             <label class="form-check-label" for="No">No</label>
                                         </div>
                                     </div>
@@ -106,11 +106,11 @@ include '../includes/head.php';
                                     <div class="col-12">
                                         <label for="allergy" class="form-label mb-1">Does the patient have allergies?</label>
                                         <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="allergy_check" id="Yes" value="Yes" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <input class="form-check-input" type="radio" name="allergy_check" id="Yes_allergy" value="Yes" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "Yes") ? "checked" : "" ?> required>
                                             <label class="form-check-label" for="Yes">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="allergy_check" id="No" value="No" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "No") ? "checked" : "" ?>>
+                                            <input class="form-check-input" type="radio" name="allergy_check" id="No_allergy" value="No" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "No") ? "checked" : "" ?>>
                                             <label class="form-check-label" for="No">No</label>
                                         </div>
                                     </div>
@@ -399,8 +399,8 @@ include '../includes/head.php';
             }
 
             // Add event listeners to both radio buttons
-            medconCheck.forEach(medcon => {
-                medcon.addEventListener("change", toggleDiagnosisContainer);
+            medconCheck.forEach(radio => {
+                radio.addEventListener("change", toggleDiagnosisContainer);
             });
         }
 
@@ -413,7 +413,7 @@ include '../includes/head.php';
             medconContainer.style.display = "none";
 
             function toggleMedconContainer() {
-                if (document.getElementById("Yes").checked) {
+                if (document.getElementById("Yes_medcon").checked) {
                     medconContainer.style.display = "block"; // Show if Yes is checked
                 } else {
                     medconContainer.style.display = "none"; // Hide if No is checked
@@ -421,8 +421,8 @@ include '../includes/head.php';
             }
 
             // Add event listeners to both radio buttons
-            exmedconCheck.forEach(exmedcon => {
-                exmedcon.addEventListener("change", toggleMedconContainer);
+            exmedconCheck.forEach(radio => {
+                radio.addEventListener("change", toggleMedconContainer);
             });
         }
 
@@ -435,7 +435,7 @@ include '../includes/head.php';
             allergyContainer.style.display = "none";
 
             function toggleAllergyContainer() {
-                if (document.getElementById("Yes").checked) {
+                if (document.getElementById("Yes_allergy").checked) {
                     allergyContainer.style.display = "block"; // Show if Yes is checked
                 } else {
                     allergyContainer.style.display = "none"; // Hide if No is checked
@@ -443,8 +443,8 @@ include '../includes/head.php';
             }
 
             // Add event listeners to both radio buttons
-            allergyCheck.forEach(allergy => {
-                allergy.addEventListener("change", toggleAllergyContainer);
+            allergyCheck.forEach(radio => {
+                radio.addEventListener("change", toggleAllergyContainer);
             });
         }
     });
