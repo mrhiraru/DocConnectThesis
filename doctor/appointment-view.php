@@ -400,7 +400,7 @@ include '../includes/head.php';
             return;
         }
         var medicationInput = $('#medication');
-        if (medicationCheck.val() === "Yes_allergy") {
+        if (medicationCheck.val() === "Yes_medication") {
             if (!medicationInput.val().trim()) {
                 medicationInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
