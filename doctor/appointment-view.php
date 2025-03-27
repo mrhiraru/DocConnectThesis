@@ -115,7 +115,7 @@ include '../includes/head.php';
                                         </div>
                                     </div>
                                     <div class="col-12" id="allergy-container">
-                                        <textarea id="allergy" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify"></textarea>
+                                        <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify"></textarea>
                                         <?php
                                         if (isset($_POST['allergy']) && !validate_field($_POST['allergy'])) {
                                         ?>
