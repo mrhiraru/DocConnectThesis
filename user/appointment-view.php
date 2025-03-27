@@ -181,10 +181,10 @@ include '../includes/head.php';
                                         <?php
                                         if ($record['appointment_status'] == "Completed") {
                                         ?>
-                                            <button class="btn btn-danger text-white mb-3" id="download_pdf">
+                                            <!-- <button class="btn btn-danger text-white mb-3" id="download_pdf">
                                                 <i class='bx bx-file align-middle fs-5'></i>
                                                 Download Result
-                                            </button>
+                                            </button> -->
                                         <?php
                                         }
                                         ?>
