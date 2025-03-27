@@ -41,6 +41,7 @@ include '../includes/head.php';
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
+                        <div class="col-12 d-flex justify-content-center mb-3 ">
                         <?php
                         if ($record['appointment_status'] == "Ongoing") {
                         ?>
@@ -51,6 +52,7 @@ include '../includes/head.php';
                         <?php
                         }
                         ?>
+                        </div>
                     </div>
                     <div class="row col-12 mb-3 border-bottom">
                         <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
