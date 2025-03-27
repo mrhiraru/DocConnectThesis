@@ -41,6 +41,16 @@ include '../includes/head.php';
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
+                        <?php
+                        if ($record['appointment_status'] == "Ongoing") {
+                        ?>
+                            <button class="btn btn-success text-white mb-3 me-2" onclick="join_meeting('<?= $record['appointment_link'] ?>'); return false;">
+                                <i class='bx bx-video me-2 align-middle fs-5'></i>
+                                Join Meeting
+                            </button>
+                        <?php
+                        }
+                        ?>
                     </div>
                     <div class="row col-12 mb-3 border-bottom">
                         <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
@@ -299,10 +309,6 @@ include '../includes/head.php';
                     <?php
                     } else if ($record['appointment_status'] == "Ongoing") {
                     ?>
-                        <button class="btn btn-success text-white mb-3 me-2" onclick="join_meeting('<?= $record['appointment_link'] ?>'); return false;">
-                            <i class='bx bx-video me-2 align-middle fs-5'></i>
-                            Join Meeting
-                        </button>
                         <button class="btn btn-danger text-white mb-3" onclick="end_meeting()">
                             <i class='bx bx-check-square align-middle fs-5'></i>
                             Complete Appointment
