@@ -149,6 +149,7 @@ include '../includes/head.php';
                                         ?>
                                     </div>
                                 </div>
+                                <p class="m-0 p-0 fs-6 text-secondary mb-2">Objective Information</p>
                                 <div class="col-12 mb-3">
                                     <label for="observation" class="form-label">Doctor's Observation:</label>
                                     <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required></textarea>
@@ -160,6 +161,7 @@ include '../includes/head.php';
                                     }
                                     ?>
                                 </div>
+                                <p class="m-0 p-0 fs-6 text-secondary mb-2">Assessment and Plan</p>
                                 <div class="col-12 mb-3">
                                     <div class="col-12">
                                         Does the patient have a medical condition?
