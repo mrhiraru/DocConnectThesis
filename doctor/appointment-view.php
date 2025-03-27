@@ -41,9 +41,10 @@ include '../includes/head.php';
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
                         <p class="m-0 p-0 fs-6 text-secondary">Patient: <span class="text-dark"><?= $record['patient_name'] ?></span></p>
-                        <p class="m-0 p-0 fs-6 text-secondary mb">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
                     </div>
                     <div class="col-12 mb-3">
+                        Patient Information
                         <div class="col-12 mb-3">
                             <label for="purpose" class="form-label">Purpose:</label>
                             <textarea id="purpose" name="purpose" rows="2" cols="50" class="form-control bg-light" required><?= $record['purpose'] ?></textarea>
@@ -71,7 +72,18 @@ include '../includes/head.php';
                         ?>
                             <form action="" class="row" id="resultForm">
                                 <div class="col-12 mb-3">
-                                    <label for="result" class="form-label">Consultation Result:</label>
+                                    <label for="result" class="form-label">Cheif Complaint:</label>
+                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required></textarea>
+                                    <?php
+                                    if (isset($_POST['result']) && !validate_field($_POST['result'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Consultation result is required.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="result" class="form-label">Doctor's Observation:</label>
                                     <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['result']) && !validate_field($_POST['result'])) {
