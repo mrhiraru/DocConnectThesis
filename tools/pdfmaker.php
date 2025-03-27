@@ -1,5 +1,5 @@
 <script type="module">
-    import pdfMake from "../node_modules/pdfmake/build/pdfmake.js";
+    import "../node_modules/pdfmake/build/pdfmake.js";
     import "../node_modules/pdfmake/build/vfs_fonts.js";
 
     document.getElementById("download_pdf").addEventListener("click", () => {
