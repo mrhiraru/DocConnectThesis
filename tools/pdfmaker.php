@@ -4,8 +4,7 @@
 
     // Set the fonts
     //pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-    function download_pdf() {
+    document.getElementById("download_pdf").addEventListener("click", () => {
         var docDefinition = {
             content: [{
                     alignment: 'start',
@@ -289,9 +288,8 @@
                 }
             }
         };
-    }
 
-    document.getElementById("download_pdf").addEventListener("click", () => {
+
         pdfMake.createPdf(docDefinition).download("consultation_result.pdf");
     });
 </script>
