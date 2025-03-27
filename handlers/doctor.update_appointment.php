@@ -153,8 +153,6 @@ if (isset($_POST['confirm'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_status = 'Completed';
 
-
-
     if (
         validate_field($appointment->appointment_id && $appointment->complaint &&
             $appointment->observation && $appointment->assessment &&

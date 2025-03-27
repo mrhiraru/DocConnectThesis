@@ -271,8 +271,8 @@ include '../includes/head.php';
                     <div class="col-12 mb-3">
                         <form action="" class="row" id="resultForm">
                             <div class="col-12 mb-3">
-                                <label for="result" class="form-label">Consultation Result:</label>
-                                <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['result'] ?></textarea>
+                                <label for="complaint" class="form-label">Chief Complaint:</label>
+                                <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['complaint'] ?></textarea>
                             </div>
                             <?php
                             if (isset($record['diagnosis'])) {
