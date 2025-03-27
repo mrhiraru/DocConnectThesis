@@ -318,8 +318,8 @@ include '../includes/head.php';
                             if (isset($record['diagnosis'])) {
                             ?>
                                 <div class="col-12 mb-2">
-                                    <label for="diagnosis" class="form-label mb-1">Medical Condition/s:</label>
-                                    <textarea id="diagnosis" name="diagnosis" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
+                                    <label for="diagnosis_text" class="form-label mb-1">Medical Condition/s:</label>
+                                    <textarea id="diagnosis_text" name="diagnosis_text" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
                                 </div>
                             <?php
                             }
