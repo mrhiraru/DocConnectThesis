@@ -56,27 +56,14 @@ include '../includes/head.php';
                             <label for="contact" class="form-label mb-1">Contact:</label>
                             <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
                         </div>
+                        <p class="m-0 p-0 fs-6 text-secondary mb-2">Subjective</p>
                         <div class="col-12 mb-2">
                             <label for="purpose" class="form-label mb-1">Purpose:</label>
-                            <textarea id="purpose" name="purpose" rows="2" cols="50" class="form-control bg-light" required><?= $record['purpose'] ?></textarea>
-                            <?php
-                            if (isset($_POST['purpose']) && !validate_field($_POST['purpose'])) {
-                            ?>
-                                <p class="text-dark m-0 ps-2">Purpose of appointment is required.</p>
-                            <?php
-                            }
-                            ?>
+                            <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['purpose'] ?></textarea>
                         </div>
-                        <div class="col-12 mb-1">
-                            <label for="reason" class="form-label">Reason:</label>
-                            <textarea id="reason" name="reason" rows="2" cols="50" class="form-control bg-light" required><?= $record['reason'] ?></textarea>
-                            <?php
-                            if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
-                            ?>
-                                <p class="text-dark m-0 ps-2">Reason of appointment is required.</p>
-                            <?php
-                            }
-                            ?>
+                        <div class="col-12 mb-2">
+                            <label for="reason" class="form-label mb-1">Reason:</label>
+                            <textarea id="reason" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['reason'] ?></textarea>
                         </div>
                         <?php
                         if ($record['appointment_status'] == "Ongoing") {
