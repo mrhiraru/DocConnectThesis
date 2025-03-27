@@ -44,19 +44,19 @@ include '../includes/head.php';
                     </div>
                     <div class="col-12 mb-3">
                         <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
-                        <div class="col-12 mb-3">
+                        <div class="col-12 mb-1">
                             <label for="name" class="form-label">Patient Name:</label>
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-12 mb-1">
                             <label for="email" class="form-label">Email:</label>
                             <input id="email" class="form-control bg-light" value="<?= $record['email'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-12 mb-1">
                             <label for="contact" class="form-label">Contact:</label>
                             <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-12 mb-1">
                             <label for="purpose" class="form-label">Purpose:</label>
                             <textarea id="purpose" name="purpose" rows="2" cols="50" class="form-control bg-light" required><?= $record['purpose'] ?></textarea>
                             <?php
@@ -67,7 +67,7 @@ include '../includes/head.php';
                             }
                             ?>
                         </div>
-                        <div class="col-12 mb-3">
+                        <div class="col-12 mb-1">
                             <label for="reason" class="form-label">Reason:</label>
                             <textarea id="reason" name="reason" rows="2" cols="50" class="form-control bg-light" required><?= $record['reason'] ?></textarea>
                             <?php
