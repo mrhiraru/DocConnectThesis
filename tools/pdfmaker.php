@@ -1,9 +1,9 @@
 <script type="module">
     import * as pdfMake from "../node_modules/pdfmake/build/pdfmake.js";
-    import "../node_modules/pdfmake/build/vfs_fonts.js";
+    import * as pdfFonts from "../node_modules/pdfmake/build/vfs_fonts.js";
 
     // Set the fonts
-    pdfMake.vfs = pdfMake.vfs;
+    //pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     function download_pdf() {
         var docDefinition = {
