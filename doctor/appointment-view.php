@@ -97,15 +97,15 @@ include '../includes/head.php';
                                         <label for="medcon" class="form-label mb-1">Does the patient have past or present medical conditions?</label>
                                         <div class="form-check form-check-inline ms-3">
                                             <input class="form-check-input" type="radio" name="exmedcon_check" id="Yes_medcon" value="Yes" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes">Yes</label>
+                                            <label class="form-check-label" for="Yes_medcon">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="exmedcon_check" id="No_medcon" value="No" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No">No</label>
+                                            <label class="form-check-label" for="No_medcon">No</label>
                                         </div>
                                     </div>
                                     <div class="col-12" id="medcon-container">
-                                        <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify"></textarea>
+                                        <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
                                         <?php
                                         if (isset($_POST['medcon']) && !validate_field($_POST['medcon'])) {
                                         ?>
@@ -120,15 +120,15 @@ include '../includes/head.php';
                                         <label for="allergy" class="form-label mb-1">Does the patient have allergies?</label>
                                         <div class="form-check form-check-inline ms-3">
                                             <input class="form-check-input" type="radio" name="allergy_check" id="Yes_allergy" value="Yes" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes">Yes</label>
+                                            <label class="form-check-label" for="Yes_allergy">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="allergy_check" id="No_allergy" value="No" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No">No</label>
+                                            <label class="form-check-label" for="No_allergy">No</label>
                                         </div>
                                     </div>
                                     <div class="col-12" id="allergy-container">
-                                        <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify"></textarea>
+                                        <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
                                         <?php
                                         if (isset($_POST['allergy']) && !validate_field($_POST['allergy'])) {
                                         ?>
@@ -143,15 +143,15 @@ include '../includes/head.php';
                                         <label for="medication" class="form-label mb-1">Is the patient taking any medications?</label>
                                         <div class="form-check form-check-inline ms-3">
                                             <input class="form-check-input" type="radio" name="medication_check" id="Yes_medication" value="Yes" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes">Yes</label>
+                                            <label class="form-check-label" for="Yes_medication">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="medication_check" id="No_medication" value="No" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No">No</label>
+                                            <label class="form-check-label" for="No_medication">No</label>
                                         </div>
                                     </div>
                                     <div class="col-12" id="medication-container">
-                                        <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify"></textarea>
+                                        <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
                                         <?php
                                         if (isset($_POST['medication']) && !validate_field($_POST['medication'])) {
                                         ?>
@@ -362,22 +362,63 @@ include '../includes/head.php';
     }
 
     function end_meeting() {
-        var resultInput = $('#result');
-
-        if (!resultInput.val().trim()) {
-            resultInput[0].reportValidity(); // Show validation popup
+        var complaintInput = $('#complaint');
+        if (!complaintInput.val().trim()) {
+            complaintInput[0].setCustomValidity("Please fill in the chief complaint."); // Set custom validation message
+            complaintInput[0].reportValidity(); // Show validation popup
             return; // Stop execution
+        } else {
+            complaintInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var exmedconCheck = $('input[name="exmedcon_check"]:checked');
+        if (exmedconCheck.length === 0) { // If no option is selected
+            $('input[name="exmedcon_check"]').get(0).reportValidity();
+            return;
+        }
+        var medconInput = $('#medcon');
+        if (exmedconCheck.val() === "Yes") {
+            if (!medconInput.val().trim()) {
+                medconInput[0].setCustomValidity("Please specify the past or existing medical condition."); // Set custom validation message
+                medconInput[0].reportValidity(); // Show validation popup
+                return; // Stop execution
+            } else {
+                medconInput[0].setCustomValidity(""); // Reset validation if valid
+            }
+        }
+
+        var allergyCheck = $('input[name="allergy_check"]:checked');
+        if (allergyCheck.length === 0) { // If no option is selected
+            $('input[name="allergy_check"]').get(0).reportValidity();
+            return;
+        }
+        var allergyInput = $('#allergy');
+        if (allergyCheck.val() === "Yes") {
+            if (!allergyInput.val().trim()) {
+                allergyInput[0].reportValidity(); // Show validation popup
+                return; // Stop execution
+            }
+        }
+
+        var medicationCheck = $('input[name="medication_check"]:checked');
+        if (medicationCheck.length === 0) { // If no option is selected
+            $('input[name="medication_check"]').get(0).reportValidity();
+            return;
+        }
+        var medicationInput = $('#medication');
+        if (medicationCheck.val() === "Yes") {
+            if (!medicationInput.val().trim()) {
+                medicationInput[0].reportValidity(); // Show validation popup
+                return; // Stop execution
+            }
         }
 
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
-
         if (medconCheck.length === 0) { // If no option is selected
             $('input[name="medcon_check"]').get(0).reportValidity();
             return;
         }
-
         var diagnosisSelect = $('#diagnosis');
-
         if (medconCheck.val() === "Yes") {
             if (diagnosisSelect.val() === null || diagnosisSelect.val().length === 0) {
                 diagnosisSelect.get(0).setCustomValidity("Please enter at least one medical condition."); // Set custom validation message
