@@ -121,26 +121,29 @@
                     },
                 <?php
                 }
+                if ($record['allergy'] != null) {
                 ?> {
-                    text: "Allergy: ",
-                    margin: [0, 5, 0, 0],
-                },
-                {
+                        text: "Allergy: ",
+                        margin: [0, 5, 0, 0],
+                    },
+                    {
 
-                    text: "<?= $record['allergy'] ?>",
-                    margin: [30, 5, 0, 0],
-                },
-                {
+                        text: "<?= $record['allergy'] ?>",
+                        margin: [30, 5, 0, 0],
+                    },
+                <?php }
+                if ($record['medication'] != null) {
+                ?> {
 
-                    text: "Medication: ",
-                    margin: [0, 5, 0, 0],
-                },
-                {
+                        text: "Medication: ",
+                        margin: [0, 5, 0, 0],
+                    },
+                    {
 
-                    text: "<?= $record['medication'] ?>",
-                    margin: [30, 5, 0, 15],
-                },
-                {
+                        text: "<?= $record['medication'] ?>",
+                        margin: [30, 5, 0, 15],
+                    },
+                <?php } ?> {
                     canvas: [{
                         type: 'line',
                         x1: 0,
@@ -183,17 +186,17 @@
                     margin: [0, 15, 0, 5],
                     fontSize: 13,
                 },
-                {
+                <?php if ($record['diagnosis'] != null) { ?> {
 
-                    text: "Medical Condition: ",
-                    margin: [0, 5, 0, 0],
-                },
-                {
+                        text: "Medical Condition: ",
+                        margin: [0, 5, 0, 0],
+                    },
+                    {
 
-                    text: "<?= $record['diagnosis'] ?>",
-                    margin: [30, 5, 0, 0],
-                },
-                {
+                        text: "<?= $record['diagnosis'] ?>",
+                        margin: [30, 5, 0, 0],
+                    },
+                <?php } ?> {
 
                     text: "Assessment: ",
                     margin: [0, 5, 0, 0],
@@ -203,27 +206,30 @@
                     text: "<?= $record['assessment'] ?>",
                     margin: [30, 5, 0, 0],
                 },
-                {
+                <?php
+                if ($record['plan'] != null) { ?> {
+                        text: "Treatment Plan and Recommendation: ",
+                        margin: [0, 5, 0, 0],
+                    },
+                    {
 
-                    text: "Treatment Plan and Recommendation: ",
-                    margin: [0, 5, 0, 0],
-                },
-                {
+                        text: "<?= $record['plan'] ?>",
+                        margin: [30, 5, 0, 0],
+                    },
+                <?php
+                }
+                if ($record['prescription'] != null) { ?> {
+                        text: "Prescription:",
+                        margin: [0, 5, 0, 0],
+                    },
+                    {
 
-                    text: "<?= $record['plan'] ?>",
-                    margin: [30, 5, 0, 0],
-                },
-                {
-
-                    text: "Prescription:",
-                    margin: [0, 5, 0, 0],
-                },
-                {
-
-                    text: "<?= $record['prescription'] ?>",
-                    margin: [30, 5, 0, 0],
-                },
-                <?php if ($record['comment'] != null) { ?> {
+                        text: "<?= $record['prescription'] ?>",
+                        margin: [30, 5, 0, 0],
+                    },
+                <?php
+                }
+                if ($record['comment'] != null) { ?> {
                         text: "Addition Comment:",
                         margin: [0, 5, 0, 0],
                     },
