@@ -56,7 +56,6 @@ include '../includes/head.php';
                             <label for="contact" class="form-label mb-1">Contact:</label>
                             <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
                         </div>
-                        <p class="m-0 p-0 fs-6 text-secondary mb-2">Subjective</p>
                         <div class="col-12 mb-2">
                             <label for="purpose" class="form-label mb-1">Purpose:</label>
                             <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['purpose'] ?></textarea>
@@ -70,23 +69,45 @@ include '../includes/head.php';
                         ?>
                             <form action="" class="row" id="resultForm">
                                 <div class="col-12 mb-3">
-                                    <label for="result" class="form-label">Cheif Complaint:</label>
-                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required></textarea>
+                                    <label for="complaint" class="form-label">Cheif Complaint:</label>
+                                    <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
-                                    if (isset($_POST['result']) && !validate_field($_POST['result'])) {
+                                    if (isset($_POST['complaint']) && !validate_field($_POST['complaint'])) {
                                     ?>
-                                        <p class="text-dark m-0 ps-2">Consultation result is required.</p>
+                                        <p class="text-dark m-0 ps-2">Cheif Complaint is required.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12">
+                                    Does the patient have an existing medical condition?
+                                    <div class="form-check form-check-inline ms-3">
+                                        <input class="form-check-input" type="radio" name="exmedcon_check" id="Yes" value="Yes" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "Yes") ? "checked" : "" ?> required>
+                                        <label class="form-check-label" for="Yes">Yes</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="exmedcon_check" id="No" value="No" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "No") ? "checked" : "" ?>>
+                                        <label class="form-check-label" for="No">No</label>
+                                    </div>
+                                </div>
+                                <div class="col-12" id="medcon-container">
+                                    <label for="medcon" class="form-label mb-1">What medical condition does the patient have?</label>
+                                    <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" readonly>If yes, please specify</textarea>
+                                    <?php
+                                    if (isset($_POST['medcon']) && !validate_field($_POST['medcon'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Existing medical condition is required.</p>
                                     <?php
                                     }
                                     ?>
                                 </div>
                                 <div class="col-12 mb-3">
-                                    <label for="result" class="form-label">Doctor's Observation:</label>
-                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required></textarea>
+                                    <label for="observation" class="form-label">Doctor's Observation:</label>
+                                    <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
-                                    if (isset($_POST['result']) && !validate_field($_POST['result'])) {
+                                    if (isset($_POST['observation']) && !validate_field($_POST['observation'])) {
                                     ?>
-                                        <p class="text-dark m-0 ps-2">Consultation result is required.</p>
+                                        <p class="text-dark m-0 ps-2">Observation is required.</p>
                                     <?php
                                     }
                                     ?>
@@ -339,8 +360,6 @@ include '../includes/head.php';
                 plugins: ['remove_button'] // Adds a remove button for each selected item
             });
 
-
-
             const medconCheck = document.getElementsByName("medcon_check");
             const diagnosisContainer = document.getElementById("diagnosis-container");
 
@@ -360,5 +379,23 @@ include '../includes/head.php';
                 radio.addEventListener("change", toggleDiagnosisContainer);
             });
         }
+
+        const exmedconCheck = document.getElementsByName("exmedcon_check");
+        const medconContainer = document.getElementById("medcon-container");
+
+        medconContainer.style.display = "none";
+
+        function toggleDiagnosisContainer() {
+            if (document.getElementById("Yes").checked) {
+                medconContainer.style.display = "block"; // Show if Yes is checked
+            } else {
+                medconContainer.style.display = "none"; // Hide if No is checked
+            }
+        }
+
+        // Add event listeners to both radio buttons
+        medconCheck.forEach(radio => {
+            radio.addEventListener("change", toggleDiagnosisContainer);
+        });
     });
 </script>
