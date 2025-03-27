@@ -70,7 +70,7 @@
                             width: '35%'
                         }
                     ],
-                    margin: [0, 5, 0, 15]
+                    margin: [0, 5, 0, 0]
                 },
                 {
                     canvas: [{
@@ -80,7 +80,8 @@
                         x2: 515,
                         y2: 0,
                         lineWidth: 1
-                    }]
+                    }],
+                    margin: [0, 15, 0, 0]
                 },
                 {
 
@@ -141,7 +142,7 @@
                     {
 
                         text: "<?= $record['medication'] ?>",
-                        margin: [30, 5, 0, 15],
+                        margin: [30, 5, 0, 0],
                     },
                 <?php } ?> {
                     canvas: [{
@@ -151,7 +152,8 @@
                         x2: 515,
                         y2: 0,
                         lineWidth: 1
-                    }]
+                    }],
+                    margin: [0, 15, 0, 0]
                 },
                 {
 
@@ -167,7 +169,7 @@
                 {
 
                     text: "<?= $record['observation'] ?>",
-                    margin: [30, 5, 0, 15],
+                    margin: [30, 5, 0, 0],
                 },
 
                 {
@@ -178,7 +180,8 @@
                         x2: 515,
                         y2: 0,
                         lineWidth: 1
-                    }]
+                    }],
+                    margin: [0, 15, 0, 0]
                 },
                 {
 
