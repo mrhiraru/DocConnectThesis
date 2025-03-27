@@ -1,6 +1,6 @@
 <script type="module">
-    import pdfMake from "../node_modules/pdfmake/build/pdfmake";
-    import pdfFonts from "../node_modules/pdfmake/build/vfs_fonts";
+    import pdfMake from "../node_modules/pdfmake/build/pdfmake.js";
+    import pdfFonts from "../node_modules/pdfmake/build/vfs_fonts.js";
     pdfMake.addVirtualFileSystem(pdfFonts);
     document.getElementById("download_pdf").addEventListener("click", () => {
         var docDefinition = {
