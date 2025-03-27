@@ -364,7 +364,7 @@ include '../includes/head.php';
     function end_meeting() {
         var complaintInput = $('#complaint');
         if (!complaintInput.val().trim()) {
-            complaintInput[0].setCustomValidity("Please fill in the chief complaint."); // Set custom validation message
+            complaintInput[0].setCustomValidity("Chief complaint is required. Please enter the patient's main health concern."); // Set custom validation message
             complaintInput[0].reportValidity(); // Show validation popup
             return; // Stop execution
         } else {
@@ -395,7 +395,7 @@ include '../includes/head.php';
         var allergyInput = $('#allergy');
         if (allergyCheck.val() === "Yes") {
             if (!allergyInput.val().trim()) {
-                allergyInput[0].setCustomValidity("Please specify the allergy.");
+                allergyInput[0].setCustomValidity("Please specify the allergies.");
                 allergyInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
             } else {
@@ -411,9 +411,21 @@ include '../includes/head.php';
         var medicationInput = $('#medication');
         if (medicationCheck.val() === "Yes") {
             if (!medicationInput.val().trim()) {
+                medicationInput[0].setCustomValidity("Please specify the medications.");
                 medicationInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
+            } else {
+                medicationInput[0].setCustomValidity(""); // Reset validation if valid
             }
+        }
+
+        var observationInput = $('#observation');
+        if (!observationInput.val().trim()) {
+            observationInput[0].setCustomValidity("Doctor's observation is required. Please provide your observation."); // Set custom validation message
+            observationInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            observationInput[0].setCustomValidity(""); // Reset validation if valid
         }
 
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
@@ -432,15 +444,67 @@ include '../includes/head.php';
             }
         }
 
+        var assessmentInput = $('#assessment');
+        if (!assessmentInput.val().trim()) {
+            assessmentInput[0].setCustomValidity("Consultation Assessment is required. Please provide your assessment."); // Set custom validation message
+            assessmentInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            assessmentInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var planCheck = $('input[name="plan_check"]:checked');
+        if (planCheck.length === 0) { // If no option is selected
+            $('input[name="plan_check"]').get(0).reportValidity();
+            return;
+        }
+        var planInput = $('#plan');
+        if (planCheck.val() === "Yes") {
+            if (!planInput.val().trim()) {
+                planInput[0].setCustomValidity("Please provide your plan and recommendation.");
+                planInput[0].reportValidity(); // Show validation popup
+                return; // Stop execution
+            } else {
+                planInput[0].setCustomValidity(""); // Reset validation if valid
+            }
+        }
+
+        var prescriptionCheck = $('input[name="prescription_check"]:checked');
+        if (prescriptionCheck.length === 0) { // If no option is selected
+            $('input[name="prescription_check"]').get(0).reportValidity();
+            return;
+        }
+        var prescriptionInput = $('#prescription');
+        if (prescriptionCheck.val() === "Yes") {
+            if (!prescriptionInput.val().trim()) {
+                prescriptionInput[0].setCustomValidity("Please provide your prescription.");
+                prescriptionInput[0].reportValidity(); // Show validation popup
+                return; // Stop execution
+            } else {
+                prescriptionInput[0].setCustomValidity(""); // Reset validation if valid
+            }
+        }
 
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
             data: {
                 end: true,
-                result: resultInput.val().trim(),
-                diagnosis: diagnosisSelect.val(),
+                complaint: complaintInput.val().trim(),
+                exmedcon_check: exmedconCheck.val(),
+                medcon: medconInput.val().trim(),
+                allergy_check: allergyCheck.val(),
+                allergy: allergyInput.val().trim(),
+                medication_check: medicationCheck.val(),
+                medication: medicationInput.val().trim(),
+                observation: observationInput.val().trim(),
                 medcon_check: medconCheck.val(),
+                diagnosis: diagnosisSelect.val(),
+                assessment: assessmentInput.val().trim(),
+                plan_check: planCheck.val(),
+                plan: planInput.val().trim(),
+                prescription_check: prescriptionCheck.val(),
+                prescription: prescriptionInput.val().trim(),
                 comment: $('#comment').val(),
                 appointment_id: '<?= $_GET['appointment_id'] ?>',
             },
