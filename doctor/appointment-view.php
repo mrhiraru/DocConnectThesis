@@ -174,6 +174,18 @@ include '../includes/head.php';
                                     ?>
                                 </div>
                                 <p class="m-0 p-0 fs-6 text-secondary mb-2">Assessment and Plan</p>
+
+                                <div class="col-12 mb-3">
+                                    <label for="assessment" class="form-label">Consultation Assessment:</label>
+                                    <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required></textarea>
+                                    <?php
+                                    if (isset($_POST['assessment']) && !validate_field($_POST['assessment'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Assessment is required.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
                                 <div class="col-12 mb-2">
                                     <div class="col-12">
                                         Did you identify any medical conditions during the consultation?
@@ -201,17 +213,6 @@ include '../includes/head.php';
                                         }
                                         ?>
                                     </div>
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label for="assessment" class="form-label">Consultation Assessment:</label>
-                                    <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required></textarea>
-                                    <?php
-                                    if (isset($_POST['assessment']) && !validate_field($_POST['assessment'])) {
-                                    ?>
-                                        <p class="text-dark m-0 ps-2">Assessment is required.</p>
-                                    <?php
-                                    }
-                                    ?>
                                 </div>
                                 <div class="col-12 mb-2">
                                     <div class="col-12">
