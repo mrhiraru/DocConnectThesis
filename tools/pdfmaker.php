@@ -1,7 +1,8 @@
 <script type="module">
-    var pdfMake = require('pdfmake/build/pdfmake.js');
-    require('pdfmake/build/vfs_fonts.js');
+    import pdfMake from "pdfmake/build/pdfmake";
+    import pdfFonts from "pdfmake/build/vfs_fonts";
 
+    // Set the fonts
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
     function download_pdf() {
