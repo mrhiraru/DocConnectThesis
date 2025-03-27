@@ -275,12 +275,11 @@ include '../includes/head.php';
                                 <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['complaint'] ?></textarea>
                             </div>
                             <?php
-                            if (isset($record['medcon_history'])) {
+                            if (!isset($record['medcon_history'])) {
                             ?>
-
                                 <div class="col-12" id="medcon-container">
                                     <label for="medcon" class="form-label mb-1">Medical History</label>
-                                    <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required><?= $record['medcon_history'] ?></textarea>
+                                    <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medcon_history'] ?></textarea>
                                 </div>
                             <?php
                             }
