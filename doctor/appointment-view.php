@@ -399,8 +399,8 @@ include '../includes/head.php';
             }
 
             // Add event listeners to both radio buttons
-            medconCheck.forEach(radio => {
-                radio.addEventListener("change", toggleDiagnosisContainer);
+            medconCheck.forEach(medcon => {
+                medcon.addEventListener("change", toggleDiagnosisContainer);
             });
         }
 
@@ -421,8 +421,8 @@ include '../includes/head.php';
             }
 
             // Add event listeners to both radio buttons
-            exmedconCheck.forEach(radio => {
-                radio.addEventListener("change", toggleMedconContainer);
+            exmedconCheck.forEach(exmedcon => {
+                exmedcon.addEventListener("change", toggleMedconContainer);
             });
         }
 
@@ -443,8 +443,8 @@ include '../includes/head.php';
             }
 
             // Add event listeners to both radio buttons
-            allergyCheck.forEach(radio => {
-                radio.addEventListener("change", toggleAllergyContainer);
+            allergyCheck.forEach(allergy => {
+                allergy.addEventListener("change", toggleAllergyContainer);
             });
         }
     });
