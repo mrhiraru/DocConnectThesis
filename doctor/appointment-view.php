@@ -278,14 +278,14 @@ include '../includes/head.php';
                             if (isset($record['medcon_history'])) {
                             ?>
                                 <div class="col-12 mb-2">
-                                    <label for="medcon" class="form-label mb-1">Medical History</label>
+                                    <label for="medcon" class="form-label mb-1">Medical History:</label>
                                     <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medcon_history'] ?></textarea>
                                 </div>
                             <?php
                             }
                             if (isset($record['allergy'])) {
                             ?>
-                                <div class="col-12 mb-2" id="medcon-container">
+                                <div class="col-12 mb-2">
                                     <label for="allergy" class="form-label mb-1">Allergies:</label>
                                     <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['allergy'] ?></textarea>
                                 </div>
