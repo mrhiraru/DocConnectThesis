@@ -97,11 +97,11 @@ include '../includes/head.php';
                                         <label for="medcon" class="form-label mb-1">Does the patient have past or present medical conditions?</label>
                                         <div class="form-check form-check-inline ms-3">
                                             <input class="form-check-input" type="radio" name="exmedcon_check" id="Yes_medcon" value="Yes" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes">Yes</label>
+                                            <label class="form-check-label" for="Yes_medcon">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="exmedcon_check" id="No_medcon" value="No" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No">No</label>
+                                            <label class="form-check-label" for="No_medcon">No</label>
                                         </div>
                                     </div>
                                     <div class="col-12" id="medcon-container">
@@ -120,11 +120,11 @@ include '../includes/head.php';
                                         <label for="allergy" class="form-label mb-1">Does the patient have allergies?</label>
                                         <div class="form-check form-check-inline ms-3">
                                             <input class="form-check-input" type="radio" name="allergy_check" id="Yes_allergy" value="Yes" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes">Yes</label>
+                                            <label class="form-check-label" for="Yes_allergy">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="allergy_check" id="No_allergy" value="No" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No">No</label>
+                                            <label class="form-check-label" for="No_allergy">No</label>
                                         </div>
                                     </div>
                                     <div class="col-12" id="allergy-container">
@@ -143,11 +143,11 @@ include '../includes/head.php';
                                         <label for="medication" class="form-label mb-1">Is the patient taking any medications?</label>
                                         <div class="form-check form-check-inline ms-3">
                                             <input class="form-check-input" type="radio" name="medication_check" id="Yes_medication" value="Yes" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes">Yes</label>
+                                            <label class="form-check-label" for="Yes_medication">Yes</label>
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="medication_check" id="No_medication" value="No" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No">No</label>
+                                            <label class="form-check-label" for="No_medication">No</label>
                                         </div>
                                     </div>
                                     <div class="col-12" id="medication-container">
