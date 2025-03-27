@@ -60,11 +60,11 @@ include '../includes/head.php';
                             <label for="name" class="form-label mb-1">Patient Name:</label>
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
                         </div>
-                        <div class="col-12 mb-2">
+                        <div class="col-6 mb-2">
                             <label for="birthdate" class="form-label mb-1">Birthdate:</label>
-                            <input id="birthdate" class="form-control bg-light" value="<?= $record['birthdate'] ?>" readonly>
+                            <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
                         </div>
-                        <div class="col-12 mb-2">
+                        <div class="col-6 mb-2">
                             <label for="gender" class="form-label mb-1">Gender:</label>
                             <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
                         </div>
