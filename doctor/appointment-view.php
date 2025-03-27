@@ -277,7 +277,7 @@ include '../includes/head.php';
                             <?php
                             if (isset($record['medcon_history'])) {
                             ?>
-                                <div class="col-12 mb-2" id="medcon-container">
+                                <div class="col-12 mb-2">
                                     <label for="medcon" class="form-label mb-1">Medical History</label>
                                     <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medcon_history'] ?></textarea>
                                 </div>
