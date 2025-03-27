@@ -164,7 +164,7 @@ include '../includes/head.php';
                                 <p class="m-0 p-0 fs-6 text-secondary mb-2">Assessment and Plan</p>
                                 <div class="col-12 mb-3">
                                     <div class="col-12">
-                                        Does the patient have a medical condition?
+                                        Did you identify any medical conditions during the consultation?
                                         <div class="form-check form-check-inline ms-3">
                                             <input class="form-check-input" type="radio" name="medcon_check" id="Yes" value="Yes" <?= (isset($_POST['medcon_check']) && $_POST['medcon_check'] == "Yes") ? "checked" : "" ?> required>
                                             <label class="form-check-label" for="Yes">Yes</label>
@@ -190,9 +190,66 @@ include '../includes/head.php';
                                         ?>
                                     </div>
                                 </div>
+                                <div class="col-12 mb-3">
+                                    <label for="assessment" class="form-label">Consultation Assessment:</label>
+                                    <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required></textarea>
+                                    <?php
+                                    if (isset($_POST['assessment']) && !validate_field($_POST['assessment'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Assessment is required.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="col-12">
+                                        <label for="plan" class="form-label mb-1">Would you like to provide a treatment plan and recommendations?</label>
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="plan_check" id="Yes_medication" value="Yes_plan" <?= (isset($_POST['plan_check']) && $_POST['plan_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <label class="form-check-label" for="Yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="plan_check" id="No_medication" value="No_plan" <?= (isset($_POST['plan_check']) && $_POST['plan_check'] == "No") ? "checked" : "" ?>>
+                                            <label class="form-check-label" for="No">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" id="plan-container">
+                                        <textarea id="plan" name="plan" rows="2" cols="50" class="form-control bg-light" placeholder="Include treatment plan and recommendation"></textarea>
+                                        <?php
+                                        if (isset($_POST['plan']) && !validate_field($_POST['plan'])) {
+                                        ?>
+                                            <p class="text-dark m-0 ps-2">Treatment Plan or Recommendation is required.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <div class="col-12">
+                                        <label for="prescription" class="form-label mb-1">Would you like to provide a prescription?</label>
+                                        <div class="form-check form-check-inline ms-3">
+                                            <input class="form-check-input" type="radio" name="prescription_check" id="Yes_prescription" value="Yes" <?= (isset($_POST['prescription_check']) && $_POST['prescription_check'] == "Yes") ? "checked" : "" ?> required>
+                                            <label class="form-check-label" for="Yes">Yes</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="prescription_check" id="No_prescription" value="No" <?= (isset($_POST['prescription_check']) && $_POST['prescription_check'] == "No") ? "checked" : "" ?>>
+                                            <label class="form-check-label" for="No">No</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" id="prescription-container">
+                                        <textarea id="prescription" name="prescription" rows="2" cols="50" class="form-control bg-light" placeholder="Include prescription here"></textarea>
+                                        <?php
+                                        if (isset($_POST['prescription']) && !validate_field($_POST['prescription'])) {
+                                        ?>
+                                            <p class="text-dark m-0 ps-2">Prescription is required.</p>
+                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
                                 <div class="col-12">
-                                    <label for="comment" class="form-label">Note:</label>
-                                    <textarea id="comment" name="comment" rows="7" cols="50" class="form-control bg-light" placeholder="Write your notes here (e.g., patient instructions, prescriptions, recommendations, and etc)."></textarea>
+                                    <label for="comment" class="form-label">Addtional Comment:</label>
+                                    <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" placeholder=""></textarea>
                                 </div>
                             </form>
                     </div>
@@ -493,6 +550,50 @@ include '../includes/head.php';
             // Add event listeners to both radio buttons
             medicationCheck.forEach(radio => {
                 radio.addEventListener("change", toggleMedicationContainer);
+            });
+        }
+
+        var plan_input = document.getElementById("plan");
+        if (plan_input) {
+
+            const planCheck = document.getElementsByName("plan_check");
+            const planContainer = document.getElementById("plan-container");
+
+            planContainer.style.display = "none";
+
+            function togglePlanContainer() {
+                if (document.getElementById("Yes_plan").checked) {
+                    planContainer.style.display = "block"; // Show if Yes is checked
+                } else {
+                    planContainer.style.display = "none"; // Hide if No is checked
+                }
+            }
+
+            // Add event listeners to both radio buttons
+            planCheck.forEach(radio => {
+                radio.addEventListener("change", togglePlanContainer);
+            });
+        }
+
+        var prescription_input = document.getElementById("prescription");
+        if (prescription_input) {
+
+            const prescriptionCheck = document.getElementsByName("prescription_check");
+            const prescriptionContainer = document.getElementById("prescription-container");
+
+            prescriptionContainer.style.display = "none";
+
+            function togglePrescriptionContainer() {
+                if (document.getElementById("Yes_prescription").checked) {
+                    prescriptionContainer.style.display = "block"; // Show if Yes is checked
+                } else {
+                    prescriptionContainer.style.display = "none"; // Hide if No is checked
+                }
+            }
+
+            // Add event listeners to both radio buttons
+            prescriptionCheck.forEach(radio => {
+                radio.addEventListener("change", togglePrescriptionContainer);
             });
         }
     });
