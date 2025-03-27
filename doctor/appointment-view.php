@@ -374,9 +374,11 @@ include '../includes/head.php';
             return;
         }
         var medconInput = $('#medcon');
-        if (!medconInput.val().trim()) {
-            medconInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
+        if (exmedconCheck.val() === "Yes_medcon") {
+            if (!medconInput.val().trim()) {
+                medconInput[0].reportValidity(); // Show validation popup
+                return; // Stop execution
+            }
         }
 
         var allergyCheck = $('input[name="allergy_check"]:checked');
