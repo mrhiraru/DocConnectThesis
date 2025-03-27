@@ -60,6 +60,14 @@ include '../includes/head.php';
                             <label for="name" class="form-label mb-1">Patient Name:</label>
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
                         </div>
+                        <div class="col-12 mb-2">
+                            <label for="birthdate" class="form-label mb-1">Birthdate:</label>
+                            <input id="birthdate" class="form-control bg-light" value="<?= $record['birthdate'] ?>" readonly>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <label for="gender" class="form-label mb-1">Gender:</label>
+                            <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
+                        </div>
                         <div class="col-6 mb-2">
                             <label for="email" class="form-label mb-1">Email:</label>
                             <input id="email" class="form-control bg-light" value="<?= $record['email'] ?>" readonly>
@@ -310,8 +318,8 @@ include '../includes/head.php';
                             if (isset($record['diagnosis'])) {
                             ?>
                                 <div class="col-12 mb-2">
-                                    <label for="result" class="form-label mb-1">Medical Condition/s:</label>
-                                    <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
+                                    <label for="diagnosis" class="form-label mb-1">Medical Condition/s:</label>
+                                    <textarea id="diagnosis" name="diagnosis" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
                                 </div>
                             <?php
                             }
