@@ -364,7 +364,7 @@ include '../includes/head.php';
     function end_meeting() {
         var complaintInput = $('#complaint');
         if (!complaintInput.val().trim()) {
-            complaintInput[0].setCustomValidity("Please fill in the chief complaint."); // Set custom validation message
+            //complaintInput[0].setCustomValidity("Please fill in the chief complaint."); // Set custom validation message
             complaintInput[0].reportValidity(); // Show validation popup
             return; // Stop execution
         } else {
