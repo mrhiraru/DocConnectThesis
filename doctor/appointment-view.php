@@ -367,6 +367,8 @@ include '../includes/head.php';
             complaintInput[0].setCustomValidity("Please fill in the chief complaint."); // Set custom validation message
             complaintInput[0].reportValidity(); // Show validation popup
             return; // Stop execution
+        } else {
+            complaintInput[0].setCustomValidity(""); // Reset validation if valid
         }
 
         var exmedconCheck = $('input[name="exmedcon_check"]:checked');
@@ -393,7 +395,7 @@ include '../includes/head.php';
         var allergyInput = $('#allergy');
         if (allergyCheck.val() === "Yes") {
             if (!allergyInput.val().trim()) {
-                allergyInput[0].setCustomValidity("Please specify the allergy.");
+                allergyInput[0].setCustomValidity("Please specify the allergies.");
                 allergyInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
             } else {
@@ -409,8 +411,11 @@ include '../includes/head.php';
         var medicationInput = $('#medication');
         if (medicationCheck.val() === "Yes") {
             if (!medicationInput.val().trim()) {
+                medicationInput[0].setCustomValidity("Please specify the medications.");
                 medicationInput[0].reportValidity(); // Show validation popup
                 return; // Stop execution
+            } else {
+                medicationInput[0].setCustomValidity(""); // Reset validation if valid
             }
         }
 
