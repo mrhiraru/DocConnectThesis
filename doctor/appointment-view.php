@@ -43,10 +43,14 @@ include '../includes/head.php';
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
                     </div>
                     <div class="col-12 mb-3">
-                        <p class="m-0 p-0 fs-5 text-center text-secondary mb-3">Patient Information</p>
+                        <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
                         <div class="col-12 mb-3">
                             <label for="name" class="form-label">Patient Name:</label>
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input id="email" class="form-control bg-light" value="<?= $record['email'] ?>" readonly>
                         </div>
                         <div class="col-12 mb-3">
                             <label for="contact" class="form-label">Contact:</label>
