@@ -23,7 +23,7 @@ include '../includes/head.php';
     <section class="page-container padding-medium">
         <div class="container py-5">
             <div class="row justify-content-center">
-                <div class="col-lg-8">
+                <div class="col-lg-10">
                     <div class="card border-0 shadow">
                         <div class="card-header bg-white">
                             <div class="d-flex align-items-center">
@@ -34,34 +34,54 @@ include '../includes/head.php';
                         </div>
                         
                         <div class="card-body">
-                            <form id="documentUploadForm" class="needs-validation" novalidate>
-                                <!-- File Upload Input -->
-                                <div class="mb-4">
-                                    <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
-                                    <div class="input-group">
-                                        <input type="file" class="form-control d-none" id="documentFile" accept=".pdf,.docx" required>
-                                        <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
-                                            <i class='bx bx-file me-1'></i> Choose File
-                                        </button>
-                                        <span id="fileName" class="input-group-text bg-light">No file chosen</span>
+                            <div class="row">
+                                <!-- Form Column -->
+                                <div class="col-md-6">
+                                    <form id="documentUploadForm" class="needs-validation" novalidate>
+                                        <!-- File Upload Input -->
+                                        <div class="mb-4">
+                                            <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
+                                            <div class="input-group">
+                                                <input type="file" class="form-control d-none" id="documentFile" accept=".pdf,.docx" required>
+                                                <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
+                                                    <i class='bx bx-file me-1'></i> Choose File
+                                                </button>
+                                                <span id="fileName" class="input-group-text bg-light">No file chosen</span>
+                                            </div>
+                                            <div class="invalid-feedback">Please select a file to upload.</div>
+                                        </div>
+                                        
+                                        <!-- Description Input -->
+                                        <div class="mb-4">
+                                            <label for="documentDescription" class="form-label fw-semibold">Description</label>
+                                            <textarea class="form-control bg-light" id="documentDescription" rows="4" placeholder="Enter a description for this document..." required></textarea>
+                                            <div class="invalid-feedback">Please provide a description.</div>
+                                        </div>
+                                        
+                                        <!-- Submit Button -->
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button type="submit" class="btn btn-green px-4 text-light">
+                                                <i class='bx bx-upload me-1'></i> Upload Document
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                
+                                <div class="col-md-6 mt-4 mt-md-0">
+                                    <div class="border rounded p-3 h-100">
+                                        <h5 class="text-center mb-3">Document Preview</h5>
+                                        <div id="noPreview" class="text-center py-5">
+                                            <i class='bx bx-file-blank fs-1 text-muted'></i>
+                                            <p class="mt-2 text-muted">No document selected</p>
+                                        </div>
+                                        <iframe id="pdfPreview" frameborder="0" scrolling="no" class="w-100 d-none" style="height: 400px;"></iframe>
+                                        <div id="unsupportedPreview" class="text-center py-5 d-none">
+                                            <i class='bx bx-error-alt fs-1 text-warning'></i>
+                                            <p class="mt-2 text-muted">Preview not available for this file type</p>
+                                        </div>
                                     </div>
-                                    <div class="invalid-feedback">Please select a file to upload.</div>
                                 </div>
-                                
-                                <!-- Description Input -->
-                                <div class="mb-4">
-                                    <label for="documentDescription" class="form-label fw-semibold">Description</label>
-                                    <textarea class="form-control" id="documentDescription" rows="4" placeholder="Enter a description for this document..." required></textarea>
-                                    <div class="invalid-feedback">Please provide a description.</div>
-                                </div>
-                                
-                                <!-- Submit Button -->
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                    <button type="submit" class="btn btn-green px-4 text-light">
-                                        <i class='bx bx-upload me-1'></i> Upload Document
-                                    </button>
-                                </div>
-                            </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -69,16 +89,38 @@ include '../includes/head.php';
         </div>
     </section>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const fileInput = document.getElementById('documentFile');
             const fileNameDisplay = document.getElementById('fileName');
+            const pdfPreview = document.getElementById('pdfPreview');
+            const noPreview = document.getElementById('noPreview');
+            const unsupportedPreview = document.getElementById('unsupportedPreview');
             
             fileInput.addEventListener('change', function() {
                 if (this.files.length > 0) {
-                    fileNameDisplay.textContent = this.files[0].name;
+                    const file = this.files[0];
+                    fileNameDisplay.textContent = file.name;
+                    
+                    pdfPreview.classList.add('d-none');
+                    noPreview.classList.add('d-none');
+                    unsupportedPreview.classList.add('d-none');
+                    
+                    if (file.type === 'application/pdf') {
+                        const fileURL = URL.createObjectURL(file);
+                        pdfPreview.src = fileURL;
+                        pdfPreview.classList.remove('d-none');
+                    } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                        unsupportedPreview.classList.remove('d-none');
+                    } else {
+                        noPreview.classList.remove('d-none');
+                    }
                 } else {
                     fileNameDisplay.textContent = 'No file chosen';
+                    pdfPreview.classList.add('d-none');
+                    unsupportedPreview.classList.add('d-none');
+                    noPreview.classList.remove('d-none');
                 }
             });
             
@@ -119,6 +161,11 @@ include '../includes/head.php';
                 form.reset();
                 form.classList.remove('was-validated');
                 fileNameDisplay.textContent = 'No file chosen';
+                
+                pdfPreview.classList.add('d-none');
+                unsupportedPreview.classList.add('d-none');
+                noPreview.classList.remove('d-none');
+                pdfPreview.src = '';
                 
                 setTimeout(() => {
                     successDiv.remove();
