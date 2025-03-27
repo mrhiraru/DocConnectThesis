@@ -47,6 +47,10 @@ a:hover {
 	color: var(--dark_secondary);
 }
 
+.btn-green {
+  background-color: var(--dark_secondary) !important;
+}
+
 .c-red {
 	color: var(--primary);
 }
