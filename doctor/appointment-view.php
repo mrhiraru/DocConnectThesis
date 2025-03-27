@@ -270,14 +270,14 @@ include '../includes/head.php';
                 ?>
                     <div class="col-12 mb-3">
                         <form action="" class="row" id="resultForm">
-                            <div class="col-12 mb-3">
-                                <label for="complaint" class="form-label">Chief Complaint:</label>
+                            <div class="col-12 mb-2">
+                                <label for="complaint" class="form-label mb-1">Chief Complaint:</label>
                                 <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['complaint'] ?></textarea>
                             </div>
                             <?php
-                            if (!isset($record['medcon_history'])) {
+                            if (isset($record['medcon_history'])) {
                             ?>
-                                <div class="col-12" id="medcon-container">
+                                <div class="col-12 mb-2" id="medcon-container">
                                     <label for="medcon" class="form-label mb-1">Medical History</label>
                                     <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medcon_history'] ?></textarea>
                                 </div>
@@ -285,8 +285,8 @@ include '../includes/head.php';
                             }
                             if (isset($record['diagnosis'])) {
                             ?>
-                                <div class="col-12 mb-3">
-                                    <label for="result" class="form-label">Medical Condition/s:</label>
+                                <div class="col-12 mb-2">
+                                    <label for="result" class="form-label mb-1">Medical Condition/s:</label>
                                     <textarea id="result" name="result" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
                                 </div>
                             <?php
