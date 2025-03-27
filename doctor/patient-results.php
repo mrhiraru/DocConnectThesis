@@ -50,7 +50,15 @@ include '../includes/head.php';
                                     <label for="name" class="form-label mb-1">Patient Name:</label>
                                     <input id="name" class="form-control bg-light" value="<?= $item['patient_name'] ?>" readonly>
                                 </div>
-
+                                <p class="m-0 p-0 fs-6 text-secondary mb-2">Subjective Information</p>
+                                <div class="col-12 mb-2">
+                                    <label for="purpose" class="form-label mb-1">Purpose:</label>
+                                    <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $item['purpose'] ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="reason" class="form-label mb-1">Reason:</label>
+                                    <textarea id="reason" rows="2" cols="50" class="form-control bg-light" readonly><?= $item['reason'] ?></textarea>
+                                </div>
                             </div>
                         </div>
                     <?php
