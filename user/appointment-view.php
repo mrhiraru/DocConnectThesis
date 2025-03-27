@@ -68,18 +68,10 @@ include '../includes/head.php';
                                     </div>
                                 </div>
                                 <div class="row col-12 mb-3 border-bottom">
-                                    <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
+                                    <p class="m-0 p-0 fs-6 text-secondary mb-2">Doctor Information</p>
                                     <div class="col-12 mb-2">
-                                        <label for="name" class="form-label mb-1">Patient Name:</label>
-                                        <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
-                                    </div>
-                                    <div class="col-6 mb-2">
-                                        <label for="birthdate" class="form-label mb-1">Birthdate:</label>
-                                        <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
-                                    </div>
-                                    <div class="col-6 mb-2">
-                                        <label for="gender" class="form-label mb-1">Gender:</label>
-                                        <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
+                                        <label for="name" class="form-label mb-1">Doctor Name:</label>
+                                        <input id="name" class="form-control bg-light" value="<?= $record['doctor_name'] ?>" readonly>
                                     </div>
                                     <div class="col-6 mb-2">
                                         <label for="email" class="form-label mb-1">Email:</label>
