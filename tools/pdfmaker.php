@@ -234,28 +234,6 @@
                     },
                 <?php } ?> {
                     canvas: [{
-                        type: 'line',
-                        x1: 0,
-                        y1: 0,
-                        x2: 515,
-                        y2: 0,
-                        lineWidth: 1
-                    }]
-                },
-                {
-                    text: "Thank you for choosing <?= $_SESSION['fullname'] ?> as your healthcare provider.",
-                    margin: [0, 15, 0, 0],
-                },
-                {
-                    text: "Please do not hesitate to contact us if you have any questions or concerns.",
-                    margin: [0, 5, 0, 0],
-                },
-                {
-                    text: "Have a great day!",
-                    margin: [0, 5, 0, 0],
-                },
-                {
-                    canvas: [{
                             type: 'line',
                             x1: 0,
                             y1: 0,
