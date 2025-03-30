@@ -12,7 +12,7 @@ class ContactInfo
 
     public function getContactInfo()
     {
-        $stmt = $this->db->prepare("SELECT * FROM contact_info ORDER BY last_updated DESC LIMIT 1");
+        $stmt = $this->db->prepare("SELECT * FROM contact_us ORDER BY last_updated DESC LIMIT 1");
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -20,7 +20,7 @@ class ContactInfo
     public function updateContactInfo($data)
     {
         $stmt = $this->db->prepare("
-            UPDATE contact_info SET
+            UPDATE contact_us SET
                 heading = :heading,
                 description = :description,
                 address = :address,
@@ -30,7 +30,7 @@ class ContactInfo
                 facebook_link = :facebook_link,
                 instagram_link = :instagram_link,
                 map_embed_url = :map_embed_url
-            WHERE id = (SELECT id FROM (SELECT id FROM contact_info ORDER BY last_updated DESC LIMIT 1) as temp)
+            WHERE id = (SELECT id FROM (SELECT id FROM contact_us ORDER BY last_updated DESC LIMIT 1) as temp)
         ");
         
         return $stmt->execute([
