@@ -3,14 +3,69 @@ session_start();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
     header('location: ../user/verification.php');
+    exit();
 } else if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 0) {
     header('location: ../index.php');
+    exit();
 }
 
-require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
+require_once('../classes/services.class.php');
+$services = new Services();
+$aboutContent = $services->getAboutContent();
+$allSections = $services->getAllSectionsWithServices();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['save_about'])) {
+        if ($services->saveAboutContent($_POST['title'], $_POST['description'])) {
+            $_SESSION['message'] = 'About section updated successfully!';
+        } else {
+            $_SESSION['error'] = 'Failed to update about section.';
+        }
+    } elseif (isset($_POST['save_section'])) {
+        $sectionId = $_POST['section_id'];
+        $sectionTitle = $_POST['section_title'];
+        $sectionDesc = $_POST['section_description'];
+
+        if ($services->saveSection($sectionId, $sectionTitle, $sectionDesc)) {
+            for ($i = 0; $i < 3; $i++) {
+                if (!empty($_POST['service_title'][$i])) {
+                    $serviceData = [
+                        'title' => $_POST['service_title'][$i],
+                        'description' => $_POST['service_description'][$i],
+                        'image' => $_FILES['service_image']['name'][$i] ?? null,
+                        'section_title' => $sectionTitle
+                    ];
+
+                    // Handle file upload
+                    if (!empty($_FILES['service_image']['tmp_name'][$i])) {
+                        $targetDir = "../assets/images/services/";
+                        $fileName = basename($_FILES["service_image"]["name"][$i]);
+                        $targetFile = $targetDir . $fileName;
+                        move_uploaded_file($_FILES["service_image"]["tmp_name"][$i], $targetFile);
+                        $serviceData['image'] = $fileName;
+                    }
+
+                    $services->saveService($sectionId, $serviceData, $i);
+                }
+            }
+            $_SESSION['message'] = 'Section updated successfully!';
+        } else {
+            $_SESSION['error'] = 'Failed to update section.';
+        }
+    } elseif (isset($_POST['delete_section'])) {
+        if ($services->deleteSection($_POST['section_id'])) {
+            $_SESSION['message'] = 'Section deleted successfully!';
+        } else {
+            $_SESSION['error'] = 'Failed to delete section.';
+        }
+    }
+
+    header('location: userServices.php');
+    exit();
+}
 
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <?php
 $title = 'Admin | User Services';
@@ -24,337 +79,183 @@ function getCurrentPage()
 <body>
     <?php
     require_once('./includes/admin_header.php');
-    ?>
-    <?php
     require_once('./includes/admin_sidepanel.php');
     ?>
 
     <section id="userPage" class="page-container">
-
         <?php
         $services = 'active';
         $aServices = 'page';
         $cServices = 'text-dark';
-
         include './includes/adminUserPage_nav.php';
         ?>
 
         <h1 class="text-start mb-3">User Services</h1>
-        <h6 class="text-start mb-4 text-muted">Icon Class: <a href="https://boxicons.com/" target="_blank">Boxicons.com</a></h6>
 
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
-            <h5 class="card-title">About Section</h5>
-        </button>
-        <hr class="mt-1 mb-2">
-        <div class="collapse" id="aboutSection">
-            <div class="card mb-3 w-100">
-                <div class="card-body">
-                    <form class="p-3 pb-md-4 mx-auto text-center">
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="title" value="Telecommunication Health Services">
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" rows="4">Welcome to DocConnect's Telecommunication Health Services! Our goal is to provide you with seamless access to quality healthcare and wellness resources from the comfort of your home or office. Our comprehensive suite of telecommunication health services ensures that you receive the care you need when you need it, without the hassle of traveling to a clinic. Here's what we offer:</textarea>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary text-light">Save</button>
-                        </div>
-                    </form>
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert alert-success"><?php echo $_SESSION['message'];
+                                                unset($_SESSION['message']); ?></div>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger"><?php echo $_SESSION['error'];
+                                            unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
 
-                </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">About Section</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="save_about" value="1">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title"
+                            value="<?php echo htmlspecialchars($aboutContent['section_title'] ?? 'Telecommunication Health Services'); ?>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea class="form-control" name="description" rows="4" required><?php
+                                                                                            echo htmlspecialchars($aboutContent['section_description'] ?? 'Welcome to DocConnect\'s Telecommunication Health Services! Our goal is to provide you with seamless access to quality healthcare and wellness resources from the comfort of your home or office.');
+                                                                                            ?></textarea>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
             </div>
         </div>
 
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#secondSection" aria-expanded="false" aria-controls="secondSection">
-            <h5 class="card-title">Service One</h5>
-        </button>
-        <hr class="mt-1 mb-2">
-        <div class="collapse" id="secondSection">
-            <div class="card w-100">
+        <!-- Existing Sections -->
+        <?php foreach ($allSections as $index => $section): ?>
+            <?php $sectionId = $index + 1; ?>
+            <div class="card mb-4">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Section <?php echo $sectionId; ?></h5>
+                    <form method="POST" class="d-inline">
+                        <input type="hidden" name="section_id" value="<?php echo $sectionId; ?>">
+                        <input type="hidden" name="delete_section" value="1">
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to delete this section and all its services?')">
+                            Delete Section
+                        </button>
+                    </form>
+                </div>
                 <div class="card-body">
-                    <form class="mb-5">
-                        <h2 class="text-primary">Service one</h2>
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="save_section" value="1">
+                        <input type="hidden" name="section_id" value="<?php echo $sectionId; ?>">
 
-                        <!-- Section Title -->
                         <div class="mb-3">
-                            <label for="sectionTitle" class="form-label">Section Title</label>
-                            <input type="text" class="form-control" id="sectionTitle" value="Virtual Consultations">
+                            <label class="form-label">Section Title</label>
+                            <input type="text" class="form-control" name="section_title"
+                                value="<?php echo htmlspecialchars($section['section_title']); ?>" required>
                         </div>
 
-                        <!-- Section Description -->
                         <div class="mb-3">
-                            <label for="sectionDescription" class="form-label">Section Description</label>
-                            <textarea class="form-control" id="sectionDescription" rows="3">Skip the waiting room—consult with healthcare professionals online!</textarea>
+                            <label class="form-label">Section Description</label>
+                            <textarea class="form-control" name="section_description" rows="2" required><?php
+                                                                                                        echo htmlspecialchars($section['section_description']);
+                                                                                                        ?></textarea>
                         </div>
+
+                        <h6 class="mt-4 mb-3">Services (Max 3)</h6>
 
                         <div class="row">
-                            <!-- Card 1 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Expert Medical Advice">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Receive personalized guidance and treatment plans from licensed healthcare providers.</textarea>
-                                </div>
-                            </div>
+                            <?php for ($i = 0; $i < 3; $i++): ?>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label class="form-label">Service Image</label>
+                                                <input type="file" class="form-control" name="service_image[]">
+                                                <?php if (isset($section['services'][$i]['image'])): ?>
+                                                    <small class="text-muted">Current: <?php echo htmlspecialchars($section['services'][$i]['image']); ?></small>
+                                                <?php endif; ?>
+                                            </div>
 
-                            <!-- Card 2 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Convenient Appointments">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Book consultations at your preferred time and attend from any device.</textarea>
-                                </div>
-                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Service Title</label>
+                                                <input type="text" class="form-control" name="service_title[]"
+                                                    value="<?php echo isset($section['services'][$i]) ? htmlspecialchars($section['services'][$i]['title']) : ''; ?>">
+                                            </div>
 
-                            <!-- Card 3 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Follow-Up Care">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Get continuous support to ensure your health management is effective.</textarea>
+                                            <div class="mb-3">
+                                                <label class="form-label">Service Description</label>
+                                                <textarea class="form-control" name="service_description[]" rows="3"><?php
+                                                                                                                        echo isset($section['services'][$i]) ? htmlspecialchars($section['services'][$i]['description']) : '';
+                                                                                                                        ?></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            <?php endfor; ?>
                         </div>
 
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary text-light">Save</button>
+                        <div class="d-flex justify-content-end mt-3">
+                            <button type="submit" class="btn btn-primary">Save Section</button>
                         </div>
                     </form>
-
                 </div>
             </div>
-        </div>
+        <?php endforeach; ?>
 
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#servicetwo" aria-expanded="false" aria-controls="servicetwo">
-            <h5 class="card-title">Service Two</h5>
-        </button>
-        <hr class="mt-1 mb-2">
-        <div class="collapse" id="servicetwo">
-            <div class="card w-100">
-                <div class="card-body">
-                    <form class="mb-5">
-                        <h2 class="text-primary">Service Two</h2>
+        <!-- Add New Section -->
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Add New Section</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="save_section" value="1">
+                    <input type="hidden" name="section_id" value="<?php echo count($allSections) + 1; ?>">
 
-                        <!-- Section Title -->
-                        <div class="mb-3">
-                            <label for="sectionTitle" class="form-label">Section Title</label>
-                            <input type="text" class="form-control" id="sectionTitle" value="Virtual Consultations">
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Section Title</label>
+                        <input type="text" class="form-control" name="section_title" required>
+                    </div>
 
-                        <!-- Section Description -->
-                        <div class="mb-3">
-                            <label for="sectionDescription" class="form-label">Section Description</label>
-                            <textarea class="form-control" id="sectionDescription" rows="3">Skip the waiting room—consult with healthcare professionals online!</textarea>
-                        </div>
+                    <div class="mb-3">
+                        <label class="form-label">Section Description</label>
+                        <textarea class="form-control" name="section_description" rows="2" required></textarea>
+                    </div>
 
-                        <div class="row">
-                            <!-- Card 1 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Expert Medical Advice">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Receive personalized guidance and treatment plans from licensed healthcare providers.</textarea>
+                    <h6 class="mt-4 mb-3">Services (Max 3)</h6>
+
+                    <div class="row">
+                        <?php for ($i = 0; $i < 3; $i++): ?>
+                            <div class="col-md-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Service Image</label>
+                                            <input type="file" class="form-control" name="service_image[]">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Service Title</label>
+                                            <input type="text" class="form-control" name="service_title[]">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">Service Description</label>
+                                            <textarea class="form-control" name="service_description[]" rows="3"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                        <?php endfor; ?>
+                    </div>
 
-                            <!-- Card 2 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Convenient Appointments">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Book consultations at your preferred time and attend from any device.</textarea>
-                                </div>
-                            </div>
-
-                            <!-- Card 3 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Follow-Up Care">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Get continuous support to ensure your health management is effective.</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary text-light">Save</button>
-                        </div>
-                    </form>
-
-                </div>
+                    <div class="d-flex justify-content-end mt-3">
+                        <button type="submit" class="btn btn-success">Add New Section</button>
+                    </div>
+                </form>
             </div>
         </div>
-
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#servicethree" aria-expanded="false" aria-controls="servicethree">
-            <h5 class="card-title">Service Three</h5>
-        </button>
-        <hr class="mt-1 mb-2">
-        <div class="collapse" id="servicethree">
-            <div class="card w-100">
-                <div class="card-body">
-                    <form class="mb-5">
-                        <h2 class="text-primary">Service Three</h2>
-
-                        <!-- Section Title -->
-                        <div class="mb-3">
-                            <label for="sectionTitle" class="form-label">Section Title</label>
-                            <input type="text" class="form-control" id="sectionTitle" value="Virtual Consultations">
-                        </div>
-
-                        <!-- Section Description -->
-                        <div class="mb-3">
-                            <label for="sectionDescription" class="form-label">Section Description</label>
-                            <textarea class="form-control" id="sectionDescription" rows="3">Skip the waiting room—consult with healthcare professionals online!</textarea>
-                        </div>
-
-                        <div class="row">
-                            <!-- Card 1 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Expert Medical Advice">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Receive personalized guidance and treatment plans from licensed healthcare providers.</textarea>
-                                </div>
-                            </div>
-
-                            <!-- Card 2 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Convenient Appointments">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Book consultations at your preferred time and attend from any device.</textarea>
-                                </div>
-                            </div>
-
-                            <!-- Card 3 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Follow-Up Care">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Get continuous support to ensure your health management is effective.</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary text-light">Save</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#servicefour" aria-expanded="false" aria-controls="servicefour">
-            <h5 class="card-title">Service Four</h5>
-        </button>
-        <hr class="mt-1 mb-2">
-        <div class="collapse" id="servicefour">
-            <div class="card w-100">
-                <div class="card-body">
-                    <form class="mb-5">
-                        <h2 class="text-primary">Service four</h2>
-
-                        <!-- Section Title -->
-                        <div class="mb-3">
-                            <label for="sectionTitle" class="form-label">Section Title</label>
-                            <input type="text" class="form-control" id="sectionTitle" value="Virtual Consultations">
-                        </div>
-
-                        <!-- Section Description -->
-                        <div class="mb-3">
-                            <label for="sectionDescription" class="form-label">Section Description</label>
-                            <textarea class="form-control" id="sectionDescription" rows="3">Skip the waiting room—consult with healthcare professionals online!</textarea>
-                        </div>
-
-                        <div class="row">
-                            <!-- Card 1 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Expert Medical Advice">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Receive personalized guidance and treatment plans from licensed healthcare providers.</textarea>
-                                </div>
-                            </div>
-
-                            <!-- Card 2 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Convenient Appointments">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Book consultations at your preferred time and attend from any device.</textarea>
-                                </div>
-                            </div>
-
-                            <!-- Card 3 -->
-                            <div class="col-md-4 mb-4">
-                                <div class="card service-card shadow-sm p-3">
-                                    <label class="form-label">Upload Image</label>
-                                    <input type="file" class="form-control mb-2">
-                                    <label class="form-label">Title</label>
-                                    <input type="text" class="form-control mb-2" value="Follow-Up Care">
-                                    <label class="form-label">Description</label>
-                                    <textarea class="form-control" rows="2">Get continuous support to ensure your health management is effective.</textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary text-light">Save</button>
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-
     </section>
 
-    <script>
-        function previewImage(event, previewId) {
-            const reader = new FileReader();
-            reader.onload = function() {
-                document.getElementById(previewId).src = reader.result;
-            }
-            reader.readAsDataURL(event.target.files[0]);
-        }
-    </script>
-
+    <?php include './includes/admin_footer.php'; ?>
 </body>
 
 </html>
