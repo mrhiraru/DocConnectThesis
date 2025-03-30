@@ -103,6 +103,11 @@ hr {
   transition: transform 0.3s ease; /* Smooth transition */
 }
 
+
+.btn-green {
+  background-color: var(--dark_secondary) !important;
+}
+
 * {
   font-family: 'Nunito', sans-serif;
 	margin: 0;

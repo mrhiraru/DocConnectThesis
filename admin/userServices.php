@@ -101,62 +101,58 @@ function getCurrentPage()
                                             unset($_SESSION['error']); ?></div>
         <?php endif; ?>
 
-        <div class="card mb-4">
-            <div class="card-header">
-                <h5 class="mb-0">About Section</h5>
-            </div>
-            <div class="card-body">
-                <form method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="save_about" value="1">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" name="title"
-                            value="<?php echo htmlspecialchars($aboutContent['section_title'] ?? 'Telecommunication Health Services'); ?>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
-                        <textarea class="form-control" name="description" rows="4" required><?php
-                                                                                            echo htmlspecialchars($aboutContent['section_description'] ?? 'Welcome to DocConnect\'s Telecommunication Health Services! Our goal is to provide you with seamless access to quality healthcare and wellness resources from the comfort of your home or office.');
-                                                                                            ?></textarea>
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                </form>
+        <!-- About Section -->
+        <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="true" aria-controls="aboutSection">
+            <h5 class="card-title">About Section</h5>
+        </button>
+        <hr class="mt-1 mb-2">
+        <div class="collapse" id="aboutSection">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="save_about" value="1">
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" name="title"
+                                value="<?php echo htmlspecialchars($aboutContent['section_title'] ?? 'Telecommunication Health Services'); ?>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="4" required><?php
+                                                                                                echo htmlspecialchars($aboutContent['section_description'] ?? 'Welcome to DocConnect\'s Telecommunication Health Services! Our goal is to provide you with seamless access to quality healthcare and wellness resources from the comfort of your home or office.');
+                                                                                                ?></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary text-light">Save Changes</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
-        <!-- Existing Sections -->
-        <?php foreach ($allSections as $index => $section): ?>
-            <?php $sectionId = $index + 1; ?>
-            <div class="card mb-4">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h5 class="mb-0">Section <?php echo $sectionId; ?></h5>
-                    <form method="POST" class="d-inline">
-                        <input type="hidden" name="section_id" value="<?php echo $sectionId; ?>">
-                        <input type="hidden" name="delete_section" value="1">
-                        <button type="submit" class="btn btn-danger btn-sm"
-                            onclick="return confirm('Are you sure you want to delete this section and all its services?')">
-                            Delete Section
-                        </button>
-                    </form>
+        <!-- Add New Section -->
+        <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#newSection" aria-expanded="false" aria-controls="newSection">
+            <h5 class="card-title">Add New Section</h5>
+        </button>
+        <hr class="mt-1 mb-2">
+        <div class="collapse show" id="newSection">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Add New Section</h5>
                 </div>
                 <div class="card-body">
                     <form method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="save_section" value="1">
-                        <input type="hidden" name="section_id" value="<?php echo $sectionId; ?>">
+                        <input type="hidden" name="section_id" value="<?php echo count($allSections) + 1; ?>">
 
                         <div class="mb-3">
                             <label class="form-label">Section Title</label>
-                            <input type="text" class="form-control" name="section_title"
-                                value="<?php echo htmlspecialchars($section['section_title']); ?>" required>
+                            <input type="text" class="form-control" name="section_title" required>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Section Description</label>
-                            <textarea class="form-control" name="section_description" rows="2" required><?php
-                                                                                                        echo htmlspecialchars($section['section_description']);
-                                                                                                        ?></textarea>
+                            <textarea class="form-control" name="section_description" rows="2" required></textarea>
                         </div>
 
                         <h6 class="mt-4 mb-3">Services (Max 3)</h6>
@@ -169,22 +165,16 @@ function getCurrentPage()
                                             <div class="mb-3">
                                                 <label class="form-label">Service Image</label>
                                                 <input type="file" class="form-control" name="service_image[]">
-                                                <?php if (isset($section['services'][$i]['image'])): ?>
-                                                    <small class="text-muted">Current: <?php echo htmlspecialchars($section['services'][$i]['image']); ?></small>
-                                                <?php endif; ?>
                                             </div>
 
                                             <div class="mb-3">
                                                 <label class="form-label">Service Title</label>
-                                                <input type="text" class="form-control" name="service_title[]"
-                                                    value="<?php echo isset($section['services'][$i]) ? htmlspecialchars($section['services'][$i]['title']) : ''; ?>">
+                                                <input type="text" class="form-control" name="service_title[]">
                                             </div>
 
                                             <div class="mb-3">
                                                 <label class="form-label">Service Description</label>
-                                                <textarea class="form-control" name="service_description[]" rows="3"><?php
-                                                                                                                        echo isset($section['services'][$i]) ? htmlspecialchars($section['services'][$i]['description']) : '';
-                                                                                                                        ?></textarea>
+                                                <textarea class="form-control" name="service_description[]" rows="3"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -193,66 +183,92 @@ function getCurrentPage()
                         </div>
 
                         <div class="d-flex justify-content-end mt-3">
-                            <button type="submit" class="btn btn-primary">Save Section</button>
+                            <button type="submit" class="btn btn-green text-light">Add New Section</button>
                         </div>
                     </form>
                 </div>
             </div>
-        <?php endforeach; ?>
+        </div>
 
-        <!-- Add New Section -->
-        <div class="card">
-            <div class="card-header">
-                <h5 class="mb-0">Add New Section</h5>
-            </div>
-            <div class="card-body">
-                <form method="POST" enctype="multipart/form-data">
-                    <input type="hidden" name="save_section" value="1">
-                    <input type="hidden" name="section_id" value="<?php echo count($allSections) + 1; ?>">
-
-                    <div class="mb-3">
-                        <label class="form-label">Section Title</label>
-                        <input type="text" class="form-control" name="section_title" required>
+        <!-- Existing Sections -->
+        <?php foreach ($allSections as $index => $section): ?>
+            <?php $sectionId = $index + 1; ?>
+            <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#section<?php echo $sectionId; ?>" aria-expanded="true" aria-controls="section<?php echo $sectionId; ?>">
+                <h5 class="card-title">Section <?php echo $sectionId; ?></h5>
+            </button>
+            <hr class="mt-1 mb-2">
+            <div class="collapse" id="section<?php echo $sectionId; ?>">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Section <?php echo $sectionId; ?></h5>
+                        <form method="POST" class="d-inline">
+                            <input type="hidden" name="section_id" value="<?php echo $sectionId; ?>">
+                            <input type="hidden" name="delete_section" value="1">
+                            <button type="submit" class="btn btn-danger btn-sm text-light"
+                                onclick="return confirm('Are you sure you want to delete this section and all its services?')">
+                                Delete Section
+                            </button>
+                        </form>
                     </div>
+                    <div class="card-body">
+                        <form method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="save_section" value="1">
+                            <input type="hidden" name="section_id" value="<?php echo $sectionId; ?>">
 
-                    <div class="mb-3">
-                        <label class="form-label">Section Description</label>
-                        <textarea class="form-control" name="section_description" rows="2" required></textarea>
-                    </div>
+                            <div class="mb-3">
+                                <label class="form-label">Section Title</label>
+                                <input type="text" class="form-control" name="section_title"
+                                    value="<?php echo htmlspecialchars($section['section_title']); ?>" required>
+                            </div>
 
-                    <h6 class="mt-4 mb-3">Services (Max 3)</h6>
+                            <div class="mb-3">
+                                <label class="form-label">Section Description</label>
+                                <textarea class="form-control" name="section_description" rows="2" required><?php
+                                                                                                            echo htmlspecialchars($section['section_description']);
+                                                                                                            ?></textarea>
+                            </div>
 
-                    <div class="row">
-                        <?php for ($i = 0; $i < 3; $i++): ?>
-                            <div class="col-md-4 mb-3">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="mb-3">
-                                            <label class="form-label">Service Image</label>
-                                            <input type="file" class="form-control" name="service_image[]">
-                                        </div>
+                            <h6 class="mt-4 mb-3">Services (Max 3)</h6>
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Service Title</label>
-                                            <input type="text" class="form-control" name="service_title[]">
-                                        </div>
+                            <div class="row">
+                                <?php for ($i = 0; $i < 3; $i++): ?>
+                                    <div class="col-md-4 mb-3">
+                                        <div class="card h-100">
+                                            <div class="card-body">
+                                                <div class="mb-3">
+                                                    <label class="form-label">Service Image</label>
+                                                    <input type="file" class="form-control" name="service_image[]">
+                                                    <?php if (isset($section['services'][$i]['image'])): ?>
+                                                        <small class="text-muted">Current: <?php echo htmlspecialchars($section['services'][$i]['image']); ?></small>
+                                                    <?php endif; ?>
+                                                </div>
 
-                                        <div class="mb-3">
-                                            <label class="form-label">Service Description</label>
-                                            <textarea class="form-control" name="service_description[]" rows="3"></textarea>
+                                                <div class="mb-3">
+                                                    <label class="form-label">Service Title</label>
+                                                    <input type="text" class="form-control" name="service_title[]"
+                                                        value="<?php echo isset($section['services'][$i]) ? htmlspecialchars($section['services'][$i]['title']) : ''; ?>">
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label class="form-label">Service Description</label>
+                                                    <textarea class="form-control" name="service_description[]" rows="3"><?php
+                                                                                                                            echo isset($section['services'][$i]) ? htmlspecialchars($section['services'][$i]['description']) : '';
+                                                                                                                            ?></textarea>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                <?php endfor; ?>
                             </div>
-                        <?php endfor; ?>
-                    </div>
 
-                    <div class="d-flex justify-content-end mt-3">
-                        <button type="submit" class="btn btn-success">Add New Section</button>
+                            <div class="d-flex justify-content-end mt-3">
+                                <button type="submit" class="btn btn-primary text-light">Save Section</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
-        </div>
+        <?php endforeach; ?>
     </section>
 
     <?php include './includes/admin_footer.php'; ?>

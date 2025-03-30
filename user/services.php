@@ -45,7 +45,7 @@ include '../includes/head.php';
         <div class="row">
           <?php foreach ($section['services'] as $service): ?>
             <div class="col-md-4 mb-4">
-              <div class="card service-card shadow-sm">
+              <div class="card service-card shadow-sm h-100">
                 <?php if ($service['image']): ?>
                   <img src="../assets/images/services/<?php echo htmlspecialchars($service['image']); ?>" class="card-img-top service-img" alt="<?php echo htmlspecialchars($service['title']); ?>">
                 <?php endif; ?>
