@@ -2,20 +2,24 @@
 session_start();
 
 if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] != 'Verified') {
-  header('location: ../user/verification.php');
+    header('location: ../user/verification.php');
 }
 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
+require_once('../classes/contact.class.php');
+
+$contactInfo = new ContactInfo();
+$currentContactInfo = $contactInfo->getContactInfo();
 
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <?php 
-  $title = 'DocConnect | Contacts';
-  $contact = 'active';
-	include '../includes/head.php';
+$title = 'DocConnect | Contacts';
+$contact = 'active';
+include '../includes/head.php';
 ?>
 <body>
   <style>
@@ -52,7 +56,7 @@ require_once('../classes/account.class.php');
   <!-- Header Section -->
   <section class="contact-header mt-5">
     <h1>Contact us</h1>
-    <p>Connect with us, and we’re here to support your telehealth journey. Here’s how you can reach us</p>
+    <p>Connect with us, and we're here to support your telehealth journey. Here's how you can reach us</p>
   </section>
 
   <!-- Contact Section -->
@@ -61,45 +65,52 @@ require_once('../classes/account.class.php');
       <!-- Left: Contact Details -->
       <div class="col-md-5 rounded-3 mb-4 mb-md-0" style="background-color: #eeeeee;">
         <div class="m-4">
-          <h4>Get in touch</h4>
-          <p>Want to get in touch? we’d love to hear from you. here’s how you can reach us</p>
+          <h4><?php echo htmlspecialchars($currentContactInfo['heading'] ?? 'Get in touch'); ?></h4>
+          <p><?php echo htmlspecialchars($currentContactInfo['description'] ?? 'Want to get in touch? Wed love to hear from you. Heres how you can reach us.'); ?></p>
+          
           <div class="mb-3">
             <div class="d-flex align-items-start">
-                <i class='bx bx-map-pin text-white bg-primary p-md-3 p-2 xx-large-font rounded-circle me-3' ></i>
+              <i class='bx bx-map-pin text-white bg-primary p-md-3 p-2 xx-large-font rounded-circle me-3'></i>
               <div>
                 <strong class="text-primary">Head Office</strong><br>
-                <p class="text-break">Normal Road, Baliwasan, 7000 Zamboanga City</p>
+                <p class="text-break"><?php echo htmlspecialchars($currentContactInfo['address'] ?? 'Normal Road, Baliwasan, 7000 Zamboanga City'); ?></p>
               </div>
             </div>
           </div>
+          
           <div class="mb-3">
             <div class="d-flex align-items-start">
-              <i class='bx bx-envelope text-white bg-primary p-md-3 p-2 xx-large-font rounded-circle me-3' ></i>
+              <i class='bx bx-envelope text-white bg-primary p-md-3 p-2 xx-large-font rounded-circle me-3'></i>
               <div>
                 <strong class="text-primary">Email Us</strong><br>
-                <p class="text-break">wmsu.docconnect@gmail.com</p> 
+                <p class="text-break"><?php echo htmlspecialchars($currentContactInfo['email'] ?? 'wmsu.docconnect@gmail.com'); ?></p> 
               </div>
             </div>
           </div>
+          
           <div class="mb-3">
             <div class="d-flex align-items-start">
               <i class='bx bx-phone text-white bg-primary p-md-3 p-2 xx-large-font rounded-circle me-3'></i>
               <div>
                 <strong class="text-primary">Call Us</strong><br>
-                Phone: +639 919 309<br>
-                Fax: +63629 924 238
+                Phone: <?php echo htmlspecialchars($currentContactInfo['phone'] ?? '+639 919 309'); ?><br>
+                Fax: <?php echo htmlspecialchars($currentContactInfo['fax'] ?? '+63629 924 238'); ?>
               </div>
             </div>
           </div>
+          
           <hr>
           <div>
             <strong>Follow our social media</strong><br>
             <div class="social-icons mt-2">
-              <a href="#"><i class='bx bxl-facebook text-white bg-primary p-2 me-1 rounded-circle' ></i></a>
-              <a href="#"><i class='bx bxl-instagram text-white bg-primary p-2 me-1 rounded-circle' ></i></a>
+              <a href="<?php echo htmlspecialchars($currentContactInfo['facebook_link'] ?? '#'); ?>">
+                <i class='bx bxl-facebook text-white bg-primary p-2 me-1 rounded-circle'></i>
+              </a>
+              <a href="<?php echo htmlspecialchars($currentContactInfo['instagram_link'] ?? '#'); ?>">
+                <i class='bx bxl-instagram text-white bg-primary p-2 me-1 rounded-circle'></i>
+              </a>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -134,7 +145,7 @@ require_once('../classes/account.class.php');
   <!-- Map Section -->
   <div class="map-container">
     <iframe
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7921.61518569353!2d122.05236037770997!3d6.913594200000012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x325041dd7a24816f%3A0x51af215fb64cc81a!2sWestern%20Mindanao%20State%20University!5e0!3m2!1sen!2sph!4v1734515759093!5m2!1sen!2sph"
+      src="<?php echo htmlspecialchars($currentContactInfo['map_embed_url'] ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7921.61518569353!2d122.05236037770997!3d6.913594200000012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x325041dd7a24816f%3A0x51af215fb64cc81a!2sWestern%20Mindanao%20State%20University!5e0!3m2!1sen!2sph!4v1734515759093!5m2!1sen!2sph'); ?>"
       width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
     </iframe>
   </div>
@@ -142,6 +153,5 @@ require_once('../classes/account.class.php');
   <?php 
     require_once ('../includes/footer.php');
   ?>
-
 </body>
 </html>

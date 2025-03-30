@@ -7,8 +7,31 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../index.php');
 }
 
-require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
+require_once('../classes/contact.class.php');
+$contactInfo = new ContactInfo();
+$currentContactInfo = $contactInfo->getContactInfo();
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = [
+        'heading' => $_POST['heading'],
+        'description' => $_POST['description'],
+        'address' => $_POST['address'],
+        'email' => $_POST['email'],
+        'phone' => $_POST['phone'],
+        'fax' => $_POST['fax'],
+        'facebook_link' => $_POST['facebook_link'],
+        'instagram_link' => $_POST['instagram_link'],
+        'map_embed_url' => $_POST['map_embed_url']
+    ];
+
+    if ($contactInfo->updateContactInfo($data)) {
+        $_SESSION['message'] = 'Contact information updated successfully!';
+    } else {
+        $_SESSION['error'] = 'Failed to update contact information.';
+    }
+    header('location: userContactUs.php');
+    exit();
+}
 
 ?>
 <html lang="en">
@@ -24,13 +47,10 @@ function getCurrentPage()
 <body>
     <?php
     require_once('./includes/admin_header.php');
-    ?>
-    <?php
     require_once('./includes/admin_sidepanel.php');
     ?>
 
     <section id="userPage" class="page-container">
-
         <?php
         $contactUs = 'active';
         $aContactUs = 'page';
@@ -42,101 +62,89 @@ function getCurrentPage()
         <h1 class="text-start mb-3">User Contact us</h1>
         <h6 class="text-start mb-4 text-muted">Icon Class: <a href="https://boxicons.com/" target="_blank">Boxicons.com</a></h6>
 
+        <?php if (isset($_SESSION['message'])): ?>
+            <div class="alert alert-success"><?php echo $_SESSION['message']; unset($_SESSION['message']); ?></div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="alert alert-danger"><?php echo $_SESSION['error']; unset($_SESSION['error']); ?></div>
+        <?php endif; ?>
+
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#contactInformation" aria-expanded="false" aria-controls="contactInformation">
             <h5 class="card-title">Contact Information</h5>
         </button>
         <hr class="mt-1 mb-2">
-        <div class="collapse" id="contactInformation">
+        <div class="collapse show" id="contactInformation">
             <div class="card mb-3 w-100">
                 <div class="card-body">
-                    <!-- Admin Edit Form for Contact Details -->
-                    <div class="col-md-12 rounded-3 mb-4 mb-md-0 p-4" style="background-color: #eeeeee;">
-                        <h4>Edit Contact Details</h4>
-                        <form>
-                            <div class="mb-3">
-                                <label for="heading" class="form-label">Heading</label>
-                                <input type="text" class="form-control" id="heading" value="Get in touch">
-                            </div>
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="heading" class="form-label">Heading</label>
+                            <input type="text" class="form-control" name="heading" value="<?php echo htmlspecialchars($currentContactInfo['heading'] ?? 'Get in touch'); ?>" required>
+                        </div>
 
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Description</label>
-                                <textarea class="form-control" id="description" rows="2">Want to get in touch? We’d love to hear from you. Here’s how you can reach us.</textarea>
-                            </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" name="description" rows="2" required><?php echo htmlspecialchars($currentContactInfo['description'] ?? 'Want to get in touch? Wed love to hear from you. Heres how you can reach us.'); ?></textarea>
+                        </div>
 
-                            <!-- Address -->
-                            <div class="mb-3">
-                                <label for="address" class="form-label">Head Office Address</label>
-                                <input type="text" class="form-control" id="address" value="Normal Road, Baliwasan, 7000 Zamboanga City">
-                            </div>
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Head Office Address</label>
+                            <input type="text" class="form-control" name="address" value="<?php echo htmlspecialchars($currentContactInfo['address'] ?? 'Normal Road, Baliwasan, 7000 Zamboanga City'); ?>" required>
+                        </div>
 
-                            <!-- Email -->
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" value="wmsu.docconnect@gmail.com">
-                            </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" value="<?php echo htmlspecialchars($currentContactInfo['email'] ?? 'wmsu.docconnect@gmail.com'); ?>" required>
+                        </div>
 
-                            <!-- Phone and Fax -->
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Phone</label>
-                                <input type="text" class="form-control" id="phone" value="+639 919 309">
-                            </div>
-                            <div class="mb-3">
-                                <label for="fax" class="form-label">Fax</label>
-                                <input type="text" class="form-control" id="fax" value="+63629 924 238">
-                            </div>
+                        <div class="mb-3">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" name="phone" value="<?php echo htmlspecialchars($currentContactInfo['phone'] ?? '+639 919 309'); ?>" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="fax" class="form-label">Fax</label>
+                            <input type="text" class="form-control" name="fax" value="<?php echo htmlspecialchars($currentContactInfo['fax'] ?? '+63629 924 238'); ?>" required>
+                        </div>
 
-                            <!-- Social Media Links -->
-                            <div class="mb-3">
-                                <label for="facebook" class="form-label">Facebook Link</label>
-                                <input type="url" class="form-control" id="facebook" value="#">
-                            </div>
-                            <div class="mb-3">
-                                <label for="instagram" class="form-label">Instagram Link</label>
-                                <input type="url" class="form-control" id="instagram" value="#">
-                            </div>
+                        <div class="mb-3">
+                            <label for="facebook_link" class="form-label">Facebook Link</label>
+                            <input type="url" class="form-control" name="facebook_link" value="<?php echo htmlspecialchars($currentContactInfo['facebook_link'] ?? '#'); ?>" required>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="instagram_link" class="form-label">Instagram Link</label>
+                            <input type="url" class="form-control" name="instagram_link" value="<?php echo htmlspecialchars($currentContactInfo['instagram_link'] ?? '#'); ?>" required>
+                        </div>
 
-                            <div class="d-flex justify-content-end">
-                                <button type="submit" class="btn btn-primary text-light">Save</button>
-                            </div>
-                        </form>
-                    </div>
+                        <div class="mb-3">
+                            <label for="map_embed_url" class="form-label">Google Map Embed URL</label>
+                            <input type="text" class="form-control" name="map_embed_url" value="<?php echo htmlspecialchars($currentContactInfo['map_embed_url'] ?? 'https://www.google.com/maps/embed?pb=...'); ?>" required>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary text-light">Save Changes</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#googleMap" aria-expanded="false" aria-controls="googleMap">
-            <h5 class="card-title">Google Map</h5>
+        <!-- Preview Section -->
+        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#previewSection" aria-expanded="false" aria-controls="previewSection">
+            <h5 class="card-title">Preview</h5>
         </button>
         <hr class="mt-1 mb-2">
-        <div class="collapse" id="googleMap">
+        <div class="collapse" id="previewSection">
             <div class="card mb-3 w-100">
                 <div class="card-body">
-                    <!-- Bootstrap 5 Form for Editing Map Embed URL -->
-                    <form id="mapForm" class="p-3 border rounded shadow-sm">
-                        <div class="mb-3">
-                            <label for="mapSrc" class="form-label">Google Map Embed URL</label>
-                            <input type="text" class="form-control" id="mapSrc" name="mapSrc" value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7921.61518569353!2d122.05236037770997!3d6.913594200000012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x325041dd7a24816f%3A0x51af215fb64cc81a!2sWestern%20Mindanao%20State%20University!5e0!3m2!1sen!2sph!4v1734515759093!5m2!1sen!2sph" required>
-                        </div>
-                        <button type="button" class="btn btn-primary text-light" onclick="updateMap()">Update Map</button>
-                    </form>
-
-                    <!-- Map Section -->
-                    <div class="map-container mt-3">
-                        <iframe id="mapIframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7921.61518569353!2d122.05236037770997!3d6.913594200000012!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x325041dd7a24816f%3A0x51af215fb64cc81a!2sWestern%20Mindanao%20State%20University!5e0!3m2!1sen!2sph!4v1734515759093!5m2!1sen!2sph" width="100%" height="400" style="border:0;" allowfullscreen loading="lazy"></iframe>
+                    <div class="map-container">
+                        <iframe id="mapIframe" src="<?php echo htmlspecialchars($currentContactInfo['map_embed_url'] ?? 'https://www.google.com/maps/embed?pb=...'); ?>" width="100%" height="400" style="border:0;" allowfullscreen loading="lazy"></iframe>
                     </div>
-
                 </div>
             </div>
         </div>
     </section>
-
-
-    <script>
-        function updateMap() {
-            const mapSrc = document.getElementById("mapSrc").value;
-            document.getElementById("mapIframe").src = mapSrc;
-        }
-    </script>
 </body>
-
 </html>

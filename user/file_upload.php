@@ -30,7 +30,6 @@ include '../includes/head.php';
                                 <i class='bx bxs-cloud-upload text-danger fs-3 me-2'></i>
                                 <h4 class="mb-0 text-dark">Upload Document</h4>
                             </div>
-                            <hr class="my-2 border-secondary">
                         </div>
                         
                         <div class="card-body">
