@@ -140,7 +140,7 @@ include '../includes/head.php';
                                     <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
                                         Book Appointment
                                     </a>
-                                    <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
+                                    <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-green text-light">
                                         Chat
                                     </a>
                                 </div>
