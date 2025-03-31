@@ -166,7 +166,7 @@ function getCurrentPage()
                                     <label class="form-label">Content</label>
                                     <textarea class="form-control" name="telehealth_content" rows="3" required>Leveraging cutting-edge technology, we offer secure and accessible teleconsultations that bring quality care to the comfort of your home.</textarea>
                                 </div>
-                                <div class="mb-3">
+                                <!-- <div class="mb-3">
                                     <label class="form-label">Testimonial Quote</label>
                                     <textarea class="form-control" name="telehealth_quote" rows="2" required>"The doctors were so attentive and helpful. Telehealth made it easy to consult from home."</textarea>
                                 </div>
@@ -174,7 +174,7 @@ function getCurrentPage()
                                     <label class="form-label">Testimonial Author</label>
                                     <input type="text" class="form-control" name="telehealth_quote_author"
                                         value="Satisfied User" required>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">

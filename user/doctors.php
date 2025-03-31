@@ -188,10 +188,10 @@ include '../includes/head.php';
           <p class="fs-5 fw-light mb-3">
             Leveraging cutting-edge technology, we offer secure and accessible teleconsultations that bring quality care to the comfort of your home.
           </p>
-          <blockquote class="blockquote bg-white p-3 rounded shadow">
+          <!-- <blockquote class="blockquote bg-white p-3 rounded shadow">
             <p class="mb-3">"The doctors were so attentive and helpful. Telehealth made it easy to consult from home."</p>
             <footer class="blockquote-footer text-end">Satisfied User</footer>
-          </blockquote>
+          </blockquote> -->
         </div>
       </div>
     </div>
