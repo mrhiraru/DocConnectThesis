@@ -12,92 +12,123 @@ class DoctorsPage
 
     public function getSectionContent($sectionName)
     {
-        $stmt = $this->db->prepare("SELECT * FROM doctorsPage_content WHERE section_name = :section_name");
-        $stmt->bindParam(':section_name', $sectionName);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM doctorsPage_content WHERE section_name = :section_name");
+            $stmt->bindParam(':section_name', $sectionName);
+            $stmt->execute();
+
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if (!$result) {
+                throw new Exception("Section not found");
+            }
+
+            return $result;
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
     }
 
     public function updateIntro($title, $content)
     {
-        $stmt = $this->db->prepare("UPDATE doctorsPage_content SET title = :title, content = :content WHERE section_name = 'intro'");
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':content', $content);
-        return $stmt->execute();
+        try {
+            $stmt = $this->db->prepare("UPDATE doctorsPage_content SET title = :title, content = :content WHERE section_name = 'intro'");
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $content);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
     }
 
     public function updateSpecializations($title, $subtitle, $spec1Title, $spec1Content, $spec2Title, $spec2Content, $spec3Title, $spec3Content)
     {
-        $stmt = $this->db->prepare("UPDATE doctorsPage_content SET 
-            title = :title, 
-            content = :content,
-            spec1_title = :spec1_title,
-            spec1_content = :spec1_content,
-            spec2_title = :spec2_title,
-            spec2_content = :spec2_content,
-            spec3_title = :spec3_title,
-            spec3_content = :spec3_content
-            WHERE section_name = 'specializations'");
+        try {
+            $stmt = $this->db->prepare("UPDATE doctorsPage_content SET 
+                title = :title, 
+                content = :content,
+                spec1_title = :spec1_title,
+                spec1_content = :spec1_content,
+                spec2_title = :spec2_title,
+                spec2_content = :spec2_content,
+                spec3_title = :spec3_title,
+                spec3_content = :spec3_content
+                WHERE section_name = 'specializations'");
 
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':content', $subtitle);
-        $stmt->bindParam(':spec1_title', $spec1Title);
-        $stmt->bindParam(':spec1_content', $spec1Content);
-        $stmt->bindParam(':spec2_title', $spec2Title);
-        $stmt->bindParam(':spec2_content', $spec2Content);
-        $stmt->bindParam(':spec3_title', $spec3Title);
-        $stmt->bindParam(':spec3_content', $spec3Content);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $subtitle);
+            $stmt->bindParam(':spec1_title', $spec1Title);
+            $stmt->bindParam(':spec1_content', $spec1Content);
+            $stmt->bindParam(':spec2_title', $spec2Title);
+            $stmt->bindParam(':spec2_content', $spec2Content);
+            $stmt->bindParam(':spec3_title', $spec3Title);
+            $stmt->bindParam(':spec3_content', $spec3Content);
 
-        return $stmt->execute();
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
     }
 
     public function updateTelehealth($title, $content, $imagePath, $quote, $quoteAuthor)
     {
-        $stmt = $this->db->prepare("UPDATE doctorsPage_content SET 
-            title = :title, 
-            content = :content,
-            image_path = :image_path,
-            quote = :quote,
-            quote_author = :quote_author
-            WHERE section_name = 'telehealth'");
+        try {
+            $stmt = $this->db->prepare("UPDATE doctorsPage_content SET 
+                title = :title, 
+                content = :content,
+                image_path = :image_path,
+                quote = :quote,
+                quote_author = :quote_author
+                WHERE section_name = 'telehealth'");
 
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':content', $content);
-        $stmt->bindParam(':image_path', $imagePath);
-        $stmt->bindParam(':quote', $quote);
-        $stmt->bindParam(':quote_author', $quoteAuthor);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':image_path', $imagePath);
+            $stmt->bindParam(':quote', $quote);
+            $stmt->bindParam(':quote_author', $quoteAuthor);
 
-        return $stmt->execute();
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
     }
 
     public function updateCommunity($title, $content, $imagePath)
     {
-        $stmt = $this->db->prepare("UPDATE doctorsPage_content SET 
-            title = :title, 
-            content = :content,
-            image_path = :image_path
-            WHERE section_name = 'community'");
+        try {
+            $stmt = $this->db->prepare("UPDATE doctorsPage_content SET 
+                title = :title, 
+                content = :content,
+                image_path = :image_path
+                WHERE section_name = 'community'");
 
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':content', $content);
-        $stmt->bindParam(':image_path', $imagePath);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':image_path', $imagePath);
 
-        return $stmt->execute();
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
     }
 
     public function updateAccessibility($title, $content, $imagePath)
     {
-        $stmt = $this->db->prepare("UPDATE doctorsPage_content SET 
-            title = :title, 
-            content = :content,
-            image_path = :image_path
-            WHERE section_name = 'accessibility'");
+        try {
+            $stmt = $this->db->prepare("UPDATE doctorsPage_content SET 
+                title = :title, 
+                content = :content,
+                image_path = :image_path
+                WHERE section_name = 'accessibility'");
 
-        $stmt->bindParam(':title', $title);
-        $stmt->bindParam(':content', $content);
-        $stmt->bindParam(':image_path', $imagePath);
+            $stmt->bindParam(':title', $title);
+            $stmt->bindParam(':content', $content);
+            $stmt->bindParam(':image_path', $imagePath);
 
-        return $stmt->execute();
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Database error: " . $e->getMessage());
+        }
     }
 
     public function uploadImage($file, $targetDir = "../assets/images/")

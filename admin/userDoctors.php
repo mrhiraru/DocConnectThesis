@@ -11,22 +11,135 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
+require_once('../classes/doctorsPage.class.php');
+require_once('../classes/database.php');
 
-$doctor = new Account();
-$allDoctors = $doctor->show_doc();
-$today = date('Ymd');
-mt_srand($today);
-shuffle($allDoctors);
-$doctorArray = array_slice($allDoctors, 0, 5);
+try {
+    $doctor = new Account();
+    $doctorsPage = new DoctorsPage();
 
+    $introContent = $doctorsPage->getSectionContent('intro');
+    $specializationsContent = $doctorsPage->getSectionContent('specializations');
+    $telehealthContent = $doctorsPage->getSectionContent('telehealth');
+    $communityContent = $doctorsPage->getSectionContent('community');
+    $accessibilityContent = $doctorsPage->getSectionContent('accessibility');
+
+    $allDoctors = $doctor->show_doc();
+    $today = date('Ymd');
+    mt_srand($today);
+    shuffle($allDoctors);
+    $doctorArray = array_slice($allDoctors, 0, 5);
+
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        try {
+            if (isset($_POST['save_intro'])) {
+                if ($doctorsPage->updateIntro($_POST['intro_title'], $_POST['intro_content'])) {
+                    $_SESSION['message'] = 'Introduction section updated successfully!';
+                } else {
+                    $_SESSION['error'] = 'Failed to update introduction section.';
+                }
+            } 
+            elseif (isset($_POST['save_specializations'])) {
+                $success = $doctorsPage->updateSpecializations(
+                    $_POST['specializations_title'],
+                    $_POST['specializations_subtitle'],
+                    $_POST['spec_title'][0],
+                    $_POST['spec_content'][0],
+                    $_POST['spec_title'][1],
+                    $_POST['spec_content'][1],
+                    $_POST['spec_title'][2],
+                    $_POST['spec_content'][2]
+                );
+                
+                if ($success) {
+                    $_SESSION['message'] = 'Specializations section updated successfully!';
+                } else {
+                    $_SESSION['error'] = 'Failed to update specializations section.';
+                }
+            }
+            elseif (isset($_POST['save_telehealth'])) {
+                $imagePath = $telehealthContent['image_path'];
+                
+                // Handle image upload if new image was provided
+                if (!empty($_FILES['telehealth_image']['name'])) {
+                    $imagePath = $doctorsPage->uploadImage($_FILES['telehealth_image']);
+                }
+                
+                $quote = $_POST['telehealth_quote'] ?? '';
+                $quoteAuthor = $_POST['telehealth_quote_author'] ?? '';
+                
+                if ($doctorsPage->updateTelehealth(
+                    $_POST['telehealth_title'],
+                    $_POST['telehealth_content'],
+                    $imagePath,
+                    $quote,
+                    $quoteAuthor
+                )) {
+                    $_SESSION['message'] = 'Telehealth section updated successfully!';
+                } else {
+                    $_SESSION['error'] = 'Failed to update telehealth section.';
+                }
+            }
+            elseif (isset($_POST['save_community'])) {
+                $imagePath = $communityContent['image_path'];
+                
+                // Handle image upload if new image was provided
+                if (!empty($_FILES['community_image']['name'])) {
+                    $imagePath = $doctorsPage->uploadImage($_FILES['community_image']);
+                }
+                
+                if ($doctorsPage->updateCommunity(
+                    $_POST['community_title'],
+                    $_POST['community_content'],
+                    $imagePath
+                )) {
+                    $_SESSION['message'] = 'Community impact section updated successfully!';
+                } else {
+                    $_SESSION['error'] = 'Failed to update community impact section.';
+                }
+            }
+            elseif (isset($_POST['save_accessibility'])) {
+                $imagePath = $accessibilityContent['image_path'];
+                
+                // Handle image upload if new image was provided
+                if (!empty($_FILES['accessibility_image']['name'])) {
+                    $imagePath = $doctorsPage->uploadImage($_FILES['accessibility_image']);
+                }
+                
+                if ($doctorsPage->updateAccessibility(
+                    $_POST['accessibility_title'],
+                    $_POST['accessibility_content'],
+                    $imagePath
+                )) {
+                    $_SESSION['message'] = 'Accessibility section updated successfully!';
+                } else {
+                    $_SESSION['error'] = 'Failed to update accessibility section.';
+                }
+            }
+            
+            header('location: userDoctors.php');
+            exit();
+            
+        } catch (Exception $e) {
+            $_SESSION['error'] = 'An error occurred: ' . $e->getMessage();
+            header('location: userDoctors.php');
+            exit();
+        }
+    }
+
+} catch (Exception $e) {
+    $_SESSION['error'] = 'An error occurred: ' . $e->getMessage();
+    header('location: userDoctors.php');
+    exit();
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
 $title = 'Admin | User Doctors';
 include './includes/admin_head.php';
-function getCurrentPage()
-{
+function getCurrentPage() {
     return basename($_SERVER['PHP_SELF']);
 }
 ?>
@@ -49,7 +162,7 @@ function getCurrentPage()
 
         <?php if (isset($_SESSION['message'])): ?>
             <div class="alert alert-success"><?php echo $_SESSION['message'];
-                                                unset($_SESSION['message']); ?></div>
+                                            unset($_SESSION['message']); ?></div>
         <?php endif; ?>
         <?php if (isset($_SESSION['error'])): ?>
             <div class="alert alert-danger"><?php echo $_SESSION['error'];
@@ -68,11 +181,14 @@ function getCurrentPage()
                         <input type="hidden" name="save_intro" value="1">
                         <div class="mb-3">
                             <label for="introTitle" class="form-label">Title</label>
-                            <input type="text" class="form-control" name="intro_title" value="Our Doctors" required>
+                            <input type="text" class="form-control" name="intro_title" 
+                                value="<?php echo htmlspecialchars($introContent['title']); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="introContent" class="form-label">Content</label>
-                            <textarea class="form-control" name="intro_content" rows="5" required>At Western Mindanao State University, our telehealth platform combines cutting-edge technology with compassionate care. Our team of dedicated doctors is here to serve not just our university community but also the broader Zamboanga Peninsula, fostering a culture of wellness and health awareness. Whether you need routine care, specialized advice, or preventive consultation, we are committed to delivering accessible and high-quality healthcare tailored to your needs.</textarea>
+                            <textarea class="form-control" name="intro_content" rows="5" required><?php 
+                                echo htmlspecialchars($introContent['content']); 
+                            ?></textarea>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary text-light">Save Changes</button>
@@ -94,25 +210,18 @@ function getCurrentPage()
                         <input type="hidden" name="save_specializations" value="1">
                         <div class="mb-3">
                             <label for="specializationsTitle" class="form-label">Section Title</label>
-                            <input type="text" class="form-control" name="specializations_title" value="Our Specializations" required>
+                            <input type="text" class="form-control" name="specializations_title" 
+                                value="<?php echo htmlspecialchars($specializationsContent['title']); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="specializationsSubtitle" class="form-label">Subtitle</label>
-                            <input type="text" class="form-control" name="specializations_subtitle" value="Our team of expert doctors provides care in the following areas:" required>
+                            <input type="text" class="form-control" name="specializations_subtitle" 
+                                value="<?php echo htmlspecialchars($specializationsContent['content']); ?>" required>
                         </div>
 
                         <h6 class="mt-4 mb-3">Specialization Cards</h6>
 
                         <div class="row">
-                            <?php
-                            $specTitles = ["General Medicine", "Mental Health", "Dentistry"];
-                            $specContents = [
-                                "We provide comprehensive primary care to address a wide range of health concerns, ensuring the overall well-being of our diverse university community.",
-                                "We support mental wellness to help students and staff manage stress, thrive academically, and foster a healthier, more supportive campus environment.",
-                                "We promote good oral health through preventive and restorative care, helping everyone maintain confident smiles and overall well-being."
-                            ];
-                            ?>
-
                             <?php for ($i = 0; $i < 3; $i++): ?>
                                 <div class="col-md-4 mb-4">
                                     <div class="card h-100">
@@ -123,13 +232,13 @@ function getCurrentPage()
                                             <div class="mb-3">
                                                 <label class="form-label">Title</label>
                                                 <input type="text" class="form-control" name="spec_title[]"
-                                                    value="<?php echo htmlspecialchars($specTitles[$i]); ?>" required>
+                                                    value="<?php echo htmlspecialchars($specializationsContent['spec'.($i+1).'_title']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Content</label>
-                                                <textarea class="form-control" name="spec_content[]" rows="3" required><?php
-                                                                                                                        echo htmlspecialchars($specContents[$i]);
-                                                                                                                        ?></textarea>
+                                                <textarea class="form-control" name="spec_content[]" rows="3" required><?php 
+                                                    echo htmlspecialchars($specializationsContent['spec'.($i+1).'_content']); 
+                                                ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -160,31 +269,35 @@ function getCurrentPage()
                                 <div class="mb-3">
                                     <label class="form-label">Section Title</label>
                                     <input type="text" class="form-control" name="telehealth_title"
-                                        value="Our Telehealth Advantage" required>
+                                        value="<?php echo htmlspecialchars($telehealthContent['title']); ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Content</label>
-                                    <textarea class="form-control" name="telehealth_content" rows="3" required>Leveraging cutting-edge technology, we offer secure and accessible teleconsultations that bring quality care to the comfort of your home.</textarea>
+                                    <textarea class="form-control" name="telehealth_content" rows="3" required><?php 
+                                        echo htmlspecialchars($telehealthContent['content']); 
+                                    ?></textarea>
                                 </div>
                                 <!-- <div class="mb-3">
                                     <label class="form-label">Testimonial Quote</label>
-                                    <textarea class="form-control" name="telehealth_quote" rows="2" required>"The doctors were so attentive and helpful. Telehealth made it easy to consult from home."</textarea>
+                                    <textarea class="form-control" name="telehealth_quote" rows="2"><?php 
+                                        echo htmlspecialchars($telehealthContent['quote']); 
+                                    ?></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Testimonial Author</label>
                                     <input type="text" class="form-control" name="telehealth_quote_author"
-                                        value="Satisfied User" required>
+                                        value="<?php echo htmlspecialchars($telehealthContent['quote_author']); ?>">
                                 </div> -->
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Image</label>
                                     <input type="file" class="form-control" name="telehealth_image">
-                                    <small class="text-muted">Current: doctors_telehealth.png</small>
+                                    <small class="text-muted">Current: <?php echo htmlspecialchars($telehealthContent['image_path']); ?></small>
                                 </div>
                                 <div class="text-center">
-                                    <img src="../assets/images/doctors_telehealth.png" alt="Current Telehealth Image"
-                                        class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
+                                    <img src="../assets/images/<?php echo htmlspecialchars($telehealthContent['image_path']); ?>" 
+                                        alt="Current Telehealth Image" class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
                                 </div>
                             </div>
                         </div>
@@ -212,22 +325,24 @@ function getCurrentPage()
                                 <div class="mb-3">
                                     <label class="form-label">Section Title</label>
                                     <input type="text" class="form-control" name="community_title"
-                                        value="Making an Impact" required>
+                                        value="<?php echo htmlspecialchars($communityContent['title']); ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Content</label>
-                                    <textarea class="form-control" name="community_content" rows="5" required>Our doctors are committed to giving back through outreach programs, health education seminars, and volunteer initiatives that promote wellness across Zamboanga Peninsula.</textarea>
+                                    <textarea class="form-control" name="community_content" rows="5" required><?php 
+                                        echo htmlspecialchars($communityContent['content']); 
+                                    ?></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Image</label>
                                     <input type="file" class="form-control" name="community_image">
-                                    <small class="text-muted">Current: doctors_community-impact.png</small>
+                                    <small class="text-muted">Current: <?php echo htmlspecialchars($communityContent['image_path']); ?></small>
                                 </div>
                                 <div class="text-center">
-                                    <img src="../assets/images/doctors_community-impact.png" alt="Current Community Impact Image"
-                                        class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
+                                    <img src="../assets/images/<?php echo htmlspecialchars($communityContent['image_path']); ?>" 
+                                        alt="Current Community Impact Image" class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
                                 </div>
                             </div>
                         </div>
@@ -255,22 +370,24 @@ function getCurrentPage()
                                 <div class="mb-3">
                                     <label class="form-label">Section Title</label>
                                     <input type="text" class="form-control" name="accessibility_title"
-                                        value="Accessible to All" required>
+                                        value="<?php echo htmlspecialchars($accessibilityContent['title']); ?>" required>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Content</label>
-                                    <textarea class="form-control" name="accessibility_content" rows="5" required>We strive to ensure that everyone can access our services, regardless of ability. Alternative formats and tools are available for users with disabilities.</textarea>
+                                    <textarea class="form-control" name="accessibility_content" rows="5" required><?php 
+                                        echo htmlspecialchars($accessibilityContent['content']); 
+                                    ?></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label class="form-label">Image</label>
                                     <input type="file" class="form-control" name="accessibility_image">
-                                    <small class="text-muted">Current: doctors_accessibility.png</small>
+                                    <small class="text-muted">Current: <?php echo htmlspecialchars($accessibilityContent['image_path']); ?></small>
                                 </div>
                                 <div class="text-center">
-                                    <img src="../assets/images/doctors_accessibility.png" alt="Current Accessibility Image"
-                                        class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
+                                    <img src="../assets/images/<?php echo htmlspecialchars($accessibilityContent['image_path']); ?>" 
+                                        alt="Current Accessibility Image" class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
                                 </div>
                             </div>
                         </div>
@@ -284,7 +401,5 @@ function getCurrentPage()
         </div>
     </section>
 
-    <?php include './includes/admin_footer.php'; ?>
 </body>
-
 </html>
