@@ -375,7 +375,7 @@ include '../includes/head.php';
                             Start Appointment
                         </button>
                         <div class="dropdown">
-                            <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class='bx bx-dots-horizontal-rounded'></i>
                             </a>
 
