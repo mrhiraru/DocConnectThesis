@@ -94,7 +94,7 @@ include '../includes/head.php';
                                         foreach ($file_sent_patient as $item) {
                                     ?>
                                             <tr>
-                                                <td><a href="#" class="file-link"></a><?= $item['file_name'] ?></td>
+                                                <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
                                                 <td><?= $item['file_description'] ?></td>
                                                 <td><?= $item['patient_name'] ?></td>
                                                 <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
