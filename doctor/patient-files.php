@@ -8,6 +8,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     exit();
 }
 
+require_once('../classes/file.class.php');
+
 $file = new File();
 
 ?>
