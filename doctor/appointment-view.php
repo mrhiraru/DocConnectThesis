@@ -366,7 +366,7 @@ include '../includes/head.php';
                         $appointment_datetime = date('Y-m-d', strtotime($record['appointment_date']));
                         $current_datetime = date('Y-m-d');
 
-                        $disable_button = ($appointment_datetime >= $current_datetime) ? 'disabled' : '';
+                        $disable_button = ($appointment_datetime < $current_datetime) ? 'disabled' : '';
                     ?>
 
                         <button class="btn btn-success text-white mb-3" id="start" onclick="start_meeting()" <?= $disable_button ?>>
