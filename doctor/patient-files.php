@@ -55,7 +55,7 @@ include '../includes/head.php';
                         </thead>
                         <tbody>
                             <?php
-                            $file_sent_doctor = $file->show_files_doctor($_GET['account_id'], $_SESSION['account_id']);
+                            $file_sent_doctor = $file->show_files_doctor($_SESSION['account_id'], $_GET['account_id']);
 
                             if (!empty($file_sent_doctor)) {
                                 foreach ($file_sent_doctor as $item) {
@@ -96,7 +96,7 @@ include '../includes/head.php';
                         </thead>
                         <tbody>
                             <?php
-                            $file_sent_patient = $file->show_files_patient($_SESSION['account_id'], $_GET['account_id']);
+                            $file_sent_patient = $file->show_files_patient($_GET['account_id'], $_SESSION['account_id']);
 
                             if (!empty($file_sent_patient)) {
                                 foreach ($file_sent_patient as $item) {
