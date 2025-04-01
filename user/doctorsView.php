@@ -70,8 +70,8 @@ include '../includes/head.php';
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <a href="./file_upload?account_id=<?= $doctor_id ?>" class="btn btn-outline-primary hover-light me-2">
-                                Send File
+                            <a href="./file_list?account_id=<?= $doctor_id ?>" class="btn btn-outline-primary hover-light me-2">
+                                Files
                             </a>
                             <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
                                 Book Appointment
