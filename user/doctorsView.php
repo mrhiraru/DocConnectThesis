@@ -55,7 +55,7 @@ include '../includes/head.php';
         <main class="mx-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="row d-flex align-items-center">
+                    <div class="d-flex align-items-center">
                         <img src="<?php if (isset($doctorDetails['account_image'])) {
                                         echo "../assets/images/" . $doctorDetails['account_image'];
                                     } else {
