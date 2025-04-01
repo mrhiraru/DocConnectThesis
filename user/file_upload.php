@@ -72,7 +72,7 @@ include '../includes/head.php';
                             <div class="row">
                                 <!-- Form Column -->
                                 <div class="col-md-6">
-                                    <form id="documentUploadForm" class="needs-validation" enctype="multipart/form-data" novalidate>
+                                    <form id="documentUploadForm" method='post' class="needs-validation" enctype="multipart/form-data" novalidate>
                                         <!-- File Upload Input -->
                                         <div class="mb-4">
                                             <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
