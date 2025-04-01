@@ -11,45 +11,13 @@ require_once('../classes/account.class.php');
 require_once('../classes/file.class.php');
 
 $file = new File();
-if (isset($_POST['upload_document'])) {
 
-    $account_class->account_id = $_SESSION['account_id'];
-
-    $uploaddir = '../assets/files/';
-    $uploadname = $_FILES[htmlentities('documentname')]['name'];
-    $uploadext = explode('.', $uploadname);
-    $uploadnewext = strtolower(end($uploadext));
-    $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx');
-
-    if (in_array($uploadnewext, $allowed)) {
-
-        $uploadenewname = reset($uploadext) . date('Ymd_His') . "." . $uploadnewext;
-        $uploadfile = $uploaddir . $uploadenewname;
-
-        if (move_uploaded_file($_FILES[htmlentities('documentname')]['tmp_name'], $uploadfile)) {
-
-            $file->file_name = $uploadenewname;
-            $file->file_description = htmlentities($_POST['documentDescription']);
-            $file->sender_id = $_SESSION['account_id'];
-            $file->receiver_id = $_GET['account_id'];
-            if ($file->add_file()) {
-                $success = 'success';
-            } else {
-                echo 'An error occured while adding in the database.';
-            }
-        } else {
-            $success = 'failed';
-        }
-    } else {
-        $success = 'failed';
-    }
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$title = 'DocConnect | File Upload';
+$title = 'DocConnect | Files';
 include '../includes/head.php';
 ?>
 
@@ -64,6 +32,9 @@ include '../includes/head.php';
                         <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h6 class="text-dark fw-semibold mb-0">Doctor Uploads</h6>
+                                <a href="./file_upload?account_id=<?= $doctor_id ?>" class="btn btn-outline-primary hover-light me-2">
+                                    Send File
+                                </a>
                             </div>
                             <table class="table table-hover doctor-files">
                                 <thead>
