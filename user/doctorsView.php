@@ -55,13 +55,13 @@ include '../includes/head.php';
         <main class="mx-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="row d-flex align-items-center justify-content-between">
+                    <div class="row d-flex align-items-center">
                         <img src="<?php if (isset($doctorDetails['account_image'])) {
                                         echo "../assets/images/" . $doctorDetails['account_image'];
                                     } else {
                                         echo "../assets/images/default_profile.png";
-                                    } ?>" alt="Doctor Profile Image" class="col-auto img-fluid rounded me-3 shadow" height="150" width="150">
-                        <div class="col-auto">
+                                    } ?>" alt="Doctor Profile Image" class="img-fluid rounded me-3 shadow" height="150" width="150">
+                        <div class="">
                             <h5 class="card-title">Dr. <?= $doctorDetails['doctor_name'] ?></h5>
                             <p class="text-muted mb-0"><?= !empty($doctorDetails['specialty']) ? htmlspecialchars($doctorDetails['specialty']) : 'Not specified' ?></p>
                             <div class="d-flex align-items-center">
@@ -69,7 +69,7 @@ include '../includes/head.php';
                                     <a href="#" class="text-decoration-none">More</a> -->
                             </div>
                         </div>
-                        <div class="col-auto d-flex justify-content-end">
+                        <div class="d-flex justify-content-end">
                             <a href="./file_upload" class="btn btn-outline-primary hover-light me-2">
                                 Send File
                             </a>
