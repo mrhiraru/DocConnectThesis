@@ -416,7 +416,7 @@ include '../includes/head.php';
                 <div class="modal-body">
                     <div class="row d-flex">
                         <div class="col-12 text-center">
-                            <h6 class="modal-title col-12 my-2 text-primary">Please notify your patient before starting.</h6>
+                            <h6 class="modal-title col-12 my-2 text-primary">Please inform your patient before starting.</h6>
                             <button type="button" class="btn btn-secondary text-light" data-bs-dismiss="modal" id="no" aria-label="Close">Cancel</button>
                             <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" id="yes" aria-label="Close" onclick="start_meeting()">I have already informed my patient, Start now.</button>
                         </div>
