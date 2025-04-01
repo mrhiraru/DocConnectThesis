@@ -364,7 +364,7 @@ include '../includes/head.php';
                     if ($record['appointment_status'] == "Incoming") {
 
                         $appointment_datetime = date('Y-m-d', strtotime($record['appointment_date']));
-                        date_default_timezone_set('Asia/Manila'); 
+                        date_default_timezone_set('Asia/Manila');
                         $current_datetime = date('Y-m-d');
 
                         $disable_button = ($appointment_datetime != $current_datetime) ? 'disabled' : '';
@@ -374,6 +374,18 @@ include '../includes/head.php';
                             <i class='bx bx-video me-2 align-middle fs-5'></i>
                             Start Appointment
                         </button>
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                ...
+                            </a>
+
+                            <ul class="dropdown-menu">
+                                <li><button class="btn btn-success text-white mb-3" id="start" onclick="start_meeting()" <?= $disable_button ?>>
+                                        <i class='bx bx-dots me-2 align-middle fs-5'></i>
+                                        Force Start
+                                    </button></li>
+                            </ul>
+                        </div>
                     <?php
                     } else if ($record['appointment_status'] == "Ongoing") {
                     ?>
