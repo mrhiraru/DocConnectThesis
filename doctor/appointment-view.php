@@ -380,7 +380,7 @@ include '../includes/head.php';
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="">Force Start</a></li>
+                                <li><a class="dropdown-item" href="" onclick="force_start()">Force Start</a></li>
                             </ul>
                         </div>
                     <?php
@@ -403,6 +403,25 @@ include '../includes/head.php';
                 </div>
                 </div>
             </main>
+        </div>
+    </div>
+
+    <div class="modal fade" id="forcestartModal" tabindex="-1" aria-labelledby="forcestartModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="forcestartModalLabel">Are you sure you want to start the appointment right now?</h5>
+                    <h6 class="modal-title">Please notify your patient before starting.</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="row d-flex">
+                        <div class="col-12 text-center">
+                            <button type="button" class="btn btn-secondary text-light" data-bs-dismiss="modal" id="no" aria-label="Close">Cancel</button>
+                            <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" id="yes" aria-label="Close" onclick="start_meeting()">I have already informed my patient, Start now.</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
@@ -432,6 +451,14 @@ include_once('../tools/pdfmaker.php');
                 console.error('Error starting meeting:', error);
             }
         });
+    }
+
+    function force_start() {
+        var modalElement = document.getElementById("forcestartModal");
+        if (modalElement) {
+            var myModal = new bootstrap.Modal(modalElement, {});
+            myModal.show();
+        }
     }
 
     function join_meeting(url) {
