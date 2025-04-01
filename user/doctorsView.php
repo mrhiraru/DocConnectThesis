@@ -69,6 +69,17 @@ include '../includes/head.php';
                                     <a href="#" class="text-decoration-none">More</a> -->
                             </div>
                         </div>
+                        <div class="d-flex justify-content-end">
+                                    <a href="./file_upload" class="btn btn-outline-primary hover-light me-2">
+                                        Send File
+                                    </a>
+                                    <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
+                                        Book Appointment
+                                    </a>
+                                    <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
+                                        Chat
+                                    </a>
+                                </div>
                     </div>
                 </div>
             </div>
@@ -133,18 +144,6 @@ include '../includes/head.php';
                                     </p>
                                 </div>
 
-                                <div class="d-flex justify-content-end">
-                                    <a href="./file_upload" class="btn btn-outline-primary hover-light me-2">
-                                        Send File
-                                    </a>
-                                    <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
-                                        Book Appointment
-                                    </a>
-                                    <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
-                                        Chat
-                                    </a>
-                                </div>
-
                                 <!-- <div class="tab-pane fade" id="nav-opinions" role="tabpanel" aria-labelledby="nav-opinions-tab">
                                 <h6>Patient Reviews</h6>
                                 <div class="review mb-3">
@@ -164,7 +163,7 @@ include '../includes/head.php';
                                 <a href="#" class="text-decoration-none">See all reviews</a>
                             </div>
 
-                                <!-- <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab">
+                                 <div class="tab-pane fade" id="nav-experience" role="tabpanel" aria-labelledby="nav-experience-tab">
                                 <h6>Professional Experience</h6>
                                 <ul class="list-unstyled">
                                     <li><strong>Senior Consultant, Orthopedics</strong> - ABC Hospital (2015 - Present)</li>

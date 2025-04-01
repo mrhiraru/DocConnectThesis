@@ -13,7 +13,7 @@ require_once('../classes/account.class.php');
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$title = 'DocConnect | Upload Documents';
+$title = 'DocConnect | File Upload';
 include '../includes/head.php';
 ?>
 
