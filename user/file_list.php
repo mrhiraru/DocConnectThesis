@@ -77,30 +77,30 @@ include '../includes/head.php';
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
                             </div>
-                            <table class="table table-hover patient-files">
-                                <thead>
+                            <tbody>
+                                <?php
+                                $file_sent_patient = $file->show_files_patient($_SESSION['account_id'], $_GET['account_id']);
+
+                                if (!empty($file_sent_patient)) {
+                                    foreach ($file_sent_patient as $item) {
+                                ?>
+                                        <tr>
+                                            <td><a href="#" class="file-link"></a><?= $item['file_name'] ?></td>
+                                            <td><?= $item['file_description'] ?></td>
+                                            <td><?= $item['doctor_name'] ?></td>
+                                            <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                } else {
+                                    ?>
                                     <tr>
-                                        <th>File Name</th>
-                                        <th>Description</th>
-                                        <th>Uploaded By</th>
-                                        <th>Date Uploaded</th>
+                                        <td colspan="4" style="text-align: center;">No files available.</td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><a href="#" class="file-link">Patient_Record_Jane_Smith_April_2024.pdf</a></td>
-                                        <td>Medical history update</td>
-                                        <td>name</td>
-                                        <td>2024-04-10</td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="#" class="file-link">Jane_Smith_XRay_Chest_January_2024.pdf</a></td>
-                                        <td>Chest X-ray results</td>
-                                        <td>name</td>
-                                        <td>2024-01-15</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                <?php
+                                }
+                                ?>
+                            </tbody>
                         </div>
                     </div>
                 </div>
