@@ -13,8 +13,6 @@ require_once('../classes/file.class.php');
 $file = new File();
 if (isset($_POST['upload_document'])) {
 
-    $account_class->account_id = $_SESSION['account_id'];
-
     $uploaddir = '../assets/files/';
     $uploadname = $_FILES[htmlentities('documentname')]['name'];
     $uploadext = explode('.', $uploadname);
