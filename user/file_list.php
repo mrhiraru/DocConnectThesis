@@ -87,7 +87,7 @@ include '../includes/head.php';
                                         <tr>
                                             <td><a href="#" class="file-link"></a><?= $item['file_name'] ?></td>
                                             <td><?= $item['file_description'] ?></td>
-                                            <td><?= $item['doctor_name'] ?></td>
+                                            <td><?= $item['patient_name'] ?></td>
                                             <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                         </tr>
                                     <?php
