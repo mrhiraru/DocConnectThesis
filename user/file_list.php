@@ -70,9 +70,8 @@ include '../includes/head.php';
                                     <tr>
                                         <th>File Name</th>
                                         <th>Description</th>
-                                        <th>Sender</th>
-                                        <th>Date Sent</th>
-                                        <th>Action</th>
+                                        <th>Uploaded By</th>
+                                        <th>Date Uploaded</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -81,16 +80,12 @@ include '../includes/head.php';
                                         <td>Annual blood test results</td>
                                         <td>Dr. superman</td>
                                         <td>2024-04-15</td>
-                                        <td>
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td><a href="#" class="file-link">Prescription_March_2024.pdf</a></td>
                                         <td>Medication prescription</td>
                                         <td>Dr. btamn</td>
                                         <td>2024-03-22</td>
-                                        <td>
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -106,9 +101,8 @@ include '../includes/head.php';
                                     <tr>
                                         <th>File Name</th>
                                         <th>Description</th>
-                                        <th>Sender</th>
-                                        <th>Date Sent</th>
-                                        <th>Action</th>
+                                        <th>Uploaded By</th>
+                                        <th>Date Uploaded</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -117,16 +111,12 @@ include '../includes/head.php';
                                         <td>Medical history update</td>
                                         <td>name</td>
                                         <td>2024-04-10</td>
-                                        <td>
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td><a href="#" class="file-link">Jane_Smith_XRay_Chest_January_2024.pdf</a></td>
                                         <td>Chest X-ray results</td>
                                         <td>name</td>
                                         <td>2024-01-15</td>
-                                        <td>
-                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
