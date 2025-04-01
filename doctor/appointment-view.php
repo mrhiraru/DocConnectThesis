@@ -375,8 +375,8 @@ include '../includes/head.php';
                             Start Appointment
                         </button>
                         <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                ...
+                            <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class='bx bx-dots-horizontal-rounded'></i>
                             </a>
 
                             <ul class="dropdown-menu">
@@ -411,7 +411,7 @@ include '../includes/head.php';
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="forcestartModalLabel">Are you sure you want to start the appointment right now?</h5>
-                    
+
                 </div>
                 <div class="modal-body">
                     <div class="row d-flex">
