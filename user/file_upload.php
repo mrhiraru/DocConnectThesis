@@ -124,7 +124,6 @@ include '../includes/head.php';
         </div>
     </section>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const fileInput = document.getElementById('documentFile');
@@ -146,7 +145,10 @@ include '../includes/head.php';
                         const fileURL = URL.createObjectURL(file);
                         pdfPreview.src = fileURL;
                         pdfPreview.classList.remove('d-none');
-                    } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document') {
+                    } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
+                        file.type === 'application/msword' ||
+                        file.type === 'application/vnd.ms-excel' ||
+                        file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
                         unsupportedPreview.classList.remove('d-none');
                     } else {
                         noPreview.classList.remove('d-none');
@@ -162,12 +164,10 @@ include '../includes/head.php';
             const form = document.getElementById('documentUploadForm');
 
             form.addEventListener('submit', function(e) {
-                e.preventDefault();
-
                 if (!form.checkValidity()) {
+                    e.preventDefault();
                     e.stopPropagation();
                     form.classList.add('was-validated');
-                    return;
                 }
 
                 const file = fileInput.files[0];
