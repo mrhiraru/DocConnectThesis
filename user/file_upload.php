@@ -8,6 +8,41 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
+require_once('../classes/file.class.php');
+
+if (isset($_POST['upload_document'])) {
+
+    $account_class->account_id = $_SESSION['account_id'];
+
+    $uploaddir = '../assets/files/';
+    $uploadname = $_FILES[htmlentities('document')]['name'];
+    $uploadext = explode('.', $uploadname);
+    $uploadnewext = strtolower(end($uploadext));
+    $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx');
+
+    if (in_array($uploadnewext, $allowed)) {
+
+        $uploadenewname = reset($uploadext) . date('Ymd_His') . "." . $uploadnewext;
+        $uploadfile = $uploaddir . $uploadenewname;
+
+        if (move_uploaded_file($_FILES[htmlentities('document')]['tmp_name'], $uploadfile)) {
+            $account_class->account_image = $uploadenewname;
+
+            $account_class->file_name = $uploadenewname;
+            $account_class->file_description = htmlentities($_POST['documentDescription']);
+
+            if ($account_class->add_file()) {
+                $success = 'success';
+            } else {
+                echo 'An error occured while adding in the database.';
+            }
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +54,7 @@ include '../includes/head.php';
 
 <body>
     <?php require_once('../includes/header.php'); ?>
-    
+
     <section class="page-container padding-medium">
         <div class="container py-5">
             <div class="row justify-content-center">
@@ -31,17 +66,17 @@ include '../includes/head.php';
                                 <h4 class="mb-0 text-dark">Upload Document</h4>
                             </div>
                         </div>
-                        
+
                         <div class="card-body">
                             <div class="row">
                                 <!-- Form Column -->
                                 <div class="col-md-6">
-                                    <form id="documentUploadForm" class="needs-validation" novalidate>
+                                    <form id="documentUploadForm" class="needs-validation" enctype="multipart/form-data" novalidate>
                                         <!-- File Upload Input -->
                                         <div class="mb-4">
                                             <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
                                             <div class="input-group">
-                                                <input type="file" class="form-control d-none" id="documentFile" accept=".pdf,.docx" required>
+                                                <input type="file" class="form-control d-none" id="documentFile" name="document" accept=".pdf,.doc,.xls,.xlsx,.docx"> required>
                                                 <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
                                                     <i class='bx bx-file me-1'></i> Choose File
                                                 </button>
@@ -49,23 +84,23 @@ include '../includes/head.php';
                                             </div>
                                             <div class="invalid-feedback">Please select a file to upload.</div>
                                         </div>
-                                        
+
                                         <!-- Description Input -->
                                         <div class="mb-4">
                                             <label for="documentDescription" class="form-label fw-semibold">Description</label>
-                                            <textarea class="form-control bg-light" id="documentDescription" rows="4" placeholder="Enter a description for this document..." required></textarea>
+                                            <textarea class="form-control bg-light" id="documentDescription" name="documentDescription" rows="4" placeholder="Enter a description for this document..." required></textarea>
                                             <div class="invalid-feedback">Please provide a description.</div>
                                         </div>
-                                        
+
                                         <!-- Submit Button -->
                                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button type="submit" class="btn btn-green px-4 text-light">
+                                            <button type="submit" class="btn btn-green px-4 text-light" name="upload_document">
                                                 <i class='bx bx-upload me-1'></i> Upload Document
                                             </button>
                                         </div>
                                     </form>
                                 </div>
-                                
+
                                 <div class="col-md-6 mt-4 mt-md-0">
                                     <div class="border rounded p-3 h-100">
                                         <h5 class="text-center mb-3">Document Preview</h5>
@@ -96,16 +131,16 @@ include '../includes/head.php';
             const pdfPreview = document.getElementById('pdfPreview');
             const noPreview = document.getElementById('noPreview');
             const unsupportedPreview = document.getElementById('unsupportedPreview');
-            
+
             fileInput.addEventListener('change', function() {
                 if (this.files.length > 0) {
                     const file = this.files[0];
                     fileNameDisplay.textContent = file.name;
-                    
+
                     pdfPreview.classList.add('d-none');
                     noPreview.classList.add('d-none');
                     unsupportedPreview.classList.add('d-none');
-                    
+
                     if (file.type === 'application/pdf') {
                         const fileURL = URL.createObjectURL(file);
                         pdfPreview.src = fileURL;
@@ -122,21 +157,21 @@ include '../includes/head.php';
                     noPreview.classList.remove('d-none');
                 }
             });
-            
+
             const form = document.getElementById('documentUploadForm');
-            
+
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 if (!form.checkValidity()) {
                     e.stopPropagation();
                     form.classList.add('was-validated');
                     return;
                 }
-                
+
                 const file = fileInput.files[0];
                 const description = document.getElementById('documentDescription').value;
-                
+
                 const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
                 if (!validTypes.includes(file.type)) {
                     const alertDiv = document.createElement('div');
@@ -148,7 +183,7 @@ include '../includes/head.php';
                     form.parentNode.insertBefore(alertDiv, form.nextSibling);
                     return;
                 }
-                
+
                 const successDiv = document.createElement('div');
                 successDiv.className = 'alert alert-success alert-dismissible fade show mt-3';
                 successDiv.innerHTML = `
@@ -156,16 +191,16 @@ include '../includes/head.php';
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 `;
                 form.parentNode.insertBefore(successDiv, form.nextSibling);
-                
+
                 form.reset();
                 form.classList.remove('was-validated');
                 fileNameDisplay.textContent = 'No file chosen';
-                
+
                 pdfPreview.classList.add('d-none');
                 unsupportedPreview.classList.add('d-none');
                 noPreview.classList.remove('d-none');
                 pdfPreview.src = '';
-                
+
                 setTimeout(() => {
                     successDiv.remove();
                 }, 3000);
@@ -175,4 +210,5 @@ include '../includes/head.php';
 
     <?php require_once('../includes/footer.php'); ?>
 </body>
+
 </html>
