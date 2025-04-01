@@ -13,6 +13,9 @@ require_once('../classes/file.class.php');
 $file = new File();
 if (isset($_POST['upload_document'])) {
 
+    $file->sender_id = $_SESSION['account_id'];
+    $file->receiver_id = $_GET['account_id'];
+    
     $uploaddir = '../assets/files/';
     $uploadname = $_FILES[htmlentities('documentname')]['name'];
     $uploadext = explode('.', $uploadname);
@@ -21,15 +24,14 @@ if (isset($_POST['upload_document'])) {
 
     if (in_array($uploadnewext, $allowed)) {
 
-        $uploadenewname = reset($uploadext) . date('Ymd_His') . "." . $uploadnewext;
+        $uploadenewname = reset($uploadext) . "_" . date('Ymd_His') . "." . $uploadnewext;
         $uploadfile = $uploaddir . $uploadenewname;
 
         if (move_uploaded_file($_FILES[htmlentities('documentname')]['tmp_name'], $uploadfile)) {
 
             $file->file_name = $uploadenewname;
             $file->file_description = htmlentities($_POST['documentDescription']);
-            $file->sender_id = $_SESSION['account_id'];
-            $file->receiver_id = $_GET['account_id'];
+
             if ($file->add_file()) {
                 $success = 'success';
             } else {
