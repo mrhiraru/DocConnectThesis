@@ -106,7 +106,7 @@ include '../includes/head.php';
                                 <div class="card-footer bg-white border-0 pb-3">
                                     <div class="d-flex justify-content-center">
                                         <a href="appointment.php?doctor_id=<?= $doctor['account_id'] ?>" class="btn btn-sm btn-primary me-2 text-light">Book Appointment</a>
-                                        <a href="chat_user.php?account_id=<?= $doctor['account_id'] ?>" class="btn btn-sm btn-success text-light">Chat Now</a>
+                                        <a href="chat_user.php?account_id=<?= $doctor['account_id'] ?>" class="btn btn-sm btn-green text-light">Chat Now</a>
                                     </div>
                                 </div>
                             </a>
