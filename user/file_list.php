@@ -77,30 +77,40 @@ include '../includes/head.php';
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
                             </div>
-                            <tbody>
-                                <?php
-                                $file_sent_patient = $file->show_files_patient($_SESSION['account_id'], $_GET['account_id']);
+                            <table class="table table-hover doctor-files">
+                                <thead>
+                                    <tr>
+                                        <th>File Name</th>
+                                        <th>Description</th>
+                                        <th>Uploaded By</th>
+                                        <th>Date Uploaded</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $file_sent_patient = $file->show_files_patient($_SESSION['account_id'], $_GET['account_id']);
 
-                                if (!empty($file_sent_patient)) {
-                                    foreach ($file_sent_patient as $item) {
-                                ?>
+                                    if (!empty($file_sent_patient)) {
+                                        foreach ($file_sent_patient as $item) {
+                                    ?>
+                                            <tr>
+                                                <td><a href="#" class="file-link"></a><?= $item['file_name'] ?></td>
+                                                <td><?= $item['file_description'] ?></td>
+                                                <td><?= $item['patient_name'] ?></td>
+                                                <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
                                         <tr>
-                                            <td><a href="#" class="file-link"></a><?= $item['file_name'] ?></td>
-                                            <td><?= $item['file_description'] ?></td>
-                                            <td><?= $item['patient_name'] ?></td>
-                                            <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                            <td colspan="4" style="text-align: center;">No files available.</td>
                                         </tr>
                                     <?php
                                     }
-                                } else {
                                     ?>
-                                    <tr>
-                                        <td colspan="4" style="text-align: center;">No files available.</td>
-                                    </tr>
-                                <?php
-                                }
-                                ?>
-                            </tbody>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
