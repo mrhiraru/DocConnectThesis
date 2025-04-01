@@ -32,7 +32,7 @@ include '../includes/head.php';
                         <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h6 class="text-dark fw-semibold mb-0">Doctor Uploads</h6>
-                                <a href="./file_upload?account_id=<?= $doctor_id ?>" class="btn btn-sm btn-outline-primary hover-light me-2">
+                                <a href="./file_upload?account_id=<?= $doctor_id ?>" class="btn btn-sm btn-primary hover-light me-2">
                                     Upload FIles
                                 </a>
                             </div>
