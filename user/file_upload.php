@@ -15,7 +15,7 @@ if (isset($_POST['upload_document'])) {
 
     $file->sender_id = $_SESSION['account_id'];
     $file->receiver_id = $_GET['account_id'];
-    
+
     $uploaddir = '../assets/files/';
     $uploadname = $_FILES[htmlentities('documentname')]['name'];
     $uploadext = explode('.', $uploadname);
@@ -168,6 +168,7 @@ include '../includes/head.php';
                     e.preventDefault();
                     e.stopPropagation();
                     form.classList.add('was-validated');
+                    return;
                 }
 
                 const file = fileInput.files[0];
