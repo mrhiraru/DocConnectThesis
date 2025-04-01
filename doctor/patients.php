@@ -62,7 +62,6 @@ include '../includes/head.php';
                                     </div>
                                     <div>
                                         <a href="./patient-appointment?account_id=<?= $item['account_id']  ?>"><i class='bx bx-calendar'></i>Appointments</a>
-
                                     </div>
                                 </div>
                             </div>
