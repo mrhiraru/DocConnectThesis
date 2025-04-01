@@ -131,6 +131,7 @@ include '../includes/head.php';
             const pdfPreview = document.getElementById('pdfPreview');
             const noPreview = document.getElementById('noPreview');
             const unsupportedPreview = document.getElementById('unsupportedPreview');
+            const form = document.getElementById('documentUploadForm');
 
             fileInput.addEventListener('change', function() {
                 if (this.files.length > 0) {
@@ -141,6 +142,7 @@ include '../includes/head.php';
                     noPreview.classList.add('d-none');
                     unsupportedPreview.classList.add('d-none');
 
+                    // preview ng file type
                     if (file.type === 'application/pdf') {
                         const fileURL = URL.createObjectURL(file);
                         pdfPreview.src = fileURL;
@@ -154,6 +156,7 @@ include '../includes/head.php';
                         noPreview.classList.remove('d-none');
                     }
                 } else {
+                    // No file selected
                     fileNameDisplay.textContent = 'No file chosen';
                     pdfPreview.classList.add('d-none');
                     unsupportedPreview.classList.add('d-none');
@@ -161,9 +164,11 @@ include '../includes/head.php';
                 }
             });
 
-            const form = document.getElementById('documentUploadForm');
-
             form.addEventListener('submit', function(e) {
+                // romeve previous alerts lng to
+                const existingAlerts = document.querySelectorAll('.alert');
+                existingAlerts.forEach(alert => alert.remove());
+
                 if (!form.checkValidity()) {
                     e.preventDefault();
                     e.stopPropagation();
@@ -171,42 +176,67 @@ include '../includes/head.php';
                     return;
                 }
 
-                const file = fileInput.files[0];
-                const description = document.getElementById('documentDescription').value;
+                if (fileInput.files.length === 0) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    form.classList.add('was-validated');
 
-                const validTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
-                if (!validTypes.includes(file.type)) {
                     const alertDiv = document.createElement('div');
                     alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
                     alertDiv.innerHTML = `
-                        <strong>Error!</strong> Please upload only PDF or DOCX files.
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    `;
+                    <strong>Error!</strong> Please select a file to upload.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
                     form.parentNode.insertBefore(alertDiv, form.nextSibling);
                     return;
                 }
 
-                const successDiv = document.createElement('div');
-                successDiv.className = 'alert alert-success alert-dismissible fade show mt-3';
-                successDiv.innerHTML = `
-                    <strong>Success!</strong> Document uploaded successfully!
+                const file = fileInput.files[0];
+                const fileExt = file.name.split('.').pop().toLowerCase();
+                const allowedExts = ['pdf', 'doc', 'xls', 'xlsx', 'docx'];
+
+                if (!allowedExts.includes(fileExt)) {
+                    e.preventDefault();
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
+                    alertDiv.innerHTML = `
+                    <strong>Error!</strong> Please upload only PDF, DOC, DOCX, XLS or XLSX files.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 `;
-                form.parentNode.insertBefore(successDiv, form.nextSibling);
+                    form.parentNode.insertBefore(alertDiv, form.nextSibling);
+                    return;
+                }
 
-                form.reset();
-                form.classList.remove('was-validated');
-                fileNameDisplay.textContent = 'No file chosen';
+                const maxSize = 10 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    e.preventDefault();
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
+                    alertDiv.innerHTML = `
+                    <strong>Error!</strong> File size exceeds 10MB limit.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                `;
+                    form.parentNode.insertBefore(alertDiv, form.nextSibling);
+                    return;
+                }
 
-                pdfPreview.classList.add('d-none');
-                unsupportedPreview.classList.add('d-none');
-                noPreview.classList.remove('d-none');
-                pdfPreview.src = '';
-
-                setTimeout(() => {
-                    successDiv.remove();
-                }, 3000);
+                const submitButton = form.querySelector('button[type="submit"]');
+                submitButton.disabled = true;
+                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...';
             });
+
+            const uploadModal = document.getElementById('uploadModal');
+            if (uploadModal) {
+                uploadModal.addEventListener('hidden.bs.modal', function() {
+                    form.reset();
+                    form.classList.remove('was-validated');
+                    fileNameDisplay.textContent = 'No file chosen';
+                    pdfPreview.classList.add('d-none');
+                    unsupportedPreview.classList.add('d-none');
+                    noPreview.classList.remove('d-none');
+                    pdfPreview.src = '';
+                });
+            }
         });
     </script>
 
