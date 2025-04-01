@@ -61,7 +61,7 @@ include '../includes/head.php';
                                     } else {
                                         echo "../assets/images/default_profile.png";
                                     } ?>" alt="Doctor Profile Image" class="img-fluid rounded me-3 shadow" height="150" width="150">
-                        <div class="">
+                        <div class="me-auto">
                             <h5 class="card-title">Dr. <?= $doctorDetails['doctor_name'] ?></h5>
                             <p class="text-muted mb-0"><?= !empty($doctorDetails['specialty']) ? htmlspecialchars($doctorDetails['specialty']) : 'Not specified' ?></p>
                             <div class="d-flex align-items-center">
@@ -69,7 +69,7 @@ include '../includes/head.php';
                                     <a href="#" class="text-decoration-none">More</a> -->
                             </div>
                         </div>
-                        <div class="float-end d-flex justify-content-end">
+                        <div class="d-flex justify-content-end">
                             <a href="./file_upload" class="btn btn-outline-primary hover-light me-2">
                                 Send File
                             </a>
