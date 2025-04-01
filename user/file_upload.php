@@ -176,58 +176,42 @@ include '../includes/head.php';
                     return;
                 }
 
-                if (fileInput.files.length === 0) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    form.classList.add('was-validated');
-
-                    const alertDiv = document.createElement('div');
-                    alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
-                    alertDiv.innerHTML = `
-                    <strong>Error!</strong> Please select a file to upload.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
-                    form.parentNode.insertBefore(alertDiv, form.nextSibling);
-                    return;
-                }
-
                 const file = fileInput.files[0];
-                const fileExt = file.name.split('.').pop().toLowerCase();
-                const allowedExts = ['pdf', 'doc', 'xls', 'xlsx', 'docx'];
+                const validTypes = [
+                    'application/pdf',
+                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                    'application/msword',
+                    'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                ];
 
-                if (!allowedExts.includes(fileExt)) {
+                if (!file || !validTypes.includes(file.type)) {
                     e.preventDefault();
                     const alertDiv = document.createElement('div');
                     alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
                     alertDiv.innerHTML = `
-                    <strong>Error!</strong> Please upload only PDF, DOC, DOCX, XLS or XLSX files.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
+                    <strong>Error!</strong> Please upload only PDF, DOC, DOCX, XLS, or XLSX files.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
+
                     form.parentNode.insertBefore(alertDiv, form.nextSibling);
                     return;
                 }
 
-                const maxSize = 10 * 1024 * 1024;
-                if (file.size > maxSize) {
-                    e.preventDefault();
-                    const alertDiv = document.createElement('div');
-                    alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
-                    alertDiv.innerHTML = `
-                    <strong>Error!</strong> File size exceeds 10MB limit.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                `;
-                    form.parentNode.insertBefore(alertDiv, form.nextSibling);
-                    return;
-                }
-
-                const submitButton = form.querySelector('button[type="submit"]');
-                submitButton.disabled = true;
-                submitButton.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Uploading...';
             });
 
-            const uploadModal = document.getElementById('uploadModal');
-            if (uploadModal) {
-                uploadModal.addEventListener('hidden.bs.modal', function() {
+            <?php if (isset($success)): ?>
+                const messageType = '<?php echo $success === 'success' ? 'success' : 'danger' ?>';
+                const messageText = '<?php echo $success === 'success' ? 'Document uploaded successfully!' : 'Failed to upload document. Please try again.' ?>';
+
+                const alertDiv = document.createElement('div');
+                alertDiv.className = `alert alert-${messageType} alert-dismissible fade show mt-3`;
+                alertDiv.innerHTML = `
+                <strong>${messageType === 'success' ? 'Success!' : 'Error!'}</strong> ${messageText}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+                form.parentNode.insertBefore(alertDiv, form.nextSibling);
+
+                <?php if ($success === 'success'): ?>
                     form.reset();
                     form.classList.remove('was-validated');
                     fileNameDisplay.textContent = 'No file chosen';
@@ -235,8 +219,8 @@ include '../includes/head.php';
                     unsupportedPreview.classList.add('d-none');
                     noPreview.classList.remove('d-none');
                     pdfPreview.src = '';
-                });
-            }
+                <?php endif; ?>
+            <?php endif; ?>
         });
     </script>
 
