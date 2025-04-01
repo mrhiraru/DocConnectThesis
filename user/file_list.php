@@ -60,8 +60,8 @@ include '../includes/head.php';
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <div class="card border-0 shadow">
-                        <div class="mb-5">
+                    <div class="card border-0 shadow p-3">
+                        <div class="mb-3">
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="text-dark fw-semibold mb-0">Doctor Uploads</h6>
                                 <div class="search-box">
