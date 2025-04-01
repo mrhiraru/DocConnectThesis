@@ -55,7 +55,7 @@ include '../includes/head.php';
         <main class="mx-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center justify-content-between">
                         <img src="<?php if (isset($doctorDetails['account_image'])) {
                                         echo "../assets/images/" . $doctorDetails['account_image'];
                                     } else {
@@ -70,16 +70,16 @@ include '../includes/head.php';
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                                    <a href="./file_upload" class="btn btn-outline-primary hover-light me-2">
-                                        Send File
-                                    </a>
-                                    <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
-                                        Book Appointment
-                                    </a>
-                                    <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
-                                        Chat
-                                    </a>
-                                </div>
+                            <a href="./file_upload" class="btn btn-outline-primary hover-light me-2">
+                                Send File
+                            </a>
+                            <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light me-2">
+                                Book Appointment
+                            </a>
+                            <a href="./chat_user?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">
+                                Chat
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
