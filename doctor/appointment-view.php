@@ -380,7 +380,7 @@ include '../includes/head.php';
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><a href="">Force Start</a></li>
+                                <li><a class="dropdown-item" href="">Force Start</a></li>
                             </ul>
                         </div>
                     <?php
