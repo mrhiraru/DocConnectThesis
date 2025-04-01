@@ -364,6 +364,7 @@ include '../includes/head.php';
                     if ($record['appointment_status'] == "Incoming") {
 
                         $appointment_datetime = date('Y-m-d', strtotime($record['appointment_date']));
+                        date_default_timezone_set('Asia/Manila'); 
                         $current_datetime = date('Y-m-d');
 
                         $disable_button = ($appointment_datetime != $current_datetime) ? 'disabled' : '';
