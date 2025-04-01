@@ -56,7 +56,7 @@ include '../includes/head.php';
                                             <td><?= $item['doctor_name'] ?></td>
                                             <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                         </tr>
-                                    <?
+                                    <?php
                                     }
                                     ?>
 
