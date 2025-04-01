@@ -10,6 +10,7 @@ require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 require_once('../classes/file.class.php');
 
+$file = new File();
 if (isset($_POST['upload_document'])) {
 
     $account_class->account_id = $_SESSION['account_id'];
@@ -26,12 +27,12 @@ if (isset($_POST['upload_document'])) {
         $uploadfile = $uploaddir . $uploadenewname;
 
         if (move_uploaded_file($_FILES[htmlentities('document')]['tmp_name'], $uploadfile)) {
-            $account_class->account_image = $uploadenewname;
 
-            $account_class->file_name = $uploadenewname;
-            $account_class->file_description = htmlentities($_POST['documentDescription']);
-
-            if ($account_class->add_file()) {
+            $file->file_name = $uploadenewname;
+            $file->file_description = htmlentities($_POST['documentDescription']);
+            $file->sender_id = $_SESSION['account_id'];
+            $file->receiver_id = $_GET['account_id'];
+            if ($file->add_file()) {
                 $success = 'success';
             } else {
                 echo 'An error occured while adding in the database.';
@@ -76,7 +77,7 @@ include '../includes/head.php';
                                         <div class="mb-4">
                                             <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
                                             <div class="input-group">
-                                                <input type="file" class="form-control d-none" id="documentFile" name="document" accept=".pdf,.doc,.xls,.xlsx,.docx"> required>
+                                                <input type="file" class="form-control d-none" id="documentFile" name="document" accept=".pdf,.doc,.xls,.xlsx,.docx" required>
                                                 <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
                                                     <i class='bx bx-file me-1'></i> Choose File
                                                 </button>
