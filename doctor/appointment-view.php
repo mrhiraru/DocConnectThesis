@@ -380,10 +380,7 @@ include '../includes/head.php';
                             </a>
 
                             <ul class="dropdown-menu">
-                                <li><button class="btn btn-success text-white mb-3" id="start" onclick="start_meeting()" <?= $disable_button ?>>
-                                        <i class='bx bx-dots me-2 align-middle fs-5'></i>
-                                        Force Start
-                                    </button></li>
+                                <li><a href="">Force Start</a></li>
                             </ul>
                         </div>
                     <?php
