@@ -69,7 +69,7 @@ include '../includes/head.php';
                                     <a href="#" class="text-decoration-none">More</a> -->
                             </div>
                         </div>
-                        <div class="d-flex justify-content-end">
+                        <div class="float-end d-flex justify-content-end">
                             <a href="./file_upload" class="btn btn-outline-primary hover-light me-2">
                                 Send File
                             </a>
