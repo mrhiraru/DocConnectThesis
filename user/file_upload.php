@@ -77,7 +77,7 @@ include '../includes/head.php';
                                         <div class="mb-4">
                                             <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
                                             <div class="input-group">
-                                                <input type="file" class="form-control d-none" id="documentFile" name="document" accept=".pdf,.docx" required>
+                                                <input type="file" class="form-control d-none" id="documentFile" name="document" accept=".pdf,.doc,.xls,.xlsx,.docx" required>
                                                 <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
                                                     <i class='bx bx-file me-1'></i> Choose File
                                                 </button>
