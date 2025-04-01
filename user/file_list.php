@@ -48,24 +48,26 @@ include '../includes/head.php';
                                 <tbody>
                                     <?php
                                     $file_sent_doctor = $file->show_files_doctor($_GET['account_id'], $_SESSION['account_id']);
-                                    foreach ($file_sent_doctor as $item) {
+
+                                    if (!empty($file_sent_doctor)) {
+                                        foreach ($file_sent_doctor as $item) {
                                     ?>
+                                            <tr>
+                                                <td><a href="#" class="file-link"></a><?= $item['file_name'] ?></td>
+                                                <td><?= $item['file_description'] ?></td>
+                                                <td><?= $item['doctor_name'] ?></td>
+                                                <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                            </tr>
+                                        <?php
+                                        }
+                                    } else {
+                                        ?>
                                         <tr>
-                                            <td><a href="#" class="file-link"></a><?= $item['file_name'] ?></td>
-                                            <td><?= $item['file_description'] ?></td>
-                                            <td><?= $item['doctor_name'] ?></td>
-                                            <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                            <td colspan="4" style="text-align: center;">No files available.</td>
                                         </tr>
                                     <?php
                                     }
                                     ?>
-
-                                    <tr>
-                                        <td><a href="#" class="file-link">Prescription_March_2024.pdf</a></td>
-                                        <td>Medication prescription</td>
-                                        <td>Dr. btamn</td>
-                                        <td>2024-03-22</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
