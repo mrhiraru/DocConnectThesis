@@ -274,18 +274,22 @@ function getCurrentPage()
             <div class="card w-100">
                 <div class="card-body">
                     <div class="container mb-4 pt-2">
+                        <?php
+                        $aboutUsContent = $homePageContent->getAboutUsContent();
+                        $keyPoints = explode("\n", $aboutUsContent['key_points'] ?? '');
+                        ?>
                         <form method="POST" action="" enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="subtitle" class="form-label text-secondary">Subtitle</label>
-                                <input type="text" class="form-control" id="subtitle" name="subtitle" value="<?= htmlspecialchars($aboutUsContent['subtitle']) ?>">
+                                <input type="text" class="form-control" id="subtitle" name="subtitle" value="<?= htmlspecialchars($aboutUsContent['subtitle'] ?? '') ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="title" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="title" name="title" value="<?= htmlspecialchars($aboutUsContent['title']) ?>">
+                                <input type="text" class="form-control" id="title" name="title" value="<?= htmlspecialchars($aboutUsContent['title'] ?? '') ?>">
                             </div>
                             <div class="mb-3">
                                 <label for="description" class="form-label">Description</label>
-                                <textarea class="form-control" id="description" name="description" rows="3"><?= htmlspecialchars($aboutUsContent['description']) ?></textarea>
+                                <textarea class="form-control" id="description" name="description" rows="3"><?= htmlspecialchars($aboutUsContent['description'] ?? '') ?></textarea>
                             </div>
 
                             <label class="form-label">Key Points</label>
@@ -298,8 +302,8 @@ function getCurrentPage()
                             <div class="mb-3">
                                 <label for="image" class="form-label">Upload Image</label>
                                 <input type="file" class="form-control" id="image" name="image" onchange="previewImage(event, 'preview4')">
-                                <input type="hidden" name="existing_image" value="<?= htmlspecialchars($aboutUsContent['image_path']) ?>">
-                                <img id="preview4" src="<?= htmlspecialchars($aboutUsContent['image_path']) ?>" class="card-img-top mt-2" style="height: 250px; object-fit: cover;">
+                                <input type="hidden" name="existing_image" value="<?= htmlspecialchars($aboutUsContent['image_path'] ?? '') ?>">
+                                <img id="preview4" src="<?= htmlspecialchars($aboutUsContent['image_path'] ?? '') ?>" class="card-img-top mt-2" style="height: 250px; object-fit: cover;">
                             </div>
                             <div class="d-flex justify-content-end">
                                 <button type="submit" name="update_about" class="btn btn-primary text-light">Save</button>

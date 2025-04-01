@@ -94,16 +94,44 @@ class HomePageContent
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // Update about us content
+    // About Us Section Methods
+    public function getAboutUsContent()
+    {
+        $stmt = $this->db->prepare("SELECT * FROM homepage_aboutus LIMIT 1");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function updateAboutUs($subtitle, $title, $description, $image_path, $key_points)
     {
-        $stmt = $this->db->prepare("UPDATE homePage_content SET subtitle = :subtitle, title = :title, description = :description, image_path = :image_path, content = :key_points WHERE section_name = 'about_us'");
+        // Check if record exists
+        $existing = $this->getAboutUsContent();
+
+        if ($existing) {
+            // Update existing record
+            $stmt = $this->db->prepare("UPDATE homepage_aboutus SET 
+            subtitle = :subtitle,
+            title = :title,
+            description = :description,
+            image_path = :image_path,
+            key_points = :key_points
+            WHERE id = :id");
+
+            $stmt->bindParam(':id', $existing['id']);
+        } else {
+            // Insert new record
+            $stmt = $this->db->prepare("INSERT INTO homepage_aboutus 
+            (subtitle, title, description, image_path, key_points) 
+            VALUES 
+            (:subtitle, :title, :description, :image_path, :key_points)");
+        }
+
         $stmt->bindParam(':subtitle', $subtitle);
         $stmt->bindParam(':title', $title);
         $stmt->bindParam(':description', $description);
         $stmt->bindParam(':image_path', $image_path);
         $stmt->bindParam(':key_points', $key_points);
+
         return $stmt->execute();
     }
 }
-?>
