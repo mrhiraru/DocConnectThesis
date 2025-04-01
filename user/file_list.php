@@ -46,12 +46,20 @@ include '../includes/head.php';
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td><a href="#" class="file-link">Test_Result_April_2024.pdf</a></td>
-                                        <td>Annual blood test results</td>
-                                        <td>Dr. superman</td>
-                                        <td>2024-04-15</td>
-                                    </tr>
+                                    <?php
+                                    $file_sent_doctor = $file->show_files_doctor($_GET['account_id'], $_SESSION['account_id']);
+                                    foreach ($file_sent_doctor as $item) {
+                                    ?>
+                                        <tr>
+                                            <td><a href="#" class="file-link"></a><?= $item['file_name'] ?></td>
+                                            <td><?= $item['file_description'] ?></td>
+                                            <td><?= $item['doctor_name'] ?></td>
+                                            <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                        </tr>
+                                    <?
+                                    }
+                                    ?>
+
                                     <tr>
                                         <td><a href="#" class="file-link">Prescription_March_2024.pdf</a></td>
                                         <td>Medication prescription</td>

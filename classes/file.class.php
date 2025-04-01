@@ -22,7 +22,7 @@ class File
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':sender_id', $this->sender_id);
         $query->bindParam(':receiver_id', $this->receiver_id);
-        $query->bindParam(':file_name', $this->file_name);     
+        $query->bindParam(':file_name', $this->file_name);
         $query->bindParam(':file_description', $this->file_description);
 
         if ($query->execute()) {
@@ -30,6 +30,37 @@ class File
         } else {
             return false;
         }
+    }
 
+    function show_files_patient($sender_id, $receiver_id)
+    {
+        $sql = "SELECT * FROM files WHERE sender_id = :sender_id AND receiver_id = :receiver_id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':sender_id', $sender_id);
+        $query->bindParam(':receiver_id', $receiver_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
+
+    function show_files_doctor($sender_id, $receiver_id)
+    {
+        $sql = "SELECT f.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), 
+        ' ', a.lastname) AS doctor_name 
+        FROM files f 
+        INNER JOIN account a ON a.account_id = f.receiver_id
+        WHERE sender_id = :sender_id AND receiver_id = :receiver_id;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':sender_id', $sender_id);
+        $query->bindParam(':receiver_id', $receiver_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
     }
 }
