@@ -16,7 +16,7 @@ if (isset($_POST['upload_document'])) {
     $account_class->account_id = $_SESSION['account_id'];
 
     $uploaddir = '../assets/files/';
-    $uploadname = $_FILES[htmlentities('document')]['name'];
+    $uploadname = $_FILES[htmlentities('documentname')]['name'];
     $uploadext = explode('.', $uploadname);
     $uploadnewext = strtolower(end($uploadext));
     $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx');
@@ -26,7 +26,7 @@ if (isset($_POST['upload_document'])) {
         $uploadenewname = reset($uploadext) . date('Ymd_His') . "." . $uploadnewext;
         $uploadfile = $uploaddir . $uploadenewname;
 
-        if (move_uploaded_file($_FILES[htmlentities('document')]['tmp_name'], $uploadfile)) {
+        if (move_uploaded_file($_FILES[htmlentities('documentname')]['tmp_name'], $uploadfile)) {
 
             $file->file_name = $uploadenewname;
             $file->file_description = htmlentities($_POST['documentDescription']);
@@ -77,7 +77,7 @@ include '../includes/head.php';
                                         <div class="mb-4">
                                             <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
                                             <div class="input-group">
-                                                <input type="file" class="form-control d-none" id="documentFile" name="document" accept=".pdf,.doc,.xls,.xlsx,.docx" required>
+                                                <input type="file" class="form-control d-none" id="documentFile" name="documentname" accept=".pdf,.doc,.xls,.xlsx,.docx" required>
                                                 <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
                                                     <i class='bx bx-file me-1'></i> Choose File
                                                 </button>
