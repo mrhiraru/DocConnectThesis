@@ -74,7 +74,7 @@ include '../includes/head.php';
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
                                 <a href="./file_upload?account_id=<?= $_GET['account_id'] ?>" class="btn btn-sm btn-primary text-light me-2">
-                                    Upload FIles
+                                    Upload new fIles
                                 </a>
                             </div>
                             <table class="table table-hover doctor-files">
