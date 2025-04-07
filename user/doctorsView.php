@@ -43,13 +43,10 @@ include '../includes/head.php';
 
     <!-- Doctor Details -->
     <section class="page-container padding-medium py-4">
-        <div class="col-md-6 ms-4 text-md-start">
-            <button onclick="history.back()" class="bg-none d-flex align-items-center">
-
-                <p class="btn btn-outline-secondary hover-light d-fex align-items-center">
-                    <i class='bx bx-chevron-left'></i>
-                    Back
-                </p>
+        <div class="col-md-6 text-md-start">
+            <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3 ms-3">
+                <i class='bx bx-chevron-left'></i>
+                Back
             </button>
         </div>
         <main class="mx-4">

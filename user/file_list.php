@@ -26,6 +26,12 @@ include '../includes/head.php';
 
     <section class="page-container padding-medium">
         <div class="container py-5">
+            <div class="col-md-6 text-md-start">
+                <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
+                    <i class='bx bx-chevron-left'></i>
+                    Back
+                </button>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-12">
                     <div class="row gx-4">
@@ -61,7 +67,7 @@ include '../includes/head.php';
                                                             <td class="text-truncate" style="max-width: 120px;"><?= htmlspecialchars($item['doctor_name']) ?></td>
                                                             <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                         </tr>
-                                                    <?php
+                                                <?php
                                                     }
                                                 }
                                                 ?>
@@ -107,14 +113,8 @@ include '../includes/head.php';
                                                             <td class="text-truncate" style="max-width: 120px;"><?= htmlspecialchars($item['patient_name']) ?></td>
                                                             <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                         </tr>
-                                                    <?php
-                                                    }
-                                                } else {
-                                                    ?>
-                                                    <tr>
-                                                        <td colspan="4" class="text-center">No files available.</td>
-                                                    </tr>
                                                 <?php
+                                                    }
                                                 }
                                                 ?>
                                             </tbody>
