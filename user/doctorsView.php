@@ -52,15 +52,15 @@ include '../includes/head.php';
         <main class="mx-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex flex-column flex-md-row align-items-center">
                         <img src="<?php if (isset($doctorDetails['account_image'])) {
                                         echo "../assets/images/" . $doctorDetails['account_image'];
                                     } else {
                                         echo "../assets/images/default_profile.png";
-                                    } ?>" alt="Doctor Profile Image" class="img-fluid rounded me-3 shadow" height="150" width="150">
-                        <div class="me-auto">
+                                    } ?>" alt="Doctor Profile Image" class="img-fluid rounded me-0 me-md-3 shadow mb-3 mb-md-0" height="150" width="150">
+                        <div class="mx-auto mx-md-0 me-md-auto mb-3">
                             <h5 class="card-title">Dr. <?= $doctorDetails['doctor_name'] ?></h5>
-                            <p class="text-muted mb-0"><?= !empty($doctorDetails['specialty']) ? htmlspecialchars($doctorDetails['specialty']) : 'Not specified' ?></p>
+                            <p class="text-muted mb-0 text-center text-md-start"><?= !empty($doctorDetails['specialty']) ? htmlspecialchars($doctorDetails['specialty']) : 'Not specified' ?></p>
                             <div class="d-flex align-items-center">
                                 <!-- <span class="text-primary me-2">★★★★★</span>
                                     <a href="#" class="text-decoration-none">More</a> -->
