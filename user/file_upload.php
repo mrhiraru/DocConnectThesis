@@ -56,8 +56,17 @@ include '../includes/head.php';
 <body>
     <?php require_once('../includes/header.php'); ?>
 
-    <section class="page-container padding-medium">
-        <div class="container py-5">
+    <div class="container py-5">
+        <section class="page-container padding-medium">
+            <div class="col-md-6 ms-4 text-md-start">
+                <button onclick="history.back()" class="bg-none d-flex align-items-center">
+
+                    <p class="btn btn-outline-secondary hover-light d-fex align-items-center">
+                        <i class='bx bx-chevron-left'></i>
+                        Back
+                    </p>
+                </button>
+            </div>
             <div class="row justify-content-center">
                 <div class="col-lg-10">
                     <div class="card border-0 shadow">
@@ -121,7 +130,7 @@ include '../includes/head.php';
                     </div>
                 </div>
             </div>
-        </div>
+    </div>
     </section>
 
     <script>
