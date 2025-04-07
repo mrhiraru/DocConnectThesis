@@ -28,9 +28,10 @@ include '../includes/head.php';
         <div class="container py-5">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <div class="card border-0 shadow p-3">
-                        <div class="mb-3">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
+                    <!-- Doctor Uploads Card -->
+                    <div class="card border-0 shadow p-3 mb-4">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="text-dark fw-semibold mb-0">Doctor Uploads</h6>
                             </div>
                             <table class="table table-hover doctor-files">
@@ -68,13 +69,15 @@ include '../includes/head.php';
                                 </tbody>
                             </table>
                         </div>
+                    </div>
 
-                        <!-- Patient Uploads Table -->
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
+                    <!-- Patient Uploads Card -->
+                    <div class="card border-0 shadow p-3">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
                                 <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
                                 <a href="./file_upload?account_id=<?= $_GET['account_id'] ?>" class="btn btn-sm btn-primary text-light me-2">
-                                    Upload new fIles
+                                    Upload new files
                                 </a>
                             </div>
                             <table class="table table-hover doctor-files">
@@ -117,7 +120,6 @@ include '../includes/head.php';
             </div>
         </div>
     </section>
-
 
     <?php require_once('../includes/footer.php'); ?>
 </body>
