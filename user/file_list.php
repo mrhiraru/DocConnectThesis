@@ -27,93 +27,103 @@ include '../includes/head.php';
     <section class="page-container padding-medium">
         <div class="container py-5">
             <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <!-- Doctor Uploads Card -->
-                    <div class="card border-0 shadow p-3 mb-4">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h6 class="text-dark fw-semibold mb-0">Doctor Uploads</h6>
-                            </div>
-                            <table class="table table-hover doctor-files">
-                                <thead>
-                                    <tr>
-                                        <th>File Name</th>
-                                        <th>Description</th>
-                                        <th>Uploaded By</th>
-                                        <th>Date Uploaded</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $file_sent_doctor = $file->show_files_doctor($_GET['account_id'], $_SESSION['account_id']);
+                <div class="col-lg-12">
+                    <div class="row">
+                        <!-- Doctor Uploads Card -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card border-0 shadow h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6 class="text-dark fw-semibold mb-0">Doctor Uploads</h6>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover doctor-files">
+                                            <thead>
+                                                <tr>
+                                                    <th>File Name</th>
+                                                    <th>Description</th>
+                                                    <th>Uploaded By</th>
+                                                    <th>Date Uploaded</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $file_sent_doctor = $file->show_files_doctor($_GET['account_id'], $_SESSION['account_id']);
 
-                                    if (!empty($file_sent_doctor)) {
-                                        foreach ($file_sent_doctor as $item) {
-                                    ?>
-                                            <tr>
-                                                <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
-                                                <td><?= $item['file_description'] ?></td>
-                                                <td><?= $item['doctor_name'] ?></td>
-                                                <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
-                                            </tr>
-                                        <?php
-                                        }
-                                    } else {
-                                        ?>
-                                        <tr>
-                                            <td colspan="4" style="text-align: center;">No files available.</td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                                                if (!empty($file_sent_doctor)) {
+                                                    foreach ($file_sent_doctor as $item) {
+                                                ?>
+                                                        <tr>
+                                                            <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
+                                                            <td><?= $item['file_description'] ?></td>
+                                                            <td><?= $item['doctor_name'] ?></td>
+                                                            <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="4" style="text-align: center;">No files available.</td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Patient Uploads Card -->
-                    <div class="card border-0 shadow p-3">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
-                                <a href="./file_upload?account_id=<?= $_GET['account_id'] ?>" class="btn btn-sm btn-primary text-light me-2">
-                                    Upload new files
-                                </a>
+                        <!-- Patient Uploads Card -->
+                        <div class="col-md-6 mb-4">
+                            <div class="card border-0 shadow h-100">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
+                                        <a href="./file_upload?account_id=<?= $_GET['account_id'] ?>" class="btn btn-sm btn-primary text-light me-2">
+                                            Upload new files
+                                        </a>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover doctor-files">
+                                            <thead>
+                                                <tr>
+                                                    <th>File Name</th>
+                                                    <th>Description</th>
+                                                    <th>Uploaded By</th>
+                                                    <th>Date Uploaded</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                $file_sent_patient = $file->show_files_patient($_SESSION['account_id'], $_GET['account_id']);
+
+                                                if (!empty($file_sent_patient)) {
+                                                    foreach ($file_sent_patient as $item) {
+                                                ?>
+                                                        <tr>
+                                                            <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
+                                                            <td><?= $item['file_description'] ?></td>
+                                                            <td><?= $item['patient_name'] ?></td>
+                                                            <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                                        </tr>
+                                                    <?php
+                                                    }
+                                                } else {
+                                                    ?>
+                                                    <tr>
+                                                        <td colspan="4" style="text-align: center;">No files available.</td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                                ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
                             </div>
-                            <table class="table table-hover doctor-files">
-                                <thead>
-                                    <tr>
-                                        <th>File Name</th>
-                                        <th>Description</th>
-                                        <th>Uploaded By</th>
-                                        <th>Date Uploaded</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $file_sent_patient = $file->show_files_patient($_SESSION['account_id'], $_GET['account_id']);
-
-                                    if (!empty($file_sent_patient)) {
-                                        foreach ($file_sent_patient as $item) {
-                                    ?>
-                                            <tr>
-                                                <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
-                                                <td><?= $item['file_description'] ?></td>
-                                                <td><?= $item['patient_name'] ?></td>
-                                                <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
-                                            </tr>
-                                        <?php
-                                        }
-                                    } else {
-                                        ?>
-                                        <tr>
-                                            <td colspan="4" style="text-align: center;">No files available.</td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
