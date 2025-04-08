@@ -63,7 +63,7 @@ include '../includes/head.php';
                             ?>
                                     <tr>
                                         <td><?= $item['purpose'] ?></td>
-                                        <td class="text-truncate"><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
+                                        <td ><a class="text-truncate" href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
                                         <td><?= $item['file_description'] ?></td>
                                         <!-- <td><?php // $item['patient_name'] 
                                                     ?></td> -->
@@ -107,7 +107,7 @@ include '../includes/head.php';
                             ?>
                                     <tr>
                                         <td><?= $item['purpose'] ?></td>
-                                        <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
+                                        <td><a class="text-truncate" href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
                                         <td><?= $item['file_description'] ?></td>
                                         <!-- <td><?php // $item['doctor_name'] 
                                                     ?></td> -->
