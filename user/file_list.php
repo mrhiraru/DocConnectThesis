@@ -44,13 +44,13 @@ include '../includes/head.php';
                             <div class="card border-0 shadow h-100">
                                 <div class="card-body p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
-
+                                        <h6 class="text-dark fw-semibold mb-0">Patient Request</h6>
                                     </div>
                                     <div class="table-container" style="overflow-x: auto; max-width: 100%;">
                                         <table class="table table-hover doctor-files w-100" id="patientFilesTable">
                                             <thead>
                                                 <tr>
+                                                    <th class="text-nowrap">Purpose</th>
                                                     <th class="text-nowrap">File Name</th>
                                                     <th class="text-nowrap">Description</th>
                                                     <th class="text-nowrap">Uploaded By</th>
@@ -67,6 +67,7 @@ include '../includes/head.php';
                                                         if ($patient_count++ >= 10) break;
                                                 ?>
                                                         <tr>
+                                                            <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>" class="file-link" download><?= htmlspecialchars($item['file_name']) ?></a></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
                                                             <td class="text-truncate" style="max-width: 120px;"><?= htmlspecialchars($item['patient_name']) ?></td>
