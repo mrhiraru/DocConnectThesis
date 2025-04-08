@@ -26,11 +26,14 @@ include '../includes/head.php';
 
     <section class="page-container padding-medium">
         <div class="container py-5">
-            <div class="col-md-6 text-md-start">
+            <div class="col-md-6 text-md-start d-flex justify-content-between">
                 <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
                     <i class='bx bx-chevron-left'></i>
                     Back
                 </button>
+                <a href="./file_upload?account_id=<?= $_GET['account_id'] ?>" class="btn btn-sm btn-primary text-light me-2">
+                    Upload new files
+                </a>
             </div>
             <div class="row justify-content-center">
                 <div class="col-12">
@@ -84,9 +87,7 @@ include '../includes/head.php';
                                 <div class="card-body p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
-                                        <a href="./file_upload?account_id=<?= $_GET['account_id'] ?>" class="btn btn-sm btn-primary text-light me-2">
-                                            Upload new files
-                                        </a>
+
                                     </div>
                                     <div class="table-container" style="overflow-x: auto; max-width: 100%;">
                                         <table class="table table-hover doctor-files w-100" id="patientFilesTable">
