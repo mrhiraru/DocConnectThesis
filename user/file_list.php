@@ -24,6 +24,35 @@ include '../includes/head.php';
 <body>
     <?php require_once('../includes/header.php'); ?>
 
+    <!-- Preview Modal -->
+    <div class="modal fade" id="filePreviewModal" tabindex="-1" aria-labelledby="filePreviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filePreviewModalLabel">File Preview</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="noPreviewModal" class="text-center py-5">
+                        <i class='bx bx-file-blank fs-1 text-muted'></i>
+                        <p class="mt-2 text-muted">Preview not available</p>
+                    </div>
+                    <iframe id="pdfPreviewModal" frameborder="0" scrolling="no" class="w-100 d-none" style="height: 500px;"></iframe>
+                    <div id="unsupportedPreviewModal" class="text-center py-5 d-none">
+                        <i class='bx bx-error-alt fs-1 text-warning'></i>
+                        <p class="mt-2 text-muted">Preview not available for this file type</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a id="downloadFileBtn" href="#" class="btn btn-primary text-light" download>
+                        <i class='bx bx-download me-1'></i> Download
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <section class="page-container padding-medium">
         <div class="container py-5">
             <div class="col-md-12 text-md-start d-flex justify-content-between">
@@ -68,7 +97,13 @@ include '../includes/head.php';
                                                 ?>
                                                         <tr>
                                                             <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
-                                                            <td class="text-truncate" style="max-width: 150px;"><a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>" class="file-link" download><?= htmlspecialchars($item['file_name']) ?></a></td>
+                                                            <td class="text-truncate" style="max-width: 150px;">
+                                                                <a href="#" class="file-link preview-file"
+                                                                    data-filepath="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
+                                                                    data-filename="<?= htmlspecialchars($item['file_name']) ?>">
+                                                                    <?= htmlspecialchars($item['file_name']) ?>
+                                                                </a>
+                                                            </td>
                                                             <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
                                                             <!-- <td class="text-truncate" style="max-width: 120px;"><?php //htmlspecialchars($item['patient_name']) 
                                                                                                                         ?></td> -->
@@ -96,7 +131,6 @@ include '../includes/head.php';
                                         <table class="table table-hover doctor-files w-100" id="doctorFilesTable">
                                             <thead>
                                                 <tr>
-
                                                     <th class="text-nowrap">Purpose</th>
                                                     <th class="text-nowrap">File Attachment</th>
                                                     <th class="text-nowrap">Description</th>
@@ -115,7 +149,13 @@ include '../includes/head.php';
                                                 ?>
                                                         <tr>
                                                             <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
-                                                            <td class="text-truncate" style="max-width: 150px;"><a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>" class="file-link" download><?= htmlspecialchars($item['file_name']) ?></a></td>
+                                                            <td class="text-truncate" style="max-width: 150px;">
+                                                                <a href="#" class="file-link preview-file"
+                                                                    data-filepath="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
+                                                                    data-filename="<?= htmlspecialchars($item['file_name']) ?>">
+                                                                    <?= htmlspecialchars($item['file_name']) ?>
+                                                                </a>
+                                                            </td>
                                                             <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
                                                             <!-- <td class="text-truncate" style="max-width: 120px;"><?php // htmlspecialchars($item['doctor_name']) 
                                                                                                                         ?></td> -->
@@ -131,8 +171,6 @@ include '../includes/head.php';
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
@@ -175,41 +213,35 @@ include '../includes/head.php';
                     "emptyTable": "No files available"
                 }
             });
+
+            // File preview functionality
+            $('.preview-file').on('click', function(e) {
+                e.preventDefault();
+
+                const filePath = $(this).data('filepath');
+                const fileName = $(this).data('filename');
+                const fileExt = fileName.split('.').pop().toLowerCase();
+
+                $('#downloadFileBtn').attr('href', filePath);
+
+                $('#pdfPreviewModal').addClass('d-none');
+                $('#unsupportedPreviewModal').addClass('d-none');
+                $('#noPreviewModal').addClass('d-none');
+
+                if (fileExt === 'pdf') {
+                    $('#pdfPreviewModal').attr('src', filePath).removeClass('d-none');
+                } else if (['doc', 'docx', 'xls', 'xlsx'].includes(fileExt)) {
+                    $('#unsupportedPreviewModal').removeClass('d-none');
+                } else {
+                    $('#noPreviewModal').removeClass('d-none');
+                }
+
+                // Show modal
+                const modal = new bootstrap.Modal(document.getElementById('filePreviewModal'));
+                modal.show();
+            });
         });
     </script>
-
-    <style>
-        .table-container {
-            width: 100%;
-            overflow: hidden;
-        }
-
-        .table {
-            table-layout: fixed;
-            width: 100%;
-            margin-bottom: 0;
-        }
-
-        .text-truncate {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .dataTables_wrapper .dataTables_filter {
-            float: none;
-            text-align: left;
-            margin-bottom: 10px;
-        }
-
-        .dataTables_wrapper .dataTables_info {
-            padding-top: 10px;
-        }
-
-        .dataTables_wrapper .dataTables_paginate {
-            padding-top: 10px;
-        }
-    </style>
 </body>
 
 </html>

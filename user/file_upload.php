@@ -136,8 +136,8 @@ include '../includes/head.php';
                     </div>
                 </div>
             </div>
+        </section>
     </div>
-    </section>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
