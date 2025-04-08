@@ -8,13 +8,13 @@
             var docDefinition = {
                 content: [{
                         alignment: 'start',
-                        text: '<?= $_SESSION['fullname'] ?>',
+                        text: '<?= isset($record['doctor_name']) ? $record['doctor_name'] : $_SESSION['fullname'] ?>',
                         style: 'header',
                         fontSize: 20
                     },
                     {
                         alignment: 'start',
-                        text: '<?= $_SESSION['specialty'] ?>',
+                        text: '<?= isset($record['specialty']) ? $record['specialty'] : $_SESSION['specialty'] ?>',
                         style: 'subheader',
                         fontSize: 13,
                         bold: false
