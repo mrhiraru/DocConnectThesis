@@ -26,7 +26,7 @@ include '../includes/head.php';
 
     <section class="page-container padding-medium">
         <div class="container py-5">
-            <div class="col-md-6 text-md-start d-flex justify-content-between">
+            <div class="col-md-12 text-md-start d-flex justify-content-between">
                 <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
                     <i class='bx bx-chevron-left'></i>
                     Back
