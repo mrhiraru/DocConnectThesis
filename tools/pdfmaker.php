@@ -47,7 +47,7 @@
                         }]
                     },
                     {
-                        text: "Patient's Name: <?= $record['patient_name'] ?>",
+                        text: "Patient's Name: <?= isset($record['patient_name']) ? $record['patient_name'] : $_SESSION['fullname'] ?>",
                         margin: [0, 15, 0, 0]
                     },
                     {
