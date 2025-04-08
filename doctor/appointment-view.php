@@ -397,6 +397,16 @@ include '../includes/head.php';
                             <i class='bx bx-file align-middle fs-5'></i>
                             Download Result
                         </button>
+                        <?php
+                        if (isset($record['prescription'])) {
+                        ?>
+                            <button class="btn btn-danger text-white mb-3" id="download_prescription_pdf">
+                                <i class='bx bx-file align-middle fs-5'></i>
+                                Download Prescription
+                            </button>
+                        <?php
+                        }
+                        ?>
                     <?php
                     }
                     ?>
