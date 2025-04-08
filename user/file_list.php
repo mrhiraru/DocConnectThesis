@@ -96,6 +96,8 @@ include '../includes/head.php';
                                         <table class="table table-hover doctor-files w-100" id="doctorFilesTable">
                                             <thead>
                                                 <tr>
+
+                                                    <th class="text-nowrap">Purpose</th>
                                                     <th class="text-nowrap">File Name</th>
                                                     <th class="text-nowrap">Description</th>
                                                     <!-- <th class="text-nowrap">Uploaded By</th> -->
@@ -112,10 +114,11 @@ include '../includes/head.php';
                                                         if ($doctor_count++ >= 10) break;
                                                 ?>
                                                         <tr>
-                                                            <th class="text-nowrap">Purpose</th>
+                                                            <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>" class="file-link" download><?= htmlspecialchars($item['file_name']) ?></a></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
-                                                            <!-- <td class="text-truncate" style="max-width: 120px;"><?php // htmlspecialchars($item['doctor_name']) ?></td> -->
+                                                            <!-- <td class="text-truncate" style="max-width: 120px;"><?php // htmlspecialchars($item['doctor_name']) 
+                                                                                                                        ?></td> -->
                                                             <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                         </tr>
                                                 <?php
