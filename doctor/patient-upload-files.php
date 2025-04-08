@@ -30,6 +30,7 @@ if (isset($_POST['upload_document'])) {
         if (move_uploaded_file($_FILES[htmlentities('documentname')]['tmp_name'], $uploadfile)) {
 
             $file->file_name = $uploadenewname;
+            $file->purpose = htmlentities($_POST['purpose']);
             $file->file_description = htmlentities($_POST['documentDescription']);
 
             if ($file->add_file()) {
@@ -82,6 +83,16 @@ include '../includes/head.php';
                         <div class="col-md-6">
                             <form id="documentUploadForm" method='post' class="needs-validation" enctype="multipart/form-data" novalidate>
                                 <!-- File Upload Input -->
+
+                                <div class="mb-3">
+                                    <label for="purpose" class="form-label">Purpose of Response</label>
+                                    <select id="purpose" name="purpose" class="form-select bg-light border border-outline-dark text-secondary">
+                                        <option value=""></option>
+                                        <option value="Medical Certificate" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Certificate") ? 'selected' : '' ?>>Medical Certificate</option>
+                                        <option value="Prescription" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Prescription") ? 'selected' : '' ?>>Prescription</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select purpose of response.</div>
+                                </div>
                                 <div class="mb-4">
                                     <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
                                     <div class="input-group">
