@@ -375,11 +375,6 @@
                     },
                     <?php
                     if ($record['prescription'] != null) { ?> {
-                            text: "Prescription:",
-                            margin: [0, 5, 0, 0],
-                        },
-                        {
-
                             text: "<?= $record['prescription'] ?>",
                             margin: [30, 5, 0, 0],
                         },
