@@ -24,35 +24,6 @@ include '../includes/head.php';
 <body>
     <?php require_once('../includes/header.php'); ?>
 
-    <!-- Preview Modal -->
-    <div class="modal fade" id="filePreviewModal" tabindex="-1" aria-labelledby="filePreviewModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="filePreviewModalLabel">File Preview</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="noPreviewModal" class="text-center py-5">
-                        <i class='bx bx-file-blank fs-1 text-muted'></i>
-                        <p class="mt-2 text-muted">Preview not available</p>
-                    </div>
-                    <iframe id="pdfPreviewModal" frameborder="0" scrolling="no" class="w-100 d-none" style="height: 500px;"></iframe>
-                    <div id="unsupportedPreviewModal" class="text-center py-5 d-none">
-                        <i class='bx bx-error-alt fs-1 text-warning'></i>
-                        <p class="mt-2 text-muted">Preview not available for this file type</p>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <a id="downloadFileBtn" href="#" class="btn btn-primary text-light" download>
-                        <i class='bx bx-download me-1'></i> Download
-                    </a>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <section class="page-container padding-medium">
         <div class="container py-5">
             <div class="col-md-12 text-md-start d-flex justify-content-between">
@@ -98,9 +69,10 @@ include '../includes/head.php';
                                                         <tr>
                                                             <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
                                                             <td class="text-truncate" style="max-width: 150px;">
-                                                                <a href="#" class="file-link preview-file"
-                                                                    data-filepath="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
-                                                                    data-filename="<?= htmlspecialchars($item['file_name']) ?>">
+                                                                <a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
+                                                                    class="file-link"
+                                                                    target="_blank"
+                                                                    onclick="return previewFile(event, '<?= htmlspecialchars($item['file_name']) ?>')">
                                                                     <?= htmlspecialchars($item['file_name']) ?>
                                                                 </a>
                                                             </td>
@@ -150,9 +122,10 @@ include '../includes/head.php';
                                                         <tr>
                                                             <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
                                                             <td class="text-truncate" style="max-width: 150px;">
-                                                                <a href="#" class="file-link preview-file"
-                                                                    data-filepath="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
-                                                                    data-filename="<?= htmlspecialchars($item['file_name']) ?>">
+                                                                <a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
+                                                                    class="file-link"
+                                                                    target="_blank"
+                                                                    onclick="return previewFile(event, '<?= htmlspecialchars($item['file_name']) ?>')">
                                                                     <?= htmlspecialchars($item['file_name']) ?>
                                                                 </a>
                                                             </td>
@@ -213,34 +186,30 @@ include '../includes/head.php';
                     "emptyTable": "No files available"
                 }
             });
-
-            // File preview functionality
-            $('.preview-file').on('click', function(e) {
-                e.preventDefault();
-
-                const filePath = $(this).data('filepath');
-                const fileName = $(this).data('filename');
-                const fileExt = fileName.split('.').pop().toLowerCase();
-
-                $('#downloadFileBtn').attr('href', filePath);
-
-                $('#pdfPreviewModal').addClass('d-none');
-                $('#unsupportedPreviewModal').addClass('d-none');
-                $('#noPreviewModal').addClass('d-none');
-
-                if (fileExt === 'pdf') {
-                    $('#pdfPreviewModal').attr('src', filePath).removeClass('d-none');
-                } else if (['doc', 'docx', 'xls', 'xlsx'].includes(fileExt)) {
-                    $('#unsupportedPreviewModal').removeClass('d-none');
-                } else {
-                    $('#noPreviewModal').removeClass('d-none');
-                }
-
-                // Show modal
-                const modal = new bootstrap.Modal(document.getElementById('filePreviewModal'));
-                modal.show();
-            });
         });
+
+        function previewFile(event, fileName) {
+            event.preventDefault();
+            const fileExt = fileName.split('.').pop().toLowerCase();
+            const fileUrl = event.target.href;
+
+            // For PDF files, open in new tab
+            if (fileExt === 'pdf') {
+                window.open(fileUrl, '_blank');
+                return false;
+            }
+
+            // For other supported file types (images), open in new tab
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if (imageExtensions.includes(fileExt)) {
+                window.open(fileUrl, '_blank');
+                return false;
+            }
+
+            // For unsupported file types, initiate download
+            window.location.href = fileUrl + '?download=true';
+            return false;
+        }
     </script>
 </body>
 
