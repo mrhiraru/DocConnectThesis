@@ -186,15 +186,14 @@ include '../includes/head.php';
             ];
 
             function setupTable(tableId) {
-                $(`#${tableId}`).DataTable({
+                const table = $(`#${tableId}`).DataTable({
                     "pageLength": 5,
                     "lengthChange": false,
                     "searching": true,
                     "ordering": true,
                     "info": true,
                     "autoWidth": false,
-                    // Remove top pagination controls
-                    "dom": '<"table-tools d-flex justify-content-between align-items-center mb-3"<"search-filter-container">>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                    "dom": 'rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
                     "language": {
                         "search": "",
                         "searchPlaceholder": "Search files...",
@@ -205,44 +204,38 @@ include '../includes/head.php';
                             "previous": "<i class='bx bx-chevron-left'></i>",
                             "next": "<i class='bx bx-chevron-right'></i>"
                         }
-                    },
-                    "initComplete": function() {
-                        var tableWrapper = $(`#${tableId}_wrapper .search-filter-container`);
-
-                        // Create and append the search input
-                        var searchDiv = $('<div class="dataTables_filter d-flex align-items-center me-3"></div>')
-                            .appendTo(tableWrapper);
-                        var searchInput = $(`#${tableId}_filter`).children().detach();
-                        searchDiv.append(searchInput);
-
-                        // Create and append the purpose filter dropdown
-                        var select = $('<select class="form-select form-select-sm ms-2" style="width: 200px;"></select>');
-                        purposeOptions.forEach(function(option) {
-                            select.append($('<option>', {
-                                value: option.value,
-                                text: option.text
-                            }));
-                        });
-
-                        // Filter column 0 (Purpose)
-                        select.on('change', function() {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                            $(`#${tableId}`).DataTable()
-                                .column(0)
-                                .search(val ? '^' + val + '$' : '', true, false)
-                                .draw();
-                        });
-
-                        tableWrapper.append(select);
                     }
                 });
+
+                const wrapper = $(`#${tableId}_wrapper`);
+                const toolsRow = $(`
+                                    <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                                        <div class="search-container"></div>
+                                        <div class="filter-container">
+                                            <select class="form-select form-select-sm" style="width: 200px;">
+                                                ${purposeOptions.map(option => `<option value="${option.value}">${option.text}</option>`).join('')}
+                                            </select>
+                                        </div>
+                                    </div>
+                                 `);
+
+                wrapper.prepend(toolsRow);
+
+                const originalSearch = wrapper.find('.dataTables_filter');
+                toolsRow.find('.search-container').append(originalSearch.contents());
+
+                toolsRow.find('select').on('change', function() {
+                    const val = $.fn.dataTable.util.escapeRegex($(this).val());
+                    table.column(0)
+                        .search(val ? '^' + val + '$' : '', true, false)
+                        .draw();
+                });
+
+                toolsRow.find('input[type="search"]').addClass('form-control form-control-sm').attr('placeholder', 'Search...');
             }
 
             setupTable('patientRequestTable');
             setupTable('doctorResponseTable');
-
-            // Style search input consistently
-            $('.dataTables_filter input').addClass('form-control form-control-sm').attr('placeholder', 'Search...');
         });
     </script>
 
