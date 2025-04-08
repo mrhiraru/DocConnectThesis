@@ -82,9 +82,25 @@ include '../includes/head.php';
                                 <!-- Form Column -->
                                 <div class="col-md-6">
                                     <form id="documentUploadForm" method='post' class="needs-validation" enctype="multipart/form-data" novalidate>
+
+                                        <div class="mb-3">
+                                            <label for="purpose" class="form-label text-black-50">Purpose of Request</label>
+                                            <select id="purpose" name="purpose" class="form-select bg-light border border-outline-dark text-secondary">
+                                                <option value=""></option>
+                                                <option value="Medical Certificate" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Certificate") ? 'selected' : '' ?>>Medical Certificate</option>
+                                                <option value="Prescription" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Prescription") ? 'selected' : '' ?>>Prescription</option>
+                                            </select>
+                                            <?php
+                                            if (isset($_POST['purpose']) && !validate_field($_POST['purpose'])) {
+                                            ?>
+                                                <p class="text-danger small mt-1">Select a purpose for the appointment.</p>
+                                            <?php
+                                            }
+                                            ?>
+                                        </div>
                                         <!-- File Upload Input -->
                                         <div class="mb-4">
-                                            <label for="documentFile" class="form-label fw-semibold">Select Document (PDF or DOCX)</label>
+                                            <label for="documentFile" class="form-label fw-semibold">Attach file (optional)</label>
                                             <div class="input-group">
                                                 <input type="file" class="form-control d-none" id="documentFile" name="documentname" accept=".pdf,.doc,.xls,.xlsx,.docx" required>
                                                 <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
