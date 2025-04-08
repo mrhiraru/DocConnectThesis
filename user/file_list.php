@@ -69,7 +69,7 @@ include '../includes/head.php';
                                                         <tr>
                                                             <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>" class="file-link" download><?= htmlspecialchars($item['file_name']) ?></a></td>
-                                                            <td class="text-truncate" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
+                                                            <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
                                                             <!-- <td class="text-truncate" style="max-width: 120px;"><?php //htmlspecialchars($item['patient_name']) 
                                                                                                                         ?></td> -->
                                                             <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
@@ -116,7 +116,7 @@ include '../includes/head.php';
                                                         <tr>
                                                             <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>" class="file-link" download><?= htmlspecialchars($item['file_name']) ?></a></td>
-                                                            <td class="text-truncate" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
+                                                            <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
                                                             <!-- <td class="text-truncate" style="max-width: 120px;"><?php // htmlspecialchars($item['doctor_name']) 
                                                                                                                         ?></td> -->
                                                             <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
