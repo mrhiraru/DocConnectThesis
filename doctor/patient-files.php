@@ -171,81 +171,78 @@ include '../includes/head.php';
         }
 
         $(document).ready(function() {
-            // Initialize Patient Request Table
-            $('#patientRequestTable').DataTable({
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "dom": '<"row"<"col-md-6"f><"col-md-6"l>>rt<"row"<"col-md-6"i><"col-md-6"p>>',
-                "language": {
-                    "search": "",
-                    "searchPlaceholder": "Search files...",
-                    "emptyTable": "No files available",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ files",
-                    "infoEmpty": "Showing 0 to 0 of 0 files",
-                    "paginate": {
-                        "previous": "<i class='bx bx-chevron-left'></i>",
-                        "next": "<i class='bx bx-chevron-right'></i>"
-                    }
+            const purposeOptions = [{
+                    value: '',
+                    text: 'All Purposes'
                 },
-                "initComplete": function() {
-                    // Add purpose filter dropdown
-                    var column = this.api().columns(0);
-                    var select = $('<select class="form-select form-select-sm ms-2 mb-2" style="width: 200px;"><option value="">All Purposes</option></select>')
-                        .appendTo($('#patientRequestTable_wrapper .col-md-6:eq(1)'))
-                        .on('change', function() {
-                            var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
+                {
+                    value: 'Medical Certificate',
+                    text: 'Medical Certificate'
+                },
+                {
+                    value: 'Prescription',
+                    text: 'Prescription'
+                }
+            ];
+
+            function setupTable(tableId) {
+                $(`#${tableId}`).DataTable({
+                    "pageLength": 5,
+                    "lengthChange": false,
+                    "searching": true,
+                    "ordering": true,
+                    "info": true,
+                    "autoWidth": false,
+                    // Remove top pagination controls
+                    "dom": '<"table-tools d-flex justify-content-between align-items-center mb-3"<"search-filter-container">>rt<"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>',
+                    "language": {
+                        "search": "",
+                        "searchPlaceholder": "Search files...",
+                        "emptyTable": "No files available",
+                        "info": "Showing _START_ to _END_ of _TOTAL_ files",
+                        "infoEmpty": "Showing 0 to 0 of 0 files",
+                        "paginate": {
+                            "previous": "<i class='bx bx-chevron-left'></i>",
+                            "next": "<i class='bx bx-chevron-right'></i>"
+                        }
+                    },
+                    "initComplete": function() {
+                        var tableWrapper = $(`#${tableId}_wrapper .search-filter-container`);
+
+                        // Create and append the search input
+                        var searchDiv = $('<div class="dataTables_filter d-flex align-items-center me-3"></div>')
+                            .appendTo(tableWrapper);
+                        var searchInput = $(`#${tableId}_filter`).children().detach();
+                        searchDiv.append(searchInput);
+
+                        // Create and append the purpose filter dropdown
+                        var select = $('<select class="form-select form-select-sm ms-2" style="width: 200px;"></select>');
+                        purposeOptions.forEach(function(option) {
+                            select.append($('<option>', {
+                                value: option.value,
+                                text: option.text
+                            }));
                         });
 
-                    column.data().unique().sort().each(function(d) {
-                        select.append('<option value="' + d + '">' + d + '</option>');
-                    });
-                }
-            });
-
-            // Initialize Doctor Response Table
-            $('#doctorResponseTable').DataTable({
-                "pageLength": 5,
-                "lengthChange": false,
-                "searching": true,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false,
-                "dom": '<"row"<"col-md-6"f><"col-md-6"l>>rt<"row"<"col-md-6"i><"col-md-6"p>>',
-                "language": {
-                    "search": "",
-                    "searchPlaceholder": "Search files...",
-                    "emptyTable": "No files available",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ files",
-                    "infoEmpty": "Showing 0 to 0 of 0 files",
-                    "paginate": {
-                        "previous": "<i class='bx bx-chevron-left'></i>",
-                        "next": "<i class='bx bx-chevron-right'></i>"
-                    }
-                },
-                "initComplete": function() {
-                    // Add purpose filter dropdown
-                    var column = this.api().columns(0);
-                    var select = $('<select class="form-select form-select-sm ms-2 mb-2" style="width: 200px;"><option value="">All Purposes</option></select>')
-                        .appendTo($('#doctorResponseTable_wrapper .col-md-6:eq(1)'))
-                        .on('change', function() {
+                        // Filter column 0 (Purpose)
+                        select.on('change', function() {
                             var val = $.fn.dataTable.util.escapeRegex($(this).val());
-                            column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            $(`#${tableId}`).DataTable()
+                                .column(0)
+                                .search(val ? '^' + val + '$' : '', true, false)
+                                .draw();
                         });
 
-                    column.data().unique().sort().each(function(d) {
-                        select.append('<option value="' + d + '">' + d + '</option>');
-                    });
-                }
-            });
+                        tableWrapper.append(select);
+                    }
+                });
+            }
 
-            // Style the search inputs
-            $('.dataTables_filter input').addClass('form-control form-control-sm');
-            $('.dataTables_filter input').attr('placeholder', 'Search...');
+            setupTable('patientRequestTable');
+            setupTable('doctorResponseTable');
+
+            // Style search input consistently
+            $('.dataTables_filter input').addClass('form-control form-control-sm').attr('placeholder', 'Search...');
         });
     </script>
 
