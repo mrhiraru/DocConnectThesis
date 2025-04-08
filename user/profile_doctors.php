@@ -72,7 +72,7 @@ include '../includes/head.php';
                                                     <a href="./patient-appointment?account_id=<?= $item['account_id']  ?>"><i class='bx bx-calendar'></i>Appointments</a>
                                                 </div>
                                                 <div>
-                                                    <a href="./file_list?account_id=<?= $item['account_id']  ?>"><i class='bx bx-folder'></i>Files</a>
+                                                    <a href="./file_list?account_id=<?= $item['account_id']  ?>"><i class='bx bx-folder'></i>Send Request</a>
                                                 </div>
                                             </div>
                                         </div>

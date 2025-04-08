@@ -47,7 +47,7 @@ include '../includes/head.php';
                     <table class="table table-hover doctor-files">
                         <thead>
                             <tr>
-                                <th>Response Purpose</th>
+                                <th>Patient Request</th>
                                 <th>File Attachment</th>
                                 <th>Description</th>
                                 <!-- <th>Uploaded By</th> -->
@@ -63,7 +63,7 @@ include '../includes/head.php';
                             ?>
                                     <tr>
                                         <td><?= $item['purpose'] ?></td>
-                                        <td ><a class="text-truncate" href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
+                                        <td><a class="text-truncate" href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
                                         <td><?= $item['file_description'] ?></td>
                                         <!-- <td><?php // $item['patient_name'] 
                                                     ?></td> -->
