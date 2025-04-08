@@ -115,7 +115,7 @@ include '../includes/head.php';
                                         <!-- Submit Button -->
                                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                             <button type="submit" class="btn btn-green px-4 text-light" name="upload_document">
-                                                <i class='bx bx-upload me-1'></i> Upload Document
+                                                <i class='bx bx-upload me-1'></i> Send Request
                                             </button>
                                         </div>
                                     </form>
