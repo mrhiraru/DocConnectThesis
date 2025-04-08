@@ -37,61 +37,21 @@ include '../includes/head.php';
                 <?php
                 require_once('../includes/breadcrumb-patient.php');
                 ?>
-                <div class="mb-3">
+                <div>
                     <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h6 class="text-dark fw-semibold mb-0">Doctor Uploads</h6>
+                        <h6 class="text-dark fw-semibold mb-0">Patient Request</h6>
                         <a href="./patient-upload-files?account_id=<?= $_GET['account_id'] ?>" class="btn btn-sm btn-primary text-light me-2">
-                            Upload FIles
+                            Send Response
                         </a>
                     </div>
                     <table class="table table-hover doctor-files">
                         <thead>
                             <tr>
-                                <th>File Name</th>
+                                <th>Response Purpose</th>
+                                <th>File Attachment</th>
                                 <th>Description</th>
-                                <th>Uploaded By</th>
-                                <th>Date Uploaded</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $file_sent_doctor = $file->show_files_doctor($_SESSION['account_id'], $_GET['account_id']);
-
-                            if (!empty($file_sent_doctor)) {
-                                foreach ($file_sent_doctor as $item) {
-                            ?>
-                                    <tr>
-                                        <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
-                                        <td><?= $item['file_description'] ?></td>
-                                        <td><?= $item['doctor_name'] ?></td>
-                                        <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
-                                    </tr>
-                                <?php
-                                }
-                            } else {
-                                ?>
-                                <tr>
-                                    <td colspan="4" style="text-align: center;">No files available.</td>
-                                </tr>
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-
-                <!-- Patient Uploads Table -->
-                <div>
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h6 class="text-dark fw-semibold mb-0">Patient Uploads</h6>
-                    </div>
-                    <table class="table table-hover doctor-files">
-                        <thead>
-                            <tr>
-                                <th>File Name</th>
-                                <th>Description</th>
-                                <th>Uploaded By</th>
-                                <th>Date Uploaded</th>
+                                <!-- <th>Uploaded By</th> -->
+                                <th>Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -102,9 +62,11 @@ include '../includes/head.php';
                                 foreach ($file_sent_patient as $item) {
                             ?>
                                     <tr>
+                                        <td><?= $item['purpose'] ?></td>
                                         <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
                                         <td><?= $item['file_description'] ?></td>
-                                        <td><?= $item['patient_name'] ?></td>
+                                        <!-- <td><?php // $item['patient_name'] 
+                                                    ?></td> -->
                                         <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                     </tr>
                                 <?php
@@ -120,6 +82,51 @@ include '../includes/head.php';
                         </tbody>
                     </table>
                 </div>
+
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6 class="text-dark fw-semibold mb-0">Response</h6>
+
+                    </div>
+                    <table class="table table-hover doctor-files">
+                        <thead>
+                            <tr>
+                                <th>Response Purpose</th>
+                                <th>File Attachment</th>
+                                <th>Description</th>
+                                <!-- <th>Uploaded By</th> -->
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $file_sent_doctor = $file->show_files_doctor($_SESSION['account_id'], $_GET['account_id']);
+
+                            if (!empty($file_sent_doctor)) {
+                                foreach ($file_sent_doctor as $item) {
+                            ?>
+                                    <tr>
+                                        <td><?= $item['purpose'] ?></td>
+                                        <td><a href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
+                                        <td><?= $item['file_description'] ?></td>
+                                        <!-- <td><?php // $item['doctor_name'] 
+                                                    ?></td> -->
+                                        <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
+                                    </tr>
+                                <?php
+                                }
+                            } else {
+                                ?>
+                                <tr>
+                                    <td colspan="4" style="text-align: center;">No files available.</td>
+                                </tr>
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+
             </main>
         </div>
     </div>
