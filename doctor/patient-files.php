@@ -42,13 +42,12 @@ include '../includes/head.php';
                             Send Response
                         </a>
                     </div>
-                    <table class="table table-hover doctor-files">
+                    <table class="table table-hover doctor-files" id="patientRequestTable">
                         <thead>
                             <tr>
                                 <th>Patient Request</th>
                                 <th>File Attachment</th>
                                 <th>Description</th>
-                                <!-- <th>Uploaded By</th> -->
                                 <th>Date</th>
                             </tr>
                         </thead>
@@ -60,7 +59,7 @@ include '../includes/head.php';
                                 foreach ($file_sent_patient as $item) {
                             ?>
                                     <tr>
-                                        <td><?= $item['purpose'] ?></td>
+                                        <td><?= htmlspecialchars($item['purpose']) ?></td>
                                         <td>
                                             <a class="text-truncate"
                                                 href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
@@ -71,8 +70,6 @@ include '../includes/head.php';
                                             </a>
                                         </td>
                                         <td><?= htmlspecialchars($item['file_description']) ?></td>
-                                        <!-- <td><?php // $item['patient_name'] 
-                                                    ?></td> -->
                                         <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                     </tr>
                                 <?php
@@ -93,13 +90,12 @@ include '../includes/head.php';
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h6 class="text-dark fw-semibold mb-0">Response</h6>
                     </div>
-                    <table class="table table-hover doctor-files">
+                    <table class="table table-hover doctor-files" id="doctorResponseTable">
                         <thead>
                             <tr>
                                 <th>Response Purpose</th>
                                 <th>File Attachment</th>
                                 <th>Description</th>
-                                <!-- <th>Uploaded By</th> -->
                                 <th>Date</th>
                             </tr>
                         </thead>
@@ -111,7 +107,7 @@ include '../includes/head.php';
                                 foreach ($file_sent_doctor as $item) {
                             ?>
                                     <tr>
-                                        <td><?= $item['purpose'] ?></td>
+                                        <td><?= htmlspecialchars($item['purpose']) ?></td>
                                         <td>
                                             <a class="text-truncate"
                                                 href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
@@ -122,8 +118,6 @@ include '../includes/head.php';
                                             </a>
                                         </td>
                                         <td><?= htmlspecialchars($item['file_description']) ?></td>
-                                        <!-- <td><?php // $item['doctor_name'] 
-                                                    ?></td> -->
                                         <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                     </tr>
                                 <?php
@@ -150,23 +144,97 @@ include '../includes/head.php';
             const fileExt = fileName.split('.').pop().toLowerCase();
             const fileUrl = event.target.href;
 
-            // For PDF files, open in new tab
             if (fileExt === 'pdf') {
                 window.open(fileUrl, '_blank');
                 return false;
             }
 
-            // For other supported file types (images), open in new tab
             const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
             if (imageExtensions.includes(fileExt)) {
                 window.open(fileUrl, '_blank');
                 return false;
             }
 
-            // For unsupported file types, initiate download
             window.location.href = fileUrl + '?download=true';
             return false;
         }
+
+        $(document).ready(function() {
+            // Patient Request Table
+            $('#patientRequestTable').DataTable({
+                "pageLength": 5,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "dom": '<"top"f>rt<"bottom"lip><"clear">',
+                "language": {
+                    "search": "_INPUT_",
+                    "searchPlaceholder": "Search files...",
+                    "emptyTable": "No files available",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ files",
+                    "infoEmpty": "Showing 0 to 0 of 0 files",
+                    "paginate": {
+                        "previous": "Previous",
+                        "next": "Next"
+                    }
+                },
+                "initComplete": function() {
+                    this.api().columns(0).every(function() {
+                        var column = this;
+                        var select = $('<select class="form-select form-select-sm"><option value="">All Purposes</option></select>')
+                            .appendTo($('#patientRequestTable thead tr:eq(0) th:eq(0)'))
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                        column.data().unique().sort().each(function(d) {
+                            select.append('<option value="' + d + '">' + d + '</option>');
+                        });
+                    });
+                }
+            });
+
+            // Doctor Response Table
+            $('#doctorResponseTable').DataTable({
+                "pageLength": 5,
+                "lengthChange": false,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false,
+                "dom": '<"top"f>rt<"bottom"lip><"clear">',
+                "language": {
+                    "search": "_INPUT_",
+                    "searchPlaceholder": "Search files...",
+                    "emptyTable": "No files available",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ files",
+                    "infoEmpty": "Showing 0 to 0 of 0 files",
+                    "paginate": {
+                        "previous": "Previous",
+                        "next": "Next"
+                    }
+                },
+                "initComplete": function() {
+                    // Add purpose filter dropdown
+                    this.api().columns(0).every(function() {
+                        var column = this;
+                        var select = $('<select class="form-select form-select-sm"><option value="">All Purposes</option></select>')
+                            .appendTo($('#doctorResponseTable thead tr:eq(0) th:eq(0)'))
+                            .on('change', function() {
+                                var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                                column.search(val ? '^' + val + '$' : '', true, false).draw();
+                            });
+
+                        column.data().unique().sort().each(function(d) {
+                            select.append('<option value="' + d + '">' + d + '</option>');
+                        });
+                    });
+                }
+            });
+        });
     </script>
 
 </body>
