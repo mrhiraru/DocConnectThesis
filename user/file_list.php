@@ -36,7 +36,7 @@ include '../includes/head.php';
                 <div class="col-12">
                     <div class="row gx-4">
                         <!-- Doctor Uploads Card -->
-                        <div class="col-md-6 mb-4">
+                        <div class="col-12 mb-4">
                             <div class="card border-0 shadow h-100">
                                 <div class="card-body p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
@@ -79,7 +79,7 @@ include '../includes/head.php';
                         </div>
 
                         <!-- Patient Uploads Card -->
-                        <div class="col-md-6 mb-4">
+                        <div class="col-md-12 mb-4">
                             <div class="card border-0 shadow h-100">
                                 <div class="card-body p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
