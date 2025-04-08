@@ -22,8 +22,6 @@ $patient = 'active';
 include '../includes/head.php';
 ?>
 
-
-
 <body>
     <?php
     require_once('../includes/header-doctor.php');
@@ -63,8 +61,16 @@ include '../includes/head.php';
                             ?>
                                     <tr>
                                         <td><?= $item['purpose'] ?></td>
-                                        <td><a class="text-truncate" href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
-                                        <td><?= $item['file_description'] ?></td>
+                                        <td>
+                                            <a class="text-truncate"
+                                                href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
+                                                class="file-link"
+                                                target="_blank"
+                                                onclick="return previewFile(event, '<?= htmlspecialchars($item['file_name']) ?>')">
+                                                <?= htmlspecialchars($item['file_name']) ?>
+                                            </a>
+                                        </td>
+                                        <td><?= htmlspecialchars($item['file_description']) ?></td>
                                         <!-- <td><?php // $item['patient_name'] 
                                                     ?></td> -->
                                         <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
@@ -86,7 +92,6 @@ include '../includes/head.php';
                 <div class="mb-3">
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <h6 class="text-dark fw-semibold mb-0">Response</h6>
-
                     </div>
                     <table class="table table-hover doctor-files">
                         <thead>
@@ -107,8 +112,16 @@ include '../includes/head.php';
                             ?>
                                     <tr>
                                         <td><?= $item['purpose'] ?></td>
-                                        <td><a class="text-truncate" href="../assets/files/<?= $item['file_name'] ?>" class="file-link" download><?= $item['file_name'] ?></a></td>
-                                        <td><?= $item['file_description'] ?></td>
+                                        <td>
+                                            <a class="text-truncate"
+                                                href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>"
+                                                class="file-link"
+                                                target="_blank"
+                                                onclick="return previewFile(event, '<?= htmlspecialchars($item['file_name']) ?>')">
+                                                <?= htmlspecialchars($item['file_name']) ?>
+                                            </a>
+                                        </td>
+                                        <td><?= htmlspecialchars($item['file_description']) ?></td>
                                         <!-- <td><?php // $item['doctor_name'] 
                                                     ?></td> -->
                                         <td><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
@@ -130,6 +143,32 @@ include '../includes/head.php';
             </main>
         </div>
     </div>
+
+    <script>
+        function previewFile(event, fileName) {
+            event.preventDefault();
+            const fileExt = fileName.split('.').pop().toLowerCase();
+            const fileUrl = event.target.href;
+
+            // For PDF files, open in new tab
+            if (fileExt === 'pdf') {
+                window.open(fileUrl, '_blank');
+                return false;
+            }
+
+            // For other supported file types (images), open in new tab
+            const imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if (imageExtensions.includes(fileExt)) {
+                window.open(fileUrl, '_blank');
+                return false;
+            }
+
+            // For unsupported file types, initiate download
+            window.location.href = fileUrl + '?download=true';
+            return false;
+        }
+    </script>
+
 </body>
 
 </html>
