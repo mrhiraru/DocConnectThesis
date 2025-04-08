@@ -53,8 +53,8 @@ include '../includes/head.php';
                                                     <th class="text-nowrap">Purpose</th>
                                                     <th class="text-nowrap">File Name</th>
                                                     <th class="text-nowrap">Description</th>
-                                                    <th class="text-nowrap">Uploaded By</th>
-                                                    <th class="text-nowrap">Date Uploaded</th>
+                                                    <!-- <th class="text-nowrap">Uploaded By</th> -->
+                                                    <th class="text-nowrap">Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -70,7 +70,8 @@ include '../includes/head.php';
                                                             <td class="text-truncate" style="max-width: 120px;"><?= $item['purpose'] ?></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>" class="file-link" download><?= htmlspecialchars($item['file_name']) ?></a></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
-                                                            <td class="text-truncate" style="max-width: 120px;"><?= htmlspecialchars($item['patient_name']) ?></td>
+                                                            <!-- <td class="text-truncate" style="max-width: 120px;"><?php //htmlspecialchars($item['patient_name']) 
+                                                                                                                        ?></td> -->
                                                             <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                         </tr>
                                                 <?php
@@ -89,7 +90,7 @@ include '../includes/head.php';
                             <div class="card border-0 shadow h-100">
                                 <div class="card-body p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h6 class="text-dark fw-semibold mb-0">Doctor Uploads</h6>
+                                        <h6 class="text-dark fw-semibold mb-0">Doctor Response</h6>
                                     </div>
                                     <div class="table-container" style="overflow-x: auto; max-width: 100%;">
                                         <table class="table table-hover doctor-files w-100" id="doctorFilesTable">
@@ -97,8 +98,8 @@ include '../includes/head.php';
                                                 <tr>
                                                     <th class="text-nowrap">File Name</th>
                                                     <th class="text-nowrap">Description</th>
-                                                    <th class="text-nowrap">Uploaded By</th>
-                                                    <th class="text-nowrap">Date Uploaded</th>
+                                                    <!-- <th class="text-nowrap">Uploaded By</th> -->
+                                                    <th class="text-nowrap">Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -111,9 +112,10 @@ include '../includes/head.php';
                                                         if ($doctor_count++ >= 10) break;
                                                 ?>
                                                         <tr>
+                                                            <th class="text-nowrap">Purpose</th>
                                                             <td class="text-truncate" style="max-width: 150px;"><a href="../assets/files/<?= htmlspecialchars($item['file_name']) ?>" class="file-link" download><?= htmlspecialchars($item['file_name']) ?></a></td>
                                                             <td class="text-truncate" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
-                                                            <td class="text-truncate" style="max-width: 120px;"><?= htmlspecialchars($item['doctor_name']) ?></td>
+                                                            <!-- <td class="text-truncate" style="max-width: 120px;"><?php // htmlspecialchars($item['doctor_name']) ?></td> -->
                                                             <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                         </tr>
                                                 <?php
