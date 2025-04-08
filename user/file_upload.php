@@ -59,17 +59,12 @@ include '../includes/head.php';
 
     <div class="container py-5">
         <section class="page-container padding-medium">
-            <div class="col-md-6 ms-4 text-md-start">
-                <button onclick="history.back()" class="bg-none d-flex align-items-center">
-
-                    <p class="btn btn-outline-secondary hover-light d-fex align-items-center">
-                        <i class='bx bx-chevron-left'></i>
-                        Back
-                    </p>
-                </button>
-            </div>
             <div class="row justify-content-center">
                 <div class="col-lg-10">
+                    <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
+                        <i class='bx bx-chevron-left'></i>
+                        Back
+                    </button>
                     <div class="card border-0 shadow">
                         <div class="card-header bg-white">
                             <div class="d-flex align-items-center">

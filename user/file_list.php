@@ -31,7 +31,7 @@ include '../includes/head.php';
                     <i class='bx bx-chevron-left'></i>
                     Back
                 </button>
-                <a href="./file_upload?account_id=<?= $_GET['account_id'] ?>" class="btn btn-primary text-light me-2">
+                <a href="./file_upload?account_id=<?= $_GET['account_id'] ?>" class="btn btn-primary text-light me-2 mb-3">
                     Send Request
                 </a>
             </div>
