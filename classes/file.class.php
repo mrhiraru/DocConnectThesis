@@ -41,7 +41,7 @@ class File
         FROM files f 
         INNER JOIN account a ON a.account_id = f.sender_id
         WHERE sender_id = :sender_id AND receiver_id = :receiver_id
-        ORDER BY f.is_created_at DESC;";
+        ORDER BY f.is_created DESC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':sender_id', $sender_id);
         $query->bindParam(':receiver_id', $receiver_id);
@@ -63,7 +63,7 @@ class File
         FROM files f 
         INNER JOIN account a ON a.account_id = f.sender_id
         WHERE sender_id = :sender_id AND receiver_id = :receiver_id
-        ORDER BY f.is_created_at DESC;";
+        ORDER BY f.is_created DESC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':sender_id', $sender_id);
         $query->bindParam(':receiver_id', $receiver_id);
