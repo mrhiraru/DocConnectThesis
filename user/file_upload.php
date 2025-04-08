@@ -64,7 +64,7 @@ include '../includes/head.php';
                         <div class="card-header bg-white">
                             <div class="d-flex align-items-center">
                                 <i class='bx bxs-cloud-upload text-danger fs-3 me-2'></i>
-                                <h4 class="mb-0 text-dark">Upload Document</h4>
+                                <h4 class="mb-0 text-dark">Medical Document Request</h4>
                             </div>
                         </div>
 
