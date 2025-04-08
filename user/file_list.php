@@ -51,7 +51,7 @@ include '../includes/head.php';
                                             <thead>
                                                 <tr>
                                                     <th class="text-nowrap">Purpose</th>
-                                                    <th class="text-nowrap">File Name</th>
+                                                    <th class="text-nowrap">File Attachment</th>
                                                     <th class="text-nowrap">Description</th>
                                                     <!-- <th class="text-nowrap">Uploaded By</th> -->
                                                     <th class="text-nowrap">Date</th>
@@ -98,7 +98,7 @@ include '../includes/head.php';
                                                 <tr>
 
                                                     <th class="text-nowrap">Purpose</th>
-                                                    <th class="text-nowrap">File Name</th>
+                                                    <th class="text-nowrap">File Attachment</th>
                                                     <th class="text-nowrap">Description</th>
                                                     <!-- <th class="text-nowrap">Uploaded By</th> -->
                                                     <th class="text-nowrap">Date</th>

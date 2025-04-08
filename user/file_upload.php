@@ -30,6 +30,7 @@ if (isset($_POST['upload_document'])) {
         if (move_uploaded_file($_FILES[htmlentities('documentname')]['tmp_name'], $uploadfile)) {
 
             $file->file_name = $uploadenewname;
+            $file->file_description = htmlentities($_POST['purpose']);
             $file->file_description = htmlentities($_POST['documentDescription']);
 
             if ($file->add_file()) {
