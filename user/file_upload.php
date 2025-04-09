@@ -20,7 +20,7 @@ if (isset($_POST['upload_document'])) {
     $uploadname = $_FILES[htmlentities('documentname')]['name'];
     $uploadext = explode('.', $uploadname);
     $uploadnewext = strtolower(end($uploadext));
-    $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx');
+    $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx', 'png', 'jpeg', 'jpg');
 
     if (in_array($uploadnewext, $allowed)) {
 
@@ -93,7 +93,7 @@ include '../includes/head.php';
                                         <div class="mb-4">
                                             <label for="documentFile" class="form-label fw-semibold">Attach file (optional)</label>
                                             <div class="input-group">
-                                                <input type="file" class="form-control d-none" id="documentFile" name="documentname" accept=".pdf,.doc,.xls,.xlsx,.docx" required>
+                                                <input type="file" class="form-control d-none" id="documentFile" name="documentname" accept=".pdf,.doc,.xls,.xlsx,.docx,.png,.jpg,.jpeg" required>
                                                 <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
                                                     <i class='bx bx-file me-1'></i> Choose File
                                                 </button>
@@ -148,21 +148,36 @@ include '../includes/head.php';
             const noPreview = document.getElementById('noPreview');
             const unsupportedPreview = document.getElementById('unsupportedPreview');
             const form = document.getElementById('documentUploadForm');
+            const previewContainer = document.querySelector('.border.rounded.p-3.h-100');
+
+            // Create image preview element
+            const imgPreview = document.createElement('img');
+            imgPreview.id = 'imagePreview';
+            imgPreview.className = 'w-100 d-none';
+            imgPreview.style.maxHeight = '400px';
+            imgPreview.style.objectFit = 'contain';
+            previewContainer.insertBefore(imgPreview, noPreview);
 
             fileInput.addEventListener('change', function() {
                 if (this.files.length > 0) {
                     const file = this.files[0];
                     fileNameDisplay.textContent = file.name;
 
+                    // Hide all previews first
                     pdfPreview.classList.add('d-none');
+                    imgPreview.classList.add('d-none');
                     noPreview.classList.add('d-none');
                     unsupportedPreview.classList.add('d-none');
 
-                    // preview ng file type
+                    // Show appropriate preview based on file type
                     if (file.type === 'application/pdf') {
                         const fileURL = URL.createObjectURL(file);
                         pdfPreview.src = fileURL;
                         pdfPreview.classList.remove('d-none');
+                    } else if (file.type.match('image.*')) {
+                        const fileURL = URL.createObjectURL(file);
+                        imgPreview.src = fileURL;
+                        imgPreview.classList.remove('d-none');
                     } else if (file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' ||
                         file.type === 'application/msword' ||
                         file.type === 'application/vnd.ms-excel' ||
@@ -175,13 +190,14 @@ include '../includes/head.php';
                     // No file selected
                     fileNameDisplay.textContent = 'No file chosen';
                     pdfPreview.classList.add('d-none');
+                    imgPreview.classList.add('d-none');
                     unsupportedPreview.classList.add('d-none');
                     noPreview.classList.remove('d-none');
                 }
             });
 
             form.addEventListener('submit', function(e) {
-                // romeve previous alerts lng to
+                // Remove previous alerts
                 const existingAlerts = document.querySelectorAll('.alert');
                 existingAlerts.forEach(alert => alert.remove());
 
@@ -198,7 +214,10 @@ include '../includes/head.php';
                     'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
                     'application/msword',
                     'application/vnd.ms-excel',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'image/png',
+                    'image/jpeg',
+                    'image/jpg'
                 ];
 
                 if (!file || !validTypes.includes(file.type)) {
@@ -206,13 +225,11 @@ include '../includes/head.php';
                     const alertDiv = document.createElement('div');
                     alertDiv.className = 'alert alert-danger alert-dismissible fade show mt-3';
                     alertDiv.innerHTML = `
-                    <strong>Error!</strong> Please upload only PDF, DOC, DOCX, XLS, or XLSX files.
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
-
+                <strong>Error!</strong> Please upload only PDF, DOC, DOCX, XLS, XLSX, PNG, JPG, or JPEG files.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
                     form.parentNode.insertBefore(alertDiv, form.nextSibling);
                     return;
                 }
-
             });
 
             <?php if (isset($success)): ?>
@@ -222,9 +239,8 @@ include '../includes/head.php';
                 const alertDiv = document.createElement('div');
                 alertDiv.className = `alert alert-${messageType} alert-dismissible fade show mt-3`;
                 alertDiv.innerHTML = `
-                <strong>${messageType === 'success' ? 'Success!' : 'Error!'}</strong> ${messageText}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            `;
+            <strong>${messageType === 'success' ? 'Success!' : 'Error!'}</strong> ${messageText}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`;
                 form.parentNode.insertBefore(alertDiv, form.nextSibling);
 
                 <?php if ($success === 'success'): ?>
@@ -232,9 +248,11 @@ include '../includes/head.php';
                     form.classList.remove('was-validated');
                     fileNameDisplay.textContent = 'No file chosen';
                     pdfPreview.classList.add('d-none');
+                    imgPreview.classList.add('d-none');
                     unsupportedPreview.classList.add('d-none');
                     noPreview.classList.remove('d-none');
                     pdfPreview.src = '';
+                    imgPreview.src = '';
                 <?php endif; ?>
             <?php endif; ?>
         });

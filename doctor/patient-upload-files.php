@@ -20,7 +20,7 @@ if (isset($_POST['upload_document'])) {
     $uploadname = $_FILES[htmlentities('documentname')]['name'];
     $uploadext = explode('.', $uploadname);
     $uploadnewext = strtolower(end($uploadext));
-    $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx');
+    $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx', 'png', 'jpeg', 'jpg');
 
     if (in_array($uploadnewext, $allowed)) {
 
