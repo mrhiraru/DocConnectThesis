@@ -34,9 +34,10 @@ if (isset($_POST['upload_document'])) {
             $file->file_description = htmlentities($_POST['documentDescription']);
 
             if ($file->add_file()) {
-                $success = 'success';
+                header('Location: patient-files?account_id=' . $_GET['account_id']);
+                exit();
             } else {
-                echo 'An error occured while adding in the database.';
+                $success = 'failed';
             }
         } else {
             $success = 'failed';
