@@ -6,7 +6,7 @@
 		<i class='bx bx-plus-medical mx-2' height="32"></i>
 		<span class="fs-4 link-primary">DocConnect</span>
 	</a>
-	<div class="dropdown me-3">
+	<!-- <div class="dropdown me-3">
     <a href="" class="notification dropdown-toggle <?= $notification ?> text-decoration-none text-dark" id="notificationDropdown" data-bs-toggle="dropdown" aria-expanded="false">
       <i class='bx bx-bell fs-5 p-2 <?= $notification ?>'></i>
     </a>
@@ -74,7 +74,7 @@
         </a>
       </li>
     </ul>
-  </div>
+  </div> -->
 
 	<script src="../js/notification_dropdropdown.js"></script>
 				
