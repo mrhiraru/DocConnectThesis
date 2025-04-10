@@ -11,7 +11,9 @@ require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 require_once('../classes/doctorDashboard.class.php');
 
-$dashboard = new Dashboard();
+$doctor_id = $_SESSION['doctor_id'];
+
+$dashboard = new Dashboard($doctor_id);
 $overviewData = $dashboard->fetchOverviewData();
 $chartData = $dashboard->fetchPatientSummaryChartData();
 $nextPatient = $dashboard->fetchNextPatientDetails();
