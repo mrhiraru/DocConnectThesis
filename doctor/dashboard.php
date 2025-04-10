@@ -212,8 +212,8 @@ include '../includes/head.php';
                                                 <?php foreach ($todayAppointments as $appointment): ?>
                                                     <tr>
                                                         <td>
-                                                            <img src="<?php echo !empty($appointment['account_image']) ? '../assets/images/' . $appointment['account_image'] : '../assets/images/defualt_profile.png'; ?>"
-                                                                class="rounded-circle" alt="Patient Image" height="40">
+                                                            <img src="<?php echo !empty($appointment['account_image']) ? '../assets/images/' . $appointment['account_image'] : '../assets/images/profilenono.jpeg'; ?>"
+                                                                class="rounded-circle" alt="Patient Image" height="40" width="40" style="object-fit: cover;">
                                                         </td>
                                                         <td>
                                                             <strong class="text-primary"><?php echo $appointment['firstname'] . ' ' . $appointment['lastname']; ?></strong><br>
@@ -252,8 +252,8 @@ include '../includes/head.php';
                                                 <?php foreach ($appointmentRequests as $request): ?>
                                                     <tr>
                                                         <td>
-                                                            <img src="<?php echo !empty($request['account_image']) ? '../assets/images/' . $request['account_image'] : 'https://via.placeholder.com/40'; ?>"
-                                                                class="rounded-circle" alt="Patient Image" height="40">
+                                                            <img src="<?php echo !empty($request['account_image']) ? '../assets/images/' . $request['account_image'] : '../assets/images/profilenono.jpeg'; ?>"
+                                                                class="rounded-circle" alt="Patient Image" height="40" width="40" style="object-fit: cover;">
                                                         </td>
                                                         <td>
                                                             <strong class="text-primary"><?php echo $request['firstname'] . ' ' . $request['lastname']; ?></strong><br>
