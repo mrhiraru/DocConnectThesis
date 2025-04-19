@@ -107,7 +107,7 @@ function getCurrentPage()
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#faqListSection" aria-expanded="false" aria-controls="faqListSection">
             <div class="d-flex flex-row align-items-center">
                 <h5 class="card-title">FAQs List</h5>
-                <i id="chevronIconFAQList" class='bx bxs-chevron-down ms-2'></i>
+                <i id="chevronIconFAQList" class='bx bxs-chevron-up ms-2'></i>
             </div>
         </button>
         <hr class="mt-1 mb-2">

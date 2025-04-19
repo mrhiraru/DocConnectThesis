@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($aboutUs->updateAboutUs($heading, $subtext, $visions, $missions, $image_path, $technology_heading, $technology_subtext, $technology_icons, $technology_titles, $technology_descriptions)) {
         $_SESSION['message'] = 'About Us updated successfully!';
-        header('location: settingAboutUs.php');
+        header('location: userAboutUs.php');
         exit();
     } else {
         $_SESSION['error'] = 'Failed to update About Us.';
@@ -159,11 +159,11 @@ function getCurrentPage()
             <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#secondSection" aria-expanded="false" aria-controls="secondSection">
                 <div class="d-flex flex-row align-items-center">
                     <h5 class="card-title">Technology and Innovation</h5>
-                    <i id="chevronIconTech" class='bx bxs-chevron-down ms-2'></i>
+                    <i id="chevronIconTech" class='bx bxs-chevron-up ms-2'></i>
                 </div>
             </button>
             <hr class="mt-1 mb-2">
-            <div class="collapse show" id="secondSection">
+            <div class="collapse" id="secondSection">
                 <div class="card w-100">
                     <div class="card-body">
                         <div class="mb-3">
