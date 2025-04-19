@@ -502,7 +502,7 @@ include_once('../tools/pdfmaker.php');
 
         var medicationInput = $('#medication');
         if (!medicationInput.val().trim()) {
-            medicationInput[0].setCustomValidity("Maintenance medication is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            medicationInput[0].setCustomValidity("Maintenance Medication is required; indicate 'N/A' if not applicable."); // Set custom validation message
             medicationInput[0].reportValidity(); // Show validation popup
             return; // Stop execution
         } else {
