@@ -40,15 +40,9 @@ include '../includes/head.php';
                         <p class="m-0 p-0 fs-5 text-dark fw-semibold text-wrap">
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
-                        <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
-                        <div class="col-12 mb-2">
-                            <label for="purpose" class="form-label mb-1">Purpose:</label>
-                            <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['purpose'] ?></textarea>
-                        </div>
-                        <div class="col-12 mb-2">
-                            <label for="reason" class="form-label mb-1">Reason:</label>
-                            <textarea id="reason" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['reason'] ?></textarea>
-                        </div>
+                        <p class="m-0 p-0 fs-6 text-secondary">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary">Purpose: <span class="text-dark"><?= $record['purpose'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary mb-3">Reason: <span class="text-dark"><?= $record['reason'] ?></span></p>
                         <div class="col-12 d-flex justify-content-center">
                             <?php
                             if ($record['appointment_status'] == "Ongoing") {
