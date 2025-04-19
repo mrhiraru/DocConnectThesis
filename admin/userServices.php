@@ -65,6 +65,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -102,8 +104,9 @@ function getCurrentPage()
         <?php endif; ?>
 
         <!-- About Section -->
-        <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="true" aria-controls="aboutSection">
-            <h5 class="card-title">About Section</h5>
+        <button class="btn btn-link text-start ps-0 d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="true" aria-controls="aboutSection">
+            <h5 class="card-title mb-0">About Section</h5>
+            <i class='bx bxs-chevron-down ms-2 chevron-icon' data-target="aboutSection"></i>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="aboutSection">
@@ -131,8 +134,9 @@ function getCurrentPage()
         </div>
 
         <!-- Add New Section -->
-        <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#newSection" aria-expanded="false" aria-controls="newSection">
-            <h5 class="card-title">Add New Section</h5>
+        <button class="btn btn-link text-start ps-0 d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#newSection" aria-expanded="false" aria-controls="newSection">
+            <h5 class="card-title mb-0">Add New Section</h5>
+            <i class='bx bxs-chevron-down ms-2 chevron-icon' data-target="newSection"></i>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse show" id="newSection">
@@ -193,8 +197,9 @@ function getCurrentPage()
         <!-- Existing Sections -->
         <?php foreach ($allSections as $index => $section): ?>
             <?php $sectionId = $index + 1; ?>
-            <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#section<?php echo $sectionId; ?>" aria-expanded="true" aria-controls="section<?php echo $sectionId; ?>">
-                <h5 class="card-title">Section <?php echo $sectionId; ?></h5>
+            <button class="btn btn-link text-start ps-0 d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#section<?php echo $sectionId; ?>" aria-expanded="true" aria-controls="section<?php echo $sectionId; ?>">
+                <h5 class="card-title mb-0">Section <?php echo $sectionId; ?></h5>
+                <i class='bx bxs-chevron-down ms-2 chevron-icon' data-target="section<?php echo $sectionId; ?>"></i>
             </button>
             <hr class="mt-1 mb-2">
             <div class="collapse" id="section<?php echo $sectionId; ?>">
@@ -272,6 +277,34 @@ function getCurrentPage()
     </section>
 
     <?php include './includes/admin_footer.php'; ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('[data-bs-toggle="collapse"]').forEach(button => {
+                const targetId = button.getAttribute('data-bs-target');
+                const targetElement = document.querySelector(targetId);
+                const chevronIcon = button.querySelector('.chevron-icon');
+
+                if (targetElement.classList.contains('show')) {
+                    chevronIcon.classList.add('rotate-180');
+                }
+
+                button.addEventListener('click', function() {
+                    chevronIcon.classList.toggle('rotate-180');
+                });
+            });
+        });
+    </script>
+
+    <style>
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .rotate-180 {
+            transform: rotate(180deg);
+        }
+    </style>
 </body>
 
 </html>
