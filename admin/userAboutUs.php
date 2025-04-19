@@ -93,81 +93,79 @@ function getCurrentPage()
                                             unset($_SESSION['error']); ?></div>
         <?php endif; ?>
 
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
-            <div class="d-flex flex-row align-items-center">
-                <h5 class="card-title">About Section</h5>
-                <i id="chevronIconAbout" class='bx bxs-chevron-down ms-2'></i>
-            </div>
-        </button>
-        <hr class="mt-1 mb-2">
-        <div class="collapse" id="aboutSection">
-            <div class="card mb-3 w-100">
-                <div class="card-body">
-                    <form class="row" method="POST" enctype="multipart/form-data">
-                        <div class="col-12 col-md-8">
-                            <div class="mb-3">
-                                <label for="heading" class="form-label">Heading</label>
-                                <input type="text" class="form-control" name="heading" value="<?= htmlspecialchars($currentAboutUs['heading'] ?? 'Your Health, Anytime, Anywhere') ?>">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="subtext" class="form-label">Subtext</label>
-                                <textarea class="form-control" name="subtext" rows="3"><?= htmlspecialchars($currentAboutUs['subtext'] ?? 'Welcome to University Telecommunications Health Services! We are dedicated to enhancing student well-being through innovative, remote health solutions that ensure accessibility, privacy, and high-quality care.') ?></textarea>
-                            </div>
-
-                            <div class="row row-cols-1 row-cols-md-2">
-                                <div class="col">
-                                    <h3>Our Vision:</h3>
-                                    <ul class="list-unstyled">
-                                        <?php foreach (json_decode($currentAboutUs['visions'] ?? '[]') as $index => $vision): ?>
-                                            <li class="d-flex align-items-baseline mb-2">
-                                                <input type="text" class="form-control" name="visions[]" value="<?= htmlspecialchars($vision) ?>">
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                    <button type="button" class="btn btn-success btn-sm text-light" onclick="addVision()">Add Vision</button>
+        <form method="POST" enctype="multipart/form-data">
+            <!-- About Section -->
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#aboutSection" aria-expanded="false" aria-controls="aboutSection">
+                <div class="d-flex flex-row align-items-center">
+                    <h5 class="card-title">About Section</h5>
+                    <i id="chevronIconAbout" class='bx bxs-chevron-down ms-2'></i>
+                </div>
+            </button>
+            <hr class="mt-1 mb-2">
+            <div class="collapse show" id="aboutSection">
+                <div class="card mb-3 w-100">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 col-md-8">
+                                <div class="mb-3">
+                                    <label for="heading" class="form-label">Heading</label>
+                                    <input type="text" class="form-control" name="heading" value="<?= htmlspecialchars($currentAboutUs['heading'] ?? 'Your Health, Anytime, Anywhere') ?>">
                                 </div>
-                                <div class="col">
-                                    <h3>Our Mission:</h3>
-                                    <ul class="list-unstyled">
-                                        <?php foreach (json_decode($currentAboutUs['missions'] ?? '[]') as $index => $mission): ?>
-                                            <li class="d-flex align-items-baseline mb-2">
-                                                <input type="text" class="form-control" name="missions[]" value="<?= htmlspecialchars($mission) ?>">
-                                            </li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                    <button type="button" class="btn btn-success btn-sm text-light" onclick="addMission()">Add Mission</button>
+
+                                <div class="mb-3">
+                                    <label for="subtext" class="form-label">Subtext</label>
+                                    <textarea class="form-control" name="subtext" rows="3"><?= htmlspecialchars($currentAboutUs['subtext'] ?? 'Welcome to University Telecommunications Health Services! We are dedicated to enhancing student well-being through innovative, remote health solutions that ensure accessibility, privacy, and high-quality care.') ?></textarea>
+                                </div>
+
+                                <div class="row row-cols-1 row-cols-md-2">
+                                    <div class="col">
+                                        <h3>Our Vision:</h3>
+                                        <ul class="list-unstyled">
+                                            <?php foreach (json_decode($currentAboutUs['visions'] ?? '[]') as $index => $vision): ?>
+                                                <li class="d-flex align-items-baseline mb-2">
+                                                    <input type="text" class="form-control" name="visions[]" value="<?= htmlspecialchars($vision) ?>">
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                        <button type="button" class="btn btn-success btn-sm text-light" onclick="addVision()">Add Vision</button>
+                                    </div>
+                                    <div class="col">
+                                        <h3>Our Mission:</h3>
+                                        <ul class="list-unstyled">
+                                            <?php foreach (json_decode($currentAboutUs['missions'] ?? '[]') as $index => $mission): ?>
+                                                <li class="d-flex align-items-baseline mb-2">
+                                                    <input type="text" class="form-control" name="missions[]" value="<?= htmlspecialchars($mission) ?>">
+                                                </li>
+                                            <?php endforeach; ?>
+                                        </ul>
+                                        <button type="button" class="btn btn-success btn-sm text-light" onclick="addMission()">Add Mission</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-4">
+                                <div class="h-100 rounded-2 d-flex flex-column align-items-center justify-content-center overflow-hidden">
+                                    <label for="imageUpload" class="form-label">Upload Image</label>
+                                    <input class="form-control" type="file" name="imageUpload">
+                                    <img src="<?= $currentAboutUs['image_path'] ?? '../assets/images/bg-1.png' ?>" alt="Image" class="img-fluid mt-2 h-50 w-100" style="object-fit: cover;">
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-12 col-md-4">
-                            <div class="h-100 rounded-2 d-flex flex-column align-items-center justify-content-center overflow-hidden">
-                                <label for="imageUpload" class="form-label">Upload Image</label>
-                                <input class="form-control" type="file" name="imageUpload">
-                                <img src="<?= $currentAboutUs['image_path'] ?? '../assets/images/bg-1.png' ?>" alt="Image" class="img-fluid mt-2 h-50 w-100" style="object-fit: cover;">
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary text-light">Save</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#secondSection" aria-expanded="false" aria-controls="secondSection">
-            <div class="d-flex flex-row align-items-center">
-                <h5 class="card-title">Technology and Innovation</h5>
-                <i id="chevronIconTech" class='bx bxs-chevron-down ms-2'></i>
-            </div>
-        </button>
-        <hr class="mt-1 mb-2">
-        <div class="collapse" id="secondSection">
-            <div class="card w-100">
-                <div class="card-body">
-                    <form method="POST">
+            <!-- Technology Section -->
+            <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#secondSection" aria-expanded="false" aria-controls="secondSection">
+                <div class="d-flex flex-row align-items-center">
+                    <h5 class="card-title">Technology and Innovation</h5>
+                    <i id="chevronIconTech" class='bx bxs-chevron-down ms-2'></i>
+                </div>
+            </button>
+            <hr class="mt-1 mb-2">
+            <div class="collapse show" id="secondSection">
+                <div class="card w-100">
+                    <div class="card-body">
                         <div class="mb-3">
                             <label for="technology_heading" class="form-label">Heading</label>
                             <input type="text" class="form-control" name="technology_heading" value="<?= htmlspecialchars($currentAboutUs['technology_heading'] ?? 'Technology and Innovation') ?>">
@@ -197,13 +195,14 @@ function getCurrentPage()
                                 </div>
                             <?php endfor; ?>
                         </div>
-                        <div class="d-flex justify-content-end">
-                            <button type="submit" class="btn btn-primary text-light">Save</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+
+            <div class="d-flex justify-content-end mt-3">
+                <button type="submit" class="btn btn-primary text-light">Save All Changes</button>
+            </div>
+        </form>
     </section>
 
     <script>
