@@ -428,176 +428,161 @@ include_once('../tools/pdfmaker.php');
     }
 
     function end_meeting() {
-        var complaintInput = $('#complaint');
-        if (!complaintInput.val().trim()) {
-            complaintInput[0].setCustomValidity("Chief complaint is required. Please enter the patient's main health concern."); // Set custom validation message
-            complaintInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            complaintInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var hisillnessInput = $('#his_illness');
-        if (!hisillnessInput.val().trim()) {
-            hisillnessInput[0].setCustomValidity("History of Present Illness is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            hisillnessInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            hisillnessInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var medconInput = $('#medcon');
-        if (!medconInput.val().trim()) {
-            medconInput[0].setCustomValidity("Past Medical or Surgical History is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            medconInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            medconInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var obhisInput = $('#ob_his');
-        if (!obhisInput.val().trim()) {
-            obhisInput[0].setCustomValidity("Obstetric History is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            obhisInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            obhisInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var famhisInput = $('#fam_his');
-        if (!famhisInput.val().trim()) {
-            famhisInput[0].setCustomValidity("Family History is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            famhisInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            famhisInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var sochisInput = $('#soc_his');
-        if (!sochisInput.val().trim()) {
-            sochisInput[0].setCustomValidity("Social History is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            sochisInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            sochisInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var revsysInput = $('#rev_sys');
-        if (!revsysInput.val().trim()) {
-            revsysInput[0].setCustomValidity("Review of System is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            revsysInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            revsysInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var medicationInput = $('#medication');
-        if (!medicationInput.val().trim()) {
-            medicationInput[0].setCustomValidity("Maintenance Medication is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            medicationInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            medicationInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var allergyInput = $('#allergy');
-        if (!allergyInput.val().trim()) {
-            allergyInput[0].setCustomValidity("Allergy & Medical Intolerance is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            allergyInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            allergyInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var immuInput = $('#immu');
-        if (!immuInput.val().trim()) {
-            immuInput[0].setCustomValidity("Immunization & Preventive Care Services is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            immuInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            immuInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var assessmentInput = $('#assessment');
-        if (!assessmentInput.val().trim()) {
-            assessmentInput[0].setCustomValidity("Consultation Assessment is required. Please provide your assessment."); // Set custom validation message
-            assessmentInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            assessmentInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
-        var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
-        if (medconCheck.length === 0) { // If no option is selected
-            $('input[name="medcon_check"]').get(0).reportValidity();
-            return;
-        }
-        var diagnosisSelect = $('#diagnosis');
-        if (medconCheck.val() === "Yes") {
-            if (diagnosisSelect.val() === null || diagnosisSelect.val().length === 0) {
-                diagnosisSelect.get(0).setCustomValidity("Please enter at least one medical condition."); // Set custom validation message
-                diagnosisSelect.get(0).reportValidity(); // Show validation popup
-                return;
-            } else {
-                diagnosisSelect.get(0).setCustomValidity(""); // Reset validation if valid
+        // Get all required fields
+        const requiredFields = [{
+                id: 'complaint',
+                message: "Chief complaint is required. Please enter the patient's main health concern."
+            },
+            {
+                id: 'his_illness',
+                message: "History of Present Illness is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'medcon',
+                message: "Past Medical or Surgical History is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'ob_his',
+                message: "Obstetric History is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'fam_his',
+                message: "Family History is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'soc_his',
+                message: "Social History is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'rev_sys',
+                message: "Review of System is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'medication',
+                message: "Maintenance Medication is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'allergy',
+                message: "Allergy & Medical Intolerance is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'immu',
+                message: "Immunization & Preventive Care Services is required; indicate 'N/A' if not applicable."
+            },
+            {
+                id: 'assessment',
+                message: "Consultation Assessment is required. Please provide your assessment."
             }
-        }
+        ];
 
-        var planCheck = $('input[name="plan_check"]:checked');
-        if (planCheck.length === 0) { // If no option is selected
-            $('input[name="plan_check"]').get(0).reportValidity();
-            return;
-        }
-        var planInput = $('#plan');
-        if (planCheck.val() === "Yes") {
-            if (!planInput.val().trim()) {
-                planInput[0].setCustomValidity("Please provide your plan and recommendation.");
-                planInput[0].reportValidity(); // Show validation popup
-                return; // Stop execution
-            } else {
-                planInput[0].setCustomValidity(""); // Reset validation if valid
+        // Validate all required fields
+        for (const field of requiredFields) {
+            const element = document.getElementById(field.id);
+            if (!element.value.trim()) {
+                element.setCustomValidity(field.message);
+                element.reportValidity();
+                // Focus on the first invalid field
+                element.focus();
+                return false;
             }
+            // Reset validity if field is valid
+            element.setCustomValidity("");
         }
 
-        var prescriptionCheck = $('input[name="prescription_check"]:checked');
-        if (prescriptionCheck.length === 0) { // If no option is selected
-            $('input[name="prescription_check"]').get(0).reportValidity();
-            return;
-        }
-        var prescriptionInput = $('#prescription');
-        if (prescriptionCheck.val() === "Yes") {
-            if (!prescriptionInput.val().trim()) {
-                prescriptionInput[0].setCustomValidity("Please provide your prescription.");
-                prescriptionInput[0].reportValidity(); // Show validation popup
-                return; // Stop execution
-            } else {
-                prescriptionInput[0].setCustomValidity(""); // Reset validation if valid
+        // Validate radio button groups
+        const radioGroups = [{
+                name: 'medcon_check',
+                message: 'Please indicate if you identified any medical conditions'
+            },
+            {
+                name: 'plan_check',
+                message: 'Please indicate if you want to provide a treatment plan'
+            },
+            {
+                name: 'prescription_check',
+                message: 'Please indicate if you want to provide a prescription'
             }
+        ];
+
+        for (const group of radioGroups) {
+            const checked = document.querySelector(`input[name="${group.name}"]:checked`);
+            if (!checked) {
+                // Show validation on the first radio button of the group
+                const firstRadio = document.querySelector(`input[name="${group.name}"]`);
+                firstRadio.setCustomValidity(group.message);
+                firstRadio.reportValidity();
+                firstRadio.focus();
+                return false;
+            }
+            // Reset validity if selection is made
+            document.querySelectorAll(`input[name="${group.name}"]`).forEach(radio => {
+                radio.setCustomValidity("");
+            });
         }
 
+        // Validate conditional fields
+        if (document.getElementById('Yes').checked) {
+            const diagnosis = document.getElementById('diagnosis');
+            if (!diagnosis.value || diagnosis.value.length === 0) {
+                diagnosis.setCustomValidity("Please enter at least one medical condition.");
+                diagnosis.reportValidity();
+                diagnosis.focus();
+                return false;
+            }
+            diagnosis.setCustomValidity("");
+        }
+
+        if (document.getElementById('Yes_plan').checked) {
+            const plan = document.getElementById('plan');
+            if (!plan.value.trim()) {
+                plan.setCustomValidity("Please provide your plan and recommendation.");
+                plan.reportValidity();
+                plan.focus();
+                return false;
+            }
+            plan.setCustomValidity("");
+        }
+
+        if (document.getElementById('Yes_prescription').checked) {
+            const prescription = document.getElementById('prescription');
+            if (!prescription.value.trim()) {
+                prescription.setCustomValidity("Please provide your prescription.");
+                prescription.reportValidity();
+                prescription.focus();
+                return false;
+            }
+            prescription.setCustomValidity("");
+        }
+
+        // If all validations pass, proceed with AJAX call
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
             data: {
                 end: true,
-                complaint: complaintInput.val().trim(),
-                exmedcon_check: exmedconCheck.val(),
-                medcon: medconInput.val().trim(),
-                allergy: allergyInput.val().trim(),
-                medication: medicationInput.val().trim(),
-                diagnosis: diagnosisSelect.val(),
-                assessment: assessmentInput.val().trim(),
-                plan_check: planCheck.val(),
-                plan: planInput.val().trim(),
-                prescription_check: prescriptionCheck.val(),
-                prescription: prescriptionInput.val().trim(),
-                comment: $('#comment').val(),
-                appointment_id: '<?= $_GET['appointment_id'] ?>',
+                complaint: $('#complaint').val().trim(),
+                his_illness: $('#his_illness').val().trim(),
+                medcon: $('#medcon').val().trim(),
+                ob_his: $('#ob_his').val().trim(),
+                fam_his: $('#fam_his').val().trim(),
+                soc_his: $('#soc_his').val().trim(),
+                rev_sys: $('#rev_sys').val().trim(),
+                medication: $('#medication').val().trim(),
+                allergy: $('#allergy').val().trim(),
+                immu: $('#immu').val().trim(),
+                medcon_check: $('input[name="medcon_check"]:checked').val(),
+                diagnosis: $('#diagnosis').val(),
+                assessment: $('#assessment').val().trim(),
+                plan_check: $('input[name="plan_check"]:checked').val(),
+                plan: $('#plan').val().trim(),
+                prescription_check: $('input[name="prescription_check"]:checked').val(),
+                prescription: $('#prescription').val().trim(),
+                appointment_id: '<?= $_GET['appointment_id'] ?>'
             },
             success: function(response) {
-                if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                if (response.trim() === 'success') {
                     message_notifcation('end');
-                    add_new_medcon(diagnosisSelect.val());
+                    add_new_medcon($('#diagnosis').val());
                     location.reload();
                 } else {
                     console.error('Error:', response);
