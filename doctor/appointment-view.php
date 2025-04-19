@@ -310,10 +310,6 @@ include '../includes/head.php';
                                         ?>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <label for="comment" class="form-label">Additional Comment:</label>
-                                    <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" placeholder=""></textarea>
-                                </div>
                             </div>
                         </form>
 
@@ -321,7 +317,7 @@ include '../includes/head.php';
                     } else if ($record['appointment_status'] == "Completed") {
                     ?>
                         <div class="col-12 mb-3">
-                            
+
                         </div>
                     <?php
                     }
