@@ -701,5 +701,27 @@ include_once('../tools/pdfmaker.php');
             });
         }
 
+        var prescription_input = document.getElementById("prescription");
+        if (prescription_input) {
+            const prescriptionCheck = document.getElementsByName("prescription_check");
+            const prescriptionContainer = document.getElementById("prescription-container");
+
+            prescriptionContainer.style.display = "none";
+
+            // Function to toggle visibility
+            function togglePrescriptionContainer() {
+                if (document.getElementById("Yes_prescription").checked) {
+                    prescriptionContainer.style.display = "block"; // Show if Yes is checked
+                } else {
+                    prescriptionContainer.style.display = "none"; // Hide if No is checked
+                }
+            }
+
+            // Add event listeners to both radio buttons
+            prescriptionCheck.forEach(radio => {
+                radio.addEventListener("change", togglePrescriptionContainer);
+            });
+        }
+
     });
 </script>
