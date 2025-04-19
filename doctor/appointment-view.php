@@ -490,17 +490,27 @@ include_once('../tools/pdfmaker.php');
         }
 
         // Validate radio button groups
+        // Validate radio button groups
         const radioGroups = [{
                 name: 'medcon_check',
-                message: 'Please indicate if you identified any medical conditions'
+                message: 'Please indicate if you identified any medical conditions',
+                yesId: 'Yes',
+                conditionalField: 'diagnosis',
+                conditionalMessage: "Please enter at least one medical condition."
             },
             {
                 name: 'plan_check',
-                message: 'Please indicate if you want to provide a treatment plan'
+                message: 'Please indicate if you want to provide a treatment plan',
+                yesId: 'Yes_plan',
+                conditionalField: 'plan',
+                conditionalMessage: "Please provide your plan and recommendation."
             },
             {
                 name: 'prescription_check',
-                message: 'Please indicate if you want to provide a prescription'
+                message: 'Please indicate if you want to provide a prescription',
+                yesId: 'Yes_prescription',
+                conditionalField: 'prescription',
+                conditionalMessage: "Please provide your prescription."
             }
         ];
 
@@ -514,44 +524,23 @@ include_once('../tools/pdfmaker.php');
                 firstRadio.focus();
                 return false;
             }
+
             // Reset validity if selection is made
             document.querySelectorAll(`input[name="${group.name}"]`).forEach(radio => {
                 radio.setCustomValidity("");
             });
-        }
 
-        // Validate conditional fields
-        if (document.getElementById('Yes').checked) {
-            const diagnosis = document.getElementById('diagnosis');
-            if (!diagnosis.value || diagnosis.value.length === 0) {
-                diagnosis.setCustomValidity("Please enter at least one medical condition.");
-                diagnosis.reportValidity();
-                diagnosis.focus();
-                return false;
+            // If "Yes" is checked, validate the conditional field immediately
+            if (document.getElementById(group.yesId).checked) {
+                const conditionalElement = document.getElementById(group.conditionalField);
+                if (!conditionalElement.value || (group.conditionalField === 'diagnosis' && conditionalElement.value.length === 0)) {
+                    conditionalElement.setCustomValidity(group.conditionalMessage);
+                    conditionalElement.reportValidity();
+                    conditionalElement.focus();
+                    return false;
+                }
+                conditionalElement.setCustomValidity("");
             }
-            diagnosis.setCustomValidity("");
-        }
-
-        if (document.getElementById('Yes_plan').checked) {
-            const plan = document.getElementById('plan');
-            if (!plan.value.trim()) {
-                plan.setCustomValidity("Please provide your plan and recommendation.");
-                plan.reportValidity();
-                plan.focus();
-                return false;
-            }
-            plan.setCustomValidity("");
-        }
-
-        if (document.getElementById('Yes_prescription').checked) {
-            const prescription = document.getElementById('prescription');
-            if (!prescription.value.trim()) {
-                prescription.setCustomValidity("Please provide your prescription.");
-                prescription.reportValidity();
-                prescription.focus();
-                return false;
-            }
-            prescription.setCustomValidity("");
         }
 
         // If all validations pass, proceed with AJAX call
