@@ -41,6 +41,14 @@ include '../includes/head.php';
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
+                        <div class="col-12 mb-2">
+                            <label for="purpose" class="form-label mb-1">Purpose:</label>
+                            <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['purpose'] ?></textarea>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <label for="reason" class="form-label mb-1">Reason:</label>
+                            <textarea id="reason" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['reason'] ?></textarea>
+                        </div>
                         <div class="col-12 d-flex justify-content-center">
                             <?php
                             if ($record['appointment_status'] == "Ongoing") {
@@ -61,34 +69,45 @@ include '../includes/head.php';
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
                         </div>
                         <div class="col-6 mb-2">
-                            <label for="birthdate" class="form-label mb-1">Birthdate:</label>
+                            <label for="birthdate" class="form-label mb-1">Age:</label>
                             <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
                         </div>
                         <div class="col-6 mb-2">
-                            <label for="gender" class="form-label mb-1">Gender:</label>
+                            <label for="gender" class="form-label mb-1">Sex:</label>
                             <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
                         </div>
                         <div class="col-6 mb-2">
-                            <label for="email" class="form-label mb-1">Email:</label>
-                            <input id="email" class="form-control bg-light" value="<?= $record['email'] ?>" readonly>
+                            <label for="civil_status" class="form-label mb-1">Civil Status:</label>
+                            <input id="civil_status" class="form-control bg-light" value="" readonly>
                         </div>
                         <div class="col-6 mb-2">
-                            <label for="contact" class="form-label mb-1">Contact:</label>
-                            <input id="contact" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
+                            <label for="address" class="form-label mb-1">Residence:</label>
+                            <input id="address" class="form-control bg-light" value="<?= $record['address'] ?>" readonly>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <label for="religion" class="form-label mb-1">Religion:</label>
+                            <input id="religion" class="form-control bg-light" value="<?= $record['contact'] ?>" readonly>
+                        </div>
+                        <div class="col-6 mb-2">
+                            <label for="date_time" class="form-label mb-1">Date & Time of Consultation:</label>
+                            <input id="date_time" class="form-control bg-light" value="<?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>" readonly>
                         </div>
                         <p class="m-0 p-0 fs-6 text-secondary mb-2">Subjective Information</p>
-                        <div class="col-12 mb-2">
-                            <label for="purpose" class="form-label mb-1">Purpose:</label>
-                            <textarea id="purpose" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['purpose'] ?></textarea>
-                        </div>
-                        <div class="col-12 mb-2">
-                            <label for="reason" class="form-label mb-1">Reason:</label>
-                            <textarea id="reason" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['reason'] ?></textarea>
-                        </div>
                         <?php
                         if ($record['appointment_status'] == "Ongoing") {
                         ?>
                             <form action="" class="row m-0 p-0" id="resultForm">
+                                <div class="col-12 mb-2">
+                                    <label for="informant" class="form-label mb-1">Informant:</label>
+                                    <textarea id="informant" name="informant" rows="1" cols="50" class="form-control bg-light" required><?= $_SESSION['fullname'] ?></textarea>
+                                    <?php
+                                    if (isset($_POST['informant']) && !validate_field($_POST['informant'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Informant is required.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
                                 <div class="col-12 mb-2">
                                     <label for="complaint" class="form-label mb-1">Cheif Complaint:</label>
                                     <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required></textarea>
@@ -101,73 +120,103 @@ include '../includes/head.php';
                                     ?>
                                 </div>
                                 <div class="col-12 mb-2">
-                                    <div class="col-12">
-                                        <label for="medcon" class="form-label mb-1">Does the patient have past or present medical conditions?</label>
-                                        <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="exmedcon_check" id="Yes_medcon" value="Yes" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes_medcon">Yes</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="exmedcon_check" id="No_medcon" value="No" <?= (isset($_POST['exmedcon_check']) && $_POST['exmedcon_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No_medcon">No</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12" id="medcon-container">
-                                        <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
-                                        <?php
-                                        if (isset($_POST['medcon']) && !validate_field($_POST['medcon'])) {
-                                        ?>
-                                            <p class="text-dark m-0 ps-2">Existing medical condition is required.</p>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
+                                    <label for="his_illness" class="form-label mb-1">History of Present Illness:</label>
+                                    <textarea id="his_illness" name="his_illness" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['his_illness']) && !validate_field($_POST['his_illness'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">History of Present Illness is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                                 <div class="col-12 mb-2">
-                                    <div class="col-12">
-                                        <label for="allergy" class="form-label mb-1">Does the patient have allergies?</label>
-                                        <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="allergy_check" id="Yes_allergy" value="Yes" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes_allergy">Yes</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="allergy_check" id="No_allergy" value="No" <?= (isset($_POST['allergy_check']) && $_POST['allergy_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No_allergy">No</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12" id="allergy-container">
-                                        <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
-                                        <?php
-                                        if (isset($_POST['allergy']) && !validate_field($_POST['allergy'])) {
-                                        ?>
-                                            <p class="text-dark m-0 ps-2">Allergy is required.</p>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
+                                    <label for="medcon" class="form-label mb-1">Past Medical or Surgical History:</label>
+                                    <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['medcon']) && !validate_field($_POST['medcon'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Past Medical or Surgical History is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                                 <div class="col-12 mb-2">
-                                    <div class="col-12">
-                                        <label for="medication" class="form-label mb-1">Is the patient taking any medications?</label>
-                                        <div class="form-check form-check-inline ms-3">
-                                            <input class="form-check-input" type="radio" name="medication_check" id="Yes_medication" value="Yes" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "Yes") ? "checked" : "" ?> required>
-                                            <label class="form-check-label" for="Yes_medication">Yes</label>
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="medication_check" id="No_medication" value="No" <?= (isset($_POST['medication_check']) && $_POST['medication_check'] == "No") ? "checked" : "" ?>>
-                                            <label class="form-check-label" for="No_medication">No</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-12" id="medication-container">
-                                        <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
-                                        <?php
-                                        if (isset($_POST['medication']) && !validate_field($_POST['medication'])) {
-                                        ?>
-                                            <p class="text-dark m-0 ps-2">Medication is required.</p>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
+                                    <label for="ob_his" class="form-label mb-1">Obstetric History:</label>
+                                    <textarea id="ob_his" name="ob_his" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['ob_his']) && !validate_field($_POST['ob_his'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Obstetric History is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="fam_his" class="form-label mb-1">Family History:</label>
+                                    <textarea id="fam_his" name="fam_his" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['fam_his']) && !validate_field($_POST['fam_his'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Family History is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="soc_his" class="form-label mb-1">Social History:</label>
+                                    <textarea id="soc_his" name="soc_his" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['soc_his']) && !validate_field($_POST['soc_his'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Social History is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="rev_sys" class="form-label mb-1">Review of System</label>
+                                    <textarea id="rev_sys" name="rev_sys" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['rev_sys']) && !validate_field($_POST['rev_sys'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Review of System is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="medication" class="form-label mb-1">Maintenance Medication:</label>
+                                    <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['medication']) && !validate_field($_POST['medication'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2"> Maintenance medication is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="allergy" class="form-label mb-1">Allergies & Medical Intolerance/s:</label>
+                                    <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['allergy']) && !validate_field($_POST['allergy'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Allergy & Medical Intolerance is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="immu" class="form-label mb-1">Immunization & Preventive Care Services:</label>
+                                    <textarea id="immu" name="immu" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <?php
+                                    if (isset($_POST['immu']) && !validate_field($_POST['immu'])) {
+                                    ?>
+                                        <p class="text-dark m-0 ps-2">Immunization & Preventive Care Services is required; indicate 'N/A' if not applicable.</p>
+                                    <?php
+                                    }
+                                    ?>
                                 </div>
                                 <p class="m-0 p-0 fs-6 text-secondary mb-2">Objective Information</p>
                                 <div class="col-12 mb-2">
@@ -685,8 +734,6 @@ include_once('../tools/pdfmaker.php');
         })
     }
 
-
-
     document.addEventListener("DOMContentLoaded", function() {
 
         var diagnosis_input = document.getElementById("diagnosis");
@@ -718,114 +765,5 @@ include_once('../tools/pdfmaker.php');
             });
         }
 
-        var exmedcon_input = document.getElementById("medcon");
-        if (exmedcon_input) {
-
-            const exmedconCheck = document.getElementsByName("exmedcon_check");
-            const medconContainer = document.getElementById("medcon-container");
-
-            medconContainer.style.display = "none";
-
-            function toggleMedconContainer() {
-                if (document.getElementById("Yes_medcon").checked) {
-                    medconContainer.style.display = "block"; // Show if Yes is checked
-                } else {
-                    medconContainer.style.display = "none"; // Hide if No is checked
-                }
-            }
-
-            // Add event listeners to both radio buttons
-            exmedconCheck.forEach(radio => {
-                radio.addEventListener("change", toggleMedconContainer);
-            });
-        }
-
-        var allergy_input = document.getElementById("allergy");
-        if (allergy_input) {
-
-            const allergyCheck = document.getElementsByName("allergy_check");
-            const allergyContainer = document.getElementById("allergy-container");
-
-            allergyContainer.style.display = "none";
-
-            function toggleAllergyContainer() {
-                if (document.getElementById("Yes_allergy").checked) {
-                    allergyContainer.style.display = "block"; // Show if Yes is checked
-                } else {
-                    allergyContainer.style.display = "none"; // Hide if No is checked
-                }
-            }
-
-            // Add event listeners to both radio buttons
-            allergyCheck.forEach(radio => {
-                radio.addEventListener("change", toggleAllergyContainer);
-            });
-        }
-
-        var medication_input = document.getElementById("medication");
-        if (medication_input) {
-
-            const medicationCheck = document.getElementsByName("medication_check");
-            const medicationContainer = document.getElementById("medication-container");
-
-            medicationContainer.style.display = "none";
-
-            function toggleMedicationContainer() {
-                if (document.getElementById("Yes_medication").checked) {
-                    medicationContainer.style.display = "block"; // Show if Yes is checked
-                } else {
-                    medicationContainer.style.display = "none"; // Hide if No is checked
-                }
-            }
-
-            // Add event listeners to both radio buttons
-            medicationCheck.forEach(radio => {
-                radio.addEventListener("change", toggleMedicationContainer);
-            });
-        }
-
-        var plan_input = document.getElementById("plan");
-        if (plan_input) {
-
-            const planCheck = document.getElementsByName("plan_check");
-            const planContainer = document.getElementById("plan-container");
-
-            planContainer.style.display = "none";
-
-            function togglePlanContainer() {
-                if (document.getElementById("Yes_plan").checked) {
-                    planContainer.style.display = "block"; // Show if Yes is checked
-                } else {
-                    planContainer.style.display = "none"; // Hide if No is checked
-                }
-            }
-
-            // Add event listeners to both radio buttons
-            planCheck.forEach(radio => {
-                radio.addEventListener("change", togglePlanContainer);
-            });
-        }
-
-        var prescription_input = document.getElementById("prescription");
-        if (prescription_input) {
-
-            const prescriptionCheck = document.getElementsByName("prescription_check");
-            const prescriptionContainer = document.getElementById("prescription-container");
-
-            prescriptionContainer.style.display = "none";
-
-            function togglePrescriptionContainer() {
-                if (document.getElementById("Yes_prescription").checked) {
-                    prescriptionContainer.style.display = "block"; // Show if Yes is checked
-                } else {
-                    prescriptionContainer.style.display = "none"; // Hide if No is checked
-                }
-            }
-
-            // Add event listeners to both radio buttons
-            prescriptionCheck.forEach(radio => {
-                radio.addEventListener("change", togglePrescriptionContainer);
-            });
-        }
     });
 </script>
