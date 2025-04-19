@@ -448,16 +448,23 @@
 
     // Add event listeners for each download button
     document.addEventListener('DOMContentLoaded', function() {
-        var downloadPdf = document.getElementById("download_pdf");
-        if (downloadPdf) {
-            downloadPdf.addEventListener("click", () => {
-                pdfMake.createPdf(consultationResult).download("consultation_result.pdf");
+        var downloadClinicalHistory = document.getElementById("download_clinical_history");
+        if (downloadClinicalHistory) {
+            downloadClinicalHistory.addEventListener("click", () => {
+                pdfMake.createPdf(clinicalHistory).download("clinical_history.pdf");
             });
         }
 
-        var downloadPrescriptionPdf = document.getElementById("download_prescription_pdf");
-        if (downloadPrescriptionPdf) {
-            downloadPrescriptionPdf.addEventListener("click", () => {
+        var downloadConsultationReport = document.getElementById("download_consultation_report");
+        if (downloadConsultationReport) {
+            downloadConsultationReport.addEventListener("click", () => {
+                pdfMake.createPdf(consultationResult).download("consultation_report.pdf");
+            });
+        }
+
+        var downloadPrescription = document.getElementById("download_prescription");
+        if (downloadPrescription) {
+            downloadPrescription.addEventListener("click", () => {
                 pdfMake.createPdf(prescription).download("prescription.pdf");
             });
         }
