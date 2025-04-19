@@ -246,7 +246,7 @@
 
             // Generate all three PDFs
             pdfMake.createPdf(clinicalHistory).download("clinical_history.pdf");
-            pdfMake.createPdf(consultationResult).download("consultation_result.pdf");
+            pdfMake.createPdf(consultationResult).download("consultation_report.pdf");
             pdfMake.createPdf(prescription).download("prescription.pdf");
         });
     }
