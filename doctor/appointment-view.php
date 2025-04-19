@@ -212,7 +212,7 @@ include '../includes/head.php';
                                     }
                                     ?>
                                 </div>
-                                <p class="m-0 p-0 fs-5 mb-2 text-center">Clinical History</p>
+                                <p class="m-0 p-0 fs-5 mb-2 text-center">Assessment</p>
                                 <div class="col-12 mb-2">
                                     <label for="observation" class="form-label mb-1">Doctor's Observation:</label>
                                     <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required></textarea>
@@ -224,7 +224,6 @@ include '../includes/head.php';
                                     }
                                     ?>
                                 </div>
-                                <p class="m-0 p-0 fs-6 text-secondary mb-2">Assessment</p>
                                 <div class="col-12 mb-2">
                                     <div class="col-12">
                                         Did you identify any medical conditions during the consultation?
