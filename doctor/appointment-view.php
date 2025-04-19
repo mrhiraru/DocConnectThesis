@@ -40,6 +40,7 @@ include '../includes/head.php';
                         <p class="m-0 p-0 fs-5 text-dark fw-semibold text-wrap">
                             <?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>
                         </p>
+                        <p class="m-0 p-0 fs-6 text-secondary">Patient Name: <span class="text-dark"><?= $record['patient_name'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary">Status: <span class="text-dark"><?= $record['appointment_status'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary">Purpose: <span class="text-dark"><?= $record['purpose'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Reason: <span class="text-dark"><?= $record['reason'] ?></span></p>
@@ -56,41 +57,40 @@ include '../includes/head.php';
                             ?>
                         </div>
                     </div>
-                    <div class="row col-12 mb-3 border-bottom">
-                        <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
-                        <div class="col-6 mb-2">
-                            <label for="name" class="form-label mb-1">Patient Name:</label>
-                            <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
-                        </div>
-                        <div class="col-2 mb-2">
-                            <label for="birthdate" class="form-label mb-1">Age:</label>
-                            <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
-                        </div>
-                        <div class="col-2 mb-2">
-                            <label for="gender" class="form-label mb-1">Sex:</label>
-                            <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
-                        </div>
-                        <div class="col-2 mb-2">
-                            <label for="civil_status" class="form-label mb-1">Civil Status:</label>
-                            <input id="civil_status" class="form-control bg-light" value="" readonly>
-                        </div>
-                        <div class="col-4 mb-2">
-                            <label for="address" class="form-label mb-1">Residence:</label>
-                            <input id="address" class="form-control bg-light" value="<?= $record['address'] ?>" readonly>
-                        </div>
-                        <div class="col-4 mb-2">
-                            <label for="religion" class="form-label mb-1">Religion:</label>
-                            <input id="religion" class="form-control bg-light" value="" readonly>
-                        </div>
-                        <div class="col-4 mb-2">
-                            <label for="date_time" class="form-label mb-1">Date & Time of Consultation:</label>
-                            <input id="date_time" class="form-control bg-light" value="<?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>" readonly>
-                        </div>
-                        <p class="m-0 p-0 fs-6 text-secondary mb-2">Subjective Information</p>
-                        <?php
-                        if ($record['appointment_status'] == "Ongoing") {
-                        ?>
-                            <form action="" class="row m-0 p-0" id="resultForm">
+                    <?php
+                    if ($record['appointment_status'] == "Ongoing") {
+                    ?>
+                        <form action="" class="row m-0 p-0" id="resultForm">
+                            <div class="row col-12 mb-3 border-bottom">
+                                <p class="m-0 p-0 fs-6 text-secondary mb-2">Clinical History</p>
+                                <div class="col-6 mb-2">
+                                    <label for="name" class="form-label mb-1">Patient Name:</label>
+                                    <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
+                                </div>
+                                <div class="col-2 mb-2">
+                                    <label for="birthdate" class="form-label mb-1">Age:</label>
+                                    <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
+                                </div>
+                                <div class="col-2 mb-2">
+                                    <label for="gender" class="form-label mb-1">Sex:</label>
+                                    <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
+                                </div>
+                                <div class="col-2 mb-2">
+                                    <label for="civil_status" class="form-label mb-1">Civil Status:</label>
+                                    <input id="civil_status" class="form-control bg-light" value="" readonly>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label for="address" class="form-label mb-1">Residence:</label>
+                                    <input id="address" class="form-control bg-light" value="<?= $record['address'] ?>" readonly>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label for="religion" class="form-label mb-1">Religion:</label>
+                                    <input id="religion" class="form-control bg-light" value="" readonly>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label for="date_time" class="form-label mb-1">Date & Time of Consultation:</label>
+                                    <input id="date_time" class="form-control bg-light" value="<?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>" readonly>
+                                </div>
                                 <div class="col-12 mb-2">
                                     <label for="informant" class="form-label mb-1">Informant:</label>
                                     <textarea id="informant" name="informant" rows="1" cols="50" class="form-control bg-light" required><?= $_SESSION['fullname'] ?></textarea>
@@ -115,7 +115,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="his_illness" class="form-label mb-1">History of Present Illness:</label>
-                                    <textarea id="his_illness" name="his_illness" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <textarea id="his_illness" name="his_illness" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['his_illness']) && !validate_field($_POST['his_illness'])) {
                                     ?>
@@ -126,7 +126,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="medcon" class="form-label mb-1">Past Medical or Surgical History:</label>
-                                    <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['medcon']) && !validate_field($_POST['medcon'])) {
                                     ?>
@@ -137,7 +137,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="ob_his" class="form-label mb-1">Obstetric History:</label>
-                                    <textarea id="ob_his" name="ob_his" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <textarea id="ob_his" name="ob_his" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['ob_his']) && !validate_field($_POST['ob_his'])) {
                                     ?>
@@ -148,7 +148,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="fam_his" class="form-label mb-1">Family History:</label>
-                                    <textarea id="fam_his" name="fam_his" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <textarea id="fam_his" name="fam_his" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['fam_his']) && !validate_field($_POST['fam_his'])) {
                                     ?>
@@ -159,7 +159,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="soc_his" class="form-label mb-1">Social History:</label>
-                                    <textarea id="soc_his" name="soc_his" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <textarea id="soc_his" name="soc_his" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['soc_his']) && !validate_field($_POST['soc_his'])) {
                                     ?>
@@ -169,8 +169,8 @@ include '../includes/head.php';
                                     ?>
                                 </div>
                                 <div class="col-12 mb-2">
-                                    <label for="rev_sys" class="form-label mb-1">Review of System</label>
-                                    <textarea id="rev_sys" name="rev_sys" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <label for="rev_sys" class="form-label mb-1">Review of System:</label>
+                                    <textarea id="rev_sys" name="rev_sys" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['rev_sys']) && !validate_field($_POST['rev_sys'])) {
                                     ?>
@@ -181,7 +181,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="medication" class="form-label mb-1">Maintenance Medication:</label>
-                                    <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['medication']) && !validate_field($_POST['medication'])) {
                                     ?>
@@ -192,7 +192,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="allergy" class="form-label mb-1">Allergies & Medical Intolerance/s:</label>
-                                    <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['allergy']) && !validate_field($_POST['allergy'])) {
                                     ?>
@@ -203,7 +203,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="immu" class="form-label mb-1">Immunization & Preventive Care Services:</label>
-                                    <textarea id="immu" name="immu" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required></textarea>
+                                    <textarea id="immu" name="immu" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
                                     if (isset($_POST['immu']) && !validate_field($_POST['immu'])) {
                                     ?>
@@ -314,146 +314,70 @@ include '../includes/head.php';
                                     <label for="comment" class="form-label">Additional Comment:</label>
                                     <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" placeholder=""></textarea>
                                 </div>
-                            </form>
-                    </div>
-                <?php
-                        } else if ($record['appointment_status'] == "Completed") {
-                ?>
-                    <div class="col-12 mb-3">
-                        <form action="" class="row" id="resultForm">
-                            <div class="col-12 mb-2">
-                                <label for="complaint" class="form-label mb-1">Chief Complaint:</label>
-                                <textarea id="complaint" name="complaint" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['complaint'] ?></textarea>
                             </div>
-                            <?php
-                            if (isset($record['medcon_history'])) {
-                            ?>
-                                <div class="col-12 mb-2">
-                                    <label for="medcon" class="form-label mb-1">Medical History:</label>
-                                    <textarea id="medcon" name="medcon" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medcon_history'] ?></textarea>
-                                </div>
-                            <?php
-                            }
-                            if (isset($record['allergy'])) {
-                            ?>
-                                <div class="col-12 mb-2">
-                                    <label for="allergy" class="form-label mb-1">Allergies:</label>
-                                    <textarea id="allergy" name="allergy" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['allergy'] ?></textarea>
-                                </div>
-                            <?php
-                            }
-                            if (isset($record['medication'])) {
-                            ?>
-                                <div class="col-12 mb-2">
-                                    <label for="medication" class="form-label mb-1">Medication:</label>
-                                    <textarea id="medication" name="medication" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['medication'] ?></textarea>
-                                </div>
-                            <?php
-                            }
-                            ?>
-                            <p class="m-0 p-0 fs-6 text-secondary mb-2">Objective Information</p>
-                            <div class="col-12 mb-2">
-                                <label for="observation" class="form-label mb-1">Doctor's Observation:</label>
-                                <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['observation'] ?></textarea>
-                            </div>
-                            <p class="m-0 p-0 fs-6 text-secondary mb-2">Assessment and Plan</p>
-                            <?php
-                            if (isset($record['diagnosis'])) {
-                            ?>
-                                <div class="col-12 mb-2">
-                                    <label for="diagnosis_text" class="form-label mb-1">Medical Condition:</label>
-                                    <textarea id="diagnosis_text" name="diagnosis_text" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['diagnosis'] ?></textarea>
-                                </div>
-                            <?php
-                            }
-                            ?>
-                            <div class="col-12 mb-3">
-                                <label for="assessment" class="form-label">Consultation Assessment:</label>
-                                <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required readonly><?= $record['assessment'] ?></textarea>
-                            </div>
-                            <?php
-                            if (isset($record['plan'])) {
-                            ?>
-                                <div class="col-12 mb-2">
-                                    <label for="plan" class="form-label mb-1">Treatment Plan and Recommendation:</label>
-                                    <textarea id="plan" name="plan" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['plan'] ?></textarea>
-                                </div>
-                            <?php
-                            }
-                            if (isset($record['prescription'])) {
-                            ?>
-                                <div class="col-12 mb-2">
-                                    <label for="prescription" class="form-label mb-1">Prescription:</label>
-                                    <textarea id="prescription" name="prescription" rows="2" cols="50" class="form-control bg-light" placeholder="If yes, please specify" required readonly><?= $record['prescription'] ?></textarea>
-                                </div>
-                            <?php
-                            }
-                            if (isset($record['comment'])) {
-                            ?>
-                                <div class="col-12">
-                                    <label for="comment" class="form-label">Additional Comment:</label>
-                                    <textarea id="comment" name="comment" rows="2" cols="50" class="form-control bg-light" readonly><?= $record['comment'] ?></textarea>
-                                </div>
-                            <?php
-                            }
-                            ?>
                         </form>
-                    </div>
-                <?php
-                        }
-                ?>
-                <div class="col-12 d-flex justify-content-center mb-3 ">
-                    <?php
-                    if ($record['appointment_status'] == "Incoming") {
 
-                        $appointment_datetime = date('Y-m-d', strtotime($record['appointment_date']));
-                        date_default_timezone_set('Asia/Manila');
-                        $current_datetime = date('Y-m-d');
-
-                        $disable_button = ($appointment_datetime != $current_datetime) ? 'disabled' : '';
-                    ?>
-
-                        <button class="btn btn-success text-white mb-3 me-2" id="start" onclick="start_meeting()" <?= $disable_button ?>>
-                            <i class='bx bx-video me-2 align-middle fs-5'></i>
-                            Start Appointment
-                        </button>
-                        <div class="dropdown">
-                            <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class='bx bx-dots-horizontal-rounded'></i>
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" onclick="force_start()">Force Start</a></li>
-                            </ul>
-                        </div>
-                    <?php
-                    } else if ($record['appointment_status'] == "Ongoing") {
-                    ?>
-                        <button class="btn btn-danger text-white mb-3" onclick="end_meeting()">
-                            <i class='bx bx-check-square align-middle fs-5'></i>
-                            Complete Appointment
-                        </button>
                     <?php
                     } else if ($record['appointment_status'] == "Completed") {
                     ?>
-                        <button class="btn btn-danger text-white mb-3" id="download_pdf">
-                            <i class='bx bx-file align-middle fs-5'></i>
-                            Download Result
-                        </button>
-                        <?php
-                        if (isset($record['prescription'])) {
-                        ?>
-                            <button class="btn btn-danger text-white mb-3 ms-2" id="download_prescription_pdf">
-                                <i class='bx bx-file align-middle fs-5'></i>
-                                Download Prescription
-                            </button>
-                        <?php
-                        }
-                        ?>
+                        <div class="col-12 mb-3">
+                            
+                        </div>
                     <?php
                     }
                     ?>
-                </div>
+                    <div class="col-12 d-flex justify-content-center mb-3 ">
+                        <?php
+                        if ($record['appointment_status'] == "Incoming") {
+
+                            $appointment_datetime = date('Y-m-d', strtotime($record['appointment_date']));
+                            date_default_timezone_set('Asia/Manila');
+                            $current_datetime = date('Y-m-d');
+
+                            $disable_button = ($appointment_datetime != $current_datetime) ? 'disabled' : '';
+                        ?>
+
+                            <button class="btn btn-success text-white mb-3 me-2" id="start" onclick="start_meeting()" <?= $disable_button ?>>
+                                <i class='bx bx-video me-2 align-middle fs-5'></i>
+                                Start Appointment
+                            </button>
+                            <div class="dropdown">
+                                <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class='bx bx-dots-horizontal-rounded'></i>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" onclick="force_start()">Force Start</a></li>
+                                </ul>
+                            </div>
+                        <?php
+                        } else if ($record['appointment_status'] == "Ongoing") {
+                        ?>
+                            <button class="btn btn-danger text-white mb-3" onclick="end_meeting()">
+                                <i class='bx bx-check-square align-middle fs-5'></i>
+                                Complete Appointment
+                            </button>
+                        <?php
+                        } else if ($record['appointment_status'] == "Completed") {
+                        ?>
+                            <button class="btn btn-danger text-white mb-3" id="download_pdf">
+                                <i class='bx bx-file align-middle fs-5'></i>
+                                Download Result
+                            </button>
+                            <?php
+                            if (isset($record['prescription'])) {
+                            ?>
+                                <button class="btn btn-danger text-white mb-3 ms-2" id="download_prescription_pdf">
+                                    <i class='bx bx-file align-middle fs-5'></i>
+                                    Download Prescription
+                                </button>
+                            <?php
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </div>
                 </div>
             </main>
         </div>
