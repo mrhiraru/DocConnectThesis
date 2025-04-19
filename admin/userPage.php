@@ -7,8 +7,6 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ../index.php');
 }
 
-require_once('../tools/functions.php');
-require_once('../classes/account.class.php');
 require_once('../classes/homePage.class.php');
 
 $homePageContent = new HomePageContent();
@@ -102,7 +100,7 @@ function getCurrentPage()
     require_once('./includes/admin_sidepanel.php');
     ?>
 
-    <section id="dashboard" class="page-container">
+    <section class="page-container">
 
         <?php
         $userPage = 'active';
@@ -116,7 +114,10 @@ function getCurrentPage()
         <h6 class="text-start mb-4 text-muted">Icon Class: <a href="https://boxicons.com/" target="_blank">Boxicons.com</a></h6>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#main" aria-expanded="false" aria-controls="main">
-            <h5 class="card-title">Main</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Main</h5>
+                <i id="chevronIconMain" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="main">
@@ -140,7 +141,10 @@ function getCurrentPage()
         </div>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#keyFeatures" aria-expanded="false" aria-controls="keyFeatures">
-            <h5 class="card-title">Key Features</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Key Features</h5>
+                <i id="chevronIconFeatures" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="keyFeatures">
@@ -176,7 +180,10 @@ function getCurrentPage()
         </div>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#ourServices" aria-expanded="false" aria-controls="ourServices">
-            <h5 class="card-title">Our Services</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Our Services</h5>
+                <i id="chevronIconServices" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="ourServices">
@@ -215,7 +222,10 @@ function getCurrentPage()
         </div>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#information" aria-expanded="false" aria-controls="information">
-            <h5 class="card-title">Information</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Information</h5>
+                <i id="chevronIconInformation" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="information">
@@ -267,7 +277,10 @@ function getCurrentPage()
         </div>
 
         <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#about" aria-expanded="false" aria-controls="about">
-            <h5 class="card-title">About Us</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">About Us</h5>
+                <i id="chevronIconAbout" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="about">
@@ -316,6 +329,41 @@ function getCurrentPage()
     </section>
 
     <script>
+        const mainButton = document.querySelector('[data-bs-target="#main"]');
+        const chevronIconMain = document.getElementById('chevronIconMain');
+
+        mainButton.addEventListener('click', function() {
+            chevronIconMain.classList.toggle('rotate-180');
+        });
+
+        const featuresButton = document.querySelector('[data-bs-target="#keyFeatures"]');
+        const chevronIconFeatures = document.getElementById('chevronIconFeatures');
+
+        featuresButton.addEventListener('click', function() {
+            chevronIconFeatures.classList.toggle('rotate-180');
+        });
+
+        const servicesButton = document.querySelector('[data-bs-target="#ourServices"]');
+        const chevronIconServices = document.getElementById('chevronIconServices');
+
+        servicesButton.addEventListener('click', function() {
+            chevronIconServices.classList.toggle('rotate-180');
+        });
+
+        const informationButton = document.querySelector('[data-bs-target="#information"]');
+        const chevronIconInformation = document.getElementById('chevronIconInformation');
+
+        informationButton.addEventListener('click', function() {
+            chevronIconInformation.classList.toggle('rotate-180');
+        });
+
+        const aboutButton = document.querySelector('[data-bs-target="#about"]');
+        const chevronIconAbout = document.getElementById('chevronIconAbout');
+
+        aboutButton.addEventListener('click', function() {
+            chevronIconAbout.classList.toggle('rotate-180');
+        });
+
         function previewImage(event, previewId) {
             const reader = new FileReader();
             reader.onload = function() {
