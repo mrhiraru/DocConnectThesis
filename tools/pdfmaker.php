@@ -2,428 +2,252 @@
     import "../node_modules/pdfmake/build/pdfmake.js";
     import "../node_modules/pdfmake/build/vfs_fonts.js";
 
+    // Function to calculate age from birthdate
+    function calculateAge(birthdate) {
+        const birthDate = new Date(birthdate);
+        const today = new Date();
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDiff = today.getMonth() - birthDate.getMonth();
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+
     var download_pdf = document.getElementById("download_pdf");
     if (download_pdf) {
         download_pdf.addEventListener("click", () => {
-            var docDefinition = {
-                content: [{
-                        alignment: 'start',
-                        text: '<?= isset($record['doctor_name']) ? $record['doctor_name'] : $_SESSION['fullname'] ?>',
-                        style: 'header',
-                        fontSize: 20
-                    },
+            // Clinical History PDF
+            var clinicalHistory = {
+                content: [
+                    {text: 'Clinical History', style: 'header', alignment: 'center'},
                     {
-                        alignment: 'start',
-                        text: '<?= isset($record['specialty']) ? $record['specialty'] : $_SESSION['specialty'] ?>',
-                        style: 'subheader',
-                        fontSize: 13,
-                        bold: false
+                        style: 'tableExample',
+                        color: '#444',
+                        table: {
+                            widths: [225, 75, 75, 100],
+                            headerRows: 1,
+                            body: [
+                                [
+                                    {text: "Patient's Name: " + (<?= isset($record['patient_name']) ? json_encode($record['patient_name']) : json_encode($_SESSION['fullname']) ?>), style: 'tableExample'}, 
+                                    {text: "Age: " + calculateAge(<?= json_encode($record['birthdate']) ?>), style: 'tableExample'}, 
+                                    {text: "Sex: " + (<?= json_encode($record['gender']) ?>), style: 'tableExample'}, 
+                                    {text: "Civil Status:", style: 'tableExample'}, 
+                                ], 
+                                [
+                                    {text: "Residence: " + (<?= json_encode($record['address']) ?>), style: 'tableExample'}, 
+                                    {text: 'Religion:', style: 'tableExample', colSpan: 2}, 
+                                    {}, 
+                                    {text: 'Date & Time: ' + (<?= json_encode(date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time']))) ?>), style: 'tableExample'}
+                                ],
+                                [
+                                    {text: 'Informant: ' + (<?= json_encode($_SESSION['fullname']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'Chief Complaint:\n' + (<?= json_encode($record['complaint']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'History of Present Illness:\n' + (<?= json_encode($record['his_illness']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'Past Medical or Surgical History:\n' + (<?= json_encode($record['medcon_history']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'OB History:\n' + (<?= json_encode($record['ob_his']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'Family History:\n' + (<?= json_encode($record['fam_his']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'Social History:\n' + (<?= json_encode($record['soc_his']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'Review of System:\n' + (<?= json_encode($record['rev_sys']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'Maintenance Medication:\n' + (<?= json_encode($record['medication']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'Allergies & Medication Intolerance/s:\n' + (<?= json_encode($record['allergy']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: 'Immunization & Preventive Care Services:\n' + (<?= json_encode($record['immu']) ?>), style: 'tableExample', colSpan: 4}, 
+                                    {}, 
+                                    {}, 
+                                    {}
+                                ],
+                            ]
+                        }
                     },
-                    {
-                        columns: [{
-                                alignment: 'start',
-                                text: 'Western Mindanao State University\nW376+CGQ, Normal Rd, Zamboanga City',
-                                style: 'address',
-                                width: '70%',
-                                margin: [0, 15, 0, 15]
-                            },
-                            {
-                                alignment: 'end',
-                                text: 'Date: <?= date("l, M d, Y", strtotime($record['appointment_date'])) ?>',
-                                style: 'address',
-                                width: '30%',
-                                margin: [0, 15, 0, 15]
-                            }
-                        ]
+                ],
+                styles: {
+                    header: {
+                        fontSize: 18,
+                        bold: true,
+                        margin: [0, 0, 0, 10]
                     },
-                    {
-                        canvas: [{
-                            type: 'line',
-                            x1: 0,
-                            y1: 0,
-                            x2: 515,
-                            y2: 0,
-                            lineWidth: 1
-                        }]
-                    },
-                    {
-                        text: "Patient's Name: <?= isset($record['patient_name']) ? $record['patient_name'] : $_SESSION['fullname'] ?>",
-                        margin: [0, 15, 0, 0]
-                    },
-                    {
-                        columns: [{
-                                text: "Birthdate: <?= date('M d, Y', strtotime($record['birthdate'])) ?>",
-                                width: '65%'
-                            },
-                            {
-                                text: "Gender: <?= $record['gender'] ?>",
-                                width: '35%'
-                            }
-                        ],
-                        margin: [0, 5, 0, 0]
-                    },
-                    {
-                        columns: [{
-                                text: "Email: <?= $record['email'] ?>",
-                                width: '65%'
-                            },
-                            {
-                                text: "Contact: <?= $record['contact'] ?>",
-                                width: '35%'
-                            }
-                        ],
-                        margin: [0, 5, 0, 0]
-                    },
-                    {
-                        canvas: [{
-                            type: 'line',
-                            x1: 0,
-                            y1: 0,
-                            x2: 515,
-                            y2: 0,
-                            lineWidth: 1
-                        }],
-                        margin: [0, 15, 0, 0]
-                    },
-                    {
-
-                        text: "Subjective Information",
-                        margin: [0, 15, 0, 5],
-                        fontSize: 13,
-                    },
-                    {
-
-                        text: "Purpose of Appointment: <?= $record['purpose'] ?>",
-                        margin: [0, 5, 0, 0],
-                    },
-                    {
-
-                        text: "Reason: <?= $record['reason'] ?>",
-                        margin: [0, 5, 0, 0],
-                    },
-                    {
-
-                        text: "Chief Complaint:",
-                        margin: [0, 5, 0, 0],
-                    },
-                    {
-
-                        text: "<?= $record['complaint'] ?>",
-                        margin: [30, 5, 0, 0],
-                    },
-                    <?php
-                    if ($record['medcon_history'] != null) {
-                    ?> {
-                            text: "Medical History: ",
-                            margin: [0, 5, 0, 0],
-                        },
-                        {
-
-                            text: "<?= $record['medcon_history'] ?>",
-                            margin: [30, 5, 0, 0],
-                        },
-                    <?php
+                    tableExample: {
+                        margin: [0, 5, 0, 15],
+                        bold: true
                     }
-                    if ($record['allergy'] != null) {
-                    ?> {
-                            text: "Allergy: ",
-                            margin: [0, 5, 0, 0],
-                        },
-                        {
+                }
+            };
 
-                            text: "<?= $record['allergy'] ?>",
-                            margin: [30, 5, 0, 0],
-                        },
-                    <?php }
-                    if ($record['medication'] != null) {
-                    ?> {
-
-                            text: "Medication: ",
-                            margin: [0, 5, 0, 0],
-                        },
-                        {
-
-                            text: "<?= $record['medication'] ?>",
-                            margin: [30, 5, 0, 0],
-                        },
-                    <?php } ?> {
-                        canvas: [{
-                            type: 'line',
-                            x1: 0,
-                            y1: 0,
-                            x2: 515,
-                            y2: 0,
-                            lineWidth: 1
-                        }],
-                        margin: [0, 15, 0, 0]
+            // Consultation Result PDF
+            var consultationResult = {
+                content: [
+                    {text: 'Consultation Result', style: 'header', alignment: 'center'},
+                    {
+                        style: 'tableExample',
+                        color: '#444',
+                        table: {
+                            widths: ['*'],
+                            body: [
+                                [
+                                    {text: "Patient's Name: " + (<?= isset($record['patient_name']) ? json_encode($record['patient_name']) : json_encode($_SESSION['fullname']) ?>), style: 'tableExample'}, 
+                                ],
+                                [
+                                    {text: 'Informant: ' + (<?= json_encode($_SESSION['fullname']) ?>), style: 'tableExample'}, 
+                                ],
+                                [
+                                    {text: 'Consultation Assessment:\n' + (<?= json_encode($record['assessment']) ?>), style: 'tableExample'}, 
+                                ],
+                                [
+                                    {text: 'Diagnosis:\n' + (<?= json_encode($record['diagnosis']) ?>), style: 'tableExample'}, 
+                                ],
+                                [
+                                    {text: 'Treatment Plan:\n' + (<?= json_encode($record['plan']) ?>), style: 'tableExample'}, 
+                                ],
+                                [
+                                    {text: 'Prescription:\n' + (<?= json_encode($record['prescription']) ?>), style: 'tableExample'}, 
+                                ],
+                                [
+                                    {text: 'Additional Comments:\n' + (<?= json_encode($record['comment']) ?>), style: 'tableExample'}, 
+                                ]
+                            ]
+                        }
                     },
                     {
-
-                        text: "Objective Information",
-                        margin: [0, 15, 0, 5],
-                        fontSize: 13,
-                    },
-                    {
-
-                        text: "Doctor's Observation: ",
-                        margin: [0, 5, 0, 0],
-                    },
-                    {
-
-                        text: "<?= $record['observation'] ?>",
-                        margin: [30, 5, 0, 0],
-                    },
-
-                    {
-                        canvas: [{
-                            type: 'line',
-                            x1: 0,
-                            y1: 0,
-                            x2: 515,
-                            y2: 0,
-                            lineWidth: 1
-                        }],
-                        margin: [0, 15, 0, 0]
-                    },
-                    {
-
-                        text: "Assessment and Plan",
-                        margin: [0, 15, 0, 5],
-                        fontSize: 13,
-                    },
-                    <?php if ($record['diagnosis'] != null) { ?> {
-
-                            text: "Medical Condition: ",
-                            margin: [0, 5, 0, 0],
-                        },
-                        {
-
-                            text: "<?= $record['diagnosis'] ?>",
-                            margin: [30, 5, 0, 0],
-                        },
-                    <?php } ?> {
-
-                        text: "Assessment: ",
-                        margin: [0, 5, 0, 0],
-                    },
-                    {
-
-                        text: "<?= $record['assessment'] ?>",
-                        margin: [30, 5, 0, 0],
-                    },
-                    <?php
-                    if ($record['plan'] != null) { ?> {
-                            text: "Treatment Plan and Recommendation: ",
-                            margin: [0, 5, 0, 0],
-                        },
-                        {
-
-                            text: "<?= $record['plan'] ?>",
-                            margin: [30, 5, 0, 0],
-                        },
-                    <?php
-                    }
-                    if ($record['prescription'] != null) { ?> {
-                            text: "Prescription:",
-                            margin: [0, 5, 0, 0],
-                        },
-                        {
-
-                            text: "<?= $record['prescription'] ?>",
-                            margin: [30, 5, 0, 0],
-                        },
-                    <?php
-                    }
-                    if ($record['comment'] != null) { ?> {
-                            text: "Addition Comment:",
-                            margin: [0, 5, 0, 0],
-                        },
-                        {
-
-                            text: "<?= $record['comment'] ?>",
-                            margin: [30, 5, 0, 0],
-                        },
-                    <?php } ?> {
-                        canvas: [{
-                                type: 'line',
-                                x1: 0,
-                                y1: 0,
-                                x2: 515,
-                                y2: 0,
-                                lineWidth: 1
-
-                            }
-
-                        ],
-                        margin: [0, 15, 0, 0]
-                    },
-                    {
-                        canvas: [{
-                            type: 'line',
-                            x1: 500,
-                            y1: 100,
-                            x2: 215,
-                            y2: 100,
-                            lineWidth: 1
-                        }]
+                        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
+                        margin: [0, 20, 0, 0]
                     },
                     {
                         text: 'Signature',
-                        margin: [333, 5, 0, 0]
+                        alignment: 'right',
+                        margin: [0, 20, 0, 0]
                     }
                 ],
                 styles: {
                     header: {
                         fontSize: 18,
                         bold: true,
-                        alignment: 'center'
+                        margin: [0, 0, 0, 10]
                     },
-                    subheader: {
-                        fontSize: 14,
-                        bold: true,
-                        alignment: 'center'
-                    },
-                    address: {
-                        fontSize: 12,
-                        alignment: 'center'
-                    },
-                    hoursTitle: {
-                        fontSize: 12,
-                        bold: true,
-                        alignment: 'center'
-                    },
-                    hours: {
-                        fontSize: 12,
-                        alignment: 'center'
+                    tableExample: {
+                        margin: [0, 5, 0, 15],
+                        bold: true
                     }
                 }
             };
 
-
-            pdfMake.createPdf(docDefinition).download("consultation_result.pdf");
-        });
-    }
-
-    var download_prescription_pdf = document.getElementById("download_prescription_pdf");
-    if (download_prescription_pdf) {
-        download_prescription_pdf.addEventListener("click", () => {
-            var docDefinition = {
-                content: [{
-                        alignment: 'start',
-                        text: '<?= isset($record['doctor_name']) ? $record['doctor_name'] : $_SESSION['fullname'] ?>',
-                        style: 'header',
-                        fontSize: 20
+            // Prescription PDF
+            var prescription = {
+                content: [
+                    {text: 'Prescription', style: 'header', alignment: 'center'},
+                    {
+                        style: 'tableExample',
+                        color: '#444',
+                        table: {
+                            widths: ['*', '*', '*'],
+                            body: [
+                                [
+                                    {text: "Patient's Name: " + (<?= isset($record['patient_name']) ? json_encode($record['patient_name']) : json_encode($_SESSION['fullname']) ?>), style: 'tableExample', colSpan: 3}, 
+                                    {}, 
+                                    {}
+                                ],
+                                [
+                                    {text: "Sex: " + (<?= json_encode($record['gender']) ?>), style: 'tableExample'}, 
+                                    {text: "Age: " + calculateAge(<?= json_encode($record['birthdate']) ?>), style: 'tableExample'}, 
+                                    {text: "Consultation Date: " + (<?= json_encode(date("M d, Y", strtotime($record['appointment_date']))) ?>), style: 'tableExample'}
+                                ]
+                            ]
+                        }
                     },
                     {
-                        alignment: 'start',
-                        text: '<?= isset($record['specialty']) ? $record['specialty'] : $_SESSION['specialty'] ?>',
+                        canvas: [{ type: 'line', x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
+                        margin: [0, 10, 0, 10]
+                    },
+                    {
+                        text: 'Prescription:',
                         style: 'subheader',
-                        fontSize: 13,
-                        bold: false
+                        margin: [0, 0, 0, 10]
                     },
                     {
-                        columns: [{
-                                alignment: 'start',
-                                text: 'Western Mindanao State University\nW376+CGQ, Normal Rd, Zamboanga City',
-                                style: 'address',
-                                width: '70%',
-                                margin: [0, 15, 0, 15]
-                            },
-                            {
-                                alignment: 'end',
-                                text: 'Date: <?= date("l, M d, Y", strtotime($record['appointment_date'])) ?>',
-                                style: 'address',
-                                width: '30%',
-                                margin: [0, 15, 0, 15]
-                            }
-                        ]
+                        text: <?= json_encode($record['prescription']) ?>,
+                        margin: [0, 0, 0, 20]
                     },
                     {
-                        canvas: [{
-                            type: 'line',
-                            x1: 0,
-                            y1: 0,
-                            x2: 515,
-                            y2: 0,
-                            lineWidth: 1
-                        }]
-                    },
-                    {
-                        text: "Patient's Name: <?= isset($record['patient_name']) ? $record['patient_name'] : $_SESSION['fullname'] ?>",
-                        margin: [0, 20, 0, 5]
-                    },
-                    {
-                        columns: [{
-                                text: "Gender:  <?= $record['gender'] ?>",
-                                width: '33%'
-                            },
-                            {
-                                text: "Birthdate:  <?= date('M d, Y', strtotime($record['birthdate'])) ?>",
-                                width: '33%'
-                            },
-                            {
-                                text: "Date:  <?= date('M d, Y', strtotime($record['appointment_date'])) ?>",
-                                width: '33%'
-                            }
-                        ],
-                        margin: [0, 10, 0, 20]
-                    },
-                    {
-                        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOAAAADhCAMAAADmr0l2AAAAe1BMVEX///8AAACZmZlsbGyGhoaXl5fc3Nzy8vISEhKTk5Pa2tp2dna3t7eMjIzW1tbv7+9eXl5OTk75+fno6OjLy8s6Ojqrq6szMzN+fn5CQkJpaWnCwsLk5OSjo6NycnJVVVUfHx9AQEAYGBgqKioiIiKzs7NPT08MDAwuLi4/fnXRAAAI6ElEQVR4nO2dbWOqPAyG8YU5NkBFp+w4dGcvx/3/X/h41O20mpSmNI3wcH+ekWtgm6RJiOajTmsejYad1ugAGHdYP4BJNu6YskQFrNL8rmPK0+ofYJUXUedU5NU3YJJ2kO9AmCZnwCyXvhYe5dkZcHwnfSk8uhv3gO1WD9h29YBtVw/YdvWAbdf/GjAb3HvS/n23m5VlNvzc5IvJDQHyaD3fVptphwHPmlUP3QY86O1x023Agz4S3odVHPCgLecCfguAB0S+u2gCHAcDHAyGEoB5etKqKp/ZCddMz6mtJ7Pgv50rUcAoWpournw069ds91RLWMoCmgjvrb6reEmT3ZuBcNcY51oUZ/tXQ8CjitywOD83IEFEAbzzAfhXG/RxnTtiGC6aEi6tPQFG0ecesfToAmESCRBdScmA0WSGmPK9lpIAP/0BRlGC2PK8H5IAc5+A0Qq29dvFFi4S4ItXwKiCjVVOxjCRABd+AbHftNeTWBLgxDNgBG8XiaM1ULKAyDPv8xbKAiIhp8+tQhgQtujTYxMGRHbDF2d7V5IGhBdmjzuFNCC8kM7c7V1KHBDe7d3tXUoc8AE0uHA3eCFxwAIM8f0lvMUB4SDT3yojDziCDGYNDOqSBwR3Qn8JNnlAcBn908CgLnlAMO71l0DsAVWFA/TnytwoYOcXGX9BvTwgGPP6C3nlAbeQwc67ap13tt3tXUocEAyXOh/weixJEAecQ/Y81nhJA04hc+/O5q4lDQgGSz6LZoQBi3vInL9NQhxwCFn75WoNkiwg+Av0e8YrCwge1PutlhEFhJO+Hg8mIlnADWjL6/GnKCBc0rB2MWWQHCB8/zw/oIKA4AbBUFMpBDjdwYbGLgxGyQBiVU5bJwajBACn8StixqsLc1ZowGmKVeFxPJ9RSMBi8ZCOTXXNfku4vuUHcL9JMa1Wq2Fczua/Pwxsf7Vk4fME2FwzrlEhtwH4mjLh3Qhgxjjp5QYAS9b2M2nA1yFzx6ss4JZp6bwJwOcxP10kBPgxGi5D9WKHA1x/7WajskqXL0GnY/kBfFP+CMzFMzQlWcq/Lwr/kfeWHVsxONtwGx5bD2uNOKIJuKUlyJp5LZZwCQ75Qg130MUTD75Df/QuMluQBxBu+PB4MG0vpogebsTznLS2ElfKogT/ji/sQ8WWk4FHC4QfO8QGCB/97YMvNHxZNXi/D+6zMaYN4fQ1y7gDgzjzovB+zzOyAhUnYAGn6MP6bKyZbaRrO6jPxpu6h/f7L68ENWI+mwCrXYP6bNyHL/CJRMDgkBsQab2vK1ku8gc71eau2I/PkFqDmm9DZy5cqta75T8fhDvJX7sDCKfZakbjtApwAg/HMR5YtwoQ2+8/OwOIzVUxvB+hZYDIPK973GebxHFWzr6wyU8/eqp9iUQYwOIL/JjF8J87pOTrEFlmS5vS50BlJMgjN7K5QuiDX0Pbuu5QdTLIvCub2hhgbhAheRWsEAhOs9m0maWXn9lSEjvhKp2QCZ71j9rlGkxrvQsHCKfZLBL6uif0QWyqCFiMh0y3rAsO9Y+Rp66FrDZEVvyasQ5abwx9uGPQckqkzNe4Jmo+gkPBZVBAuNvT6LNph6kuIzzCFsTC03EG92hcrm0RTgWzgSt+kYGNWEJfSwe4TXUMXdL8CBuAFw+Nz/FUI3hROux2g16plrB6sv8KTcEBsQmX8dVfap6B86lU+LYCJM125YFN1ZMN91M3gfmi2Bhq/QK0LcX1+YxkBqgi+702/kBr7m1yaioBOEUyEcp9mqgp/0ZTf0VG4GLDkP+19qiVRM06CkmA6Kj0PfFbkTTbjy+mzlpreKpPAkQ8rQF9egg2Nv/kd6veQNPDRBIgtsIPBtQC5QKsZhucllKVb9207oQEiL9ngNyYimZ2p1r25qlxXQ0JEPu3u9RoXaWSzpqrSbSP5nVDFED8CXVp7rd5x4qHyi8KIOInH+VQG1L/ohwfY2UIgEikc9IbvTYESbP55bMHLPAXopwI6ZdjfE2Or7FAdoDFojK9jOakWbogrgnowYo/PiPgajc7aveMtU1fav/7z/EzO8t+XMzt9sfH9e4zy/wQlmbzWDkrC4h7t946ZYQBsTSbv6pLaUB88/E0v1EcEHlryMDX4BV5QDSKfmUHbPBGPkplNuriNkg12QFussRRGekHdH5SrjM1PgrYSeESk3Cv28NE+BsANE0oab6UygMagxRyLuRK4oBIecm31k1L9KUBa1fqpr1AwoAWO1HDUYeygArfDH33X7O2SlFApX1rjs8ia+Z3SwIqruDxfAVdb0y1wXUSBFRd3VN9FrojNrg2OcBYATgHDmhCv8HUXzFA9Rf389V4JtF5O5QCVPmU/BKaSXQevS0EqD6fmr+JvgnXtWNNBlBdXy7qR1DX1HGyowig+nxeddqhGXS3RJsEoMp3ndso0GYJpzkKAoBDI59pcpRLdBgeUF0o4QIR1Ct1OaQLDqjyYQUGaDYYLyxFFRpQ5cMLYGKM8I18ph0YUOUzHcD/wQi/qIRhAbVfl9H7QjNt1Pg3KKDGZ14w0Hw3NVkaEpDAZzhYIyZLAwKS+AxeKW2cczhA7ZbYOCVoCsPUZ3H9taEANT673xE+cpxwgB8KUCtUtGn8/CvwvW9H2W8WgQC1+2d9LIYvpfZFwGEANb69vb+FVewR2tCCAGrP5z3FF8HLq2w3ixCAeqKFVOFjqGezTHgHANQ9Z6Ijgu8VlnUA/IAX+WrKHhaZHBrLxYobcHLpNRM/XxgAB08WlSbMgNfLIDHcMd3Bgc2pBSvgAxDWEY+KzAfch+ipLqnPBzhdwaOASLkxNLT/p605FcUCuIlLQyXoYFRm1WaZ4/vFIs+XaZWVI4MRVc9lglKyAFpeF/p5U/U7Jiw/cJOAuJPdA/aAPWAIQLxH6kYAk6GN8HCgsvq8bgzzkKRLudjVA7ZdPWDb1QO2XT1g29UDtl3/H8CMmJFti/LsDJikIu994laRJmfAuMo7SFjkVfwNGFdpftcx5emB7wcwTrJxx5QlsQrYVR0BO61RNB91WvP/AA7ltIHhh4YAAAAAAElFTkSuQmCC',
-                        width: 100,
-                        height: 100
-                    },
-                    <?php
-                    if ($record['prescription'] != null) { ?> {
-                            text: "<?= $record['prescription'] ?>",
-                            margin: [30, 5, 0, 0],
-                        },
-                    <?php
-                    }
-                    ?> {
-                        canvas: [{
-                            type: 'line',
-                            x1: 500,
-                            y1: 400,
-                            x2: 215,
-                            y2: 400,
-                            lineWidth: 2
-                        }]
+                        canvas: [{ type: 'line', x1: 500, y1: 0, x2: 215, y2: 0, lineWidth: 2 }],
+                        margin: [0, 0, 0, 5]
                     },
                     {
                         text: 'Signature',
-                        margin: [333, 5, 0, 0]
+                        alignment: 'right',
+                        margin: [0, 5, 0, 0]
                     }
                 ],
                 styles: {
                     header: {
                         fontSize: 18,
                         bold: true,
-                        alignment: 'center'
+                        margin: [0, 0, 0, 10]
                     },
                     subheader: {
                         fontSize: 14,
                         bold: true,
-                        alignment: 'center'
+                        margin: [0, 0, 0, 5]
                     },
-                    address: {
-                        fontSize: 12,
-                        alignment: 'center'
-                    },
-                    hoursTitle: {
-                        fontSize: 12,
-                        bold: true,
-                        alignment: 'center'
-                    },
-                    hours: {
-                        fontSize: 12,
-                        alignment: 'center'
+                    tableExample: {
+                        margin: [0, 5, 0, 15],
+                        bold: true
                     }
                 }
             };
 
-
-            pdfMake.createPdf(docDefinition).download("prescription.pdf");
+            // Generate all three PDFs
+            pdfMake.createPdf(clinicalHistory).download("clinical_history.pdf");
+            pdfMake.createPdf(consultationResult).download("consultation_result.pdf");
+            pdfMake.createPdf(prescription).download("prescription.pdf");
         });
     }
 </script>
