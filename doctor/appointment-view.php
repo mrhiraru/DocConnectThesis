@@ -678,5 +678,28 @@ include_once('../tools/pdfmaker.php');
             });
         }
 
+        var plan_input = document.getElementById("plan");
+        if (plan_input) {
+
+            const planCheck = document.getElementsByName("plan_check");
+            const planContainer = document.getElementById("plan-container");
+
+            planContainer.style.display = "none";
+
+            // Function to toggle visibility
+            function togglePlanContainer() {
+                if (document.getElementById("Yes_plan").checked) {
+                    planContainer.style.display = "block"; // Show if Yes is checked
+                } else {
+                    planContainer.style.display = "none"; // Hide if No is checked
+                }
+            }
+
+            // Add event listeners to both radio buttons
+            planCheck.forEach(radio => {
+                radio.addEventListener("change", togglePlanContainer);
+            });
+        }
+
     });
 </script>
