@@ -25,6 +25,13 @@ class Appointment
     public $prescription;
     public $comment;
 
+    public $his_illness;
+    public $ob_his;
+    public $fam_his;
+    public $soc_his;
+    public $rev_sys;
+    public $immu;
+
     protected $db;
 
     function __construct()
@@ -339,13 +346,39 @@ class Appointment
 
     function complete_appointment()
     {
-        $sql = "UPDATE appointment SET complaint=:complaint, medcon_history=:medcon_history, allergy=:allergy, medication=:medication, observation=:observation, assessment=:assessment, plan=:plan, prescription=:prescription, comment=:comment, appointment_status=:appointment_status, diagnosis=:diagnosis WHERE appointment_id = :appointment_id";
+        $sql = "UPDATE appointment SET 
+                complaint = :complaint,
+                his_illness = :his_illness,
+                medcon_history = :medcon_history,
+                ob_his = :ob_his,
+                fam_his = :fam_his,
+                soc_his = :soc_his,
+                rev_sys = :rev_sys,
+                allergy = :allergy,
+                medication = :medication,
+                immu = :immu,
+                observation = :observation,
+                assessment = :assessment,
+                plan = :plan,
+                prescription = :prescription,
+                comment = :comment,
+                appointment_status = :appointment_status,
+                diagnosis = :diagnosis
+                WHERE appointment_id = :appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
+        
+        // Bind all parameters
         $query->bindParam(':complaint', $this->complaint);
+        $query->bindParam(':his_illness', $this->his_illness);
         $query->bindParam(':medcon_history', $this->medcon_history);
+        $query->bindParam(':ob_his', $this->ob_his);
+        $query->bindParam(':fam_his', $this->fam_his);
+        $query->bindParam(':soc_his', $this->soc_his);
+        $query->bindParam(':rev_sys', $this->rev_sys);
         $query->bindParam(':allergy', $this->allergy);
         $query->bindParam(':medication', $this->medication);
+        $query->bindParam(':immu', $this->immu);
         $query->bindParam(':observation', $this->observation);
         $query->bindParam(':assessment', $this->assessment);
         $query->bindParam(':plan', $this->plan);

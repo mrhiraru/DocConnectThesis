@@ -544,30 +544,45 @@ include_once('../tools/pdfmaker.php');
         }
 
         // If all validations pass, proceed with AJAX call
+
+        const formData = {
+            end: true,
+            complaint: $('#complaint').val().trim(),
+            his_illness: $('#his_illness').val().trim(),
+            medcon: $('#medcon').val().trim(),
+            ob_his: $('#ob_his').val().trim(),
+            fam_his: $('#fam_his').val().trim(),
+            soc_his: $('#soc_his').val().trim(),
+            rev_sys: $('#rev_sys').val().trim(),
+            medication: $('#medication').val().trim(),
+            allergy: $('#allergy').val().trim(),
+            immu: $('#immu').val().trim(),
+            medcon_check: $('input[name="medcon_check"]:checked').val(),
+            diagnosis: $('#diagnosis').val(),
+            assessment: $('#assessment').val().trim(),
+            plan_check: $('input[name="plan_check"]:checked').val(),
+            plan: $('#plan').val().trim(),
+            prescription_check: $('input[name="prescription_check"]:checked').val(),
+            prescription: $('#prescription').val().trim(),
+            appointment_id: '<?= $_GET['appointment_id'] ?>',
+            appointment_status: 'Completed'
+        };
+
+        // Add conditional fields based on radio button selections
+        if (formData.medcon_check === 'No') {
+            formData.diagnosis = null;
+        }
+        if (formData.plan_check === 'No') {
+            formData.plan = null;
+        }
+        if (formData.prescription_check === 'No') {
+            formData.prescription = null;
+        }
+
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
-            data: {
-                end: true,
-                complaint: $('#complaint').val().trim(),
-                his_illness: $('#his_illness').val().trim(),
-                medcon: $('#medcon').val().trim(),
-                ob_his: $('#ob_his').val().trim(),
-                fam_his: $('#fam_his').val().trim(),
-                soc_his: $('#soc_his').val().trim(),
-                rev_sys: $('#rev_sys').val().trim(),
-                medication: $('#medication').val().trim(),
-                allergy: $('#allergy').val().trim(),
-                immu: $('#immu').val().trim(),
-                medcon_check: $('input[name="medcon_check"]:checked').val(),
-                diagnosis: $('#diagnosis').val(),
-                assessment: $('#assessment').val().trim(),
-                plan_check: $('input[name="plan_check"]:checked').val(),
-                plan: $('#plan').val().trim(),
-                prescription_check: $('input[name="prescription_check"]:checked').val(),
-                prescription: $('#prescription').val().trim(),
-                appointment_id: '<?= $_GET['appointment_id'] ?>'
-            },
+            data: formData,
             success: function(response) {
                 if (response.trim() === 'success') {
                     message_notifcation('end');

@@ -107,66 +107,69 @@ if (isset($_POST['confirm'])) {
         $success = 'failed';
     }
 } else if (isset($_POST['end'])) {
+    $appointment = new Appointment();
+
+    // Required fields
     $appointment->complaint = htmlentities($_POST['complaint']);
+    $appointment->his_illness = htmlentities($_POST['his_illness']);
+    $appointment->medcon_history = htmlentities($_POST['medcon']);
+    $appointment->ob_his = htmlentities($_POST['ob_his']);
+    $appointment->fam_his = htmlentities($_POST['fam_his']);
+    $appointment->soc_his = htmlentities($_POST['soc_his']);
+    $appointment->rev_sys = htmlentities($_POST['rev_sys']);
+    $appointment->medication = htmlentities($_POST['medication']);
+    $appointment->allergy = htmlentities($_POST['allergy']);
+    $appointment->immu = htmlentities($_POST['immu']);
+    $appointment->assessment = htmlentities($_POST['assessment']);
 
-    if ($_POST['exmedcon_check'] === 'Yes') {
-        $appointment->medcon_history = htmlentities($_POST['medcon']);
-    } else if ($_POST['exmedcon_check'] === 'No') {
-        $appointment->medcon_history = "No past or existing medical condition history";
-    }
-
-    if ($_POST['allergy_check'] === 'Yes') {
-        $appointment->allergy = htmlentities($_POST['allergy']);
-    } else if ($_POST['allergy_check'] === 'No') {
-        $appointment->allergy = "No allergies";
-    }
-
-    if ($_POST['medication_check'] === 'Yes') {
-        $appointment->medication = htmlentities($_POST['medication']);
-    } else if ($_POST['allergy_check'] === 'No') {
-        $appointment->medication = "No medication";
-    }
-
-    $appointment->observation = htmlentities($_POST['observation']);
-
+    // Conditional fields
     if ($_POST['medcon_check'] === 'Yes') {
-        $appointment->diagnosis = implode(", ", $_POST['diagnosis']);
-    } else if ($_POST['medcon_check'] === 'No') {
+        $appointment->diagnosis = !empty($_POST['diagnosis']) ? implode(", ", $_POST['diagnosis']) : null;
+    } else {
         $appointment->diagnosis = null;
     }
 
-    $appointment->assessment = htmlentities($_POST['assessment']);
-
     if ($_POST['plan_check'] === 'Yes') {
         $appointment->plan = htmlentities($_POST['plan']);
-    } else if ($_POST['plan_check'] === 'No') {
+    } else {
         $appointment->plan = null;
     }
 
     if ($_POST['prescription_check'] === 'Yes') {
         $appointment->prescription = htmlentities($_POST['prescription']);
-    } else if ($_POST['prescription_check'] === 'No') {
+    } else {
         $appointment->prescription = null;
     }
 
-    $appointment->comment = htmlentities($_POST['comment']);
+    // System fields
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_status = 'Completed';
 
+    // Validate required fields
     if (
-        validate_field($appointment->appointment_id && $appointment->complaint &&
-            $appointment->observation && $appointment->assessment &&
-            $appointment->appointment_status)
+        validate_field($appointment->appointment_id) &&
+        validate_field($appointment->complaint) &&
+        validate_field($appointment->his_illness) &&
+        validate_field($appointment->medcon_history) &&
+        validate_field($appointment->ob_his) &&
+        validate_field($appointment->fam_his) &&
+        validate_field($appointment->soc_his) &&
+        validate_field($appointment->rev_sys) &&
+        validate_field($appointment->medication) &&
+        validate_field($appointment->allergy) &&
+        validate_field($appointment->immu) &&
+        validate_field($appointment->assessment)
     ) {
-        if ($appointment->complete_appointment()) {
 
-            $success = 'success';
+        if ($appointment->complete_appointment()) {
+            echo 'success';
         } else {
-            $success = 'failed';
+            echo 'failed';
         }
     } else {
-        $success = 'failed';
+        echo 'failed';
     }
+    exit();
 }
 
 echo $success;
