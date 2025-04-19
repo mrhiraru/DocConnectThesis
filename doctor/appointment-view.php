@@ -491,15 +491,6 @@ include_once('../tools/pdfmaker.php');
             revsysInput[0].setCustomValidity(""); // Reset validation if valid
         }
 
-        var allergyInput = $('#allergy');
-        if (!allergyInput.val().trim()) {
-            allergyInput[0].setCustomValidity("Allergy & Medical Intolerance is required; indicate 'N/A' if not applicable."); // Set custom validation message
-            allergyInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            allergyInput[0].setCustomValidity(""); // Reset validation if valid
-        }
-
         var medicationInput = $('#medication');
         if (!medicationInput.val().trim()) {
             medicationInput[0].setCustomValidity("Maintenance Medication is required; indicate 'N/A' if not applicable."); // Set custom validation message
@@ -509,6 +500,15 @@ include_once('../tools/pdfmaker.php');
             medicationInput[0].setCustomValidity(""); // Reset validation if valid
         }
 
+        var allergyInput = $('#allergy');
+        if (!allergyInput.val().trim()) {
+            allergyInput[0].setCustomValidity("Allergy & Medical Intolerance is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            allergyInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            allergyInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
         var immuInput = $('#immu');
         if (!immuInput.val().trim()) {
             immuInput[0].setCustomValidity("Immunization & Preventive Care Services is required; indicate 'N/A' if not applicable."); // Set custom validation message
@@ -516,6 +516,15 @@ include_once('../tools/pdfmaker.php');
             return; // Stop execution
         } else {
             immuInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var assessmentInput = $('#assessment');
+        if (!assessmentInput.val().trim()) {
+            assessmentInput[0].setCustomValidity("Consultation Assessment is required. Please provide your assessment."); // Set custom validation message
+            assessmentInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            assessmentInput[0].setCustomValidity(""); // Reset validation if valid
         }
 
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
@@ -532,15 +541,6 @@ include_once('../tools/pdfmaker.php');
             } else {
                 diagnosisSelect.get(0).setCustomValidity(""); // Reset validation if valid
             }
-        }
-
-        var assessmentInput = $('#assessment');
-        if (!assessmentInput.val().trim()) {
-            assessmentInput[0].setCustomValidity("Consultation Assessment is required. Please provide your assessment."); // Set custom validation message
-            assessmentInput[0].reportValidity(); // Show validation popup
-            return; // Stop execution
-        } else {
-            assessmentInput[0].setCustomValidity(""); // Reset validation if valid
         }
 
         var planCheck = $('input[name="plan_check"]:checked');
