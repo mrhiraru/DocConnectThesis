@@ -384,12 +384,10 @@ include '../includes/head.php';
                                     <textarea id="assessment" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['assessment'] ?? '') ?></textarea>
                                 </div>
 
-                                <?php if (!empty($record['diagnosis'])) : ?>
-                                    <div class="col-12 mb-2">
-                                        <label for="diagnosis" class="form-label mb-1">Diagnosis:</label>
-                                        <textarea id="diagnosis" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['diagnosis'] ?? '') ?></textarea>
-                                    </div>
-                                <?php endif; ?>
+                                <div class="col-12 mb-2">
+                                    <label for="diagnosis" class="form-label mb-1">Diagnosis:</label>
+                                    <textarea id="diagnosis" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['diagnosis'] ?? 'No diagnosis recorded') ?></textarea>
+                                </div>
 
                                 <?php if (!empty($record['plan'])) : ?>
                                     <div class="col-12 mb-2">
