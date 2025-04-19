@@ -305,7 +305,106 @@ include '../includes/head.php';
                     } else if ($record['appointment_status'] == "Completed") {
                     ?>
                         <div class="col-12 mb-3">
+                            <div class="row col-12 mb-3 border-bottom">
+                                <p class="m-0 p-0 fs-5 mb-2 text-center">Clinical History</p>
+                                <div class="col-6 mb-2">
+                                    <label for="name" class="form-label mb-1">Patient Name:</label>
+                                    <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
+                                </div>
+                                <div class="col-2 mb-2">
+                                    <label for="birthdate" class="form-label mb-1">Age:</label>
+                                    <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
+                                </div>
+                                <div class="col-2 mb-2">
+                                    <label for="gender" class="form-label mb-1">Sex:</label>
+                                    <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
+                                </div>
+                                <div class="col-2 mb-2">
+                                    <label for="civil_status" class="form-label mb-1">Civil Status:</label>
+                                    <input id="civil_status" class="form-control bg-light" value="" readonly>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label for="address" class="form-label mb-1">Residence:</label>
+                                    <input id="address" class="form-control bg-light" value="<?= $record['address'] ?>" readonly>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label for="religion" class="form-label mb-1">Religion:</label>
+                                    <input id="religion" class="form-control bg-light" value="" readonly>
+                                </div>
+                                <div class="col-4 mb-2">
+                                    <label for="date_time" class="form-label mb-1">Date & Time of Consultation:</label>
+                                    <input id="date_time" class="form-control bg-light" value="<?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>" readonly>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="informant" class="form-label mb-1">Informant:</label>
+                                    <textarea id="informant" rows="1" cols="50" class="form-control bg-light" readonly><?= $_SESSION['fullname'] ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="complaint" class="form-label mb-1">Chief Complaint:</label>
+                                    <textarea id="complaint" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['complaint'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="his_illness" class="form-label mb-1">History of Present Illness:</label>
+                                    <textarea id="his_illness" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['his_illness'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="medcon" class="form-label mb-1">Past Medical or Surgical History:</label>
+                                    <textarea id="medcon" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['medcon_history'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="ob_his" class="form-label mb-1">Obstetric History:</label>
+                                    <textarea id="ob_his" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['ob_his'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="fam_his" class="form-label mb-1">Family History:</label>
+                                    <textarea id="fam_his" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['fam_his'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="soc_his" class="form-label mb-1">Social History:</label>
+                                    <textarea id="soc_his" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['soc_his'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="rev_sys" class="form-label mb-1">Review of System:</label>
+                                    <textarea id="rev_sys" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['rev_sys'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="medication" class="form-label mb-1">Maintenance Medication:</label>
+                                    <textarea id="medication" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['medication'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="allergy" class="form-label mb-1">Allergies & Medical Intolerance/s:</label>
+                                    <textarea id="allergy" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['allergy'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-2">
+                                    <label for="immu" class="form-label mb-1">Immunization & Preventive Care Services:</label>
+                                    <textarea id="immu" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['immu'] ?? '') ?></textarea>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <label for="assessment" class="form-label">Consultation Assessment:</label>
+                                    <textarea id="assessment" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['assessment'] ?? '') ?></textarea>
+                                </div>
 
+                                <?php if (!empty($record['diagnosis'])) : ?>
+                                    <div class="col-12 mb-2">
+                                        <label for="diagnosis" class="form-label mb-1">Diagnosis:</label>
+                                        <textarea id="diagnosis" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['diagnosis'] ?? '') ?></textarea>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if (!empty($record['plan'])) : ?>
+                                    <div class="col-12 mb-2">
+                                        <label for="plan" class="form-label mb-1">Treatment Plan:</label>
+                                        <textarea id="plan" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['plan'] ?? '') ?></textarea>
+                                    </div>
+                                <?php endif; ?>
+
+                                <?php if (!empty($record['prescription'])) : ?>
+                                    <div class="col-12 mb-2">
+                                        <label for="prescription" class="form-label mb-1">Prescription:</label>
+                                        <textarea id="prescription" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['prescription'] ?? '') ?></textarea>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     <?php
                     }
