@@ -285,7 +285,7 @@
             },
             {
                 text: "Patient's Name:  " + (<?= isset($record['patient_name']) ? json_encode($record['patient_name']) : json_encode($_SESSION['fullname']) ?>),
-                margin: [0, 20, 0, 5]
+                margin: [0, 20, 0, -1]
             },
             {
                 canvas: [{
@@ -299,7 +299,7 @@
             },
             {
                 text: "Address:  " + (<?= json_encode($record['address']) ?>),
-                margin: [0, 5, 0, 5]
+                margin: [0, 10, 0, -1]
             },
             {
                 canvas: [{
@@ -325,7 +325,7 @@
                         width: '33%'
                     }
                 ],
-                margin: [0, 10, 0, 20]
+                margin: [0, 10, 0, -1]
             },
             {
                 columns: [{
@@ -374,9 +374,9 @@
                 canvas: [{
                     type: 'line',
                     x1: 500,
-                    y1: 400,
+                    y1: 250,
                     x2: 215,
-                    y2: 400,
+                    y2: 250,
                     lineWidth: 2
                 }]
             },
