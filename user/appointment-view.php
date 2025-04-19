@@ -224,7 +224,7 @@ include '../includes/head.php';
     require_once('../includes/footer.php');
     ?>
     <?php
-    include_once('../tools/pdfmaker.php');
+    include_once('../tools/pdfmaker_user.php');
     ?>
     <script>
         function join_meeting(url) {
