@@ -190,13 +190,46 @@
                     widths: ['*'],
                     body: [
                         [{
-                            text: "Patient's Name: " + (<?= isset($record['patient_name']) ? json_encode($record['patient_name']) : json_encode($_SESSION['fullname']) ?>),
-                            style: 'tableExample'
-                        }, ],
+                                text: "Patient's Name: " + (<?= isset($record['patient_name']) ? json_encode($record['patient_name']) : json_encode($_SESSION['fullname']) ?>),
+                                style: 'tableExample'
+                            },
+                            {
+                                text: "Age: " + calculateAge(<?= json_encode($record['birthdate']) ?>),
+                                style: 'tableExample'
+                            },
+                            {
+                                text: "Sex: " + (<?= json_encode($record['gender']) ?>),
+                                style: 'tableExample'
+                            },
+                            {
+                                text: "Civil Status:",
+                                style: 'tableExample'
+                            },
+                        ],
                         [{
-                            text: 'Informant: ' + (<?= json_encode($_SESSION['fullname']) ?>),
-                            style: 'tableExample'
-                        }, ],
+                                text: "Residence: " + (<?= json_encode($record['address']) ?>),
+                                style: 'tableExample'
+                            },
+                            {
+                                text: 'Religion:',
+                                style: 'tableExample',
+                                colSpan: 2
+                            },
+                            {},
+                            {
+                                text: 'Date & Time: ' + (<?= json_encode(date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time']))) ?>),
+                                style: 'tableExample'
+                            }
+                        ],
+                        [{
+                                text: 'Informant: ' + (<?= json_encode($_SESSION['fullname']) ?>),
+                                style: 'tableExample',
+                                colSpan: 4
+                            },
+                            {},
+                            {},
+                            {}
+                        ],
                         [{
                             text: 'Consultation Assessment:\n' + (<?= json_encode($record['assessment']) ?>),
                             style: 'tableExample'
@@ -212,29 +245,9 @@
                         [{
                             text: 'Prescription:\n' + (<?= json_encode($record['prescription']) ?>),
                             style: 'tableExample'
-                        }, ],
-                        [{
-                            text: 'Additional Comments:\n' + (<?= json_encode($record['comment']) ?>),
-                            style: 'tableExample'
                         }, ]
                     ]
                 }
-            },
-            {
-                canvas: [{
-                    type: 'line',
-                    x1: 0,
-                    y1: 0,
-                    x2: 515,
-                    y2: 0,
-                    lineWidth: 1
-                }],
-                margin: [0, 20, 0, 0]
-            },
-            {
-                text: 'Signature',
-                alignment: 'right',
-                margin: [0, 20, 0, 0]
             }
         ],
         styles: {
