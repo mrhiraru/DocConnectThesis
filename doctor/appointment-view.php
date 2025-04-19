@@ -212,7 +212,6 @@ include '../includes/head.php';
                                     }
                                     ?>
                                 </div>
-                                <p class="m-0 p-0 fs-5 my-2 text-center">Assessment</p>
                                 <div class="col-12 mb-3">
                                     <label for="assessment" class="form-label">Consultation Assessment:</label>
                                     <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required></textarea>
