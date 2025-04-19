@@ -336,14 +336,14 @@ function getCurrentPage()
             chevronIconMain.classList.toggle('rotate-180');
         });
 
-        const featuresButton = document.querySelector('data-bs-target="#keyFeatures"');
+        const featuresButton = document.querySelector('[data-bs-target="#keyFeatures"]');
         const chevronIconFeatures = document.getElementById('chevronIconFeatures');
 
         featuresButton.addEventListener('click', function() {
             chevronIconFeatures.classList.toggle('rotate-180');
         });
 
-        const servicesButton = document.querySelector('data-bs-target="#ourServices"');
+        const servicesButton = document.querySelector('[data-bs-target="#ourServices"]');
         const chevronIconServices = document.getElementById('chevronIconServices');
 
         servicesButton.addEventListener('click', function() {
