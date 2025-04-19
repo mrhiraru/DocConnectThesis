@@ -386,7 +386,7 @@ include '../includes/head.php';
 
                                 <div class="col-12 mb-2">
                                     <label for="diagnosis" class="form-label mb-1">Diagnosis:</label>
-                                    <textarea id="diagnosis" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['diagnosis'] ?? 'No diagnosis recorded') ?></textarea>
+                                    <textarea id="diagnosis-data" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['diagnosis'] ?? 'No diagnosis recorded') ?></textarea>
                                 </div>
 
                                 <?php if (!empty($record['plan'])) : ?>
