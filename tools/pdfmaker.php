@@ -187,7 +187,7 @@
                 style: 'tableExample',
                 color: '#444',
                 table: {
-                    widths: ['*'],
+                    widths: [225, 75, 75, 100],
                     body: [
                         [{
                                 text: "Patient's Name: " + (<?= isset($record['patient_name']) ? json_encode($record['patient_name']) : json_encode($_SESSION['fullname']) ?>),
