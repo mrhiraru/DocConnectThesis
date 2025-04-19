@@ -15,9 +15,10 @@ require_once('../classes/appointment.class.php');
 $appointment_class = new Appointment();
 $record = $appointment_class->get_appointment_details_user($_GET['appointment_id']);
 
-function calculateAge($birthdate) {
+function calculateAge($birthdate)
+{
     if (empty($birthdate)) return 'N/A';
-    
+
     $birthDate = new DateTime($birthdate);
     $today = new DateTime();
     $age = $today->diff($birthDate);
@@ -95,7 +96,7 @@ include '../includes/head.php';
                                             </div>
                                             <div class="col-2 mb-2">
                                                 <label for="gender" class="form-label mb-1">Sex:</label>
-                                                <input id="gender" class="form-control bg-light" value="<?= $record['gender'] ?>" readonly>
+                                                <input id="gender" class="form-control bg-light" value="<?= $_SESSION['gender'] ?>" readonly>
                                             </div>
                                             <div class="col-2 mb-2">
                                                 <label for="civil_status" class="form-label mb-1">Civil Status:</label>
@@ -103,7 +104,7 @@ include '../includes/head.php';
                                             </div>
                                             <div class="col-4 mb-2">
                                                 <label for="address" class="form-label mb-1">Residence:</label>
-                                                <input id="address" class="form-control bg-light" value="<?= $record['address'] ?>" readonly>
+                                                <input id="address" class="form-control bg-light" value="<?= $_SESSION['address'] ?>" readonly>
                                             </div>
                                             <div class="col-4 mb-2">
                                                 <label for="religion" class="form-label mb-1">Religion:</label>
@@ -189,14 +190,18 @@ include '../includes/head.php';
                                     <?php
                                     if ($record['appointment_status'] == "Completed") {
                                     ?>
-                                        <button class="btn btn-danger text-white mb-3" id="download_pdf">
+                                        <button class="btn btn-danger text-white mb-3 me-2" id="download_clinical_history">
                                             <i class='bx bx-file align-middle fs-5'></i>
-                                            Download Result
+                                            Download Clinical History
+                                        </button>
+                                        <button class="btn btn-danger text-white mb-3 me-2" id="download_consultation_report">
+                                            <i class='bx bx-file align-middle fs-5'></i>
+                                            Download Consultation Report
                                         </button>
                                         <?php
                                         if (isset($record['prescription'])) {
                                         ?>
-                                            <button class="btn btn-danger text-white mb-3 ms-2" id="download_prescription_pdf">
+                                            <button class="btn btn-danger text-white mb-3" id="download_prescription">
                                                 <i class='bx bx-file align-middle fs-5'></i>
                                                 Download Prescription
                                             </button>
