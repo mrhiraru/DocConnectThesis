@@ -93,7 +93,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-12 mb-2">
                                     <label for="informant" class="form-label mb-1">Informant:</label>
-                                    <textarea id="informant" name="informant" rows="1" cols="50" class="form-control bg-light" required><?= $_SESSION['fullname'] ?></textarea>
+                                    <textarea id="informant" name="informant" rows="1" cols="50" class="form-control bg-light" readonly required><?= $_SESSION['fullname'] ?></textarea>
                                     <?php
                                     if (isset($_POST['informant']) && !validate_field($_POST['informant'])) {
                                     ?>
@@ -437,61 +437,85 @@ include_once('../tools/pdfmaker.php');
             complaintInput[0].setCustomValidity(""); // Reset validation if valid
         }
 
-        var exmedconCheck = $('input[name="exmedcon_check"]:checked');
-        if (exmedconCheck.length === 0) { // If no option is selected
-            $('input[name="exmedcon_check"]').get(0).reportValidity();
-            return;
-        }
-        var medconInput = $('#medcon');
-        if (exmedconCheck.val() === "Yes") {
-            if (!medconInput.val().trim()) {
-                medconInput[0].setCustomValidity("Please specify the past or existing medical condition."); // Set custom validation message
-                medconInput[0].reportValidity(); // Show validation popup
-                return; // Stop execution
-            } else {
-                medconInput[0].setCustomValidity(""); // Reset validation if valid
-            }
-        }
-
-        var allergyCheck = $('input[name="allergy_check"]:checked');
-        if (allergyCheck.length === 0) { // If no option is selected
-            $('input[name="allergy_check"]').get(0).reportValidity();
-            return;
-        }
-        var allergyInput = $('#allergy');
-        if (allergyCheck.val() === "Yes") {
-            if (!allergyInput.val().trim()) {
-                allergyInput[0].setCustomValidity("Please specify the allergies.");
-                allergyInput[0].reportValidity(); // Show validation popup
-                return; // Stop execution
-            } else {
-                allergyInput[0].setCustomValidity(""); // Reset validation if valid
-            }
-        }
-
-        var medicationCheck = $('input[name="medication_check"]:checked');
-        if (medicationCheck.length === 0) { // If no option is selected
-            $('input[name="medication_check"]').get(0).reportValidity();
-            return;
-        }
-        var medicationInput = $('#medication');
-        if (medicationCheck.val() === "Yes") {
-            if (!medicationInput.val().trim()) {
-                medicationInput[0].setCustomValidity("Please specify the medications.");
-                medicationInput[0].reportValidity(); // Show validation popup
-                return; // Stop execution
-            } else {
-                medicationInput[0].setCustomValidity(""); // Reset validation if valid
-            }
-        }
-
-        var observationInput = $('#observation');
-        if (!observationInput.val().trim()) {
-            observationInput[0].setCustomValidity("Doctor's observation is required. Please provide your observation."); // Set custom validation message
-            observationInput[0].reportValidity(); // Show validation popup
+        var hisillnessInput = $('#his_illness');
+        if (!hisillnessInput.val().trim()) {
+            hisillnessInput[0].setCustomValidity("History of Present Illness is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            hisillnessInput[0].reportValidity(); // Show validation popup
             return; // Stop execution
         } else {
-            observationInput[0].setCustomValidity(""); // Reset validation if valid
+            hisillnessInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var medconInput = $('#medcon');
+        if (!medconInput.val().trim()) {
+            medconInput[0].setCustomValidity("Past Medical or Surgical History is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            medconInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            medconInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var obhisInput = $('#ob_his');
+        if (!obhisInput.val().trim()) {
+            obhisInput[0].setCustomValidity("Obstetric History is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            obhisInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            obhisInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var famhisInput = $('#fam_his');
+        if (!famhisInput.val().trim()) {
+            famhisInput[0].setCustomValidity("Family History is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            famhisInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            famhisInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var sochisInput = $('#soc_his');
+        if (!sochisInput.val().trim()) {
+            sochisInput[0].setCustomValidity("Social History is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            sochisInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            sochisInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var revsysInput = $('#rev_sys');
+        if (!revsysInput.val().trim()) {
+            revsysInput[0].setCustomValidity("Review of System is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            revsysInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            revsysInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var allergyInput = $('#allergy');
+        if (!allergyInput.val().trim()) {
+            allergyInput[0].setCustomValidity("Allergy & Medical Intolerance is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            allergyInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            allergyInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var medicationInput = $('#medication');
+        if (!medicationInput.val().trim()) {
+            medicationInput[0].setCustomValidity("Maintenance medication is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            medicationInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            medicationInput[0].setCustomValidity(""); // Reset validation if valid
+        }
+
+        var immuInput = $('#immu');
+        if (!immuInput.val().trim()) {
+            immuInput[0].setCustomValidity("Immunization & Preventive Care Services is required; indicate 'N/A' if not applicable."); // Set custom validation message
+            immuInput[0].reportValidity(); // Show validation popup
+            return; // Stop execution
+        } else {
+            immuInput[0].setCustomValidity(""); // Reset validation if valid
         }
 
         var medconCheck = $('input[name="medcon_check"]:checked'); // Get the checked radio
