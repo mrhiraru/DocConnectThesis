@@ -58,7 +58,7 @@ include '../includes/head.php';
                     </div>
                     <div class="row col-12 mb-3 border-bottom">
                         <p class="m-0 p-0 fs-6 text-secondary mb-2">Patient Information</p>
-                        <div class="col-4 mb-2">
+                        <div class="col-6 mb-2">
                             <label for="name" class="form-label mb-1">Patient Name:</label>
                             <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
                         </div>
@@ -74,15 +74,15 @@ include '../includes/head.php';
                             <label for="civil_status" class="form-label mb-1">Civil Status:</label>
                             <input id="civil_status" class="form-control bg-light" value="" readonly>
                         </div>
-                        <div class="col-6 mb-2">
+                        <div class="col-4 mb-2">
                             <label for="address" class="form-label mb-1">Residence:</label>
                             <input id="address" class="form-control bg-light" value="<?= $record['address'] ?>" readonly>
                         </div>
-                        <div class="col-6 mb-2">
+                        <div class="col-4 mb-2">
                             <label for="religion" class="form-label mb-1">Religion:</label>
                             <input id="religion" class="form-control bg-light" value="" readonly>
                         </div>
-                        <div class="col-6 mb-2">
+                        <div class="col-4 mb-2">
                             <label for="date_time" class="form-label mb-1">Date & Time of Consultation:</label>
                             <input id="date_time" class="form-control bg-light" value="<?= date("l, M d, Y", strtotime($record['appointment_date'])) . " " . date("g:i A", strtotime($record['appointment_time'])) ?>" readonly>
                         </div>
