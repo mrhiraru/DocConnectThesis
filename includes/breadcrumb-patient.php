@@ -8,9 +8,9 @@ $current_page = basename($_SERVER['PHP_SELF'], ".php");
             <li class="breadcrumb-item">
                 <a href="../doctor/patient-view?account_id=<?= $_GET['account_id'] ?>" class="<?= $current_page == 'patient-view' ? 'current' : '' ?>">Patient Information</a>
             </li>
-            <li class="breadcrumb-item">
-                <a href="../doctor/patient-results?account_id=<?= $_GET['account_id'] ?>" class="<?= $current_page == 'patient-results' ? 'current' : '' ?>">Results</a>
-            </li>
+            <!-- <li class="breadcrumb-item">
+                <a href="../doctor/patient-results?account_id=<?php // $_GET['account_id'] ?>" class="<?= $current_page == 'patient-results' ? 'current' : '' ?>">Results</a>
+            </li> -->
             <li class="breadcrumb-item">
                 <a href="../doctor/patient-files?account_id=<?= $_GET['account_id'] ?>" class="<?= $current_page == 'patient-files' ? 'current' : '' ?>">Request</a>
             </li>
