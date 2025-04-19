@@ -14,6 +14,15 @@ require_once('../classes/appointment.class.php');
 $appointment_class = new Appointment();
 $record = $appointment_class->get_appointment_details($_GET['appointment_id']);
 
+function calculateAge($birthdate) {
+    if (empty($birthdate)) return 'N/A';
+    
+    $birthDate = new DateTime($birthdate);
+    $today = new DateTime();
+    $age = $today->diff($birthDate);
+    return $age->y;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -69,7 +78,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-2 mb-2">
                                     <label for="birthdate" class="form-label mb-1">Age:</label>
-                                    <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
+                                    <input id="birthdate" class="form-control bg-light" value="<<?= calculateAge($record['birthdate']) ?>" readonly>
                                 </div>
                                 <div class="col-2 mb-2">
                                     <label for="gender" class="form-label mb-1">Sex:</label>
@@ -313,7 +322,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-2 mb-2">
                                     <label for="birthdate" class="form-label mb-1">Age:</label>
-                                    <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
+                                    <input id="birthdate" class="form-control bg-light" value="<?= calculateAge($record['birthdate']) ?>" readonly>
                                 </div>
                                 <div class="col-2 mb-2">
                                     <label for="gender" class="form-label mb-1">Sex:</label>

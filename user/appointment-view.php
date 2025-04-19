@@ -15,6 +15,14 @@ require_once('../classes/appointment.class.php');
 $appointment_class = new Appointment();
 $record = $appointment_class->get_appointment_details_user($_GET['appointment_id']);
 
+function calculateAge($birthdate) {
+    if (empty($birthdate)) return 'N/A';
+    
+    $birthDate = new DateTime($birthdate);
+    $today = new DateTime();
+    $age = $today->diff($birthDate);
+    return $age->y;
+}
 ?>
 
 <!DOCTYPE html>
@@ -79,11 +87,11 @@ include '../includes/head.php';
                                             <p class="m-0 p-0 fs-5 mb-2 text-center">Clinical History</p>
                                             <div class="col-6 mb-2">
                                                 <label for="name" class="form-label mb-1">Patient Name:</label>
-                                                <input id="name" class="form-control bg-light" value="<?= $record['patient_name'] ?>" readonly>
+                                                <input id="name" class="form-control bg-light" value="<?= $_SESSION['fullname'] ?>" readonly>
                                             </div>
                                             <div class="col-2 mb-2">
                                                 <label for="birthdate" class="form-label mb-1">Age:</label>
-                                                <input id="birthdate" class="form-control bg-light" value="<?= date('F d, Y', strtotime($record['birthdate'])) ?>" readonly>
+                                                <input id="birthdate" class="form-control bg-light" value="<?= calculateAge($_SESSION['birthdate']) ?>" readonly>
                                             </div>
                                             <div class="col-2 mb-2">
                                                 <label for="gender" class="form-label mb-1">Sex:</label>
