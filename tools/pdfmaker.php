@@ -204,7 +204,7 @@
                             {
                                 text: "Civil Status:",
                                 style: 'tableExample'
-                            },
+                            }
                         ],
                         [{
                                 text: "Residence: " + (<?= json_encode($record['address']) ?>),
@@ -231,21 +231,41 @@
                             {}
                         ],
                         [{
-                            text: 'Consultation Assessment:\n' + (<?= json_encode($record['assessment']) ?>),
-                            style: 'tableExample'
-                        }, ],
+                                text: 'Consultation Assessment:\n' + (<?= json_encode($record['assessment']) ?>),
+                                style: 'tableExample',
+                                colSpan: 4
+                            },
+                            {},
+                            {},
+                            {}
+                        ],
                         [{
-                            text: 'Diagnosis:\n' + (<?= json_encode($record['diagnosis']) ?>),
-                            style: 'tableExample'
-                        }, ],
+                                text: 'Diagnosis:\n' + (<?= json_encode($record['diagnosis']) ?>),
+                                style: 'tableExample',
+                                colSpan: 4
+                            },
+                            {},
+                            {},
+                            {}
+                        ],
                         [{
-                            text: 'Treatment Plan:\n' + (<?= json_encode($record['plan']) ?>),
-                            style: 'tableExample'
-                        }, ],
+                                text: 'Treatment Plan:\n' + (<?= json_encode($record['plan']) ?>),
+                                style: 'tableExample',
+                                colSpan: 4
+                            },
+                            {},
+                            {},
+                            {}
+                        ],
                         [{
-                            text: 'Prescription:\n' + (<?= json_encode($record['prescription']) ?>),
-                            style: 'tableExample'
-                        }, ]
+                                text: 'Prescription:\n' + (<?= json_encode($record['prescription']) ?>),
+                                style: 'tableExample',
+                                colSpan: 4
+                            },
+                            {},
+                            {},
+                            {}
+                        ]
                     ]
                 }
             }
