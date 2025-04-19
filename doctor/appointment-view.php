@@ -213,13 +213,13 @@ include '../includes/head.php';
                                     ?>
                                 </div>
                                 <p class="m-0 p-0 fs-5 my-2 text-center">Assessment</p>
-                                <div class="col-12 mb-2">
-                                    <label for="observation" class="form-label mb-1">Doctor's Observation:</label>
-                                    <textarea id="observation" name="observation" rows="2" cols="50" class="form-control bg-light" required></textarea>
+                                <div class="col-12 mb-3">
+                                    <label for="assessment" class="form-label">Consultation Assessment:</label>
+                                    <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required></textarea>
                                     <?php
-                                    if (isset($_POST['observation']) && !validate_field($_POST['observation'])) {
+                                    if (isset($_POST['assessment']) && !validate_field($_POST['assessment'])) {
                                     ?>
-                                        <p class="text-dark m-0 ps-2">Observation is required.</p>
+                                        <p class="text-dark m-0 ps-2">Assessment is required.</p>
                                     <?php
                                     }
                                     ?>
@@ -252,17 +252,7 @@ include '../includes/head.php';
                                         ?>
                                     </div>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <label for="assessment" class="form-label">Consultation Assessment:</label>
-                                    <textarea id="assessment" name="assessment" rows="2" cols="50" class="form-control bg-light" required></textarea>
-                                    <?php
-                                    if (isset($_POST['assessment']) && !validate_field($_POST['assessment'])) {
-                                    ?>
-                                        <p class="text-dark m-0 ps-2">Assessment is required.</p>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
+
                                 <div class="col-12 mb-2">
                                     <div class="col-12">
                                         <label for="plan" class="form-label mb-1">Would you like to provide a treatment plan and recommendations?</label>
