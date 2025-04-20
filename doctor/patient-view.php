@@ -49,6 +49,8 @@ include '../includes/head.php';
                         <p class="m-0 p-0 fs-6 text-secondary">Address: <span class="text-dark"><?= $record['address'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary">Contact: <span class="text-dark"><?= $record['contact'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Email: <span class="text-dark"><?= $record['email'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary mb-3">Religion: <span class="text-dark"><?= $record['religion'] ?></span></p>
+                        <p class="m-0 p-0 fs-6 text-secondary mb-3">Civil Status: <span class="text-dark"><?= $record['civil_status'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary">Height(cm): <span class="text-dark"><?= $record['height'] ?></span></p>
                         <p class="m-0 p-0 fs-6 text-secondary mb-3">Weight(kg): <span class="text-dark"><?= $record['weight'] ?></span></p>
                         <p class="m-0 p-0 fs-6 fw-semibold text-dark mb-2">Parent | Guardian</p>
