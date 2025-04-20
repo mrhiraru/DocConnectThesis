@@ -256,7 +256,8 @@ class Account
         }
     }
 
-    function get_full_name() {
+    function get_full_name()
+    {
         $name = $this->firstname;
         if (!empty($this->middlename)) {
             $name .= ' ' . $this->middlename;
@@ -444,20 +445,20 @@ class Account
         $connect->beginTransaction();
 
         $sql = "UPDATE account
-                    SET firstname = :firstname, 
-                        middlename = :middlename, 
-                        lastname = :lastname, 
-                        suffix = :suffix,
-                        gender = :gender, 
-                        birthdate = :birthdate, 
-                        contact = :contact, 
-                        email = :email, 
-                        address = :address,
-                        role = :role,
-                        religion = :religion,
-                        civil_status = :civil_status,
-                        campus_id = :campus_id,
-                    WHERE account_id = :account_id";
+                SET firstname = :firstname, 
+                    middlename = :middlename, 
+                    lastname = :lastname, 
+                    suffix = :suffix,
+                    gender = :gender, 
+                    birthdate = :birthdate, 
+                    contact = :contact, 
+                    email = :email, 
+                    address = :address,
+                    role = :role,
+                    religion = :religion,
+                    civil_status = :civil_status,
+                    campus_id = :campus_id
+                WHERE account_id = :account_id";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':firstname', $this->firstname);
@@ -470,17 +471,15 @@ class Account
         $query->bindParam(':email', $this->email);
         $query->bindParam(':address', $this->address);
         $query->bindParam(':role', $this->role);
-        $query->bindParam(':gender', $this->gender);
         $query->bindParam(':campus_id', $this->campus_id);
         $query->bindParam(':religion', $this->religion);
         $query->bindParam(':civil_status', $this->civil_status);
         $query->bindParam(':account_id', $this->account_id);
 
         if ($query->execute()) {
-
             $sec_sql = "UPDATE patient_info 
-            SET height = :height, weight = :weight
-            WHERE account_id = :account_id";
+                       SET height = :height, weight = :weight
+                       WHERE account_id = :account_id";
 
             $sec_query = $connect->prepare($sec_sql);
             $sec_query->bindParam(':account_id', $this->account_id);
@@ -727,7 +726,9 @@ class Account
                 $this->height = $accountData['height'];
                 $this->weight = $accountData['weight'];
                 $this->role = $accountData['role'];
-                //add more data if needed for users
+                $this->suffix = $accountData['suffix'];
+                $this->religion = $accountData['religion'];
+                $this->civil_status = $accountData['civil_status'];
 
                 return true;
             }

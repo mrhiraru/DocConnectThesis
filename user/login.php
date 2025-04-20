@@ -42,6 +42,9 @@ if (!isset($_SESSION['user_role']) && isset($_COOKIE['remember_me'])) {
       $_SESSION['height'] = $account->height;
       $_SESSION['weight'] = $account->weight;
       $_SESSION['role'] = $account->role;
+      $_SESSION['civil_status'] = $account->civil_status;
+      $_SESSION['religion'] = $account->religion;
+      $_SESSION['suffix'] = $account->suffix;
 
       if ($_SESSION['user_role'] == 3) {
         header('location: ./index.php');
