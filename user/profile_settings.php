@@ -14,7 +14,7 @@ require_once('../classes/account.class.php');
 require_once('../classes/campus.class.php');
 require_once('../classes/patient.class.php');
 
-$account_class = new Account();
+$account_class = new Account(); 
 if (isset($_POST['save'])) {
   $account_class->account_id = $_SESSION['account_id'];
 
@@ -31,6 +31,9 @@ if (isset($_POST['save'])) {
   $account_class->height = htmlentities($_POST['height']);
   $account_class->weight = htmlentities($_POST['weight']);
   $account_class->email = htmlentities($_POST['email']);
+  $account_class->suffix = isset($_POST['suffix']) ? htmlentities($_POST['suffix']) : '';
+  $account_class->religion = isset($_POST['religion']) ? htmlentities($_POST['religion']) : '';
+  $account_class->civil_status = isset($_POST['civil_status']) ? htmlentities($_POST['civil_status']) : '';
 
   if (isset($_POST['gender'])) {
     $account_class->gender = htmlentities($_POST['gender']);
@@ -73,6 +76,9 @@ if (isset($_POST['save'])) {
       $_SESSION['contact'] = $account_class->contact;
       $_SESSION['role'] = $account_class->role;
       $_SESSION['campus_id'] = $account_class->campus_id;
+      $_SESSION['suffix'] = $account_class->suffix;
+      $_SESSION['religion'] = $account_class->religion;
+      $_SESSION['civil_status'] = $account_class->civil_status;
 
       $_SESSION['height'] = $account_class->height;
       $_SESSION['weight'] = $account_class->weight;
@@ -308,30 +314,30 @@ include '../includes/head.php';
                 <!-- ---3rd ROW--- -->
                 <div class="row row-cols-1 row-cols-md-2 mb-3">
                   <div class="col mb-3 mb-md-0">
-                    <label for="email" class="form-label text-black-50">Religion</label>
-                    <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@wmsu.edu.ph" value="<?= isset($_POST['email']) ? $_POST['email'] : $_SESSION['email'] ?>" required>
+                    <label for="religion" class="form-label text-black-50">Religion</label>
+                    <input type="religion" class="form-control bg-light border border-dark" id="religion" name="religion" value="<?= isset($_POST['religion']) ? $_POST['religion'] : $_SESSION['religion'] ?>" required>
                   </div>
                   <div class="col mb-3 mb-md-0">
-                    <label for="phoneNo" class="form-label text-black-50">Civil Status</label>
-                    <select class="form-select bg-light border border-dark" id="status" name="status" required>
-                      <option value="Single" <?php if ((isset($_POST['status']) && $_POST['status'] == "Single")) {
+                    <label for="civil_status" class="form-label text-black-50">Civil Status</label>
+                    <select class="form-select bg-light border border-dark" id="civil_status" name="civil_status" required>
+                      <option value="Single" <?php if ((isset($_POST['civil_status']) && $_POST['civil_status'] == "Single")) {
                                                 echo 'selected';
-                                              } else if ($_SESSION['status'] == "Single") {
+                                              } else if ($_SESSION['civil_status'] == "Single") {
                                                 echo "selected";
                                               } ?>>Single</option>
-                      <option value="Married" <?php if ((isset($_POST['status']) && $_POST['status'] == "Married")) {
+                      <option value="Married" <?php if ((isset($_POST['civil_status']) && $_POST['civil_status'] == "Married")) {
                                                 echo 'selected';
-                                              } else if ($_SESSION['status'] == "Married") {
+                                              } else if ($_SESSION['civil_status'] == "Married") {
                                                 echo "selected";
                                               } ?>>Married</option>
-                      <option value="Divorce" <?php if ((isset($_POST['status']) && $_POST['status'] == "Divorce")) {
+                      <option value="Divorce" <?php if ((isset($_POST['civil_status']) && $_POST['civil_status'] == "Divorce")) {
                                                 echo 'selected';
-                                              } else if ($_SESSION['status'] == "Divorce") {
+                                              } else if ($_SESSION['civil_status'] == "Divorce") {
                                                 echo "selected";
                                               } ?>>Divorced</option>
-                      <option value="Widowed" <?php if ((isset($_POST['status']) && $_POST['status'] == "Widowed")) {
+                      <option value="Widowed" <?php if ((isset($_POST['civil_status']) && $_POST['civil_status'] == "Widowed")) {
                                                 echo 'selected';
-                                              } else if ($_SESSION['status'] == "Widowed") {
+                                              } else if ($_SESSION['civil_status'] == "Widowed") {
                                                 echo "selected";
                                               } ?>>Widowed</option>
                     </select>

@@ -31,6 +31,9 @@ class Account
     public $height;
     public $weight;
     public $role;
+    public $suffix;
+    public $religion;
+    public $civil_status;
 
 
 
@@ -56,14 +59,24 @@ class Account
                 $this->firstname = $accountData['firstname'];
                 $this->middlename = $accountData['middlename'];
                 $this->lastname = $accountData['lastname'];
+                $this->suffix = $accountData['suffix'];
                 $this->email = $accountData['email'];
                 $this->verification_status = $accountData['verification_status'];
                 $this->account_image = $accountData['account_image'];
                 $this->address = $accountData['address'];
                 $this->campus_id = $accountData['campus_id'];
+                $this->gender = $accountData['gender'];
+                $this->birthdate = $accountData['birthdate'];
+                $this->contact = $accountData['contact'];
+                $this->height = $accountData['height'];
+                $this->weight = $accountData['weight'];
+                $this->role = $accountData['role'];
+                $this->religion = $accountData['religion'];
+                $this->civil_status = $accountData['civil_status'];
                 return true;
             }
         }
+        return false;
     }
 
     function createRememberMeToken($account_id)
@@ -157,15 +170,25 @@ class Account
                 $this->firstname = $accountData['firstname'];
                 $this->middlename = $accountData['middlename'];
                 $this->lastname = $accountData['lastname'];
+                $this->suffix = $accountData['suffix'];
                 $this->email = $accountData['email'];
                 $this->verification_status = $accountData['verification_status'];
                 $this->account_image = $accountData['account_image'];
                 $this->address = $accountData['address'];
                 $this->campus_id = $accountData['campus_id'];
                 $this->campus_name = $accountData['campus_name'];
+                $this->gender = $accountData['gender'];
+                $this->birthdate = $accountData['birthdate'];
+                $this->contact = $accountData['contact'];
+                $this->height = $accountData['height'];
+                $this->weight = $accountData['weight'];
+                $this->role = $accountData['role'];
+                $this->religion = $accountData['religion'];
+                $this->civil_status = $accountData['civil_status'];
                 return true;
             }
         }
+        return false;
     }
 
     // admin functions begin
@@ -231,6 +254,18 @@ class Account
         } else {
             return false;
         }
+    }
+
+    function get_full_name() {
+        $name = $this->firstname;
+        if (!empty($this->middlename)) {
+            $name .= ' ' . $this->middlename;
+        }
+        $name .= ' ' . $this->lastname;
+        if (!empty($this->suffix)) {
+            $name .= ' ' . $this->suffix;
+        }
+        return $name;
     }
 
     // doctor functions start
@@ -314,7 +349,8 @@ class Account
         return $data;
     }
 
-    function get_available_specialties() {
+    function get_available_specialties()
+    {
         $sql = "SELECT DISTINCT specialty FROM doctor_info WHERE specialty IS NOT NULL AND specialty != '' AND is_deleted = 0";
         $query = $this->db->connect()->prepare($sql);
         $data = [];
@@ -411,19 +447,23 @@ class Account
                     SET firstname = :firstname, 
                         middlename = :middlename, 
                         lastname = :lastname, 
+                        suffix = :suffix,
                         gender = :gender, 
                         birthdate = :birthdate, 
                         contact = :contact, 
                         email = :email, 
                         address = :address,
                         role = :role,
-                        campus_id = :campus_id
+                        religion = :religion,
+                        civil_status = :civil_status,
+                        campus_id = :campus_id,
                     WHERE account_id = :account_id";
 
         $query = $connect->prepare($sql);
         $query->bindParam(':firstname', $this->firstname);
         $query->bindParam(':middlename', $this->middlename);
         $query->bindParam(':lastname', $this->lastname);
+        $query->bindParam(':suffix', $this->suffix);
         $query->bindParam(':gender', $this->gender);
         $query->bindParam(':birthdate', $this->birthdate);
         $query->bindParam(':contact', $this->contact);
@@ -432,6 +472,8 @@ class Account
         $query->bindParam(':role', $this->role);
         $query->bindParam(':gender', $this->gender);
         $query->bindParam(':campus_id', $this->campus_id);
+        $query->bindParam(':religion', $this->religion);
+        $query->bindParam(':civil_status', $this->civil_status);
         $query->bindParam(':account_id', $this->account_id);
 
         if ($query->execute()) {

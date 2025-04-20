@@ -107,7 +107,7 @@ include '../includes/head.php';
                       <p class="mb-0">Religion:</p>
                     </div>
                     <div class="col-sm-8">
-                      <p class="text-muted mb-0"><?= $_SESSION['role'] ?></p>
+                      <p class="text-muted mb-0"><?= isset($_SESSION['religion']) ? $_SESSION['religion'] : 'N/A' ?></p>
                     </div>
                   </div>
                   <hr>
@@ -116,7 +116,7 @@ include '../includes/head.php';
                       <p class="mb-0">Civil Status:</p>
                     </div>
                     <div class="col-sm-8">
-                      <p class="text-muted mb-0"><?= $_SESSION['role'] ?></p>
+                      <p class="text-muted mb-0"><?= isset($_SESSION['civil_status']) ? $_SESSION['civil_status'] : 'N/A' ?></p>
                     </div>
                   </div>
                   <hr>
