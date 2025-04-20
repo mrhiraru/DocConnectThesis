@@ -209,8 +209,19 @@ include '../includes/head.php';
                 <div class="row">
                   <div class="col-md-12">
                     <!-- ---NAME--- -->
-                    <div class="row row-cols-1 row-cols-md-3 mb-3">
-                      <div class="col mb-3 mb-md-0">
+                    <div class="row mb-3">
+                      <div class="col-12 col-md-4">
+                        <label for="lastName" class="form-label text-black-50">Last Name</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="lastName" name="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : $_SESSION['lastname'] ?>" required>
+                        <?php
+                        if (isset($_POST['lastname']) && !validate_field($_POST['lastname'])) {
+                        ?>
+                          <p class="text-dark m-0 ps-2">Last name is required.</p>
+                        <?php
+                        }
+                        ?>
+                      </div>
+                      <div class="col-12 col-md-4 mb-3 mb-md-0">
                         <label for="firstName" class="form-label text-black-50">First Name</label>
                         <input type="text" class="form-control bg-light border border-dark" id="firstName" name="firstname" value="<?= isset($_POST['firstname']) ? $_POST['firstname'] : $_SESSION['firstname'] ?>" required>
                         <?php
@@ -221,20 +232,13 @@ include '../includes/head.php';
                         }
                         ?>
                       </div>
-                      <div class="col mb-3 mb-md-0">
+                      <div class="col-12 col-md-3 mb-3 mb-md-0">
                         <label for="middleName" class="form-label text-black-50">Middle Name</label>
                         <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middlename" value="<?= isset($_POST['middlename']) ? $_POST['middlename'] : $_SESSION['middlename'] ?>">
                       </div>
-                      <div class="col">
-                        <label for="lastName" class="form-label text-black-50">Last Name</label>
-                        <input type="text" class="form-control bg-light border border-dark" id="lastName" name="lastname" value="<?= isset($_POST['lastname']) ? $_POST['lastname'] : $_SESSION['lastname'] ?>" required>
-                        <?php
-                        if (isset($_POST['lastname']) && !validate_field($_POST['lastname'])) {
-                        ?>
-                          <p class="text-dark m-0 ps-2">Last name is required.</p>
-                        <?php
-                        }
-                        ?>
+                      <div class="col-12 col-md-1 mb-3 mb-md-0">
+                        <label for="middleName" class="form-label text-black-50">Sfx</label>
+                        <input type="text" class="form-control bg-light border border-dark" id="middleName" name="middlename" value="<?= isset($_POST['middlename']) ? $_POST['middlename'] : $_SESSION['middlename'] ?>">
                       </div>
                     </div>
                   </div>
@@ -297,6 +301,39 @@ include '../includes/head.php';
                                             } else if ($_SESSION['gender'] == "Other") {
                                               echo "selected";
                                             } ?>>Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- ---3rd ROW--- -->
+                <div class="row row-cols-1 row-cols-md-2 mb-3">
+                  <div class="col mb-3 mb-md-0">
+                    <label for="email" class="form-label text-black-50">Religion</label>
+                    <input type="email" class="form-control bg-light border border-dark" id="email" name="email" placeholder="example@wmsu.edu.ph" value="<?= isset($_POST['email']) ? $_POST['email'] : $_SESSION['email'] ?>" required>
+                  </div>
+                  <div class="col mb-3 mb-md-0">
+                    <label for="phoneNo" class="form-label text-black-50">Civil Status</label>
+                    <select class="form-select bg-light border border-dark" id="status" name="status" required>
+                      <option value="Single" <?php if ((isset($_POST['status']) && $_POST['status'] == "Single")) {
+                                                echo 'selected';
+                                              } else if ($_SESSION['status'] == "Single") {
+                                                echo "selected";
+                                              } ?>>Single</option>
+                      <option value="Married" <?php if ((isset($_POST['status']) && $_POST['status'] == "Married")) {
+                                                echo 'selected';
+                                              } else if ($_SESSION['status'] == "Married") {
+                                                echo "selected";
+                                              } ?>>Married</option>
+                      <option value="Divorce" <?php if ((isset($_POST['status']) && $_POST['status'] == "Divorce")) {
+                                                echo 'selected';
+                                              } else if ($_SESSION['status'] == "Divorce") {
+                                                echo "selected";
+                                              } ?>>Divorced</option>
+                      <option value="Widowed" <?php if ((isset($_POST['status']) && $_POST['status'] == "Widowed")) {
+                                                echo 'selected';
+                                              } else if ($_SESSION['status'] == "Widowed") {
+                                                echo "selected";
+                                              } ?>>Widowed</option>
                     </select>
                   </div>
                 </div>

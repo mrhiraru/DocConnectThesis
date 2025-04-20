@@ -89,16 +89,34 @@ include '../includes/head.php';
                     </div>
                   </div>
                   <hr>
-                </div>
-
-                <div class="col">
-                  <!-- PADAAGDAG ito sa display -->
                   <div class="row">
                     <div class="col-sm-4">
                       <p class="mb-0">Campus:</p>
                     </div>
                     <div class="col-sm-8">
                       <p class="text-muted mb-0"><?= $_SESSION['campus_name'] ?></p>
+                    </div>
+                  </div>
+                  <hr>
+                </div>
+
+                <div class="col">
+                  <!-- PADAAGDAG ito sa display -->
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <p class="mb-0">Religion:</p>
+                    </div>
+                    <div class="col-sm-8">
+                      <p class="text-muted mb-0"><?= $_SESSION['role'] ?></p>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <p class="mb-0">Civil Status:</p>
+                    </div>
+                    <div class="col-sm-8">
+                      <p class="text-muted mb-0"><?= $_SESSION['role'] ?></p>
                     </div>
                   </div>
                   <hr>
