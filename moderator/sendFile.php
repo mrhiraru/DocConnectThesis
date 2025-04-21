@@ -65,7 +65,7 @@ function getCurrentPage()
         <!-- Doctor List Section -->
         <section class="doctors-listing padding-medium py-5">
             <div class="container">
-                <div class="row" id="doctor-container">
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3" id="doctor-container">
                     <?php foreach ($doctorArray as $item): ?>
                         <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-name="<?= strtolower($item['doctor_name']) ?>">
                             <div class="card h-100 shadow-sm border-1">
@@ -92,20 +92,26 @@ function getCurrentPage()
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const searchInput = document.getElementById("search");
+            const doctorCards = document.querySelectorAll(".doctor-card");
             const doctorContainer = document.getElementById("doctor-container");
             const toggleButtons = document.querySelectorAll(".toggle-view");
 
             searchInput.addEventListener("input", function() {
-                let filter = searchInput.value.toLowerCase();
-                document.querySelectorAll(".doctor-card").forEach(function(card) {
-                    let name = card.getAttribute("data-name");
-                    card.style.display = name.includes(filter) ? "block" : "none";
+                const filter = searchInput.value.toLowerCase();
+                doctorCards.forEach(function(card) {
+                    const name = card.getAttribute("data-name");
+                    if (name.includes(filter)) {
+                        card.classList.remove("d-none");
+                    } else {
+                        card.classList.add("d-none");
+                    }
                 });
             });
 
             toggleButtons.forEach(button => {
                 button.addEventListener("click", function() {
-                    let view = this.getAttribute("data-view");
+                    const view = this.getAttribute("data-view");
+
                     if (view === "list") {
                         doctorContainer.classList.remove("row-cols-md-2", "row-cols-lg-3");
                         doctorContainer.classList.add("row-cols-1");
