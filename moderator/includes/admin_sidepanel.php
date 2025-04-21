@@ -25,12 +25,12 @@
         Analytics & Reports
       </a>
     </li>
-    <!-- <li>
-      <a href="./userPage" class="nav-link <?php echo getCurrentPage() == 'userPage.php' ? 'active' : 'link-dark'; ?>">
+    <li>
+      <a href="./sendFile" class="nav-link <?php echo getCurrentPage() == 'sendFile.php' ? 'active' : 'link-dark'; ?>">
         <i class='bx bx-user-circle me-2'></i>
-        User Page
+        Send File
       </a>
-    </li> -->
+    </li>
     <!-- <li>
       <a href="./staffs" class="nav-link <?php echo getCurrentPage() == 'staffs.php' ? 'active' : 'link-dark'; ?>">
         <i class='bx bx-group me-2' ></i>
