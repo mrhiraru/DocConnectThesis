@@ -54,9 +54,7 @@ include '../includes/head.php';
                             <p class="text-muted"><?= !empty($doctorDetails['specialty']) ? htmlspecialchars($doctorDetails['specialty']) : 'Not specified' ?></p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a href="./file_list.php?account_id=<?= $doctor_id ?>" class="btn btn-outline-primary">Files</a>
-                            <a href="./appointment.php?doctor_id=<?= $doctor_id ?>" class="btn btn-primary text-light">Book Appointment</a>
-                            <a href="./chat_user.php?account_id=<?= $doctor_id ?>" class="btn btn-success text-light">Chat</a>
+                            <a href="./file_list.php?account_id=<?= $doctor_id ?>" class="btn btn-outline-primary hover-light">Send Files</a>\
                         </div>
                     </div>
                 </div>

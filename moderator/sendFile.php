@@ -93,22 +93,25 @@ function getCurrentPage()
                 <div class="row" id="doctor-container">
                     <?php foreach ($doctorArray as $item): ?>
                         <div class="col mb-4 doctor-card" data-name="<?= strtolower($item['doctor_name']) ?>">
-                            <div class="card h-100 shadow-sm border-1">
-                                <div class="card-header bg-white border-0 pt-3 text-center">
-                                    <img src="<?= isset($item['account_image']) ? "../assets/images/" . $item['account_image'] : "../assets/images/default_profile.png" ?>"
-                                        class="img-fluid rounded shadow" height="100" width="100" alt="Doctor Profile">
+                            <a href="./doctorView.php?doctor_id=<?= $item['account_id'] ?>" class="text-decoration-none text-dark">
+                                <div class="card h-100 shadow-sm border-1 hoverable-card">
+                                    <div class="card-header bg-white border-0 pt-3 text-center">
+                                        <img src="<?= isset($item['account_image']) ? "../assets/images/" . $item['account_image'] : "../assets/images/default_profile.png" ?>"
+                                            class="img-fluid rounded shadow" height="100" width="100" alt="Doctor Profile">
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title text-green mb-1"><?= htmlspecialchars($item['doctor_name']) ?></h5>
+                                    </div>
+                                    <div class="card-footer bg-white border-0 pb-3 text-center">
+                                        <span class="btn btn-sm btn-primary text-light">
+                                            <i class='bx bx-file'></i> Send File
+                                        </span>
+                                    </div>
                                 </div>
-                                <div class="card-body text-center">
-                                    <h5 class="card-title text-green mb-1"><?= htmlspecialchars($item['doctor_name']) ?></h5>
-                                </div>
-                                <div class="card-footer bg-white border-0 pb-3 text-center">
-                                    <a href="./send-file-form.php?account_id=<?= $item['account_id'] ?>" class="btn btn-sm btn-primary text-light">
-                                        <i class='bx bx-file'></i> Send File
-                                    </a>
-                                </div>
-                            </div>
+                            </a>
                         </div>
                     <?php endforeach; ?>
+
                 </div>
             </div>
         </section>
