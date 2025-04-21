@@ -41,6 +41,9 @@ if (!isset($_SESSION['user_role']) && isset($_COOKIE['remember_me'])) {
       $_SESSION['bio'] = $account->bio;
       $_SESSION['account_image'] = $account->account_image;
       $_SESSION['doctor_id'] = $account->doctor_id;
+      $_SESSION['civil_status'] = $account->civil_status;
+      $_SESSION['religion'] = $account->religion;
+      $_SESSION['suffix'] = $account->suffix;
 
       if ($_SESSION['user_role'] == 1) {
         header('location: ./index.php');
@@ -83,6 +86,9 @@ if (isset($_POST['login'])) {
     $_SESSION['bio'] = $account->bio;
     $_SESSION['account_image'] = $account->account_image;
     $_SESSION['doctor_id'] = $account->doctor_id;
+    $_SESSION['civil_status'] = $account->civil_status;
+    $_SESSION['religion'] = $account->religion;
+    $_SESSION['suffix'] = $account->suffix;
 
     if (isset($_POST['remember-me'])) {
       $token = $account->createRememberMeToken($account->account_id);
