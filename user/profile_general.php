@@ -50,8 +50,6 @@ include '../includes/head.php';
 
           include 'profile_nav.php';
           ?>
-<?php 
-echo "<pre>"; print_r($_SESSION); echo "</pre>";?>
           <div class="card bg-body-tertiary mb-4">
             <div class="card-body">
               <h4 class="text-green mb-3">Personal Information</h4>
