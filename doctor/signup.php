@@ -58,8 +58,32 @@ if (isset($_POST['signup'])) {
 $title = 'Signup';
 include '../includes/head.php';
 ?>
+<style>
+  .bg-image {
+    background: url('../assets/images/bg-4.jpg') no-repeat center center;
+    background-size: cover;
+    position: relative;
+  }
 
-<body class="bg-green d-flex align-items-center min-vh-100">
+  .bg-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 128, 0, 0.5);
+    z-index: 0;
+  }
+
+  .container,
+  .card {
+    position: relative;
+    z-index: 1;
+  }
+</style>
+
+<body class="bg-image d-flex align-items-center min-vh-100">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-12 col-md-8">
