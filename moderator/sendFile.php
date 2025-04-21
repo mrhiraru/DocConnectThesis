@@ -25,6 +25,31 @@ function getCurrentPage()
     return basename($_SERVER['PHP_SELF']);
 }
 ?>
+<style>
+    .list-view-card {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        text-align: left;
+    }
+
+    .list-view-card .card-header,
+    .list-view-card .card-body,
+    .list-view-card .card-footer {
+        flex: 1;
+        padding: 1rem;
+    }
+
+    .list-view-card .card-header {
+        max-width: 120px;
+        text-align: center;
+    }
+
+    .list-view-card img {
+        max-width: 100px;
+        height: auto;
+    }
+</style>
 
 <body>
     <?php
@@ -117,6 +142,15 @@ function getCurrentPage()
                     } else {
                         doctorContainer.classList.add("row-cols-md-2", "row-cols-lg-3");
                     }
+
+                    doctorCards.forEach(card => {
+                        const cardElement = card.querySelector(".card");
+                        if (view === "list") {
+                            cardElement.classList.add("list-view-card");
+                        } else {
+                            cardElement.classList.remove("list-view-card");
+                        }
+                    });
                 });
             });
 
