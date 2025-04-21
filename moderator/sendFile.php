@@ -65,9 +65,9 @@ function getCurrentPage()
         <!-- Doctor List Section -->
         <section class="doctors-listing padding-medium py-5">
             <div class="container">
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3" id="doctor-container">
+                <div class="row" id="doctor-container">
                     <?php foreach ($doctorArray as $item): ?>
-                        <div class="col-lg-4 col-md-6 mb-4 doctor-card" data-name="<?= strtolower($item['doctor_name']) ?>">
+                        <div class="col mb-4 doctor-card" data-name="<?= strtolower($item['doctor_name']) ?>">
                             <div class="card h-100 shadow-sm border-1">
                                 <div class="card-header bg-white border-0 pt-3 text-center">
                                     <img src="<?= isset($item['account_image']) ? "../assets/images/" . $item['account_image'] : "../assets/images/default_profile.png" ?>"
@@ -100,11 +100,7 @@ function getCurrentPage()
                 const filter = searchInput.value.toLowerCase();
                 doctorCards.forEach(function(card) {
                     const name = card.getAttribute("data-name");
-                    if (name.includes(filter)) {
-                        card.classList.remove("d-none");
-                    } else {
-                        card.classList.add("d-none");
-                    }
+                    card.classList.toggle("d-none", !name.includes(filter));
                 });
             });
 
@@ -112,15 +108,19 @@ function getCurrentPage()
                 button.addEventListener("click", function() {
                     const view = this.getAttribute("data-view");
 
+                    toggleButtons.forEach(btn => btn.classList.remove("bg-dark", "text-white"));
+                    this.classList.add("bg-dark", "text-white");
+
+                    doctorContainer.className = 'row';
                     if (view === "list") {
-                        doctorContainer.classList.remove("row-cols-md-2", "row-cols-lg-3");
                         doctorContainer.classList.add("row-cols-1");
                     } else {
-                        doctorContainer.classList.remove("row-cols-1");
                         doctorContainer.classList.add("row-cols-md-2", "row-cols-lg-3");
                     }
                 });
             });
+
+            document.querySelector('.toggle-view[data-view="grid"]').click();
         });
     </script>
 </body>
