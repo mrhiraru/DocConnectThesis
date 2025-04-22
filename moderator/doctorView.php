@@ -20,6 +20,10 @@ $doctorArray = $doctor->get_doctors();
 <?php
 $title = 'Doctor Profile';
 include '../includes/head.php';
+function getCurrentPage()
+{
+    return basename($_SERVER['PHP_SELF']);
+}
 ?>
 
 <style>
@@ -35,8 +39,10 @@ include '../includes/head.php';
 </style>
 
 <body>
-    <?php require_once('../includes/header.php'); ?>
-
+    <?php
+    require_once('./includes/admin_header.php');
+    require_once('./includes/admin_sidepanel.php');
+    ?>
     <section class="page-container padding-medium py-4">
         <div class="col-md-6 text-md-start">
             <button onclick="history.back()" class="btn btn-outline-secondary d-flex align-items-center mb-3 ms-3">
@@ -54,7 +60,7 @@ include '../includes/head.php';
                             <p class="text-muted"><?= !empty($doctorDetails['specialty']) ? htmlspecialchars($doctorDetails['specialty']) : 'Not specified' ?></p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a href="./file_list.php?account_id=<?= $doctor_id ?>" class="btn btn-outline-primary hover-light">Send Files</a>\
+                            <a href="./file_list.php?account_id=<?= $doctor_id ?>" class="btn btn-outline-primary hover-light">Send Files</a>
                         </div>
                     </div>
                 </div>
