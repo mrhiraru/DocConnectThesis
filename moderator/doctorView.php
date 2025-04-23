@@ -19,45 +19,35 @@ $doctorArray = $doctor->get_doctors();
 <html lang="en">
 <?php
 $title = 'Doctor Profile';
-include '../includes/head.php';
+include './includes/admin_head.php';
 function getCurrentPage()
 {
     return basename($_SERVER['PHP_SELF']);
 }
 ?>
 
-<style>
-    .profile-card {
-        height: 100%;
-    }
-
-    @media (max-width:450px) {
-        .profile-card {
-            height: 300px !important;
-        }
-    }
-</style>
-
 <body>
     <?php
     require_once('./includes/admin_header.php');
     require_once('./includes/admin_sidepanel.php');
     ?>
-    <section class="page-container padding-medium py-4">
+    <div class="page-container">
+
+        <!-- Page Header -->
         <div class="col-md-6 text-md-start">
-            <button onclick="history.back()" class="btn btn-outline-secondary d-flex align-items-center mb-3 ms-3">
+            <a href="./sendFile" class="btn btn-outline-secondary d-flex align-items-center mb-3 ms-3 w-25 hover-light">
                 <i class='bx bx-chevron-left'></i> Back
-            </button>
+            </a>
         </div>
         <main class="mx-4">
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex flex-column flex-md-row align-items-center">
                         <img src="<?= isset($doctorDetails['account_image']) ? "../assets/images/" . $doctorDetails['account_image'] : "../assets/images/default_profile.png" ?>"
-                             alt="Doctor Profile Image" class="img-fluid rounded shadow mb-3 me-md-3" height="150" width="150">
+                            alt="Doctor Profile Image" class="img-fluid rounded shadow mb-3 me-md-3" height="150" width="150">
                         <div class="flex-grow-1">
-                            <h5 class="card-title">Dr. <?= htmlspecialchars($doctorDetails['doctor_name']) ?></h5>
-                            <p class="text-muted"><?= !empty($doctorDetails['specialty']) ? htmlspecialchars($doctorDetails['specialty']) : 'Not specified' ?></p>
+                            <h5 class="card-title">Dr. eee</h5>
+                            <p class="text-muted">e</p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
                             <a href="./file_list.php?account_id=<?= $doctor_id ?>" class="btn btn-outline-primary hover-light">Send Files</a>
@@ -82,7 +72,7 @@ function getCurrentPage()
                                 <?php
                                 if (!empty($doctorDetails['start_day']) && !empty($doctorDetails['end_day']) && !empty($doctorDetails['start_wt']) && !empty($doctorDetails['end_wt'])) {
                                     echo htmlspecialchars($doctorDetails['start_day']) . ' to ' . htmlspecialchars($doctorDetails['end_day']) . ", " .
-                                         date('h:i A', strtotime($doctorDetails['start_wt'])) . ' - ' . date('h:i A', strtotime($doctorDetails['end_wt']));
+                                        date('h:i A', strtotime($doctorDetails['start_wt'])) . ' - ' . date('h:i A', strtotime($doctorDetails['end_wt']));
                                 } else {
                                     echo 'Not specified';
                                 }
@@ -104,8 +94,7 @@ function getCurrentPage()
                 </div>
             </div>
         </main>
-    </section>
-
-    <?php require_once('../includes/footer.php'); ?>
+    </div>
 </body>
+
 </html>
