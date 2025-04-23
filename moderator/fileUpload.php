@@ -21,7 +21,7 @@ $file = new File();
 if (isset($_POST['upload_document'])) {
 
     $file->sender_id = $_SESSION['account_id'];
-    $file->receiver_id = $_GET['account_id'];
+    $file->receiver_id = $_GET['doctor_id'];
 
     $uploaddir = '../assets/files/';
     $uploadname = $_FILES[htmlentities('documentname')]['name'];
