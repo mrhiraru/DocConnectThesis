@@ -29,10 +29,10 @@ include '../includes/head.php';
             <main class="col-md-9 ms-sm-auto col-lg-10 p-md-4">
                 <div class="container">
                     <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
-                        <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-flex align-items-center">
+                        <a href="./profile" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
                             <i class='bx bx-chevron-left'></i>
                             Back
-                        </button>
+                        </a>
                         <a href="./profile_fileUpload" class="btn btn-outline-primary hover-light">
                             Send Files
                         </a>
@@ -128,8 +128,8 @@ include '../includes/head.php';
                                                                         </a>
                                                                     </td>
                                                                     <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
-                                                                    <td class="text-truncate" style="max-width: 120px;"><?php htmlspecialchars($item['campus_name']) 
-                                                                                                                                ?></td>
+                                                                    <td class="text-truncate" style="max-width: 120px;"><?php htmlspecialchars($item['campus_name'])
+                                                                                                                        ?></td>
                                                                     <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                                 </tr>
                                                         <?php

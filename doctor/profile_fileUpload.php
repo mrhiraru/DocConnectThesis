@@ -29,10 +29,10 @@ include '../includes/head.php';
             <main class="col-md-9 ms-sm-auto col-lg-10 p-md-4">
                 <div class="row justify-content-center">
                     <div class="col-lg-10">
-                        <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
+                        <a href="./profile_fileList" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
                             <i class='bx bx-chevron-left'></i>
                             Back
-                        </button>
+                        </a>
                         <div class="card border-0 shadow">
                             <div class="card-header bg-white">
                                 <div class="d-flex align-items-center">
