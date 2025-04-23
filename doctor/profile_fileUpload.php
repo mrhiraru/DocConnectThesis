@@ -34,7 +34,7 @@ if (isset($_POST['upload_document'])) {
             $file->file_description = htmlentities($_POST['documentDescription']);
 
             if ($file->add_file()) {
-                header('Location: patient-fileList');
+                header('Location: profile_fileList');
                 exit();
             } else {
                 $success = 'failed';
