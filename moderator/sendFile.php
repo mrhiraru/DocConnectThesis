@@ -93,7 +93,7 @@ function getCurrentPage()
                 <div class="row" id="doctor-container">
                     <?php foreach ($doctorArray as $item): ?>
                         <div class="col mb-4 doctor-card" data-name="<?= strtolower($item['doctor_name']) ?>">
-                            <a href="./doctorView.php?doctor_id=<?= $item['account_id'] ?>" class="text-decoration-none text-dark">
+                            <a href="./fileList.php?doctor_id=<?= $item['account_id'] ?>" class="text-decoration-none text-dark">
                                 <div class="card h-100 shadow-sm border-1 hoverable-card">
                                     <div class="card-header bg-white border-0 pt-3 text-center">
                                         <img src="<?= isset($item['account_image']) ? "../assets/images/" . $item['account_image'] : "../assets/images/default_profile.png" ?>"
