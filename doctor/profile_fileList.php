@@ -46,7 +46,7 @@ include '../includes/head.php';
                                     <div class="card border-0 shadow h-100">
                                         <div class="card-body p-3">
                                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <h6 class="text-dark fw-semibold mb-0">Dr. (last name) Files</h6>
+                                                <h6 class="text-dark fw-semibold mb-0">Dr. <?= $_SESSION['fullname'] ?> Files</h6>
                                             </div>
                                             <div class="table-container" style="overflow-x: auto; max-width: 100%;">
                                                 <table class="table table-hover doctor-files w-100" id="doctorFilesTable">
@@ -60,7 +60,7 @@ include '../includes/head.php';
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        $file_sent_doctor = $file->show_files_doctor($_GET['account_id'], $_SESSION['account_id']);
+                                                        $file_sent_doctor = $file->show_files_doctor_to_campus($_GET['account_id'], $_SESSION['account_id'], $_SESSION['user_role']);
                                                         $doctor_count = 0;
 
                                                         if (!empty($file_sent_doctor)) {
