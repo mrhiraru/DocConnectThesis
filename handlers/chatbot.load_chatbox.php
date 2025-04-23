@@ -45,16 +45,28 @@ $message = new Message();
 
 <script>
   $(document).ready(function() {
-
+    const messageInput = $("#message");
+    
     $('#chatForm').on('submit', function(e) {
-      e.preventDefault();
+        e.preventDefault();
+        sendMessage();
+      
+    });
 
+    messageInput.on("keydown", function(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function sendMessage() {
       $('#send').prop('disabled', true);
 
       const formData = {
         send: $('#send').val(),
         account_id: $('#account_id').val(),
-        message: $("#message").val()
+        message: messageInput.val()
       }
 
       $.ajax({
@@ -62,14 +74,13 @@ $message = new Message();
         type: 'POST',
         data: formData,
         success: function(response) {
-          $('#message').val('');
+          messageInput.val('');
           $('#send').prop('disabled', false);
         },
         error: function(xhr, status, error) {
           console.error('Error sending message:', error);
         }
       });
-    });
-
+    }
   });
 </script>
