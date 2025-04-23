@@ -26,11 +26,28 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
                 } ?>" alt="Profile" class="rounded-circle me-3" height="40" width="40">
       <span><?= (isset($record['middlename'])) ? ucwords(strtolower($record['firstname'] . ' ' . $record['middlename'] . ' ' . $record['lastname'])) : ucwords(strtolower($record['firstname'] . ' ' . $record['lastname'])) ?></span>
     </div>
-    <div>
+    <!-- <div>
       <a href="../user/doctorsView" class="d-flex">
         <i class='bx bx-dots-horizontal-rounded fs-4'></i>
       </a>
-    </div>
+    </div> -->
+
+    <!-- <?php
+    $currentFile = basename($_SERVER['PHP_SELF']); // gets the filename like "chats.php"
+
+    $link = "#"; // default or fallback link
+    if ($currentFile === "chats.php") {
+      $link = "../doctor/patient-view";
+    } elseif ($currentFile === "chat_user.php") {
+      $link = "../user/doctorsView";
+    }
+    ?>
+
+    <div>
+      <a href="<?= $link ?>" class="d-flex">
+        <i class='bx bx-dots-horizontal-rounded fs-4'></i>
+      </a>
+    </div> -->
   </div>
 </div>
 <!-- Chat Messages -->
