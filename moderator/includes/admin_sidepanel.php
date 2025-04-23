@@ -28,7 +28,7 @@
     <li>
       <a href="./sendFile" class="nav-link <?php echo getCurrentPage() == 'sendFile.php' ? 'active' : 'link-dark'; ?>">
         <i class='bx bx-user-circle me-2'></i>
-        Send File
+        Doctors
       </a>
     </li>
     <!-- <li>
