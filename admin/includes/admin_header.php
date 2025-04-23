@@ -23,7 +23,7 @@
     </button>
 
     <a class="d-flex align-items-center text-dark text-decoration-none" href="./index">
-      <img src="../assets/images/logo.png" class="me-2" alt="Logo" height="32">
+      <!-- <img src="../assets/images/logo.png" class="me-2" alt="Logo" height="32"> -->
       <h1 class="fs-4 link-light m-0 d-name">Doc<span class="link-light">Connect</span></h1>
     </a>
 
@@ -106,7 +106,7 @@
       <div class="dropdown text-end">
         <a href="#" class="acc d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
           <div class="d-flex align-items-center">
-            <img src="../../assets/images/default_profile.png" alt="mdo" width="32" height="32" class="rounded-circle border border-2 border-light me-2">
+            <!-- <img src="../../assets/images/default_profile.png" alt="mdo" width="32" height="32" class="rounded-circle border border-2 border-light me-2"> -->
             <h6 class="m-0 text-light d-none d-md-block">Administrator</h6>
           </div>
         </a>
