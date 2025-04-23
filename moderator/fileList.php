@@ -48,7 +48,7 @@ function getCurrentPage()
                             <p class="text-muted">e</p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a href="./fileUpload.php" class="btn btn-outline-primary hover-light">Send Files</a>
+                            <a href="./fileUpload.php?doctor_id=<?= $_GET['doctor_id'] ?>" class="btn btn-outline-primary hover-light">Send Files</a>
                         </div>
                     </div>
                 </div>

@@ -13,6 +13,47 @@ require_once '../classes/doctor.class.php';
 
 $doctor = new Doctor();
 $doctorArray = $doctor->get_doctors();
+
+
+require_once('../classes/file.class.php');
+
+$file = new File();
+if (isset($_POST['upload_document'])) {
+
+    $file->sender_id = $_SESSION['account_id'];
+    $file->receiver_id = $_GET['account_id'];
+
+    $uploaddir = '../assets/files/';
+    $uploadname = $_FILES[htmlentities('documentname')]['name'];
+    $uploadext = explode('.', $uploadname);
+    $uploadnewext = strtolower(end($uploadext));
+    $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx', 'png', 'jpeg', 'jpg');
+
+    if (in_array($uploadnewext, $allowed)) {
+
+        $uploadenewname = reset($uploadext) . "_" . date('Ymd_His') . "." . $uploadnewext;
+        $uploadfile = $uploaddir . $uploadenewname;
+
+        if (move_uploaded_file($_FILES[htmlentities('documentname')]['tmp_name'], $uploadfile)) {
+
+            $file->file_name = $uploadenewname;
+            $file->purpose = htmlentities($_POST['purpose']);
+            $file->file_description = htmlentities($_POST['documentDescription']);
+
+            if ($file->add_file()) {
+                header('Location: patient-files?account_id=' . $_GET['account_id']);
+                exit();
+            } else {
+                $success = 'failed';
+            }
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -52,16 +93,7 @@ function getCurrentPage()
                             <!-- Form Column -->
                             <div class="col-md-6">
                                 <form id="documentUploadForm" method='post' class="needs-validation" enctype="multipart/form-data" novalidate>
-
-                                    <div class="mb-3">
-                                        <label for="purpose" class="form-label">Purpose of Request</label>
-                                        <select id="purpose" name="purpose" class="form-select bg-light border border-outline-dark text-secondary">
-                                            <option value=""></option>
-                                            <option value="Medical Certificate" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Certificate") ? 'selected' : '' ?>>Medical Certificate</option>
-                                            <option value="Prescription" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Prescription") ? 'selected' : '' ?>>Prescription</option>
-                                        </select>
-                                        <div class="invalid-feedback">Please select purpose of request.</div>
-                                    </div>
+                 
                                     <!-- File Upload Input -->
                                     <div class="mb-4">
                                         <label for="documentFile" class="form-label fw-semibold">Attach file (optional)</label>
