@@ -38,8 +38,7 @@ if (isset($_POST['signup'])) {
     validate_field($account->contact) &&
     validate_password($account->password) &&
     validate_cpw($account->password, $_POST['confirm-password']) &&
-    validate_email($account->email) == 'success' && !$account->is_email_exist() &&
-    validate_wmsu_email($account->email)
+    validate_email($account->email) == 'success' && !$account->is_email_exist()
   ) {
     if ($account->add_doc()) {
       $success = 'success';
@@ -184,7 +183,7 @@ include '../includes/head.php';
                 ?>
                   <p class="text-dark m-0 ps-2">Email you've entered already exist.</p>
                 <?php
-                } else if (isset($_POST['email']) && !validate_wmsu_email($_POST['email'])) {
+                } else if (isset($_POST['email'])) {
                 ?>
                   <p class="text-dark m-0 ps-2">You must use wmsu email.</p>
                 <?php

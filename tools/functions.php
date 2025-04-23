@@ -2,20 +2,22 @@
 
 function validate_email($email)
 {
-    // Check if the 'email' key exists in the $_POST array
     if (isset($email)) {
-        $email = trim($email); // Trim whitespace
-        // Check if the email is not empty
+        $email = trim($email);
+
         if (empty($email)) {
             return "Email is required";
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            // Check if the email has a valid format
-            return "Email you've entered is invalid format.";
+            return "Email you've entered is in an invalid format.";
         } else {
-            return 'success';
+            if (preg_match('/@wmsu\.edu\.ph$/i', $email) || preg_match('/@gmail\.com$/i', $email)) {
+                return 'success';
+            } else {
+                return "Only emails ending in @wmsu.edu.ph or @gmail.com are allowed.";
+            }
         }
     } else {
-        return 'Email is required'; // 'email' key doesn't exist in $_POST
+        return 'Email is required';
     }
 }
 
