@@ -52,32 +52,42 @@ $record = $message->load_chatbox($_GET['chatwith_account_id']);
 
 <script>
   $(document).ready(function() {
+    const messageInput = $("#message");
 
     $('#chatForm').on('submit', function(e) {
       e.preventDefault();
+      sendMessage();
+    });
 
+    messageInput.on("keydown", function(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    function sendMessage() {
       $('#send').prop('disabled', true);
 
       const formData = {
         send: $('#send').val(),
         sender_id: $('#sender_id').val(),
         receiver_id: $('#receiver_id').val(),
-        message: $("#message").val()
-      }
+        message: messageInput.val()
+      };
 
       $.ajax({
         url: '../handlers/chat.send_message.php',
         type: 'POST',
         data: formData,
         success: function(response) {
-          $('#message').val('');
+          messageInput.val('');
           $('#send').prop('disabled', false);
         },
         error: function(xhr, status, error) {
           console.error('Error sending message:', error);
         }
       });
-    });
-
+    }
   });
 </script>
