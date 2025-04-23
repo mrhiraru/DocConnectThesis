@@ -100,7 +100,7 @@ include '../includes/head.php';
                                     <div class="card border-0 shadow h-100">
                                         <div class="card-body p-3">
                                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                                <h6 class="text-dark fw-semibold mb-0">(campus name) clinic Files</h6>
+                                                <h6 class="text-dark fw-semibold mb-0">Campus Clinic Files</h6>
                                             </div>
                                             <div class="table-container" style="overflow-x: auto; max-width: 100%;">
                                                 <table class="table table-hover doctor-files w-100" id="patientFilesTable">

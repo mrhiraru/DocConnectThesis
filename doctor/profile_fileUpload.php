@@ -7,6 +7,10 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php');
 }
 
+include_once '../classes/file.class.php';
+include_once '../classes/campus.class.php';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -46,13 +50,21 @@ include '../includes/head.php';
                                     <!-- Form Column -->
                                     <div class="col-md-6">
                                         <form id="documentUploadForm" method='post' class="needs-validation" enctype="multipart/form-data" novalidate>
-
+                                            <?php
+                                            $campus = new Campus();
+                                            $campusArray = $campus->show_campus_mod();
+                                            ?>
                                             <div class="mb-3">
-                                                <label for="purpose" class="form-label">Select campus clinic</label>
-                                                <select id="purpose" name="purpose" class="form-select bg-light border border-outline-dark text-secondary">
+                                                <label for="account_id" class="form-label">Select campus clinic</label>
+                                                <select id="account_id" name="account_id" class="form-select bg-light border border-outline-dark text-secondary">
                                                     <option value="">select campus</option>
-                                                    <option value="Campus A">Campus A</option>
-                                                    <option value="Campus B">Campus B</option>
+                                                    <?php
+                                                    foreach ($campusArray as $item) {
+                                                    ?>
+                                                        <option value="<?= $item['account_id'] ?>" <?= (isset($_POST['account_id']) && $_POST['account_id'] == $item['account_id']) ? 'selected' : '' ?>><?= $item['campus_name'] ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
                                                 </select>
                                                 <div class="invalid-feedback">Please select purpose of request.</div>
                                             </div>
