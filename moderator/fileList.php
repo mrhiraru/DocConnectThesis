@@ -79,7 +79,7 @@ function getCurrentPage()
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $file_sent_patient = $file->show_files_campus_to_doctor($_SESSION['account_id'], 2, 1);
+                                                $file_sent_patient = $file->show_files_campus_to_doctor($_GET['doctor_id'], 2, 1);
                                                 $patient_count = 0;
 
                                                 if (!empty($file_sent_patient)) {
