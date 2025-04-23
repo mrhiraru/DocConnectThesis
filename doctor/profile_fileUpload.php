@@ -11,6 +11,42 @@ include_once '../classes/file.class.php';
 include_once '../classes/campus.class.php';
 
 
+$file = new File();
+if (isset($_POST['upload_document'])) {
+
+    $file->sender_id = $_SESSION['account_id'];
+    $file->receiver_id = $_POST['account_id'];
+
+    $uploaddir = '../assets/files/';
+    $uploadname = $_FILES[htmlentities('documentname')]['name'];
+    $uploadext = explode('.', $uploadname);
+    $uploadnewext = strtolower(end($uploadext));
+    $allowed = array('pdf', 'doc', 'xls', 'xlsx', 'docx', 'png', 'jpeg', 'jpg');
+
+    if (in_array($uploadnewext, $allowed)) {
+
+        $uploadenewname = reset($uploadext) . "_" . date('Ymd_His') . "." . $uploadnewext;
+        $uploadfile = $uploaddir . $uploadenewname;
+
+        if (move_uploaded_file($_FILES[htmlentities('documentname')]['tmp_name'], $uploadfile)) {
+
+            $file->file_name = $uploadenewname;
+            $file->file_description = htmlentities($_POST['documentDescription']);
+
+            if ($file->add_file()) {
+                header('Location: patient-fileList');
+                exit();
+            } else {
+                $success = 'failed';
+            }
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
