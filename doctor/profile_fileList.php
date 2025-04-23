@@ -33,7 +33,7 @@ include '../includes/head.php';
                             <i class='bx bx-chevron-left'></i>
                             Back
                         </button>
-                        <a href="./fileUpload.php" class="btn btn-outline-primary hover-light">
+                        <a href="./profile_fileUpload" class="btn btn-outline-primary hover-light">
                             Send Files
                         </a>
                     </div>
