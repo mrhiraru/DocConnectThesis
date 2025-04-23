@@ -28,23 +28,13 @@ include '../includes/head.php';
             ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 p-md-4">
                 <div class="container">
-                    <a href="./SendFile" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
-                        <i class='bx bx-chevron-left'></i>
-                        Back
-                    </a>
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="d-flex flex-column flex-md-row align-items-center">
-                                <img src="<?= isset($doctorDetails['account_image']) ? "../assets/images/" . $doctorDetails['account_image'] : "../assets/images/default_profile.png" ?>"
-                                    alt="Doctor Profile Image" class="img-fluid rounded shadow mb-3 me-md-3" height="150" width="150">
-                                <div class="flex-grow-1">
-                                    <h5 class="card-title">Dr. eee</h5>
-                                    <p class="text-muted">e</p>
-                                </div>
-                                <div class="d-flex flex-wrap gap-2">
-                                    <a href="./fileUpload.php" class="btn btn-outline-primary hover-light">Send Files</a>
-                                </div>
-                            </div>
+                    <div class="col-md-12 text-md-start d-flex justify-content-between">
+                        <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
+                            <i class='bx bx-chevron-left'></i>
+                            Back
+                        </button>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a href="./fileUpload.php" class="btn btn-outline-primary hover-light">Send Files</a>
                         </div>
                     </div>
                     <div class="row justify-content-center">
