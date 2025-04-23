@@ -13,6 +13,9 @@ require_once '../classes/doctor.class.php';
 
 $doctor = new Doctor();
 $doctorArray = $doctor->get_doctors();
+
+include_once '../classes/file.class.php';
+$file = new File();
 ?>
 
 <!DOCTYPE html>
@@ -57,31 +60,31 @@ function getCurrentPage()
                 <div class="col-12">
                     <div class="row gx-4">
 
-                        <!-- Doctor Uploads Card -->
-                        <div class="col-12 mb-4">
+                        <!-- Campus Uploads Card -->
+                        <div class="col-md-12 mb-4">
                             <div class="card border-0 shadow h-100">
                                 <div class="card-body p-3">
                                     <div class="d-flex justify-content-between align-items-center mb-3">
-                                        <h6 class="text-dark fw-semibold mb-0">Dr. (last name) Files</h6>
+                                        <h6 class="text-dark fw-semibold mb-0">Campus Clinic Files</h6>
                                     </div>
                                     <div class="table-container" style="overflow-x: auto; max-width: 100%;">
-                                        <table class="table table-hover doctor-files w-100" id="doctorFilesTable">
+                                        <table class="table table-hover doctor-files w-100" id="patientFilesTable">
                                             <thead>
                                                 <tr>
                                                     <th class="text-nowrap">File Attachment</th>
                                                     <th class="text-nowrap">Description</th>
-                                                    <!-- <th class="text-nowrap">Uploaded By</th> -->
+
                                                     <th class="text-nowrap">Date</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $file_sent_doctor = $file->show_files_doctor($_GET['account_id'], $_SESSION['account_id']);
-                                                $doctor_count = 0;
+                                                $file_sent_patient = $file->show_files_campus_to_doctor($_SESSION['account_id'], 2, $_SESSION['user_role']);
+                                                $patient_count = 0;
 
-                                                if (!empty($file_sent_doctor)) {
-                                                    foreach ($file_sent_doctor as $item) {
-                                                        if ($doctor_count++ >= 10) break;
+                                                if (!empty($file_sent_patient)) {
+                                                    foreach ($file_sent_patient as $item) {
+                                                        if ($patient_count++ >= 10) break;
                                                 ?>
                                                         <tr>
                                                             <td class="text-truncate" style="max-width: 150px;">
@@ -93,8 +96,7 @@ function getCurrentPage()
                                                                 </a>
                                                             </td>
                                                             <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
-                                                            <!-- <td class="text-truncate" style="max-width: 120px;"><?php // htmlspecialchars($item['doctor_name']) 
-                                                                                                                        ?></td> -->
+
                                                             <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                         </tr>
                                                 <?php
