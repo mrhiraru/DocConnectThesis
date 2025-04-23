@@ -92,7 +92,7 @@ include '../includes/head.php';
                                     </div>
                                 </div>
 
-                                <!-- Patient Uploads Card -->
+                                <!-- Campus Uploads Card -->
                                 <div class="col-md-12 mb-4">
                                     <div class="card border-0 shadow h-100">
                                         <div class="card-body p-3">
@@ -105,7 +105,7 @@ include '../includes/head.php';
                                                         <tr>
                                                             <th class="text-nowrap">File Attachment</th>
                                                             <th class="text-nowrap">Description</th>
-                                                            <!-- <th class="text-nowrap">Uploaded By</th> -->
+                                                            <th class="text-nowrap">Uploaded By</th>
                                                             <th class="text-nowrap">Date</th>
                                                         </tr>
                                                     </thead>
@@ -128,8 +128,8 @@ include '../includes/head.php';
                                                                         </a>
                                                                     </td>
                                                                     <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
-                                                                    <!-- <td class="text-truncate" style="max-width: 120px;"><?php //htmlspecialchars($item['patient_name']) 
-                                                                                                                                ?></td> -->
+                                                                    <td class="text-truncate" style="max-width: 120px;"><?php htmlspecialchars($item['campus_name']) 
+                                                                                                                                ?></td>
                                                                     <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                                 </tr>
                                                         <?php
