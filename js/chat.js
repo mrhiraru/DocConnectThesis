@@ -80,6 +80,8 @@ function mark_read(sender_id, receiver_id) {
 }
 
 function loadMessages(account_id, chatwith_account_id) {
+  if (currentMessagesRequest) return;
+
   currentMessagesRequest = $.ajax({
     url: "../handlers/chat.load_messages.php",
     type: "GET",
@@ -89,20 +91,20 @@ function loadMessages(account_id, chatwith_account_id) {
       last_message_id: last_message_id,
     },
     success: function (response) {
-      $("#chatMessages").append(response);
-      scrollToBottom();
-      updateLastMessageId();
+      if (response.trim() !== '') {
+        $("#chatMessages").append(response);
+        scrollToBottom();
+        updateLastMessageId();
+      }
       mark_read(chatwith_account_id, account_id);
       currentMessagesRequest = null;
-      loadMessages(account_id, chatwith_account_id);
+      setTimeout(() => loadMessages(account_id, chatwith_account_id), 2000);
     },
     error: function (xhr, status, error) {
-      console.error("Error loading messages:", error);
+      currentMessagesRequest = null;
       if (status !== "abort") {
         console.error("Error loading messages:", error);
-        setTimeout(function () {
-          loadMessages(account_id, chatwith_account_id);
-        }, 5000);
+        setTimeout(() => loadMessages(account_id, chatwith_account_id), 5000);
       }
     },
   });
