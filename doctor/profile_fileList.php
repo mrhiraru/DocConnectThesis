@@ -7,6 +7,9 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     header('location: ./index.php');
 }
 
+include_once '../classes/file.class.php';
+$file = new File();
+
 ?>
 
 <!DOCTYPE html>
