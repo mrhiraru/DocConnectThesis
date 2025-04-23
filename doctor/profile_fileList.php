@@ -114,7 +114,7 @@ include '../includes/head.php';
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        $file_sent_patient = $file->show_files_patient($_SESSION['account_id'], $_GET['account_id']);
+                                                        $file_sent_patient = $file->show_files_campus_to_doctor($_SESSION['account_id'], 2, $_SESSION['user_role']);
                                                         $patient_count = 0;
 
                                                         if (!empty($file_sent_patient)) {

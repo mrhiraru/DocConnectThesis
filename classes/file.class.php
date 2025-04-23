@@ -95,4 +95,25 @@ class File
         }
         return $data;
     }
+
+    function show_files_campus_to_doctor($receiver_id, $sender_role, $user_role)
+    {
+        $sql = "SELECT f.*, CONCAT(a1.firstname, IF(a1.middlename IS NOT NULL AND a1.middlename != '', CONCAT(' ', a1.middlename), ''), 
+        ' ', a1.lastname) AS doctor_name 
+        FROM files f 
+        INNER JOIN account a1 ON a1.account_id = :sender_role
+        INNER JOIN account a2 ON a2.user_role = :receiver_id AND a2.user_role = :user_role
+        WHERE sender_id = a1.account_id AND receiver_id = :receiver_id
+        ORDER BY f.is_created DESC;";
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':receiver_id', $receiver_id);
+        $query->bindParam(':sender_role', $sender_role);
+        $query->bindParam(':user_role', $user_role);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
