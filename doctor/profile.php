@@ -46,7 +46,7 @@ include '../includes/head.php';
                                 </div>
                             </div>
                             <div class="mt-3 mt-md-0">
-                                <a href="./profile_fileList" class="btn btn-outline-primary hover-light">Send Files</a>
+                                <a href="./profile_fileList" class="btn btn-outline-primary hover-light">Files</a>
                             </div>
                         </div>
                     </div>
