@@ -41,7 +41,7 @@ if (isset($_POST['upload_document'])) {
             $file->file_description = htmlentities($_POST['documentDescription']);
 
             if ($file->add_file()) {
-                header('Location: patient-files?account_id=' . $_GET['account_id']);
+                header('Location: fileList?doctor_id=' . $_GET['doctor_id']);
                 exit();
             } else {
                 $success = 'failed';
