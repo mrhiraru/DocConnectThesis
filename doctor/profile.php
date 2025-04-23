@@ -29,19 +29,24 @@ include '../includes/head.php';
             <main class="col-md-9 ms-sm-auto col-lg-10 p-md-4">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <img src="<?php if (isset($_SESSION['account_image'])) {
-                                            echo "../assets/images/" . $_SESSION['account_image'];
-                                        } else {
-                                            echo "../assets/images/defualt_profile.png";
-                                        } ?>" alt="Doctor's profile image" class="rounded-circle me-3" height="80" width="80">
-                            <div>
-                                <h5 class="card-title"><?= $_SESSION['fullname'] ?></h5>
-                                <p class="text-muted mb-0"><?= $_SESSION['specialty'] ?></p>
-                                <div class="d-flex align-items-center">
-                                    <!-- <span class="text-primary me-2">★★★★★</span>
-                                    <a href="#" class="text-decoration-none">More</a> -->
+                        <div class="d-flex flex-column flex-md-row align-items-center justify-content-between">
+                            <div class="d-flex align-items-center">
+                                <img src="<?php if (isset($_SESSION['account_image'])) {
+                                                echo "../assets/images/" . $_SESSION['account_image'];
+                                            } else {
+                                                echo "../assets/images/defualt_profile.png";
+                                            } ?>"
+                                    alt="Doctor's profile image"
+                                    class="rounded-circle me-3"
+                                    height="80"
+                                    width="80">
+                                <div>
+                                    <h5 class="card-title mb-1"><?= $_SESSION['fullname'] ?></h5>
+                                    <p class="text-muted mb-0"><?= $_SESSION['specialty'] ?></p>
                                 </div>
+                            </div>
+                            <div class="mt-3 mt-md-0">
+                                <a href="./profile_fileList" class="btn btn-outline-primary hover-light">Send Files</a>
                             </div>
                         </div>
                     </div>
