@@ -412,11 +412,39 @@ function getCurrentPage()
     </section>
 
     <script>
-        const mainButton = document.querySelector('[data-bs-target="#main"]');
-        const chevronIconMain = document.getElementById('chevronIconMain');
+        const introButton = document.querySelector('[data-bs-target="#introSection"]');
+        const chevronIconIntroduction = document.getElementById('chevronIconIntroduction');
 
-        mainButton.addEventListener('click', function() {
-            chevronIconMain.classList.toggle('rotate-180');
+        introButton.addEventListener('click', function() {
+            chevronIconIntroduction.classList.toggle('rotate-180');
+        });
+
+        const specializationsButton = document.querySelector('[data-bs-target="#specializationsSection"]');
+        const chevronIconSpecializations = document.getElementById('chevronIconSpecializations');
+
+        specializationsButton.addEventListener('click', function() {
+            chevronIconSpecializations.classList.toggle('rotate-180');
+        });
+
+        const telehealthButton = document.querySelector('[data-bs-target="#telehealthSection"]');
+        const chevronIconTelehealth = document.getElementById('chevronIconTelehealth');
+
+        telehealthButton.addEventListener('click', function() {
+            chevronIconTelehealth.classList.toggle('rotate-180');
+        });
+
+        const communityButton = document.querySelector('[data-bs-target="#communitySection"]');
+        const chevronIconCommunity = document.getElementById('chevronIconCommunity');
+
+        communityButton.addEventListener('click', function() {
+            chevronIconCommunity.classList.toggle('rotate-180');
+        });
+
+        const accessibilityButton = document.querySelector('[data-bs-target="#accessibilitySection"]');
+        const chevronIconAccessibility = document.getElementById('chevronIconAccessibility');
+
+        accessibilityButton.addEventListener('click', function() {
+            chevronIconAccessibility.classList.toggle('rotate-180');
         });
     </script>
 
