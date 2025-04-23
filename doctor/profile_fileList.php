@@ -63,7 +63,7 @@ include '../includes/head.php';
                                                     </thead>
                                                     <tbody>
                                                         <?php
-                                                        $file_sent_doctor = $file->show_files_doctor_to_campus($_SESSION['account_id'], 3, $_SESSION['user_role']);
+                                                        $file_sent_doctor = $file->show_files_doctor_to_campus($_SESSION['account_id'], 2, $_SESSION['user_role']);
                                                         $doctor_count = 0;
 
                                                         if (!empty($file_sent_doctor)) {
