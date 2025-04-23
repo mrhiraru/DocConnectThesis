@@ -18,7 +18,7 @@ $doctorArray = $doctor->get_doctors();
 <!DOCTYPE html>
 <html lang="en">
 <?php
-$title = 'Doctor Profile';
+$title = 'File List';
 include './includes/admin_head.php';
 function getCurrentPage()
 {
