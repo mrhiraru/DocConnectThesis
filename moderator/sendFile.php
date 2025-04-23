@@ -103,9 +103,7 @@ function getCurrentPage()
                                         <h5 class="card-title text-green mb-1"><?= htmlspecialchars($item['doctor_name']) ?></h5>
                                     </div>
                                     <div class="card-footer bg-white border-0 pb-3 text-center">
-                                        <span class="btn btn-sm btn-primary text-light">
-                                            <i class='bx bx-file'></i> Send File
-                                        </span>
+                                        <a href="./fileUpload.php" class="btn btn-sm btn-primary text-light">Send Files</a>
                                     </div>
                                 </div>
                             </a>
