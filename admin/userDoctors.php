@@ -38,8 +38,7 @@ try {
                 } else {
                     $_SESSION['error'] = 'Failed to update introduction section.';
                 }
-            } 
-            elseif (isset($_POST['save_specializations'])) {
+            } elseif (isset($_POST['save_specializations'])) {
                 $success = $doctorsPage->updateSpecializations(
                     $_POST['specializations_title'],
                     $_POST['specializations_subtitle'],
@@ -50,24 +49,23 @@ try {
                     $_POST['spec_title'][2],
                     $_POST['spec_content'][2]
                 );
-                
+
                 if ($success) {
                     $_SESSION['message'] = 'Specializations section updated successfully!';
                 } else {
                     $_SESSION['error'] = 'Failed to update specializations section.';
                 }
-            }
-            elseif (isset($_POST['save_telehealth'])) {
+            } elseif (isset($_POST['save_telehealth'])) {
                 $imagePath = $telehealthContent['image_path'];
-                
+
                 // Handle image upload if new image was provided
                 if (!empty($_FILES['telehealth_image']['name'])) {
                     $imagePath = $doctorsPage->uploadImage($_FILES['telehealth_image']);
                 }
-                
+
                 $quote = $_POST['telehealth_quote'] ?? '';
                 $quoteAuthor = $_POST['telehealth_quote_author'] ?? '';
-                
+
                 if ($doctorsPage->updateTelehealth(
                     $_POST['telehealth_title'],
                     $_POST['telehealth_content'],
@@ -79,15 +77,14 @@ try {
                 } else {
                     $_SESSION['error'] = 'Failed to update telehealth section.';
                 }
-            }
-            elseif (isset($_POST['save_community'])) {
+            } elseif (isset($_POST['save_community'])) {
                 $imagePath = $communityContent['image_path'];
-                
+
                 // Handle image upload if new image was provided
                 if (!empty($_FILES['community_image']['name'])) {
                     $imagePath = $doctorsPage->uploadImage($_FILES['community_image']);
                 }
-                
+
                 if ($doctorsPage->updateCommunity(
                     $_POST['community_title'],
                     $_POST['community_content'],
@@ -97,15 +94,14 @@ try {
                 } else {
                     $_SESSION['error'] = 'Failed to update community impact section.';
                 }
-            }
-            elseif (isset($_POST['save_accessibility'])) {
+            } elseif (isset($_POST['save_accessibility'])) {
                 $imagePath = $accessibilityContent['image_path'];
-                
+
                 // Handle image upload if new image was provided
                 if (!empty($_FILES['accessibility_image']['name'])) {
                     $imagePath = $doctorsPage->uploadImage($_FILES['accessibility_image']);
                 }
-                
+
                 if ($doctorsPage->updateAccessibility(
                     $_POST['accessibility_title'],
                     $_POST['accessibility_content'],
@@ -116,17 +112,15 @@ try {
                     $_SESSION['error'] = 'Failed to update accessibility section.';
                 }
             }
-            
+
             header('location: userDoctors.php');
             exit();
-            
         } catch (Exception $e) {
             $_SESSION['error'] = 'An error occurred: ' . $e->getMessage();
             header('location: userDoctors.php');
             exit();
         }
     }
-
 } catch (Exception $e) {
     $_SESSION['error'] = 'An error occurred: ' . $e->getMessage();
     header('location: userDoctors.php');
@@ -139,7 +133,8 @@ try {
 <?php
 $title = 'Admin | User Doctors';
 include './includes/admin_head.php';
-function getCurrentPage() {
+function getCurrentPage()
+{
     return basename($_SERVER['PHP_SELF']);
 }
 ?>
@@ -162,7 +157,7 @@ function getCurrentPage() {
 
         <?php if (isset($_SESSION['message'])): ?>
             <div class="alert alert-success"><?php echo $_SESSION['message'];
-                                            unset($_SESSION['message']); ?></div>
+                                                unset($_SESSION['message']); ?></div>
         <?php endif; ?>
         <?php if (isset($_SESSION['error'])): ?>
             <div class="alert alert-danger"><?php echo $_SESSION['error'];
@@ -171,7 +166,10 @@ function getCurrentPage() {
 
         <!-- Introduction Section -->
         <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#introSection" aria-expanded="true" aria-controls="introSection">
-            <h5 class="card-title">Introduction Section</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Introduction Section</h5>
+                <i id="chevronIconIntroduction" class='bx bxs-chevron-up ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse show" id="introSection">
@@ -181,14 +179,14 @@ function getCurrentPage() {
                         <input type="hidden" name="save_intro" value="1">
                         <div class="mb-3">
                             <label for="introTitle" class="form-label">Title</label>
-                            <input type="text" class="form-control" name="intro_title" 
+                            <input type="text" class="form-control" name="intro_title"
                                 value="<?php echo htmlspecialchars($introContent['title']); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="introContent" class="form-label">Content</label>
-                            <textarea class="form-control" name="intro_content" rows="5" required><?php 
-                                echo htmlspecialchars($introContent['content']); 
-                            ?></textarea>
+                            <textarea class="form-control" name="intro_content" rows="5" required><?php
+                                                                                                    echo htmlspecialchars($introContent['content']);
+                                                                                                    ?></textarea>
                         </div>
                         <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-primary text-light">Save Changes</button>
@@ -200,7 +198,10 @@ function getCurrentPage() {
 
         <!-- Specializations Section -->
         <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#specializationsSection" aria-expanded="false" aria-controls="specializationsSection">
-            <h5 class="card-title">Specializations Section</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Specializations Section</h5>
+                <i id="chevronIconSpecializations" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="specializationsSection">
@@ -210,12 +211,12 @@ function getCurrentPage() {
                         <input type="hidden" name="save_specializations" value="1">
                         <div class="mb-3">
                             <label for="specializationsTitle" class="form-label">Section Title</label>
-                            <input type="text" class="form-control" name="specializations_title" 
+                            <input type="text" class="form-control" name="specializations_title"
                                 value="<?php echo htmlspecialchars($specializationsContent['title']); ?>" required>
                         </div>
                         <div class="mb-3">
                             <label for="specializationsSubtitle" class="form-label">Subtitle</label>
-                            <input type="text" class="form-control" name="specializations_subtitle" 
+                            <input type="text" class="form-control" name="specializations_subtitle"
                                 value="<?php echo htmlspecialchars($specializationsContent['content']); ?>" required>
                         </div>
 
@@ -232,13 +233,13 @@ function getCurrentPage() {
                                             <div class="mb-3">
                                                 <label class="form-label">Title</label>
                                                 <input type="text" class="form-control" name="spec_title[]"
-                                                    value="<?php echo htmlspecialchars($specializationsContent['spec'.($i+1).'_title']); ?>" required>
+                                                    value="<?php echo htmlspecialchars($specializationsContent['spec' . ($i + 1) . '_title']); ?>" required>
                                             </div>
                                             <div class="mb-3">
                                                 <label class="form-label">Content</label>
-                                                <textarea class="form-control" name="spec_content[]" rows="3" required><?php 
-                                                    echo htmlspecialchars($specializationsContent['spec'.($i+1).'_content']); 
-                                                ?></textarea>
+                                                <textarea class="form-control" name="spec_content[]" rows="3" required><?php
+                                                                                                                        echo htmlspecialchars($specializationsContent['spec' . ($i + 1) . '_content']);
+                                                                                                                        ?></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -256,7 +257,10 @@ function getCurrentPage() {
 
         <!-- Telehealth Advantage Section -->
         <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#telehealthSection" aria-expanded="false" aria-controls="telehealthSection">
-            <h5 class="card-title">Telehealth Advantage Section</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Telehealth Advantage Section</h5>
+                <i id="chevronIconTelehealth" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="telehealthSection">
@@ -273,15 +277,15 @@ function getCurrentPage() {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Content</label>
-                                    <textarea class="form-control" name="telehealth_content" rows="3" required><?php 
-                                        echo htmlspecialchars($telehealthContent['content']); 
-                                    ?></textarea>
+                                    <textarea class="form-control" name="telehealth_content" rows="3" required><?php
+                                                                                                                echo htmlspecialchars($telehealthContent['content']);
+                                                                                                                ?></textarea>
                                 </div>
                                 <!-- <div class="mb-3">
                                     <label class="form-label">Testimonial Quote</label>
-                                    <textarea class="form-control" name="telehealth_quote" rows="2"><?php 
-                                        echo htmlspecialchars($telehealthContent['quote']); 
-                                    ?></textarea>
+                                    <textarea class="form-control" name="telehealth_quote" rows="2"><?php
+                                                                                                    echo htmlspecialchars($telehealthContent['quote']);
+                                                                                                    ?></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Testimonial Author</label>
@@ -296,7 +300,7 @@ function getCurrentPage() {
                                     <small class="text-muted">Current: <?php echo htmlspecialchars($telehealthContent['image_path']); ?></small>
                                 </div>
                                 <div class="text-center">
-                                    <img src="../assets/images/<?php echo htmlspecialchars($telehealthContent['image_path']); ?>" 
+                                    <img src="../assets/images/<?php echo htmlspecialchars($telehealthContent['image_path']); ?>"
                                         alt="Current Telehealth Image" class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
                                 </div>
                             </div>
@@ -312,7 +316,10 @@ function getCurrentPage() {
 
         <!-- Community Impact Section -->
         <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#communitySection" aria-expanded="false" aria-controls="communitySection">
-            <h5 class="card-title">Community Impact Section</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Community Impact Section</h5>
+                <i id="chevronIconCommunity" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="communitySection">
@@ -329,9 +336,9 @@ function getCurrentPage() {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Content</label>
-                                    <textarea class="form-control" name="community_content" rows="5" required><?php 
-                                        echo htmlspecialchars($communityContent['content']); 
-                                    ?></textarea>
+                                    <textarea class="form-control" name="community_content" rows="5" required><?php
+                                                                                                                echo htmlspecialchars($communityContent['content']);
+                                                                                                                ?></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -341,7 +348,7 @@ function getCurrentPage() {
                                     <small class="text-muted">Current: <?php echo htmlspecialchars($communityContent['image_path']); ?></small>
                                 </div>
                                 <div class="text-center">
-                                    <img src="../assets/images/<?php echo htmlspecialchars($communityContent['image_path']); ?>" 
+                                    <img src="../assets/images/<?php echo htmlspecialchars($communityContent['image_path']); ?>"
                                         alt="Current Community Impact Image" class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
                                 </div>
                             </div>
@@ -357,7 +364,10 @@ function getCurrentPage() {
 
         <!-- Accessibility Section -->
         <button class="btn btn-link text-start ps-0" type="button" data-bs-toggle="collapse" data-bs-target="#accessibilitySection" aria-expanded="false" aria-controls="accessibilitySection">
-            <h5 class="card-title">Accessibility Section</h5>
+            <div class="d-flex flex-row align-items-center">
+                <h5 class="card-title">Accessibility Section</h5>
+                <i id="chevronIconAccessibility" class='bx bxs-chevron-down ms-2'></i>
+            </div>
         </button>
         <hr class="mt-1 mb-2">
         <div class="collapse" id="accessibilitySection">
@@ -374,9 +384,9 @@ function getCurrentPage() {
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Content</label>
-                                    <textarea class="form-control" name="accessibility_content" rows="5" required><?php 
-                                        echo htmlspecialchars($accessibilityContent['content']); 
-                                    ?></textarea>
+                                    <textarea class="form-control" name="accessibility_content" rows="5" required><?php
+                                                                                                                    echo htmlspecialchars($accessibilityContent['content']);
+                                                                                                                    ?></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -386,7 +396,7 @@ function getCurrentPage() {
                                     <small class="text-muted">Current: <?php echo htmlspecialchars($accessibilityContent['image_path']); ?></small>
                                 </div>
                                 <div class="text-center">
-                                    <img src="../assets/images/<?php echo htmlspecialchars($accessibilityContent['image_path']); ?>" 
+                                    <img src="../assets/images/<?php echo htmlspecialchars($accessibilityContent['image_path']); ?>"
                                         alt="Current Accessibility Image" class="img-fluid rounded shadow mt-2" style="max-height: 200px;">
                                 </div>
                             </div>
@@ -401,5 +411,15 @@ function getCurrentPage() {
         </div>
     </section>
 
+    <script>
+        const mainButton = document.querySelector('[data-bs-target="#main"]');
+        const chevronIconMain = document.getElementById('chevronIconMain');
+
+        mainButton.addEventListener('click', function() {
+            chevronIconMain.classList.toggle('rotate-180');
+        });
+    </script>
+
 </body>
+
 </html>
