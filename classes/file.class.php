@@ -82,7 +82,7 @@ class File
         FROM files f 
         INNER JOIN account a1 ON a1.account_id = f.sender_id AND a1.user_role = :user_role
         INNER JOIN account a2 ON a2.user_role = :receiver_role
-        WHERE sender_id = :sender_id 
+        WHERE sender_id = :sender_id AND receiver_id = a2.account_id
         ORDER BY f.is_created DESC;";
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':sender_id', $sender_id);
