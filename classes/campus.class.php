@@ -82,4 +82,18 @@ class Campus
         }
         return $data;
     }
+
+    function show_campus_mod()
+    {
+        $sql = "SELECT c.*, a.account_id FROM campus c
+        INNER JOIN account a ON a.campus_id = c.campus_id
+        WHERE a.user_role = 2 AND a.is_deleted != 1 AND c.is_deleted != 1
+        ORDER BY campus_id ASC;";
+        $query = $this->db->connect()->prepare($sql);
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetchAll();
+        }
+        return $data;
+    }
 }
