@@ -28,14 +28,14 @@ include '../includes/head.php';
             ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 p-md-4">
                 <div class="container">
-                    <div class="col-md-12 text-md-start d-flex justify-content-between">
-                        <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
+                    <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
+                        <button onclick="history.back()" class="btn btn-outline-secondary hover-light d-flex align-items-center">
                             <i class='bx bx-chevron-left'></i>
                             Back
                         </button>
-                        <div class="d-flex flex-wrap gap-2">
-                            <a href="./fileUpload.php" class="btn btn-outline-primary hover-light">Send Files</a>
-                        </div>
+                        <a href="./fileUpload.php" class="btn btn-outline-primary hover-light">
+                            Send Files
+                        </a>
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-12">
