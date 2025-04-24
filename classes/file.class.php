@@ -98,11 +98,12 @@ class File
 
     function show_files_campus_to_doctor($receiver_id, $sender_role, $user_role)
     {
-        $sql = "SELECT f.*, CONCAT(a1.firstname, IF(a1.middlename IS NOT NULL AND a1.middlename != '', CONCAT(' ', a1.middlename), ''), 
+        $sql = "SELECT f.*, c.*, CONCAT(a1.firstname, IF(a1.middlename IS NOT NULL AND a1.middlename != '', CONCAT(' ', a1.middlename), ''), 
         ' ', a1.lastname) AS doctor_name 
         FROM files f 
         INNER JOIN account a1 ON a1.user_role = :sender_role
         INNER JOIN account a2 ON a2.account_id = :receiver_id AND a2.user_role = :user_role
+        INNER JOIN campus c ON c.campus_id = a1.campus_id
         WHERE sender_id = a1.account_id AND receiver_id = :receiver_id
         ORDER BY f.is_created DESC;";
         $query = $this->db->connect()->prepare($sql);

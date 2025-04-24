@@ -108,7 +108,7 @@ include '../includes/head.php';
                                                         <tr>
                                                             <th class="text-nowrap">File Attachment</th>
                                                             <th class="text-nowrap">Description</th>
-                                                            <th class="text-nowrap">Uploaded By</th>
+                                                            <th class="text-nowrap">Uploaded from</th>
                                                             <th class="text-nowrap">Date</th>
                                                         </tr>
                                                     </thead>
@@ -131,7 +131,7 @@ include '../includes/head.php';
                                                                         </a>
                                                                     </td>
                                                                     <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['file_description']) ?></td>
-                                                                
+                                                                    <td class="" style="max-width: 150px;"><?= htmlspecialchars($item['campus_name']) ?></td>
                                                                     <td class="text-nowrap"><?= date("F d, Y", strtotime($item['is_created'])) ?></td>
                                                                 </tr>
                                                         <?php
