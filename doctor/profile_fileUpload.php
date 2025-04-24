@@ -106,7 +106,7 @@ include '../includes/head.php';
                                             </div>
                                             <!-- File Upload Input -->
                                             <div class="mb-4">
-                                                <label for="documentFile" class="form-label fw-semibold">Attach file (optional)</label>
+                                                <label for="documentFile" class="form-label fw-semibold">Attach file</label>
                                                 <div class="input-group">
                                                     <input type="file" class="form-control d-none" id="documentFile" name="documentname" accept=".pdf,.doc,.xls,.xlsx,.docx,.png,.jpg,.jpeg" required>
                                                     <button class="btn btn-danger text-light" type="button" onclick="document.getElementById('documentFile').click()">
