@@ -877,7 +877,7 @@ class Account
                        ap.appointment_time,
                        ap.appointment_status,
                        ap.reason,
-                       ap.result
+                       ap.*
                 FROM appointment ap
                 LEFT JOIN doctor_info d ON ap.doctor_id = d.doctor_id
                 LEFT JOIN account a1 ON d.account_id = a1.account_id
