@@ -14,6 +14,7 @@ require_once '../classes/doctor.class.php';
 $doctor = new Doctor();
 $doctorArray = $doctor->get_doctors();
 
+
 include_once '../classes/file.class.php';
 $file = new File();
 ?>
@@ -44,11 +45,15 @@ function getCurrentPage()
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex flex-column flex-md-row align-items-center">
-                        <img src="<?= isset($doctorDetails['account_image']) ? "../assets/images/" . $doctorDetails['account_image'] : "../assets/images/default_profile.png" ?>"
+                        <img src="<?php if (isset($_SESSION['account_image'])) {
+                                        echo "../assets/images/" . $_SESSION['account_image'];
+                                    } else {
+                                        echo "../assets/images/defualt_profile.png";
+                                    } ?>"
                             alt="Doctor Profile Image" class="img-fluid rounded shadow mb-3 me-md-3" height="150" width="150">
                         <div class="flex-grow-1">
-                            <h5 class="card-title">Dr. eee</h5>
-                            <p class="text-muted">e</p>
+                            <h5 class="card-title">Dr. Franklin Oliveros</h5>
+                            <p class="text-muted">Dentist</p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
                             <a href="./fileUpload.php?doctor_id=<?= $_GET['doctor_id'] ?>" class="btn btn-outline-primary hover-light">Send Files</a>

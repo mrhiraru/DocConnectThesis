@@ -51,4 +51,17 @@ class Doctor
         }
         return $data;
     }
+
+    function getDoctorDetailsById($doctorId) {
+        $doctor = new Doctor();
+        $allDoctors = $doctor->get_doctors();
+        
+        foreach ($allDoctors as $doc) {
+            if ($doc['doctor_id'] == $doctorId) {
+                return $doc;
+            }
+        }
+        return null;
+    }
+    
 }
