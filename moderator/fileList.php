@@ -11,8 +11,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once '../classes/doctor.class.php';
 
-$doctor = new Doctor();
-$doctorArray = $doctor->get_doctors();
+$doctor = new Account();
+$doctor_record = $doctor->get_doctor_info_2($_GET['doctor_id']);
 
 
 include_once '../classes/file.class.php';
@@ -52,7 +52,7 @@ function getCurrentPage()
                                     } ?>"
                             alt="Doctor Profile Image" class="img-fluid rounded shadow mb-3 me-md-3" height="150" width="150">
                         <div class="flex-grow-1">
-                            <h5 class="card-title">Dr. Franklin Oliveros</h5>
+                            <h5 class="card-title"><?= $doctor_record['doctor_name'] ?></h5>
                             <p class="text-muted">Dentist</p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
