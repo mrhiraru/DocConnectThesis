@@ -2,9 +2,9 @@
 class Database
 {
     private $host = 'localhost';
-    private $username = 'root';
-    private $password = '';
-    private $database = 'docconnect_db5';
+    private $username = 'u701207055_docconnect_db';
+    private $password = '#Docconnect_db32';
+    private $database = 'u701207055_docconnect_db';
     protected $connection;
 
     
