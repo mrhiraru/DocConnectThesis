@@ -9,7 +9,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     exit();
 }
 
-require_once '../classes/doctor.class.php';
+require_once '../classes/account.class.php';
 
 $doctor = new Account();
 $doctor_record = $doctor->get_doctor_info_2($_GET['doctor_id']);
@@ -45,15 +45,15 @@ function getCurrentPage()
             <div class="card mb-4">
                 <div class="card-body">
                     <div class="d-flex flex-column flex-md-row align-items-center">
-                        <img src="<?php if (isset($_SESSION['account_image'])) {
-                                        echo "../assets/images/" . $_SESSION['account_image'];
+                        <img src="<?php if (isset($doctor_record['account_image'])) {
+                                        echo "../assets/images/" . $doctor_record['account_image'];
                                     } else {
                                         echo "../assets/images/defualt_profile.png";
                                     } ?>"
                             alt="Doctor Profile Image" class="img-fluid rounded shadow mb-3 me-md-3" height="150" width="150">
                         <div class="flex-grow-1">
-                            <h5 class="card-title"><?= $doctor_record['doctor_name'] ?></h5>
-                            <p class="text-muted">Dentist</p>
+                            <h5 class="card-title">Dr. <?= $doctor_record['doctor_name'] ?></h5>
+                            <p class="text-muted"><?= $doctor_record['specialty'] ?></p>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
                             <a href="./fileUpload.php?doctor_id=<?= $_GET['doctor_id'] ?>" class="btn btn-outline-primary hover-light">Send Files</a>
