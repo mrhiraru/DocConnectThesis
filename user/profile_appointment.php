@@ -89,7 +89,7 @@ include '../includes/head.php';
                             <?php
                             } else if ($item['appointment_status'] == 'Pending') {
                             ?>
-                              <button type="button" class="btn btn-sm btn-danger text-light" id="cancel" onclick="cancel_request(<?= $item['appointment_id'] ?>)">Cancel</button>
+                              <button type="button" class="btn btn-sm btn-danger text-light" id="cancel" onclick="cancel_request(<?= $item['appointment_Id'] ?>)">Cancel</button>
                             <?php
                             } else if ($item['appointment_status'] == 'Completed') {
                             ?>
@@ -152,7 +152,7 @@ include '../includes/head.php';
         <div class="modal-body">
           <div class="row d-flex">
             <div class="col-12 text-center">
-              <a href="./appointment" class="text-decoration-none text-dark">
+              <a href="./profile_appointment" class="text-decoration-none text-dark">
                 <p class="m-0 text-primary fw-bold">Click to Continue.</p>
               </a>
             </div>
@@ -175,9 +175,6 @@ include '../includes/head.php';
 
       document.getElementById("cancel-yes").addEventListener("click", async function() {
         console.log("User confirmed cancellation.");
-
-        const isVerified = await handleAuthClick();
-
 
         const formData = {
           appointment_id: appointment_id,
