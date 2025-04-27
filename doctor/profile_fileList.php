@@ -31,7 +31,7 @@ include '../includes/head.php';
             ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 p-md-4">
                 <div class="container">
-                    <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
+                    <div class="col-md-12 d-flex justify-content-between align-items-center">
                         <a href="./profile" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
                             <i class='bx bx-chevron-left'></i>
                             Back
