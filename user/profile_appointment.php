@@ -172,22 +172,9 @@ include '../includes/head.php';
         var myModal = new bootstrap.Modal(updated, {});
         myModal.show();
 
-        var cancel_perm;
+        var successful;
 
         document.getElementById("cancel-yes").addEventListener("click", function() {
-          cancel_perm = true;
-
-          myModal.hide();
-        });
-
-        document.getElementById("cancel-no").addEventListener("click", function() {
-          cancel_perm = false;
-
-          myModal.hide();
-        });
-
-
-        if (cancel_perm) {
           const formData = {
             appointment_id: appointment_id,
             cancel_request: true,
@@ -198,13 +185,8 @@ include '../includes/head.php';
             type: 'POST',
             data: formData,
             success: function(response) {
-              if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                const updated = document.getElementById('cancelledModal');
-                message_notifcation('cancel');
-                if (updated) {
-                  var myModal = new bootstrap.Modal(updated, {});
-                  myModal.show();
-                }
+              if (response.trim() === 'success') {
+                successful = true;
               } else {
                 console.error('Error:', response);
               }
@@ -213,6 +195,21 @@ include '../includes/head.php';
               console.error('Error sending message:', error);
             }
           });
+
+          myModal.hide();
+        });
+
+        document.getElementById("cancel-no").addEventListener("click", function() {
+
+          myModal.hide();
+        });
+
+        if (successful) {
+          const newMod = document.getElementById('cancelledModal');
+          if (newMod) {
+            var myModal = new bootstrap.Modal(newMod, {});
+            myModal.show();
+          }
         }
       }
     }
