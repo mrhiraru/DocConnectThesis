@@ -166,7 +166,6 @@ include '../includes/head.php';
   require_once('../includes/footer.php');
   ?>
   <script>
-    $(document).ready(function() {
       function cancel_request(appointment_id) {
         const updated = document.getElementById('cancelModal');
         if (updated) {
@@ -180,7 +179,6 @@ include '../includes/head.php';
               appointment_id: appointment_id,
               cancel_request: $('#cancel').val(),
             };
-
 
             $.ajax({
               url: '../handlers/doctor.update_appointment.php',
@@ -208,7 +206,6 @@ include '../includes/head.php';
           });
         }
       }
-    });
   </script>
 </body>
 
