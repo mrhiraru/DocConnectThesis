@@ -172,18 +172,13 @@ include '../includes/head.php';
         var myModal = new bootstrap.Modal(updated, {});
         myModal.show();
 
-        document.getElementById("cancel-yes").addEventListener("click", async function() {
+        document.getElementById("cancel-yes").addEventListener("click", function() {
           console.log("User confirmed cancellation.");
-
-          document.getElementById('cancel-yes').blur();
-          myModal.hide();
 
           const formData = {
             appointment_id: appointment_id,
             cancel_request: $('#cancel').val(),
           };
-
-
 
           $.ajax({
             url: '../handlers/doctor.update_appointment.php',
@@ -208,6 +203,12 @@ include '../includes/head.php';
 
           myModal.hide();
 
+        });
+
+        document.getElementById("cancel-no").addEventListener("click", function() {
+          console.log("User declined cancellation.");
+
+          myModal.hide();
         });
       }
     }
