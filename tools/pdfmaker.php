@@ -14,11 +14,11 @@
         return age;
     }
 
-    function getbase64(path) {
+    function getbase64(location) {
         const fs = require('fs');
         const path = require('path');
 
-        const imagePath = path.resolve(__dirname, path);
+        const imagePath = path.resolve(__dirname, location);
         const imageBase64 = fs.readFileSync(imagePath, {
             encoding: 'base64'
         });
