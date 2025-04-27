@@ -17,6 +17,7 @@ require_once('../classes/appointment.class.php');
 <html lang="en">
 <?php
 $title = 'DocConnect | Profile';
+$appointment = 'active';
 include '../includes/head.php';
 ?>
 
@@ -42,7 +43,12 @@ include '../includes/head.php';
 
           <div class="card bg-body-tertiary mb-4">
             <div class="card-body">
-              <h5 class="card-title mb-2 text-green">Appointment List</h5>
+              <div class="d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0 text-green">Appointment List</h5>
+                <a href="./appointment" class="btn btn-sm btn-primary text-light">
+                  New Appointment
+                </a>
+              </div>
               <hr>
               <div class="table-responsive">
                 <table class="table table-striped" id="eventsTable">
@@ -81,7 +87,7 @@ include '../includes/head.php';
                             <?php
                             } else if ($item['appointment_status'] == 'Pending') {
                             ?>
-                              
+
                             <?php
                             } else if ($item['appointment_status'] == 'Completed') {
                             ?>

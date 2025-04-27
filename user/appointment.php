@@ -88,7 +88,8 @@ include '../includes/head.php';
     .flatpickr-calendar {
         margin: auto;
         width: 100%;
-        max-width: 300px; /* Adjust as needed */
+        max-width: 300px;
+        /* Adjust as needed */
     }
 
     .flatpickr-time .flatpickr-hour,
@@ -114,21 +115,26 @@ include '../includes/head.php';
 
         .flatpickr-input {
             width: 100%;
-            font-size: 16px; /* Larger font for better readability on mobile */
+            font-size: 16px;
+            /* Larger font for better readability on mobile */
         }
 
         .flatpickr-calendar .flatpickr-months {
-            font-size: 14px; /* Adjust month and year font size */
+            font-size: 14px;
+            /* Adjust month and year font size */
         }
 
         .flatpickr-calendar .flatpickr-weekdays {
-            font-size: 12px; /* Adjust weekday font size */
+            font-size: 12px;
+            /* Adjust weekday font size */
         }
 
         .flatpickr-calendar .flatpickr-day {
-            height: 30px; /* Adjust day cell height */
+            height: 30px;
+            /* Adjust day cell height */
             width: 10px;
-            line-height: 30px; /* Center day text vertically */
+            line-height: 30px;
+            /* Center day text vertically */
         }
 
         .flatpickr-calendar .flatpickr-innerContainer {
@@ -137,6 +143,7 @@ include '../includes/head.php';
     }
 
     @media (max-width: 376px) {
+
         .flatpickr-calendar .dayContainer,
         .flatpickr-calendar .flatpickr-days {
             width: 275.875px;
@@ -145,6 +152,7 @@ include '../includes/head.php';
     }
 
     @media (max-width: 321px) {
+
         .flatpickr-calendar .dayContainer,
         .flatpickr-calendar .flatpickr-days {
             width: 220.875px;
@@ -158,9 +166,16 @@ include '../includes/head.php';
     require_once('../includes/header.php');
     ?>
 
-    <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
-        <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
-            <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-2 p-md-3 m-0 mb-4 mb-md-0">
+
+<form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
+    <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
+        <div class="col-md-12 d-flex justify-content-between align-items-center">
+            <a href="./profile_appointment" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
+                <i class='bx bx-chevron-left'></i>
+                Back
+            </a>
+        </div>
+        <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-2 p-md-3 m-0 mb-4 mb-md-0">
                 <div class="row d-flex justify-content-between align-items-center">
                     <div class="col-6 text-start">
                         <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Form</p>
