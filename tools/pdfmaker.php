@@ -19,7 +19,7 @@
         content: [{
 			columns: [
 			    {
-                    image: '../assets/images/wmsulogo.png',
+                    image: 'https://docconnect.xscpry.com/assets/images/cliniclogo.png',
 			        width: 75,
 			        height: 75
 		        },
@@ -41,7 +41,7 @@
                     ]
                 },
                 {
-                    image: '../assets/images/cliniclogo.png',
+                    image: 'https://docconnect.xscpry.com/assets/images/wmsulogo.png',
 		            width: 75,
 			        height: 75
 		        },
