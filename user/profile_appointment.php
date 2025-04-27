@@ -178,40 +178,36 @@ include '../includes/head.php';
 
         const isVerified = await handleAuthClick();
 
-        if (isVerified) {
-          const formData = {
-            appointment_id: appointment_id,
-            cancel: $('#cancel').val(),
-          };
 
-          var deleted_event = await delete_event(formData.event_id);
+        const formData = {
+          appointment_id: appointment_id,
+          cancel: $('#cancel').val(),
+        };
 
-          if (deleted_event.deleted) {
-            $.ajax({
-              url: '../handlers/doctor.update_appointment.php',
-              type: 'POST',
-              data: formData,
-              success: function(response) {
-                if (response.trim() === 'success') { // Trim to avoid whitespace issues
-                  const updated = document.getElementById('cancelledModal');
-                  message_notifcation('cancel');
-                  if (updated) {
-                    var myModal = new bootstrap.Modal(updated, {});
-                    myModal.show();
-                  }
-                } else {
-                  console.error('Error:', response);
-                }
-              },
-              error: function(xhr, status, error) {
-                console.error('Error sending message:', error);
+
+        $.ajax({
+          url: '../handlers/doctor.update_appointment.php',
+          type: 'POST',
+          data: formData,
+          success: function(response) {
+            if (response.trim() === 'success') { // Trim to avoid whitespace issues
+              const updated = document.getElementById('cancelledModal');
+              message_notifcation('cancel');
+              if (updated) {
+                var myModal = new bootstrap.Modal(updated, {});
+                myModal.show();
               }
-            });
-
+            } else {
+              console.error('Error:', response);
+            }
+          },
+          error: function(xhr, status, error) {
+            console.error('Error sending message:', error);
           }
+        });
 
-          myModal.hide();
-        }
+        myModal.hide();
+
       });
     }
   }
