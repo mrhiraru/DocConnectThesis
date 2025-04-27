@@ -8,6 +8,8 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
     exit();
 }
 
+$birthdate = isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : "";
+
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 require_once('../classes/appointment.class.php');
@@ -68,9 +70,9 @@ include '../includes/head.php';
                                                 <div>
                                                     <a href="./chat_user.php?account_id=<?= $item['account_id']  ?>"><i class='bx bx-chat'></i>Chat</a>
                                                 </div>
-                                                <div>
+                                                <!-- <div>
                                                     <a href="./patient-appointment?account_id=<?= $item['account_id']  ?>"><i class='bx bx-calendar'></i>Appointments</a>
-                                                </div>
+                                                </div> -->
                                                 <div>
                                                     <a href="./file_list?account_id=<?= $item['account_id']  ?>"><i class='bx bx-folder'></i>Send Request</a>
                                                 </div>
