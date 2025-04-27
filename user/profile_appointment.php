@@ -89,7 +89,7 @@ include '../includes/head.php';
                             <?php
                             } else if ($item['appointment_status'] == 'Pending') {
                             ?>
-
+                              <button type="button" class="btn btn-danger text-light" id="cancel" onclick="cancel_request()">Cancel</button>
                             <?php
                             } else if ($item['appointment_status'] == 'Completed') {
                             ?>
@@ -124,9 +124,99 @@ include '../includes/head.php';
     </div>
   </section>
 
+  <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cancelModalLabel">Are you sure you want to cancel the appointment?</h5>
+        </div>
+        <div class="modal-body">
+          <div class="row d-flex">
+            <div class="col-12 text-center">
+              <button type="button" class="btn btn-secondary text-light" data-bs-dismiss="modal" id="cancel-no" aria-label="Close">No</button>
+              <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" id="cancel-yes" aria-label="Close">Yes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="cancelledModal" tabindex="-1" aria-labelledby="cancelledModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cancelledModalLabel">The appointment has been cancelled.</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row d-flex">
+            <div class="col-12 text-center">
+              <a href="./appointment" class="text-decoration-none text-dark">
+                <p class="m-0 text-primary fw-bold">Click to Continue.</p>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <?php
   require_once('../includes/footer.php');
   ?>
 </body>
+<script>
+  function cancel_request() {
+    const updated = document.getElementById('cancelModal');
+    if (updated) {
+      var myModal = new bootstrap.Modal(updated, {});
+      myModal.show();
+
+      document.getElementById("cancel-yes").addEventListener("click", async function() {
+        console.log("User confirmed cancellation.");
+
+        const isVerified = await handleAuthClick();
+
+        if (isVerified) {
+          const formData = {
+            appointment_id: <?= $record['appointment_id'] ?>,
+            cancel: $('#cancel').val(),
+            event_id: '<?= $record['event_id'] ?>'
+          };
+
+          var deleted_event = await delete_event(formData.event_id);
+
+          if (deleted_event.deleted) {
+            $.ajax({
+              url: '../handlers/doctor.update_appointment.php',
+              type: 'POST',
+              data: formData,
+              success: function(response) {
+                if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                  const updated = document.getElementById('cancelledModal');
+                  message_notifcation('cancel');
+                  if (updated) {
+                    var myModal = new bootstrap.Modal(updated, {});
+                    myModal.show();
+                  }
+                } else {
+                  console.error('Error:', response);
+                }
+              },
+              error: function(xhr, status, error) {
+                console.error('Error sending message:', error);
+              }
+            });
+
+          }
+
+          myModal.hide();
+        }
+      });
+    }
+  }
+</script>
+
 
 </html>
