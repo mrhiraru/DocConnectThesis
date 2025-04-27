@@ -172,12 +172,25 @@ include '../includes/head.php';
         var myModal = new bootstrap.Modal(updated, {});
         myModal.show();
 
-        document.getElementById("cancel-yes").addEventListener("click", function() {
-          console.log("User confirmed cancellation.");
+        var cancel_perm;
 
+        document.getElementById("cancel-yes").addEventListener("click", function() {
+          cancel_perm = true;
+
+          myModal.hide();
+        });
+
+        document.getElementById("cancel-no").addEventListener("click", function() {
+          cancel_perm = false;
+
+          myModal.hide();
+        });
+
+
+        if (cancel_perm) {
           const formData = {
             appointment_id: appointment_id,
-            cancel_request: $('#cancel').val(),
+            cancel_request: true,
           };
 
           $.ajax({
@@ -200,16 +213,7 @@ include '../includes/head.php';
               console.error('Error sending message:', error);
             }
           });
-
-          myModal.hide();
-
-        });
-
-        document.getElementById("cancel-no").addEventListener("click", function() {
-          console.log("User declined cancellation.");
-
-          myModal.hide();
-        });
+        }
       }
     }
   </script>
