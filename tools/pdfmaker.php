@@ -14,39 +14,51 @@
         return age;
     }
 
+    function getbase64(path) {
+        const fs = require('fs');
+        const path = require('path');
+
+        const imagePath = path.resolve(__dirname, path);
+        const imageBase64 = fs.readFileSync(imagePath, {
+            encoding: 'base64'
+        });
+
+        return imageBase64;
+    }
+
+
+
     // Clinical History PDF
     var clinicalHistory = {
         content: [{
-			columns: [
-			    {
-                    image: 'https://docconnect.xscpry.com/assets/images/cliniclogo.png',
-			        width: 75,
-			        height: 75
-		        },
-                {
-                    width: '*',
-                    alignment: 'center',
-                     stack: [
-                        {
-                            text: 'Western Mindanao State University',
-                            style: 'header',
-                            fontSize: 20
-                        },
-                        {
-                            text: 'W376+CGQ, Normal Rd, Zamboanga City',
-                            style: 'subheader',
-                            fontSize: 13,
-                            bold: false
-                        }
-                    ]
-                },
-                {
-                    image: 'https://docconnect.xscpry.com/assets/images/wmsulogo.png',
-		            width: 75,
-			        height: 75
-		        },
-			],
-		},{
+                columns: [{
+                        image: 'data:image/png;base64,' + getbase64('assets/images/cliniclogo.png'),
+                        width: 75,
+                        height: 75
+                    },
+                    {
+                        width: '*',
+                        alignment: 'center',
+                        stack: [{
+                                text: 'Western Mindanao State University',
+                                style: 'header',
+                                fontSize: 20
+                            },
+                            {
+                                text: 'W376+CGQ, Normal Rd, Zamboanga City',
+                                style: 'subheader',
+                                fontSize: 13,
+                                bold: false
+                            }
+                        ]
+                    },
+                    {
+                        image: 'data:image/png;base64,' + getbase64('assets/images/wmsulogo.png'),
+                        width: 75,
+                        height: 75
+                    },
+                ],
+            }, {
                 text: 'Clinical History',
                 style: 'header',
                 alignment: 'center'
