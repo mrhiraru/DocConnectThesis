@@ -122,7 +122,7 @@ include '../includes/head.php';
                                     </div>
                                 </div>
 
-                                <div class="card mb-3 bg-light shadow-lg p-3">
+                                <!-- <div class="card mb-3 bg-light shadow-lg p-3">
                                     <h4 class="text-primary mb-3">Contact Information</h4>
                                     <div class="mb-2 fw-light">
                                         <i class='bx bxs-envelope me-2 text-green'></i>
@@ -132,7 +132,7 @@ include '../includes/head.php';
                                         <i class='bx bxs-phone me-2 text-green'></i>
                                         <span><?= !empty($doctorDetails['contact']) ? htmlspecialchars($doctorDetails['contact']) : 'Not provided' ?></span>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="card px-4 py-2 bg-light shadow-lg mb-3">
                                     <h6 class="text-primary">Professional Biography:</h6>
