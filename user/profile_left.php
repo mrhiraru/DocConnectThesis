@@ -21,7 +21,8 @@ if (isset($_SESSION['fullname']) && !empty($_SESSION['fullname'])) {
                     echo "../assets/images/default_profile.png";
                   } ?>" alt="avatar" class="img-fluid" style="width: 100%; height: 100%; object-fit: cover;">
       </div>
-      <h4 class="my-3 text-green"><?= $displayName ?></h4>
+      <h4 class="mt-3 text-green"><?= $displayName ?></h4>
+      <p class="text-muted"><?= $_SESSION['role'] ?></p>
       <hr>
       <div class="details">
         <div class="d-flex mx-5 mx-md-4">
@@ -57,6 +58,12 @@ if (isset($_SESSION['fullname']) && !empty($_SESSION['fullname'])) {
             <p class="text-black"><?= isset($_SESSION['weight']) ? $_SESSION['weight'] . " kg" : "N/A" ?></p>
           </div>
         </div>
+        <!-- <div class="d-flex mx-5 mx-md-4">
+          <p class="text-muted text-start w-75">Role</p>
+          <div class="text-start w-50">
+            <p class="text-black"><?= isset($_SESSION['role']) ? $_SESSION['rolex'] : "N/A" ?></p>
+          </div>
+        </div> -->
       </div>
     </div>
   </div>
