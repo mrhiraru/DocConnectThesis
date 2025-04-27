@@ -172,8 +172,6 @@ include '../includes/head.php';
         var myModal = new bootstrap.Modal(updated, {});
         myModal.show();
 
-        var successful;
-
         document.getElementById("cancel-yes").addEventListener("click", function() {
           const formData = {
             appointment_id: appointment_id,
@@ -186,7 +184,7 @@ include '../includes/head.php';
             data: formData,
             success: function(response) {
               if (response.trim() === 'success') {
-                successful = true;
+                window.location.href = './profile_appointment.php';
               } else {
                 console.error('Error:', response);
               }
@@ -203,14 +201,6 @@ include '../includes/head.php';
 
           myModal.hide();
         });
-
-        if (successful) {
-          const newMod = document.getElementById('cancelledModal');
-          if (newMod) {
-            var myModal = new bootstrap.Modal(newMod, {});
-            myModal.show();
-          }
-        }
       }
     }
   </script>
