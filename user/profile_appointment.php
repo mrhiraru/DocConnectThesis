@@ -89,7 +89,7 @@ include '../includes/head.php';
                             <?php
                             } else if ($item['appointment_status'] == 'Pending') {
                             ?>
-                              <button type="button" class="btn btn-danger text-light" id="cancel" onclick="cancel_request(<?= $item['appointment_id'] ?>)">Cancel</button>
+                              <button type="button" class="btn btn-sm btn-danger text-light" id="cancel" onclick="cancel_request(<?= $item['appointment_id'] ?>)">Cancel</button>
                             <?php
                             } else if ($item['appointment_status'] == 'Completed') {
                             ?>
