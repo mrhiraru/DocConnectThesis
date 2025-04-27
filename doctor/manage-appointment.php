@@ -328,9 +328,19 @@ include '../includes/head.php';
                 </div>
                 <div class="modal-body">
                     <div class="row d-flex">
+                        <div class="col-12 text-center mb-2">
+                            <select class="form-select" id="decline_reason" aria-label="Default select example">
+                                <option selected>Select a reason for declining.</option>
+                                <option value="Doctor is unavailable at requested time and date.">Doctor is unavailable at requested time and date.</option>
+                                <option value="Patient already has an existing appointment.">Patient already has an existing appointment.</option>
+                                <option value="Reason for appointment is not suitable for doctor's specialty.">Reason for appointment is not suitable for doctor's specialty.</option>
+                                <option value="Doctor is not accepting appointment at this time.">Doctor is not accepting appointment at this time.</option>
+                                <option value="Others">Others</option>
+                            </select>
+                        </div>
                         <div class="col-12 text-center">
                             <button type="button" class="btn btn-secondary text-light" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-                            <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" aria-label="Close" onclick="decline_appointment()">Decline</button>
+                            <button type="button" class="btn btn-primary text-light" data-bs-dismiss="modal" aria-label="Close" onclick="decline_appointment(document.getElementById('decline_reason').value)">Decline</button>
                         </div>
                     </div>
                 </div>

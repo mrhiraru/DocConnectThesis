@@ -458,13 +458,14 @@
         });
     });
 
-    function decline_appointment() {
+    function decline_appointment(decline_reason) {
         $.ajax({
             url: '../handlers/doctor.update_appointment.php',
             type: 'POST',
             data: {
                 appointment_id: <?= $record['appointment_id'] ?>,
-                decline: 'true'
+                decline: 'true',
+                decline_reason: decline_reason,
             },
             success: function(response) {
                 if (response.trim() === 'success') { // Trim to avoid whitespace issues

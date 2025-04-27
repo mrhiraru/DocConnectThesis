@@ -24,6 +24,7 @@ class Appointment
     public $plan;
     public $prescription;
     public $comment;
+    public $decline_reason;
 
     public $his_illness;
     public $ob_his;

@@ -35,6 +35,7 @@ if (isset($_POST['confirm'])) {
 } else if (isset($_POST['decline'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_status = "Cancelled";
+    $appointment->decline_reason = htmlentities($_POST['decline_reason']);
 
     if (
         validate_field($appointment->appointment_id && $appointment->appointment_status)
