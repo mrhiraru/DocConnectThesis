@@ -89,7 +89,7 @@ include '../includes/head.php';
                             <?php
                             } else if ($item['appointment_status'] == 'Pending') {
                             ?>
-                              <button type="button" class="btn btn-danger text-light" id="cancel" onclick="cancel_request()">Cancel</button>
+                              <button type="button" class="btn btn-danger text-light" id="cancel" onclick="cancel_request(<?= $item['appointment_id'] ?>)">Cancel</button>
                             <?php
                             } else if ($item['appointment_status'] == 'Completed') {
                             ?>
@@ -167,7 +167,7 @@ include '../includes/head.php';
   ?>
 </body>
 <script>
-  function cancel_request() {
+  function cancel_request(appointment_id) {
     const updated = document.getElementById('cancelModal');
     if (updated) {
       var myModal = new bootstrap.Modal(updated, {});
@@ -180,9 +180,8 @@ include '../includes/head.php';
 
         if (isVerified) {
           const formData = {
-            appointment_id: <?= $record['appointment_id'] ?>,
+            appointment_id: appointment_id,
             cancel: $('#cancel').val(),
-            event_id: '<?= $record['event_id'] ?>'
           };
 
           var deleted_event = await delete_event(formData.event_id);
