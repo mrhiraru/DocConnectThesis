@@ -165,50 +165,53 @@ include '../includes/head.php';
   <?php
   require_once('../includes/footer.php');
   ?>
-</body>
-<script>
-  function cancel_request(appointment_id) {
-    const updated = document.getElementById('cancelModal');
-    if (updated) {
-      var myModal = new bootstrap.Modal(updated, {});
-      myModal.show();
+  <script>
+    $(document).ready(function() {
+      function cancel_request(appointment_id) {
+        const updated = document.getElementById('cancelModal');
+        if (updated) {
+          var myModal = new bootstrap.Modal(updated, {});
+          myModal.show();
 
-      document.getElementById("cancel-yes").addEventListener("click", async function() {
-        console.log("User confirmed cancellation.");
+          document.getElementById("cancel-yes").addEventListener("click", async function() {
+            console.log("User confirmed cancellation.");
 
-        const formData = {
-          appointment_id: appointment_id,
-          cancel_request: $('#cancel').val(),
-        };
+            const formData = {
+              appointment_id: appointment_id,
+              cancel_request: $('#cancel').val(),
+            };
 
 
-        $.ajax({
-          url: '../handlers/doctor.update_appointment.php',
-          type: 'POST',
-          data: formData,
-          success: function(response) {
-            if (response.trim() === 'success') { // Trim to avoid whitespace issues
-              const updated = document.getElementById('cancelledModal');
-              message_notifcation('cancel');
-              if (updated) {
-                var myModal = new bootstrap.Modal(updated, {});
-                myModal.show();
+            $.ajax({
+              url: '../handlers/doctor.update_appointment.php',
+              type: 'POST',
+              data: formData,
+              success: function(response) {
+                if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                  const updated = document.getElementById('cancelledModal');
+                  message_notifcation('cancel');
+                  if (updated) {
+                    var myModal = new bootstrap.Modal(updated, {});
+                    myModal.show();
+                  }
+                } else {
+                  console.error('Error:', response);
+                }
+              },
+              error: function(xhr, status, error) {
+                console.error('Error sending message:', error);
               }
-            } else {
-              console.error('Error:', response);
-            }
-          },
-          error: function(xhr, status, error) {
-            console.error('Error sending message:', error);
-          }
-        });
+            });
 
-        myModal.hide();
+            myModal.hide();
 
-      });
-    }
-  }
-</script>
+          });
+        }
+      }
+    });
+  </script>
+</body>
+
 
 
 </html>
