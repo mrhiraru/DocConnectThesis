@@ -263,12 +263,12 @@ class Appointment
 
     function decline_appointment()
     {
-        $sql = "UPDATE appointment SET appointment_status=:appointment_status, decline_status=:decline_status WHERE appointment_id=:appointment_id";
+        $sql = "UPDATE appointment SET appointment_status=:appointment_status, decline_reason=:decline_reason WHERE appointment_id=:appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':appointment_id', $this->appointment_id);
         $query->bindParam(':appointment_status', $this->appointment_status);
-        $query->bindParam(':decline_status', $this->decline_reason);
+        $query->bindParam(':decline_reason', $this->decline_reason);
 
         if ($query->execute()) {
             return true;
