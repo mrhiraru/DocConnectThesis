@@ -14,25 +14,11 @@
         return age;
     }
 
-    function getbase64(loc) {
-        const fs = require('fs');
-        const path = require('path');
-
-        const imagePath = path.resolve(__dirname, loc);
-        const imageBase64 = fs.readFileSync(imagePath, {
-            encoding: 'base64'
-        });
-
-        return imageBase64;
-    }
-
-
-
     // Clinical History PDF
     var clinicalHistory = {
         content: [{
                 columns: [{
-                        image: 'data:image/png;base64,' + getbase64('assets/images/cliniclogo.png'),
+                        image: ,
                         width: 75,
                         height: 75
                     },
@@ -53,7 +39,7 @@
                         ]
                     },
                     {
-                        image: 'data:image/png;base64,' + getbase64('assets/images/wmsulogo.png'),
+                        image: ,
                         width: 75,
                         height: 75
                     },
