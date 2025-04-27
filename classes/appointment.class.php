@@ -312,6 +312,21 @@ class Appointment
         }
     }
 
+    function cancel_request_appointment()
+    {
+        $sql = "UPDATE appointment SET appointment_status=:appointment_status WHERE appointment_id=:appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':appointment_id', $this->appointment_id);
+        $query->bindParam(':appointment_status', $this->appointment_status);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function get_patient_appointment($doctor_id, $account_id)
     {
         $sql = "SELECT ap.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS patient_name 
@@ -369,7 +384,7 @@ class Appointment
                 WHERE appointment_id = :appointment_id";
 
         $query = $this->db->connect()->prepare($sql);
-        
+
         // Bind all parameters
         $query->bindParam(':complaint', $this->complaint);
         $query->bindParam(':his_illness', $this->his_illness);

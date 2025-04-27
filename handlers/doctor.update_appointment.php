@@ -90,6 +90,23 @@ if (isset($_POST['confirm'])) {
     } else {
         $success = 'failed';
     }
+} else if (isset($_POST['cancel_request'])) {
+    $appointment->appointment_id = htmlentities($_POST['appointment_id']);
+    $appointment->appointment_status = "Cancelled";
+
+    if (
+        validate_field($appointment->appointment_id &&
+            $appointment->appointment_status)
+    ) {
+        if ($appointment->cancel_request_appointment()) {
+
+            $success = 'success';
+        } else {
+            $success = 'failed';
+        }
+    } else {
+        $success = 'failed';
+    }
 } else if (isset($_POST['start'])) {
     $appointment->appointment_id = htmlentities($_POST['appointment_id']);
     $appointment->appointment_status = 'Ongoing';

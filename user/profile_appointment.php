@@ -181,7 +181,7 @@ include '../includes/head.php';
 
         const formData = {
           appointment_id: appointment_id,
-          cancel: $('#cancel').val(),
+          cancel_request: $('#cancel').val(),
         };
 
 
