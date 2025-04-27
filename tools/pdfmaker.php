@@ -17,6 +17,36 @@
     // Clinical History PDF
     var clinicalHistory = {
         content: [{
+			columns: [
+			    {
+                    image: '../assets/images/wmsulogo.png',
+			        width: 75,
+			        height: 75
+		        },
+                {
+                    width: '*',
+                    alignment: 'center',
+                     stack: [
+                        {
+                            text: 'Western Mindanao State University',
+                            style: 'header',
+                            fontSize: 20
+                        },
+                        {
+                            text: 'W376+CGQ, Normal Rd, Zamboanga City',
+                            style: 'subheader',
+                            fontSize: 13,
+                            bold: false
+                        }
+                    ]
+                },
+                {
+                    image: '../assets/images/cliniclogo.png',
+		            width: 75,
+			        height: 75
+		        },
+			],
+		},{
                 text: 'Clinical History',
                 style: 'header',
                 alignment: 'center'
