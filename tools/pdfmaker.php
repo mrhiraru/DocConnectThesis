@@ -318,6 +318,7 @@
                                 style: 'tableExample',
                                 colSpan: 2
                             },
+                            {},
                             {
                                 text: 'Dosage:\n' + (<?= json_encode($record['dosage']) ?>),
                                 style: 'tableExample',
@@ -325,8 +326,7 @@
                             {
                                 text: 'Frequency:\n' + (<?= json_encode($record['frequency']) ?>),
                                 style: 'tableExample',
-                            },
-                            {}
+                            }
                         ]
                     ]
                 }
