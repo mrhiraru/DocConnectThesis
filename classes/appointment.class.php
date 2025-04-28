@@ -23,6 +23,8 @@ class Appointment
     public $assessment;
     public $plan;
     public $prescription;
+    public $dosage;
+    public $frequency;
     public $comment;
     public $decline_reason;
 
@@ -402,6 +404,8 @@ class Appointment
                 assessment = :assessment,
                 plan = :plan,
                 prescription = :prescription,
+                dosage = :dosage,  
+                frequency = :frequency,
                 comment = :comment,
                 appointment_status = :appointment_status,
                 diagnosis = :diagnosis
@@ -424,6 +428,8 @@ class Appointment
         $query->bindParam(':assessment', $this->assessment);
         $query->bindParam(':plan', $this->plan);
         $query->bindParam(':prescription', $this->prescription);
+        $query->bindParam(':dosage', $this->dosage);
+        $query->bindParam(':frequency', $this->frequency);
         $query->bindParam(':comment', $this->comment);
         $query->bindParam(':appointment_status', $this->appointment_status);
         $query->bindParam(':diagnosis', $this->diagnosis);

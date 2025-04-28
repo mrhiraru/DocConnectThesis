@@ -79,7 +79,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-2 mb-2">
                                     <label for="birthdate" class="form-label mb-1">Age:</label>
-                                    <input id="birthdate" class="form-control bg-light" value="<<?= calculateAge($record['birthdate']) ?>" readonly>
+                                    <input id="birthdate" class="form-control bg-light" value="<?= calculateAge($record['birthdate']) ?>" readonly>
                                 </div>
                                 <div class="col-2 mb-2">
                                     <label for="gender" class="form-label mb-1">Sex:</label>
@@ -304,7 +304,7 @@ include '../includes/head.php';
                                             <textarea class="form-control bg-light" id="dosage" name="dosage" placeholder="Dosage" required></textarea>
                                             <textarea class="form-control bg-light" id="frequency" name="frequency" placeholder="Usage Frequency" required></textarea>
                                         </div>
-                                        
+
                                         <?php
                                         if (isset($_POST['prescription']) && !validate_field($_POST['prescription'])) {
                                         ?>
@@ -416,6 +416,11 @@ include '../includes/head.php';
                                     <div class="col-12 mb-2">
                                         <label for="prescription" class="form-label mb-1">Prescription:</label>
                                         <textarea id="prescription" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['prescription'] ?? '') ?></textarea>
+                                        <div class="input-group">
+                                            <textarea class="form-control bg-light" id="prescription" name="prescription" readonly><?= htmlspecialchars($record['prescription'] ?? '') ?></textarea>
+                                            <textarea class="form-control bg-light" id="dosage" name="dosage" readonly><?= htmlspecialchars($record['dosage'] ?? '') ?></textarea>
+                                            <textarea class="form-control bg-light" id="frequency" name="frequency" readonly><?= htmlspecialchars($record['frequency'] ?? '') ?></textarea>
+                                        </div>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -681,6 +686,8 @@ include_once('../tools/pdfmaker.php');
             plan: $('#plan').val().trim(),
             prescription_check: $('input[name="prescription_check"]:checked').val(),
             prescription: $('#prescription').val().trim(),
+            dosage: $('#dosage').val().trim(),
+            frequency: $('#frequency').val().trim(),
             appointment_id: '<?= $_GET['appointment_id'] ?>',
             appointment_status: 'Completed'
         };
