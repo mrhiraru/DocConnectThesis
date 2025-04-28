@@ -5,6 +5,11 @@ require_once('../classes/appointment.class.php');
 $appointment_class = new Appointment();
 
 ?>
+<div class="d-flex justify-content-end mt-2">
+    <button class="btn btn-green btn-sm me-2 text-light" onclick="exportTableToExcel('eventsTable')">Export to Excel</button>
+    <button class="btn btn-danger btn-sm text-light" onclick="exportTableToPDF('eventsTable')">Export to PDF</button>
+</div>
+
 <div class="table-responsive">
     <table class="table table-striped" id="eventsTable">
         <thead>
@@ -67,3 +72,23 @@ $appointment_class = new Appointment();
         </tbody>
     </table>
 </div>
+
+<script>
+function exportTableToExcel(tableID) {
+  const table = document.getElementById(tableID);
+  const wb = XLSX.utils.table_to_book(table, {sheet: "Appointments"});
+  XLSX.writeFile(wb, "appointments.xlsx");
+}
+
+function exportTableToPDF(tableID) {
+  const element = document.getElementById(tableID);
+  const opt = {
+    margin:       0.5,
+    filename:     'appointments.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+  };
+  html2pdf().from(element).set(opt).save();
+}
+</script>
