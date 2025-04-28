@@ -131,6 +131,30 @@ class Appointment
         return $data;
     }
 
+    function get_appointment_fulldetails($appointment_id)
+    {
+        $sql = "SELECT ap.*, p.*, a1.*, a2.*, d.*, CONCAT(a1.firstname, IF(a1.middlename IS NOT NULL AND a1.middlename != '', CONCAT(' ', a1.middlename), ''), ' ', a1.lastname) AS patient_name,
+        CONCAT(a2.firstname, IF(a2.middlename IS NOT NULL AND a2.middlename != '', CONCAT(' ', a2.middlename), ''), ' ', a2.lastname) AS doctor_name,
+        a1.email AS patient_email, a2.email AS doctor_email
+        FROM appointment ap
+
+        INNER JOIN patient_info p ON ap.patient_id = p.patient_id
+        INNER JOIN account a1 ON p.account_id = a1.account_id
+
+        INNER JOIN doctor_info d ON ap.doctor_id = d.doctor_id
+        INNER JOIN account a2 ON d.account_id = a2.account_id
+        WHERE ap.appointment_id = :appointment_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':appointment_id', $appointment_id);
+
+        $data = null;
+        if ($query->execute()) {
+            $data = $query->fetch();
+        }
+        return $data;
+    }
+
     function get_appointment_details_user($appointment_id)
     {
         $sql = "SELECT ap.*, di.*, a.*, CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS doctor_name 

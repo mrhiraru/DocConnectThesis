@@ -2,6 +2,7 @@
 require_once('../classes/appointment.class.php');
 require_once('../classes/medical_condition.class.php');
 require_once('../tools/functions.php');
+require_once('../tools/mailer.php');
 
 $appointment = new Appointment();
 
@@ -15,7 +16,6 @@ if (isset($_POST['confirm'])) {
     $appointment->event_id = htmlentities($_POST['event_id']);
     $appointment->appointment_status = "Incoming";
 
-
     if (
         validate_field($appointment->appointment_id &&
             $appointment->appointment_date &&
@@ -24,6 +24,9 @@ if (isset($_POST['confirm'])) {
             $appointment->appointment_status)
     ) {
         if ($appointment->update_appointment()) {
+
+            $appointment_details = $appointment->get_appointment_fulldetails($appointment->appointment_id);
+            email_notification($appointment_details['appointment_date'], $appointment_details['appointment_time'], $appointment_details['doctor_email'], $appointment_details['patient_name'], $appointment_details['patient_email'], $appointment_details['doctor_name'], $appointment->appointment_link, 'confirm');
 
             $success = 'success';
         } else {

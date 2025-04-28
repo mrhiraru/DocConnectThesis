@@ -45,8 +45,52 @@ function send_code($email, $fullname, $code)
     }
 }
 
-function email_notification($email, $fullname)
+function formatAppointmentSchedule($date, $time)
 {
+    // Set the timezone to GMT+8
+    date_default_timezone_set('Asia/Manila'); // GMT+8
+
+    // Combine date and time into a full datetime
+    $datetime = strtotime($date . ' ' . $time);
+
+    // Format the starting time
+    $start = date('D j M Y g', $datetime); // D = day short, j = day number, M = month short, Y = year, g = 12-hour format without leading zero
+
+    // Get the hour part for the ending time
+    $startHour = (int)date('G', $datetime); // G = 24-hour format without leading zero
+    $endHour = $startHour; // Same hour for ":59" end
+
+    // Determine AM/PM
+    $meridiem = date('a', $datetime); // am or pm
+
+    // Build the final string
+    return "@ {$start}{$meridiem} - {$endHour}:59{$meridiem} (GMT+8)";
+}
+
+function formatAppointmentSchedule2($date, $time)
+{
+    // Set the timezone to GMT+8
+    date_default_timezone_set('Asia/Manila'); // GMT+8
+
+    // Combine date and time into a full datetime
+    $datetime = strtotime($date . ' ' . $time);
+
+    // Format as "April 9, 2025 at 07:00 PM"
+    return date('F j, Y \a\t h:i A', $datetime);
+}
+
+function email_notification($date, $time, $doctor_email, $doctor_fullname, $patient_email, $patient_fullname, $link, $action)
+{
+    if ($action == 'confirm') {
+        $message = 'Appointment has been confirmed on ' . formatAppointmentSchedule2($date, $time) . '. <br> Meeting Link: <a href="' . $link . '"> ' . $link . ' </a>';
+    } else if ($action == 'decline') {
+        $message = '';
+    } else if ($action == 'reschedule') {
+        $message = 'Appoinment has been rescheduled to ' . formatAppointmentSchedule2($date, $time) . '. <br> Meeting Link: <a href="' . $link . '"> ' . $link . ' </a>';
+    } else if ($action == 'cancel') {
+        $message = '';
+    }
+
     $mail = new PHPMailer(true);
     try {
         //Server settings
@@ -61,13 +105,14 @@ function email_notification($email, $fullname)
 
         //Recipients
         $mail->setFrom('wmsu.docconnect@gmail.com', 'DocConnect');
-        $mail->addAddress($email, $fullname);     //Add a recipient
+        $mail->addAddress($doctor_email, $doctor_fullname);     //Add a recipient
+        $mail->addAddress($patient_email, $patient_fullname);     //Add a recipient
         $mail->addReplyTo('wmsu.docconnect@gmail.com', 'DocConnect');
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'WMSU DocConnect Appointment';
-        $mail->Body    = '<p> Hi ' . ucwords($fullname) . ',Verification Code: <strong>';
+        $mail->Subject = 'Notification: Docconnect Consultation: ' . formatAppointmentSchedule($date, $time) . ' (Hilal Abdulajid)';
+        $mail->Body    = $message;
         $mail->AltBody = '';
 
         if ($mail->send()) {
