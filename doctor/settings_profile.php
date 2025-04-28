@@ -320,13 +320,13 @@ include '../includes/head.php';
               <input type="submit" class="btn btn-primary text-light" name="save" value="Save Changes">
             </form>
 
-            <form method="post" action="" enctype="multipart/form-data" class="mt-4">
-              <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
+            <form method="post" action="" enctype="multipart/form-data" class="mt-5">
+              <div class="d-flex flex-column flex-lg-row align-items-center  mb-4">
                 <!-- Profile Picture -->
                 <div class="campus-pic align-items-end">
                   <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
                     <i class="bx bxs-camera-plus text-light p-2 bg-primary"></i>
-                    <span>Change E-signature</span>
+                    <span>Change E Signature</span>
                   </label>
 
                   <img src="<?php if (isset($_SESSION['e_signature'])) {
