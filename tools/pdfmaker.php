@@ -495,15 +495,14 @@
                         width: '33%'
                     },
                     {
-                        text: "Dosage:  " + calculateAge(<?= json_encode($record['dosage']) ?>),
+                        text: "Dosage:  " + (<?= json_encode($record['dosage']) ?>),
                         width: '33%'
                     },
                     {
-                        text: "Frequency:  " + (<?= json_encode(date("M d, Y", strtotime($record['frequency']))) ?>),
+                        text: "Frequency:  " + (<?= json_encode($record['frequency']) ?>),
                         width: '33%'
                     }
                 ],
-                text: <?= json_encode($record['prescription']) ?>,
                 margin: [0, 30, 0, 20]
             },
             {
