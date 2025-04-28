@@ -491,7 +491,19 @@
                 height: 100
             },
             {
-                text: <?= json_encode($record['prescription']) ?>,
+                columns: [{
+                        text: "Prescription:  " + (<?= json_encode($record['prescription']) ?>),
+                        width: '33%'
+                    },
+                    {
+                        text: "Dosage:  " + (<?= json_encode($record['dosage']) ?>),
+                        width: '33%'
+                    },
+                    {
+                        text: "Frequency:  " + (<?= json_encode($record['frequency']) ?>),
+                        width: '33%'
+                    }
+                ],
                 margin: [0, 30, 0, 20]
             },
             {
