@@ -344,6 +344,7 @@
                                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                                     const updated = document.getElementById('updatedModal');
                                     message_notifcation('confirm');
+                                    email_notifcation('confirm');
                                     if (updated) {
                                         var myModal = new bootstrap.Modal(updated, {});
                                         myModal.show();
@@ -499,6 +500,23 @@
             },
             error: function(xhr, status, error) {
                 console.error('Error sending message:', error);
+            }
+        })
+    }
+
+    function email_notifcation(action) {
+        $.ajax({
+            url: '../handlers/email.send_notification.php',
+            type: 'POST',
+            data: {
+                appointment_id: '<?= $record["appointment_id"] ?>',
+                action: action
+            },
+            success: function(response) {
+                console.log('Email notifcation sent.');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error sending email:', error);
             }
         })
     }
