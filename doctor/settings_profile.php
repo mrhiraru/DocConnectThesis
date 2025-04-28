@@ -319,6 +319,28 @@ include '../includes/head.php';
               <!-- Save Button -->
               <input type="submit" class="btn btn-primary text-light" name="save" value="Save Changes">
             </form>
+
+            <form method="post" action="" enctype="multipart/form-data">
+              <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
+                <!-- Profile Picture -->
+                <div class="campus-pic align-items-end">
+                  <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
+                    <i class="bx bxs-camera-plus text-light p-2 bg-primary"></i>
+                    <span>Change E-signature</span>
+                  </label>
+
+                  <img src="<?php if (isset($_SESSION['e_signature'])) {
+                              echo "../assets/images/" . $_SESSION['e_signature'];
+                            } else {
+                              echo "../assets/images/defualt_profile.png";
+                            } ?>" id="outputesign" class="rounded-circle" alt="User Avatar">
+
+                  <input id="file" type="file" name="e_signature" accept=".jpg, .jpeg, .png" required onchange="previewImageesign(event)">
+                </div>
+                <!-- <button class="btn btn-primary btn-md d-block mx-2 text-light" id="upload_profile" type="button">Upload New</button> -->
+                <input type="submit" class="btn btn-primary text-light ms-0 mx-lg-3" name="save_e_signature" value="Save E-Signature">
+              </div>
+            </form>
           </div>
         </div>
       </main>
@@ -374,6 +396,7 @@ include '../includes/head.php';
   <!-- <script src="../js/doctor/settings_profile.js"></script> -->
   <script src="../js/main.js"></script>
   <script src="../js/imageChange.js"></script>
+  <script src="../js/eSign.js"></script>
   <script>
     function formatPhoneNumber(input) {
       let value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
