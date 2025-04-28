@@ -325,7 +325,6 @@ include '../includes/head.php';
                 <!-- Profile Picture -->
                 <div class="campus-pic align-items-end">
                   <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
-                    <i class="bx bxs-camera-plus text-light p-2 bg-primary"></i>
                     <span>Change E Signature</span>
                   </label>
 
