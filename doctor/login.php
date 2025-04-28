@@ -44,6 +44,7 @@ if (!isset($_SESSION['user_role']) && isset($_COOKIE['remember_me'])) {
       $_SESSION['civil_status'] = $account->civil_status;
       $_SESSION['religion'] = $account->religion;
       $_SESSION['suffix'] = $account->suffix;
+      $_SESSION['e_signature'] = $account->e_signature;
 
       if ($_SESSION['user_role'] == 1) {
         header('location: ./index.php');

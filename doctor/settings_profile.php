@@ -106,7 +106,7 @@ if (isset($_POST['save_esignature'])) {
     $uploadfile = $uploaddir . $uploadenewname;
 
     if (move_uploaded_file($_FILES[htmlentities('e_signature')]['tmp_name'], $uploadfile)) {
-      $account->account_image = $uploadenewname;
+      $account->e_signature = $uploadenewname;
 
       if ($account->save_e_signature()) {
         $_SESSION['e_signature'] = $account->e_signature;

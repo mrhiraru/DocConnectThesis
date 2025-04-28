@@ -391,6 +391,7 @@ class Account
                 $this->specialty = $accountData['specialty'];
                 $this->bio = $accountData['bio'];
                 $this->doctor_id = $accountData['doctor_id'];
+                $this->e_signature = $accountData['e_signature'];
 
                 return true;
             }
