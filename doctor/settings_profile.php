@@ -320,7 +320,7 @@ include '../includes/head.php';
               <input type="submit" class="btn btn-primary text-light" name="save" value="Save Changes">
             </form>
 
-            <form method="post" action="" enctype="multipart/form-data">
+            <form method="post" action="" enctype="multipart/form-data" class="mt-4">
               <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
                 <!-- Profile Picture -->
                 <div class="campus-pic align-items-end">
