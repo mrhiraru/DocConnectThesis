@@ -316,6 +316,7 @@
                         [{
                                 text: 'Prescription:\n' + (<?= json_encode($record['prescription']) ?>),
                                 style: 'tableExample',
+                                colSpan: 2
                             },
                             {
                                 text: 'Dosage:\n' + (<?= json_encode($record['dosage']) ?>),
