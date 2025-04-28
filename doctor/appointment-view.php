@@ -416,13 +416,13 @@ include '../includes/head.php';
                                     <div class="col-12 mb-2">
                                         <label for="prescription" class="form-label mb-1">Prescription:</label>
                                         <div class="input-group">
-                                            <textarea class="form-control bg-light" id="prescription" name="prescription" readonly>Prescribed Medicine: 
+                                            <textarea class="form-control bg-light" id="prescription" name="prescription" readonly>Prescribed Medicine:
                                             <?= htmlspecialchars($record['prescription'] ?? '') ?>
                                             </textarea>
-                                            <textarea class="form-control bg-light" id="dosage" name="dosage" readonly>Dosage: 
+                                            <textarea class="form-control bg-light" id="dosage" name="dosage" readonly>Dosage:
                                             <?= htmlspecialchars($record['dosage'] ?? '') ?>
                                             </textarea>
-                                            <textarea class="form-control bg-light" id="frequency" name="frequency" readonly>Frequency: 
+                                            <textarea class="form-control bg-light" id="frequency" name="frequency" readonly>Frequency:
                                             <?= htmlspecialchars($record['frequency'] ?? '') ?>
                                             </textarea>
                                         </div>
