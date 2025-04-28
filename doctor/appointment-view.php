@@ -298,7 +298,13 @@ include '../includes/head.php';
                                         </div>
                                     </div>
                                     <div class="col-12 input-group" id="prescription-container">
-                                        <textarea class="form-control" aria-label="With textarea"></textarea>
+
+                                        <div class="input-group">
+                                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                                            <textarea class="form-control" aria-label="With textarea"></textarea>
+                                        </div>
+
                                         <textarea id="prescription" name="prescription" rows="2" cols="50" class="form-control bg-light" placeholder="Include prescription here" required></textarea>
                                         <?php
                                         if (isset($_POST['prescription']) && !validate_field($_POST['prescription'])) {
