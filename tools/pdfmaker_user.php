@@ -492,15 +492,15 @@
             },
             {
                 columns: [{
-                        text: "Prescription:  " + (<?= json_encode($record['prescription']) ?>),
+                        text: "Prescription:  \n" + (<?= json_encode($record['prescription']) ?>),
                         width: '33%'
                     },
                     {
-                        text: "Dosage:  " + (<?= json_encode($record['dosage']) ?>),
+                        text: "Dosage:  \n" + (<?= json_encode($record['dosage']) ?>),
                         width: '33%'
                     },
                     {
-                        text: "Frequency:  " + (<?= json_encode($record['frequency']) ?>),
+                        text: "Frequency:  \n" + (<?= json_encode($record['frequency']) ?>),
                         width: '33%'
                     }
                 ],
