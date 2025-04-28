@@ -24,7 +24,7 @@ $appointment_class = new Appointment();
             <?php
             $appointmentArray = $appointment_class->doctor_appointments($_GET['doctor_id'], $_GET['status']);
             $counter = 1;
-            if (empty(!$appointmentArray)) {
+            if (!empty($appointmentArray)) {
                 foreach ($appointmentArray as $item) {
             ?>
                     <tr>
