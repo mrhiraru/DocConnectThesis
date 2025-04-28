@@ -415,11 +415,10 @@ include '../includes/head.php';
                                 <?php if (!empty($record['prescription'])) : ?>
                                     <div class="col-12 mb-2">
                                         <label for="prescription" class="form-label mb-1">Prescription:</label>
-                                        <textarea id="prescription" rows="2" cols="50" class="form-control bg-light" readonly><?= htmlspecialchars($record['prescription'] ?? '') ?></textarea>
                                         <div class="input-group">
-                                            <textarea class="form-control bg-light" id="prescription" name="prescription" readonly><?= htmlspecialchars($record['prescription'] ?? '') ?></textarea>
-                                            <textarea class="form-control bg-light" id="dosage" name="dosage" readonly><?= htmlspecialchars($record['dosage'] ?? '') ?></textarea>
-                                            <textarea class="form-control bg-light" id="frequency" name="frequency" readonly><?= htmlspecialchars($record['frequency'] ?? '') ?></textarea>
+                                            <textarea class="form-control bg-light" id="prescription" name="prescription" readonly>Prescribed Medicine: <?= '\n' . htmlspecialchars($record['prescription'] ?? '') ?></textarea>
+                                            <textarea class="form-control bg-light" id="dosage" name="dosage" readonly>Dosage: <?= '\n' . htmlspecialchars($record['dosage'] ?? '') ?></textarea>
+                                            <textarea class="form-control bg-light" id="frequency" name="frequency" readonly>Frequency: <?= '\n' . htmlspecialchars($record['frequency'] ?? '') ?></textarea>
                                         </div>
                                     </div>
                                 <?php endif; ?>
