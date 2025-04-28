@@ -316,10 +316,18 @@
                         [{
                                 text: 'Prescription:\n' + (<?= json_encode($record['prescription']) ?>),
                                 style: 'tableExample',
-                                colSpan: 4
+                                colSpan: 2
                             },
-                            {},
-                            {},
+                            {
+                                text: 'Dosage:\n' + (<?= json_encode($record['dosage']) ?>),
+                                style: 'tableExample',
+                                colSpan: 1
+                            },
+                            {
+                                text: 'Frequency:\n' + (<?= json_encode($record['frequency']) ?>),
+                                style: 'tableExample',
+                                colSpan: 1
+                            },
                             {}
                         ]
                     ]
