@@ -333,7 +333,7 @@ include '../includes/head.php';
                               echo "../assets/images/" . $_SESSION['e_signature'];
                             } else {
                               echo "../assets/images/defualt_profile.png";
-                            } ?>" id="outputesign" class="rounded-circle" alt="User Avatar">
+                            } ?>" id="outputesign" class="rounded" alt="User Avatar">
 
                   <input id="file" type="file" name="e_signature" accept=".jpg, .jpeg, .png" required onchange="previewImageesign(event)">
                 </div>
