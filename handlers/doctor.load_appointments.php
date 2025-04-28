@@ -74,21 +74,74 @@ $appointment_class = new Appointment();
 </div>
 
 <script>
-function exportTableToExcel(tableID) {
-  const table = document.getElementById(tableID);
-  const wb = XLSX.utils.table_to_book(table, {sheet: "Appointments"});
-  XLSX.writeFile(wb, "appointments.xlsx");
-}
+    function exportTableToExcel(tableID) {
+        const table = document.getElementById(tableID);
+        const clonedTable = table.cloneNode(true);
+        const rows = clonedTable.querySelectorAll("tr");
 
-function exportTableToPDF(tableID) {
-  const element = document.getElementById(tableID);
-  const opt = {
-    margin:       0.5,
-    filename:     'appointments.pdf',
-    image:        { type: 'jpeg', quality: 0.98 },
-    html2canvas:  { scale: 2 },
-    jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
-  };
-  html2pdf().from(element).set(opt).save();
-}
+        rows.forEach(row => {
+            const actionCell = row.querySelector("td:last-child, th:last-child");
+            if (actionCell) actionCell.remove();
+        });
+
+        const wb = XLSX.utils.table_to_book(clonedTable, {
+            sheet: "Appointments"
+        });
+
+        const ws = wb.Sheets["Appointments"];
+        const range = XLSX.utils.decode_range(ws['!ref']);
+        const colWidths = [];
+
+        for (let C = range.s.c; C <= range.e.c; ++C) {
+            let maxWidth = 10;
+            for (let R = range.s.r; R <= range.e.r; ++R) {
+                const cellAddress = {
+                    c: C,
+                    r: R
+                };
+                const cellRef = XLSX.utils.encode_cell(cellAddress);
+                const cell = ws[cellRef];
+                if (cell && cell.v != null) {
+                    const cellValue = cell.v.toString();
+                    maxWidth = Math.max(maxWidth, cellValue.length + 5);
+                }
+            }
+            colWidths.push({
+                wch: maxWidth
+            });
+        }
+        ws['!cols'] = colWidths;
+
+        XLSX.writeFile(wb, "appointments.xlsx");
+    }
+
+    function exportTableToPDF(tableID) {
+        const table = document.getElementById(tableID);
+        const clonedTable = table.cloneNode(true);
+        const rows = clonedTable.querySelectorAll("tr");
+
+        rows.forEach(row => {
+            const actionCell = row.querySelector("td:last-child, th:last-child");
+            if (actionCell) actionCell.remove();
+        });
+
+        const opt = {
+            margin: 0.5,
+            filename: 'appointments.pdf',
+            image: {
+                type: 'jpeg',
+                quality: 0.98
+            },
+            html2canvas: {
+                scale: 2
+            },
+            jsPDF: {
+                unit: 'in',
+                format: 'letter',
+                orientation: 'landscape'
+            }
+        };
+
+        html2pdf().from(clonedTable).set(opt).save();
+    }
 </script>
