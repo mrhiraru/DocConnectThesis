@@ -45,7 +45,7 @@
                         height: 75
                     },
                 ],
-            },{
+            }, {
                 text: 'Clinical History',
                 style: 'header',
                 alignment: 'center'
@@ -235,7 +235,7 @@
                         height: 75
                     },
                 ],
-            },{
+            }, {
                 text: 'Consultation Result',
                 style: 'header',
                 alignment: 'center'
@@ -317,11 +317,17 @@
                         [{
                                 text: 'Prescription:\n' + (<?= json_encode($record['prescription']) ?>),
                                 style: 'tableExample',
-                                colSpan: 4
+                                colSpan: 2
                             },
                             {},
-                            {},
-                            {}
+                            {
+                                text: 'Dosage:\n' + (<?= json_encode($record['dosage']) ?>),
+                                style: 'tableExample',
+                            },
+                            {
+                                text: 'Frequency:\n' + (<?= json_encode($record['frequency']) ?>),
+                                style: 'tableExample',
+                            }
                         ]
                     ]
                 }
@@ -370,7 +376,7 @@
                         height: 75
                     },
                 ],
-            },{
+            }, {
                 alignment: 'start',
                 text: '<?= $record["doctor_name"] ?>',
                 style: 'header',
