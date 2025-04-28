@@ -154,8 +154,12 @@ if (isset($_POST['confirm'])) {
 
     if ($_POST['prescription_check'] === 'Yes') {
         $appointment->prescription = htmlentities($_POST['prescription']);
+        $appointment->dosage = htmlentities($_POST['dosage']);
+        $appointment->frequency = htmlentities($_POST['frequency']);
     } else {
         $appointment->prescription = null;
+        $appointment->dosage = null;
+        $appointment->frequency = null;
     }
 
     // System fields
