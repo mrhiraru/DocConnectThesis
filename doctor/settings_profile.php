@@ -366,10 +366,10 @@ include '../includes/head.php';
                               echo "../assets/images/defualt_profile.png";
                             } ?>" id="outputesign" class="rounded" alt="User Avatar">
 
-                  <input id="file" type="file" name="e_signature" accept=".jpg, .jpeg, .png" required onchange="previewImageesign(event)">
+                  <input id="fileesign" type="file" name="e_signature" accept=".jpg, .jpeg, .png" required onchange="previewImageesign(event)">
                 </div>
                 <!-- <button class="btn btn-primary btn-md d-block mx-2 text-light" id="upload_profile" type="button">Upload New</button> -->
-                <input type="submit" class="btn btn-primary text-light ms-0 mx-lg-3" name="save_e_signature" value="Save E-Signature">
+                <input type="submit" class="btn btn-primary text-light ms-0 mx-lg-3" name="save_esignature" value="Save E-Signature">
               </div>
             </form>
           </div>
