@@ -90,6 +90,38 @@ if (isset($_POST['save_image'])) {
   }
 }
 
+if (isset($_POST['save_esignature'])) {
+
+  $account->account_id = $_SESSION['account_id'];
+
+  $uploaddir = '../assets/images/';
+  $uploadname = $_FILES[htmlentities('e_signature')]['name'];
+  $uploadext = explode('.', $uploadname);
+  $uploadnewext = strtolower(end($uploadext));
+  $allowed = array('jpg', 'jpeg', 'png');
+
+  if (in_array($uploadnewext, $allowed)) {
+
+    $uploadenewname = uniqid('', true) . "." . $uploadnewext;
+    $uploadfile = $uploaddir . $uploadenewname;
+
+    if (move_uploaded_file($_FILES[htmlentities('e_signature')]['tmp_name'], $uploadfile)) {
+      $account->account_image = $uploadenewname;
+
+      if ($account->save_e_signature()) {
+        $_SESSION['e_signature'] = $account->e_signature;
+        $success = 'success';
+      } else {
+        echo 'An error occured while adding in the database.';
+      }
+    } else {
+      $success = 'failed';
+    }
+  } else {
+    $success = 'failed';
+  }
+}
+
 ?>
 
 <!DOCTYPE html>

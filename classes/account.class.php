@@ -35,6 +35,7 @@ class Account
     public $religion;
     public $civil_status;
 
+    public $e_signature;
 
 
     protected $db;
@@ -505,6 +506,21 @@ class Account
 
         $query = $this->db->connect()->prepare($sql);
         $query->bindParam(':account_image', $this->account_image);
+        $query->bindParam(':account_id', $this->account_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function save_e_signature()
+    {
+        $sql = "UPDATE doctor_info SET e_signature = :e_signature WHERE account_id = :account_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':e_signature', $this->e_signature);
         $query->bindParam(':account_id', $this->account_id);
 
         if ($query->execute()) {
