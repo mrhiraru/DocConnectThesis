@@ -51,17 +51,21 @@ function formatAppointmentSchedule($date, $time)
     date_default_timezone_set('Asia/Manila'); // GMT+8
 
     // Combine date and time into a full datetime
-    $datetime = strtotime($date . ' ' . $time);
+    $pure_date = date('Y-m-d', strtotime($date)); // extract only date (2025-04-09)
+
+    // Combine with real time
+    $datetimeString = $pure_date . ' ' . $time;
+    $timestamp = strtotime($datetimeString);
 
     // Format the starting time
-    $start = date('D j M Y g', $datetime); // D = day short, j = day number, M = month short, Y = year, g = 12-hour format without leading zero
+    $start = date('D j M Y g', $timestamp); // D = day short, j = day number, M = month short, Y = year, g = 12-hour format without leading zero
 
     // Get the hour part for the ending time
-    $startHour = (int)date('G', $datetime); // G = 24-hour format without leading zero
+    $startHour = (int)date('G', $timestamp); // G = 24-hour format without leading zero
     $endHour = $startHour; // Same hour for ":59" end
 
     // Determine AM/PM
-    $meridiem = date('a', $datetime); // am or pm
+    $meridiem = date('a', $timestamp); // am or pm
 
     // Build the final string
     return "@ {$start}{$meridiem} - {$endHour}:59{$meridiem} (GMT+8)";
@@ -73,10 +77,14 @@ function formatAppointmentSchedule2($date, $time)
     date_default_timezone_set('Asia/Manila'); // GMT+8
 
     // Combine date and time into a full datetime
-    $datetime = strtotime($date . ' ' . $time);
+    $pure_date = date('Y-m-d', strtotime($date)); // extract only date (2025-04-09)
+
+    // Combine with real time
+    $datetimeString = $pure_date . ' ' . $time;
+    $timestamp = strtotime($datetimeString);
 
     // Format as "April 9, 2025 at 07:00 PM"
-    return date('F j, Y \a\t h:i A', $datetime);
+    return date('F j, Y \a\t h:i A', $timestamp);
 }
 
 function email_notification($date, $time, $doctor_email, $doctor_fullname, $patient_email, $patient_fullname, $link, $action)
@@ -111,7 +119,7 @@ function email_notification($date, $time, $doctor_email, $doctor_fullname, $pati
 
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
-        $mail->Subject = 'Notification: Docconnect Consultation: ' . formatAppointmentSchedule($date, $time) . ' (Hilal Abdulajid)';
+        $mail->Subject = 'Notification: Docconnect Appointment ' . formatAppointmentSchedule($date, $time);
         $mail->Body    = $message;
         $mail->AltBody = '';
 
