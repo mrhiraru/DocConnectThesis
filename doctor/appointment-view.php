@@ -14,9 +14,10 @@ require_once('../classes/appointment.class.php');
 $appointment_class = new Appointment();
 $record = $appointment_class->get_appointment_details($_GET['appointment_id']);
 
-function calculateAge($birthdate) {
+function calculateAge($birthdate)
+{
     if (empty($birthdate)) return 'N/A';
-    
+
     $birthDate = new DateTime($birthdate);
     $today = new DateTime();
     $age = $today->diff($birthDate);
@@ -296,7 +297,8 @@ include '../includes/head.php';
                                             <label class="form-check-label" for="No">No</label>
                                         </div>
                                     </div>
-                                    <div class="col-12" id="prescription-container">
+                                    <div class="col-12 input-group" id="prescription-container">
+                                        <textarea class="form-control" aria-label="With textarea"></textarea>
                                         <textarea id="prescription" name="prescription" rows="2" cols="50" class="form-control bg-light" placeholder="Include prescription here" required></textarea>
                                         <?php
                                         if (isset($_POST['prescription']) && !validate_field($_POST['prescription'])) {
