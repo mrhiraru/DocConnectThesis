@@ -73,75 +73,96 @@ $appointment_class = new Appointment();
     </table>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <script>
     function exportTableToExcel(tableID) {
-        const table = document.getElementById(tableID);
-        const clonedTable = table.cloneNode(true);
-        const rows = clonedTable.querySelectorAll("tr");
+        setTimeout(() => {
+            const table = document.getElementById(tableID);
+            if (!table) return alert('Table not found!');
 
-        rows.forEach(row => {
-            const actionCell = row.querySelector("td:last-child, th:last-child");
-            if (actionCell) actionCell.remove();
-        });
+            const clonedTable = table.cloneNode(true);
+            const rows = clonedTable.querySelectorAll("tr");
 
-        const wb = XLSX.utils.table_to_book(clonedTable, {
-            sheet: "Appointments"
-        });
-
-        const ws = wb.Sheets["Appointments"];
-        const range = XLSX.utils.decode_range(ws['!ref']);
-        const colWidths = [];
-
-        for (let C = range.s.c; C <= range.e.c; ++C) {
-            let maxWidth = 10;
-            for (let R = range.s.r; R <= range.e.r; ++R) {
-                const cellAddress = {
-                    c: C,
-                    r: R
-                };
-                const cellRef = XLSX.utils.encode_cell(cellAddress);
-                const cell = ws[cellRef];
-                if (cell && cell.v != null) {
-                    const cellValue = cell.v.toString();
-                    maxWidth = Math.max(maxWidth, cellValue.length + 5);
-                }
-            }
-            colWidths.push({
-                wch: maxWidth
+            rows.forEach(row => {
+                const actionCell = row.querySelector("td:last-child, th:last-child");
+                if (actionCell) actionCell.remove();
             });
-        }
-        ws['!cols'] = colWidths;
 
-        XLSX.writeFile(wb, "appointments.xlsx");
+            const wb = XLSX.utils.table_to_book(clonedTable, {
+                sheet: "Appointments"
+            });
+
+            const ws = wb.Sheets["Appointments"];
+            const range = XLSX.utils.decode_range(ws['!ref']);
+            const colWidths = [];
+
+            for (let C = range.s.c; C <= range.e.c; ++C) {
+                let maxWidth = 10;
+                for (let R = range.s.r; R <= range.e.r; ++R) {
+                    const cellAddress = {
+                        c: C,
+                        r: R
+                    };
+                    const cellRef = XLSX.utils.encode_cell(cellAddress);
+                    const cell = ws[cellRef];
+                    if (cell && cell.v != null) {
+                        const cellValue = cell.v.toString();
+                        maxWidth = Math.max(maxWidth, cellValue.length + 5);
+                    }
+                }
+                colWidths.push({
+                    wch: maxWidth
+                });
+            }
+            ws['!cols'] = colWidths;
+
+            const status = new URLSearchParams(window.location.search).get('status') || 'appointments';
+            const filename = `${capitalizeFirstLetter(status)}_Appointments.xlsx`;
+
+            XLSX.writeFile(wb, filename);
+        }, 100);
     }
 
     function exportTableToPDF(tableID) {
-        const table = document.getElementById(tableID);
-        const clonedTable = table.cloneNode(true);
-        const rows = clonedTable.querySelectorAll("tr");
+        setTimeout(() => {
+            const table = document.getElementById(tableID);
+            if (!table) return alert('Table not found!');
 
-        rows.forEach(row => {
-            const actionCell = row.querySelector("td:last-child, th:last-child");
-            if (actionCell) actionCell.remove();
-        });
+            const clonedTable = table.cloneNode(true);
+            const rows = clonedTable.querySelectorAll("tr");
 
-        const opt = {
-            margin: 0.5,
-            filename: 'appointments.pdf',
-            image: {
-                type: 'jpeg',
-                quality: 0.98
-            },
-            html2canvas: {
-                scale: 2
-            },
-            jsPDF: {
-                unit: 'in',
-                format: 'letter',
-                orientation: 'landscape'
-            }
-        };
+            rows.forEach(row => {
+                const actionCell = row.querySelector("td:last-child, th:last-child");
+                if (actionCell) actionCell.remove();
+            });
 
-        html2pdf().from(clonedTable).set(opt).save();
+            const status = new URLSearchParams(window.location.search).get('status') || 'appointments';
+            const filename = `${capitalizeFirstLetter(status)}_Appointments.pdf`;
+
+            const opt = {
+                margin: 0.5,
+                filename: filename,
+                image: {
+                    type: 'jpeg',
+                    quality: 0.98
+                },
+                html2canvas: {
+                    scale: 2
+                },
+                jsPDF: {
+                    unit: 'in',
+                    format: 'letter',
+                    orientation: 'landscape'
+                }
+            };
+
+            html2pdf().from(clonedTable).set(opt).save();
+        }, 100);
+    }
+
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 </script>
