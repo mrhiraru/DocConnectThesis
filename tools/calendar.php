@@ -386,6 +386,7 @@
                                 if (response.trim() === 'success') { // Trim to avoid whitespace issues
                                     const updated = document.getElementById('rescheduleModal');
                                     message_notifcation('resched');
+                                    email_notifcation('reschedule');
                                     if (updated) {
                                         var myModal = new bootstrap.Modal(updated, {});
                                         myModal.show();
@@ -429,6 +430,7 @@
                                         if (response.trim() === 'success') { // Trim to avoid whitespace issues
                                             const updated = document.getElementById('cancelledModal');
                                             message_notifcation('cancel');
+                                            email_notifcation('cancel');
                                             if (updated) {
                                                 var myModal = new bootstrap.Modal(updated, {});
                                                 myModal.show();

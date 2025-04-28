@@ -96,7 +96,7 @@ function email_notification($date, $time, $doctor_email, $doctor_fullname, $pati
     } else if ($action == 'reschedule') {
         $message = 'Appoinment has been rescheduled to ' . formatAppointmentSchedule2($date, $time) . '. <br> Meeting Link: <a href="' . $link . '"> ' . $link . ' </a>';
     } else if ($action == 'cancel') {
-        $message = '';
+        $message = 'Appointment on ' . formatAppointmentSchedule2($date, $time) . ' has been cancelled.';
     }
 
     $mail = new PHPMailer(true);
