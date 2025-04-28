@@ -69,7 +69,7 @@
                                 style: 'tableExample'
                             },
                             {
-                                text: "Civil Status:",
+                                text: "Civil Status: " + (<?= json_encode($record['civil_status']) ?>),
                                 style: 'tableExample'
                             },
                         ],
@@ -78,7 +78,7 @@
                                 style: 'tableExample'
                             },
                             {
-                                text: 'Religion:',
+                                text: 'Religion: ' + (<?= json_encode($record['religion']) ?>),
                                 style: 'tableExample',
                                 colSpan: 2
                             },
@@ -258,7 +258,7 @@
                                 style: 'tableExample'
                             },
                             {
-                                text: "Civil Status:",
+                                text: "Civil Status:" + (<?= json_encode($record['civil_status']) ?>),
                                 style: 'tableExample'
                             }
                         ],
@@ -267,7 +267,7 @@
                                 style: 'tableExample'
                             },
                             {
-                                text: 'Religion:',
+                                text: 'Religion:' + (<?= json_encode($record['religion']) ?>),
                                 style: 'tableExample',
                                 colSpan: 2
                             },

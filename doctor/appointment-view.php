@@ -330,7 +330,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-2 mb-2">
                                     <label for="civil_status" class="form-label mb-1">Civil Status:</label>
-                                    <input id="civil_status" class="form-control bg-light" value="" readonly>
+                                    <input id="civil_status" class="form-control bg-light" value="<?= $record['civil_status'] ?>" readonly>
                                 </div>
                                 <div class="col-4 mb-2">
                                     <label for="address" class="form-label mb-1">Residence:</label>
@@ -338,7 +338,7 @@ include '../includes/head.php';
                                 </div>
                                 <div class="col-4 mb-2">
                                     <label for="religion" class="form-label mb-1">Religion:</label>
-                                    <input id="religion" class="form-control bg-light" value="" readonly>
+                                    <input id="religion" class="form-control bg-light" value="<?= $record['religion'] ?>" readonly>
                                 </div>
                                 <div class="col-4 mb-2">
                                     <label for="date_time" class="form-label mb-1">Date & Time of Consultation:</label>
