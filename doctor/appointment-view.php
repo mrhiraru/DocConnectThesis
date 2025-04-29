@@ -43,7 +43,11 @@ include '../includes/head.php';
             ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mb-4">
                 <?php
-                require_once('../includes/breadcrumb-patient.php');
+                if (isset($_GET['referral'])) {
+                    
+                } else {
+                    require_once('../includes/breadcrumb-patient.php');
+                }
                 ?>
                 <div class="p-0 m-0 row">
                     <div class="col-12 mb-3 border-bottom">
@@ -67,7 +71,7 @@ include '../includes/head.php';
                                 if (!isset($_GET['referral'])) {
                                 ?>
 
-                                    <a href="./new_referral.php?account_id=<?= $_GET['patient_account_id'] ?>&appointment_id=<?= $_GET['appointment_id'] ?>" class="btn btn-primary text-light mb-3"></i>Refer patient to another doctor.</a>
+                                    <a href="./new_referral.php?appointment_id=<?= $_GET['appointment_id'] ?>" class="btn btn-primary text-light mb-3"></i>Refer patient to another doctor.</a>
                             <?php
                                 }
                             }
