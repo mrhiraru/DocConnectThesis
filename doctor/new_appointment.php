@@ -11,6 +11,7 @@ require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
 require_once('../classes/referral.class.php');
 require_once('../classes/doctor.class.php');
+require_once('../classes/message.class.php');
 
 $appointment_class = new Appointment();
 $refer = new Refer();
