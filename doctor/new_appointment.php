@@ -14,8 +14,64 @@ require_once('../classes/doctor.class.php');
 
 $appointment_class = new Appointment();
 $refer = new Refer();
-
 $appointment_record = $appointment_class->get_appointment_details($_GET['appointment_id']);
+
+$appointment_class = new Appointment();
+if (isset($_POST['request'])) {
+    $appointment_class->patient_id = $_SESSION['patient_id'];
+    $appointment_class->doctor_id = htmlentities($_POST['doctor_id']);
+    $appointment_class->appointment_date = htmlentities($_POST['appointment_date']);
+    $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
+    $appointment_class->estimated_end = date('H:i', strtotime('+59 minutes', strtotime($appointment_class->appointment_time)));
+    if (isset($_POST['purpose'])) {
+        $appointment_class->purpose = htmlentities($_POST['purpose']);
+    } else {
+        $appointment_class->purpose = '';
+    }
+    $appointment_class->reason = htmlentities($_POST['reason']);
+    $appointment_class->appointment_status = "Incoming";
+
+    if (
+        validate_field($appointment_class->patient_id) &&
+        validate_field($appointment_class->doctor_id) &&
+        validate_field($appointment_class->appointment_date) &&
+        validate_field($appointment_class->appointment_time) &&
+        validate_field($appointment_class->reason) &&
+        validate_field($appointment_class->purpose) &&
+        validate_field($appointment_class->appointment_status)
+    ) {
+        if ($appointment_class->add_appointment()) {
+            $message = new Message();
+
+            $date_time = new DateTime($_POST['appointment_date'] . ' ' . $_POST['appointment_time']);
+            $date_time = $date_time->format('F j, Y \a\t h:i A');
+            $id = $message->get_doctor_account($appointment_class->doctor_id);
+
+            $message->sender_id = $_SESSION['account_id'];
+            $message->receiver_id = $id['account_id'];
+            $message->message = 'Referral Accepted: You have incoming appointment on ' . $date_time . '.';
+            $message->message_type = 'System';
+
+            if (
+                validate_field($message->message) &&
+                validate_field($message->sender_id) &&
+                validate_field($message->receiver_id)
+            ) {
+                if ($message->send_message()) {
+                    $success = 'success';
+                } else {
+                    echo 'An error occured while adding in the database.';
+                }
+            } else {
+                $success = 'failed';
+            }
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -118,7 +174,7 @@ include '../includes/head.php';
 
             var doctorSelect = document.getElementById("doctor_id");
 
-        
+
 
             function getDisabledDays(startDay, endDay) {
                 const daysMap = {
