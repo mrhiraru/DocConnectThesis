@@ -35,54 +35,31 @@ include '../includes/head.php';
             <main class="col-md-9 ms-sm-auto col-lg-10 bg-light">
                 <div class="card flex-fill my-4">
                     <div class="card-body">
-                        <h2>Patient Referral</h2>
-                        <div class="table-responsive">
-                            <table class="table table-striped" id="eventsTable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Patient</th>
-                                        <th>Referral Reason</th>
-                                        <th>Date of Referral</th>
-                                        <th>Status</th>
-                                        <th class="text-center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Incoming');
-                                    $counter = 1;
-                                    if (!empty($appointmentArray)) {
-                                        foreach ($appointmentArray as $item) {
-                                    ?>
-                                            <tr>
-                                                <td><?= $counter ?></td>
-                                                <td><?= $item['patient_name'] ?></td>
-                                                <td><?= 'nagtatataeee' ?></td>
-                                                <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
-
-                                                <td><?= 'Accepted' ?></td>
-
-                                                <td class="text-center">
-
-                                                    <a href="./appointment-view.php?account_id=<?= $item['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>&referral=true" class="btn btn-info btn-sm text-light"><i class='bx bx-file-blank me-1'></i>Appointment Result</a>
-
-                                                </td>
-                                            </tr>
-                                        <?php
-                                            $counter++;
-                                        }
-                                    } else {
-                                        ?>
-                                        <tr>
-                                            <td colspan="5" class="text-center">No <?= $_GET['status'] ?> Appointments</td>
-                                        </tr>
-                                    <?php
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
+                        <h2>New Referral</h2>
+                        <form action="" method="post">
+                            <div class="col-12 col-md-4 mb-3">
+                                <label for="reason">Referral Reason</label>
+                                <textarea class="form-control" id="reason" name="reason" required><?= isset($_POST['reason']) ? $_POST['reason'] : '' ?></textarea>
+                                <?php
+                                if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                                ?>
+                                    <p class="text-dark m-0 ps-2">Referral reason is required.</p>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                            <div class="col-12 col-md-4 mb-3">
+                                <label for="reason">Refer to:</label>
+                                <input type="text" class="form-control" id="reason" name="reason" required placeholder="" value="<?= isset($_POST['reason']) ? $_POST['reason'] : '' ?>">
+                                <?php
+                                if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                                ?>
+                                    <p class="text-dark m-0 ps-2">Referral reason is required.</p>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </form>
                     </div>
                 </div>
 

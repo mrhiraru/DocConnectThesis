@@ -42,8 +42,9 @@ include '../includes/head.php';
                                     <tr>
                                         <th></th>
                                         <th>Patient</th>
-                                        <th>Referral Reason</th>
-                                        <th>Date of Referral</th>
+                                        <th>Reason</th>
+                                        <th>Date</th>
+                                        <th>Doctor</th>
                                         <th>Status</th>
                                         <th class="text-center">Action</th>
                                     </tr>
@@ -61,6 +62,7 @@ include '../includes/head.php';
                                                 <td><?= 'nagtatataeee' ?></td>
                                                 <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
 
+                                                <td><?= $item['patient_name'] ?></td>
                                                 <td><?= 'Accepted' ?></td>
 
                                                 <td class="text-center">
