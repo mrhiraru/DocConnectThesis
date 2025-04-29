@@ -18,7 +18,7 @@ $appointment_class = new Appointment();
 <html lang="en">
 <?php
 $title = 'Patient Referral';
-$appointment = 'active';
+$referral = 'active';
 include '../includes/head.php';
 
 ?>

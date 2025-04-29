@@ -8,7 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 }
 
 require_once('../tools/functions.php');
-require_once('../classes/appointment.class.php');
+require_once('../classes/referral.class.php');
 require_once('../classes/doctor.class.php');
 
 $appointment_class = new Appointment();
@@ -19,7 +19,7 @@ $appointment_class = new Appointment();
 <html lang="en">
 <?php
 $title = 'Patient Referral';
-$appointment = 'active';
+$referral = 'active';
 include '../includes/head.php';
 
 ?>
