@@ -33,7 +33,7 @@ if (isset($_POST['refer'])) {
     ) {
         if ($refer->new_referral()) {
             $success = 'success';
-            header('location: ./appointment-view.php?appointment_id=' . $refer->appointment_id);
+            header('location: ./appointment-view.php?account_id= ' . $_GET['account_id'] . '&appointment_id=' . $_GET['appointment_id']);
         } else {
             echo 'An error occured while adding in the database.';
         }
