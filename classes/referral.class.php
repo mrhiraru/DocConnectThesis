@@ -27,9 +27,9 @@ class Refer
                 FROM referral r
                 INNER JOIN appointment ap ON r.appointment_id = ap.appointment_id
                 INNER JOIN patient_info p ON ap.patient_id = p.patient_id
-                INNER JOIN account a1 ON ap.patient_id = a1.account_id
+                INNER JOIN account a1 ON p.account_id = a1.account_id
                 INNER JOIN doctor_info d ON ap.doctor_id = d.doctor_id
-                INNER JOIN account a2 ON ap.doctor_id = a2.account_id
+                INNER JOIN account a2 ON p.account_id = a2.account_id
                 WHERE r.doctor_id = :doctor_id ORDER BY r.is_created ASC";
 
         $query = $this->db->connect()->prepare($sql);
