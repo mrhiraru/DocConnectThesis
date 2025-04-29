@@ -58,7 +58,7 @@ if (isset($_POST['request'])) {
                 validate_field($message->sender_id) &&
                 validate_field($message->receiver_id)
             ) {
-                if ($message->send_message()) {
+                if ($message->send_message()  && $refer->update_status($_GET['referral_id'], 'Accepted')) {
                     $success = 'success';
                 } else {
                     echo 'An error occured while adding in the database.';

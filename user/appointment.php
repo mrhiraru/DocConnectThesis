@@ -53,7 +53,7 @@ if (isset($_POST['request'])) {
                 validate_field($message->sender_id) &&
                 validate_field($message->receiver_id)
             ) {
-                if ($message->send_message() && $refer->update_status(ref)) {
+                if ($message->send_message()) {
                     $success = 'success';
                 } else {
                     echo 'An error occured while adding in the database.';
