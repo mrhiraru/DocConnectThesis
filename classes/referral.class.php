@@ -43,10 +43,10 @@ class Refer
                 VALUES (:doctor_id, :appointment_id, :reason, :status)";
 
         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':doctor_id', $doctor_id);
-        $query->bindParam(':appointment_id', $appointment_id);
-        $query->bindParam(':reason', $reason);
-        $query->bindParam(':status', $status);
+        $query->bindParam(':doctor_id', $this->doctor_id);
+        $query->bindParam(':appointment_id', $this->appointment_id);
+        $query->bindParam(':reason',  $this->reason);
+        $query->bindParam(':status',  $this->status);
 
         if ($query->execute()) {
             return true;
@@ -54,5 +54,4 @@ class Refer
             return false;
         }
     }
-
 }
