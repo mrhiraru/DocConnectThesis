@@ -160,7 +160,7 @@ include '../includes/head.php';
               <form method="post" action="" enctype="multipart/form-data">
                 <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
                   <!-- Profile Picture -->
-                  <div class="campus-pic align-items-end">
+                  <div class="docProfile_pic align-items-end">
                     <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
                       <i class="bx bxs-camera-plus text-light p-2 bg-primary"></i>
                       <span>Change Image</span>
@@ -179,10 +179,10 @@ include '../includes/head.php';
                 </div>
               </form>
   
-              <form method="post" action="" enctype="multipart/form-data" class="mt-5">
-                <div class="d-flex flex-column flex-lg-row align-items-center  mb-4">
+              <form method="post" action="" enctype="multipart/form-data">
+                <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
                   <!-- Profile Picture -->
-                  <div class="campus-pic align-items-end">
+                  <div class="eSigniture_pic align-items-end">
                     <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
                       <span>Change E Signature</span>
                     </label>
