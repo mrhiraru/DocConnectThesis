@@ -18,7 +18,7 @@ class Doctor
 
     function get_doctors()
     {
-        $sql = "SELECT a.*, 
+        $sql = "SELECT a.*, di.*,
                 CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS doctor_name
                 FROM account a
                 INNER JOIN doctor_info di ON di.account_id = a.account_id
