@@ -66,7 +66,7 @@ include '../includes/head.php';
                 <div class="card flex-fill my-4">
                     <div class="card-body">
                         <h2>New Appointment</h2>
-                        <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
+                        <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-start">
                             <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
                                 <input type="hidden" name="doctor_id">
                                 <input type="hidden" name="purpose">
