@@ -284,6 +284,12 @@ include '../includes/head.php';
                 }
             });
         }
+
+        function subtractOneHour(time) {
+            let [hours, minutes] = time.split(":").map(Number);
+            hours = (hours === 0) ? 23 : hours - 1; // Handle midnight wrap-around
+            return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+        }
     </script>
 </body>
 
