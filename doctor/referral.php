@@ -79,7 +79,7 @@ include '../includes/head.php';
                                     } else {
                                         ?>
                                         <tr>
-                                            <td colspan="5" class="text-center">No <?= $_GET['status'] ?> Appointments</td>
+                                            <td colspan="5" class="text-center">No referred patients.</td>
                                         </tr>
                                     <?php
                                     }
