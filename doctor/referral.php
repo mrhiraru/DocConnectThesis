@@ -53,7 +53,7 @@ include '../includes/head.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $referralArray = $refer->get_referral($_SESSION['doctor_id']);
+                                    $referralArray = $refer->get_referral($_SESSION['account_id']);
                                     $counter = 1;
                                     if (!empty($referralArray)) {
                                         foreach ($referralArray as $item) {
