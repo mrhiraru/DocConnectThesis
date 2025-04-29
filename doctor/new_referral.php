@@ -74,7 +74,10 @@ include '../includes/head.php';
                                 }
                                 ?>
                             </div>
-                            <button type="submit" class="btn btn-primary text-light w-100" name="refer">Confirm</button>
+                            <div class="col-12 col-md-4 mb-3">
+                                <button type="submit" class="btn btn-primary text-light w-100" name="refer">Confirm</button>
+                            </div>
+
                         </form>
                     </div>
                 </div>
