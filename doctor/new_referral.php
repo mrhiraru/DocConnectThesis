@@ -9,9 +9,36 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
+require_once('../classes/referral.class.php');
 require_once('../classes/doctor.class.php');
 
 $appointment_class = new Appointment();
+$refer = new Refer();
+
+if ($_POST['refer']) {
+
+    $refer->appointment_id = htmlentities($_GET['appointment_id']);
+    $refer->reason = ucfirst(strtolower(htmlentities($_POST['reason'])));
+    if (isset($_POST['doctor_id'])) {
+        $refer->doctor_id = htmlentities($_POST['doctor_id']);
+    } else {
+        $refer->doctor_id = '';
+    }
+
+    if (
+        validate_field($refer->appointment_id) &&
+        validate_field($refer->reason) &&
+        validate_field($refer->doctor_id)
+    ) {
+        if ($refer->new_referral()) {
+            $success = 'success';
+        } else {
+            echo 'An error occured while adding in the database.';
+        }
+    } else {
+        $success = 'failed';
+    }
+}
 
 ?>
 
@@ -50,7 +77,7 @@ include '../includes/head.php';
                                 ?>
                             </div>
                             <div class="col-12 col-md-4 mb-3">
-                                <label for="gender">Refer to:</label>
+                                <label for="doctor_id">Refer to:</label>
                                 <?php
                                 $doctor = new Doctor();
                                 $doctorArray = $doctor->get_doctors();
@@ -74,10 +101,10 @@ include '../includes/head.php';
                                 }
                                 ?>
                             </div>
+                            <input type="hidden" name="appointment_id" value="<?= $_GET['appointment_id'] ?>">
                             <div class="col-12 col-md-4 mb-3">
                                 <button type="submit" class="btn btn-primary text-light w-100" name="refer">Confirm</button>
                             </div>
-
                         </form>
                     </div>
                 </div>
