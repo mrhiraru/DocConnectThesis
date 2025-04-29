@@ -39,7 +39,7 @@ include '../includes/head.php';
                         <h2>New Referral</h2>
                         <form action="" method="post">
                             <div class="col-12 col-md-4 mb-3">
-                                <label for="reason">Referral Reason</label>
+                                <label for="reason">Referral reason:</label>
                                 <textarea class="form-control" id="reason" name="reason" required><?= isset($_POST['reason']) ? $_POST['reason'] : '' ?></textarea>
                                 <?php
                                 if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
@@ -74,6 +74,7 @@ include '../includes/head.php';
                                 }
                                 ?>
                             </div>
+                            <button type="submit" class="btn btn-primary text-light w-100" name="refer">Confirm</button>
                         </form>
                     </div>
                 </div>
