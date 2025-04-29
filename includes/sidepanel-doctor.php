@@ -34,6 +34,12 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link text-dark <?= $referral ?>" href="../doctor/referral">
+                    <i class='bx bx-book-bookmark me-2'></i>
+                    Patient Referral
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link text-dark <?= $patient ?>" href="../doctor/patients">
                     <i class='bx bx-group me-2'></i>
                     Patients
