@@ -87,7 +87,7 @@ include '../includes/head.php';
 
                                     <?php
                                     foreach ($doctorArray as $item) {
-                                        if ($item['doctor_id'] != $_SESSION['doctor_id']) {
+                                        if ($item['doctor_id'] == $_SESSION['doctor_id']) {
                                             continue;
                                         }
                                     ?>
