@@ -94,7 +94,7 @@ include '../includes/head.php';
     </div>
 
     <?php
-    $appArray = $appointment_class->get_full_dates($_SESSION['doctor_id'], $$_SESSION['start_wt'], $$_SESSION['end_wt']);
+    $appArray = $appointment_class->get_full_dates($_SESSION['doctor_id'], $_SESSION['start_wt'], $_SESSION['end_wt']);
 
     $fullDates = array_map(function ($date) {
         return date('Y-m-d', strtotime($date['appointment_date']));
