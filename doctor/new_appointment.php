@@ -68,41 +68,10 @@ include '../includes/head.php';
                         <h2>New Appointment</h2>
                         <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
                             <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
-
-
-
-
-                                <hr>
-                                <div class="mb-3">
-                                    <label for="purpose" class="form-label text-black-50">Purpose of Appointment</label>
-                                    <select id="purpose" name="purpose" class="form-select bg-light border border-outline-dark text-secondary">
-                                        <option value=""></option>
-                                        <option value="Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Check-up") ? 'selected' : '' ?>>Check-up</option>
-                                        <option value="Follow-up Check-up" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Follow-up Check-up") ? 'selected' : '' ?>>Follow-up Check-up</option>
-                                        <option value="Medical Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Medical Advice") ? 'selected' : '' ?>>Medical Advice</option>
-                                        <option value="Mental Health Consultation" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Mental Health Consultation") ? 'selected' : '' ?>>Mental Health Consultation</option>
-                                        <option value="Dietary and Nutrition Advice" <?= (isset($_POST['purpose']) && $_POST['purpose'] == "Dietary and Nutrition Advice") ? 'selected' : '' ?>>Dietary and Nutrition Advice</option>
-                                    </select>
-                                    <?php
-                                    if (isset($_POST['purpose']) && !validate_field($_POST['purpose'])) {
-                                    ?>
-                                        <p class="text-danger small mt-1">Select a purpose for the appointment.</p>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="reason" class="form-label text-black-50">Reason</label>
-                                    <textarea class="form-control bg-light fs-6 mb-3 border  border-outline-dark text-secondary" rows="3" id="reason" name="reason" placeholder="Include your reason for appointment."><?= (isset($_POST['reason'])) ? $_POST['reason'] : '' ?></textarea>
-                                    <?php
-                                    if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
-                                    ?>
-                                        <p class="text-danger small mt-1">Reason for appointment is required.</p>
-                                    <?php
-                                    }
-                                    ?>
-                                </div>
-
+                                <input type="hidden" name="doctor_id">
+                                <input type="hidden" name="purpose">
+                                <input type="hidden" name="reason">
+                                <input type="hidden" name="patient_id">
                                 <div class="container mt-4">
                                     <div class="row g-3">
                                         <!-- Date Picker -->
