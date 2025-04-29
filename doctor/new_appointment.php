@@ -66,8 +66,8 @@ include '../includes/head.php';
                 <div class="card flex-fill my-4">
                     <div class="card-body">
                         <h2>New Appointment</h2>
-                        <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-start">
-                            <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
+                        <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
+                            <section id="appointment" class="col-12 col-md-8 padding-medium">
                                 <input type="hidden" name="doctor_id">
                                 <input type="hidden" name="purpose">
                                 <input type="hidden" name="reason">
@@ -108,9 +108,7 @@ include '../includes/head.php';
                                         </div>
                                     </div>
                                 </div>
-
-                                <hr class="my-2">
-                                <div class="w-100 d-flex justify-content-end">
+                                <div class="w-100 d-flex justify-content-end mt-3">
                                     <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2" disabled>Request Appointment</button>
                                 </div>
                             </section>
