@@ -48,7 +48,7 @@ include '../includes/head.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $appointmentArray = $appointment_class->doctor_appointments($_GET['doctor_id'], $_GET['status']);
+                                    $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Incoming');
                                     $counter = 1;
                                     if (!empty($appointmentArray)) {
                                         foreach ($appointmentArray as $item) {
