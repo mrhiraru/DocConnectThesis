@@ -63,6 +63,10 @@ include '../includes/head.php';
                                     Join Meeting
                                 </button>
                             <?php
+                            } else if ($record['appointment_status'] == "Completed") {
+                            ?>
+                                <a href="./new_referral.php?account_id=appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-info btn-sm text-light"></i>Refer patient to another doctor.</a>
+                            <?php
                             }
                             ?>
                         </div>
