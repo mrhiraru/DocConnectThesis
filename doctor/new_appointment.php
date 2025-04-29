@@ -83,7 +83,7 @@ include '../includes/head.php';
                                     </div>
                                 </div>
                                 <div class="w-100 d-flex justify-content-end mt-3">
-                                    <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2" disabled>Request Appointment</button>
+                                    <button id="request" name="request" type="submit" class="col-12 col-md-6 col-lg-4 btn btn-primary text-light mt-2">Request Appointment</button>
                                 </div>
                             </section>
                         </form>
