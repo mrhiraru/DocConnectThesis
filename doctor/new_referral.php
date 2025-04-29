@@ -87,6 +87,9 @@ include '../includes/head.php';
 
                                     <?php
                                     foreach ($doctorArray as $item) {
+                                        if ($item['doctor_id'] != $_SESSION['doctor_id']) {
+                                            continue;
+                                        }
                                     ?>
                                         <option value="<?= $item['doctor_id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] == $item['doctor_id']) ? 'selected' : '' ?>><?= $item['doctor_name'] . ' - ' . $item['specialty'] ?></option>
                                     <?php
