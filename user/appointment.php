@@ -167,15 +167,15 @@ include '../includes/head.php';
     ?>
 
 
-<form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
-    <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
-        <div class="col-md-12 d-flex justify-content-between align-items-center">
-            <a href="./profile_appointment" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
-                <i class='bx bx-chevron-left'></i>
-                Back
-            </a>
-        </div>
-        <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-2 p-md-3 m-0 mb-4 mb-md-0">
+    <form id="appointmentForm" action="" method="post" class="container-fluid row g-2 p-3 d-flex justify-content-center">
+        <section id="appointment" class="col-12 col-md-8 page-container padding-medium">
+            <div class="col-md-12 d-flex justify-content-between align-items-center">
+                <a href="./profile_appointment" class="btn btn-outline-secondary hover-light d-fex align-items-center mb-3">
+                    <i class='bx bx-chevron-left'></i>
+                    Back
+                </a>
+            </div>
+            <div id="" class="border border-dark-subtle shadow-sm rounded-2 p-2 p-md-3 m-0 mb-4 mb-md-0">
                 <div class="row d-flex justify-content-between align-items-center">
                     <div class="col-6 text-start">
                         <p class="form-label text-black-50 fw-bold fs-5 m-0"> Appointment Form</p>
