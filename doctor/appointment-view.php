@@ -43,10 +43,12 @@ include '../includes/head.php';
             ?>
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 mb-4">
                 <?php
-                if (isset($_GET['referral'])) {
-                    
-                } else {
+                if (!isset($_GET['referral'])) {
                     require_once('../includes/breadcrumb-patient.php');
+                } else {
+                ?>
+                    <div class="mt-5"></div>
+                <?php
                 }
                 ?>
                 <div class="p-0 m-0 row">
