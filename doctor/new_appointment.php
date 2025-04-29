@@ -118,58 +118,7 @@ include '../includes/head.php';
 
             var doctorSelect = document.getElementById("doctor_id");
 
-            if (doctorSelect) { // Check if the element exists
-                var selectedOption = doctorSelect.options[doctorSelect.selectedIndex];
-
-                if (selectedOption && selectedOption.hasAttribute("data-accountid")) { // Check if the option exists and has the attribute
-
-                    startDay = selectedOption.getAttribute("data-startday");
-                    endDay = selectedOption.getAttribute("data-endday");
-                    startTime = selectedOption.getAttribute("data-starttime");
-                    endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
-                    rawendTime = selectedOption.getAttribute("data-endtime");
-                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
-                    doctor_id = selectedOption.getAttribute("data-doctorid");
-
-                    show_doctor_info(selectedOption.getAttribute("data-accountid"));
-                    reinitializeFlatpickr();
-                    request_btn.removeAttribute('disabled'); // Ensure it's disabled
-                }
-            }
-
-            document.getElementById("doctor_id").addEventListener("change", function() {
-                if (!this.value) { // Check if no doctor is selected
-
-                    startDay = "";
-                    endDay = "";
-                    startTime = "00:00:00";
-                    endTime = "00:00:00";
-                    full_dates = [];
-                    doctor_id = "";
-
-                    document.getElementById('appointment_time').value = '';
-                    show_doctor_info(null);
-
-                    request_btn.setAttribute('disabled', 'true'); // Ensure it's disabled
-                } else {
-                    let selectedOption = this.options[this.selectedIndex];
-
-                    startDay = selectedOption.getAttribute("data-startday");
-                    endDay = selectedOption.getAttribute("data-endday");
-                    startTime = selectedOption.getAttribute("data-starttime");
-                    endTime = subtractOneHour(selectedOption.getAttribute("data-endtime"));
-                    rawendTime = selectedOption.getAttribute("data-endtime");
-                    full_dates = selectedOption.getAttribute("data-fulldates").split(', ');
-                    doctor_id = selectedOption.getAttribute("data-doctorid");
-
-                    show_doctor_info(selectedOption.getAttribute('data-accountid'));
-                    reinitializeFlatpickr();
-
-                    // purpose_field.setCustomValidity("Please select the purpose of appointment.");
-                    // reason_field.setCustomValidity("Please provide a reason for the appointment.");
-                    request_btn.removeAttribute('disabled'); // Ensure it's enabled
-                }
-            });
+        
 
             function getDisabledDays(startDay, endDay) {
                 const daysMap = {
