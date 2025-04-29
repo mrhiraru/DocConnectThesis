@@ -65,7 +65,7 @@ include '../includes/head.php';
                             <?php
                             } else if ($record['appointment_status'] == "Completed") {
                             ?>
-                                <a href="./new_referral.php?account_id=<?= $_GET['account_id'] ?>&appointment_id=<?= $_GET['appointment_id'] ?>" class="btn btn-primary text-light mb-3"></i>Refer patient to another doctor.</a>
+                                <a href="./new_referral.php?account_id=<?= $_GET['patient_account_id'] ?>&appointment_id=<?= $_GET['appointment_id'] ?>" class="btn btn-primary text-light mb-3"></i>Refer patient to another doctor.</a>
                             <?php
                             }
                             ?>
