@@ -15,7 +15,7 @@ require_once('../classes/doctor.class.php');
 $appointment_class = new Appointment();
 $refer = new Refer();
 
-if ($_POST['refer']) {
+if (isset($_POST['refer'])) {
 
     $refer->appointment_id = htmlentities($_GET['appointment_id']);
     $refer->reason = ucfirst(strtolower(htmlentities($_POST['reason'])));
