@@ -51,7 +51,7 @@ include '../includes/head.php';
                             </div>
                             <div class="col-12 col-md-4 mb-3">
                                 <label for="gender">Refer to:</label>
-                                <?=
+                                <?php
                                 $doctor = new Doctor();
                                 $doctorArray = $doctor->get_doctors();
                                 ?>
@@ -67,9 +67,9 @@ include '../includes/head.php';
                                     ?>
                                 </select>
                                 <?php
-                                if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
+                                if (isset($_POST['doctor_id']) && !validate_field($_POST['doctor_id'])) {
                                 ?>
-                                    <p class="text-dark m-0 ps-2">Referral reason is required.</p>
+                                    <p class="text-dark m-0 ps-2">Doctor is required.</p>
                                 <?php
                                 }
                                 ?>
