@@ -57,6 +57,7 @@ include '../includes/head.php';
                                             <tr>
                                                 <td><?= $counter ?></td>
                                                 <td><?= $item['patient_name'] ?></td>
+                                                <td><?= 'nagtatataeee' ?></td>
                                                 <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
 
                                                 <td class="text-center">
