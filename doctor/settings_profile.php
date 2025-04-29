@@ -156,9 +156,9 @@ include '../includes/head.php';
         <div class="card bg-body-tertiary mb-4">
           <div class="card-body">
 
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center justify-content-center">
               <form method="post" action="" enctype="multipart/form-data">
-                <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
+                <div class="d-flex flex-column align-items-center mx-4 mb-4">
                   <!-- Profile Picture -->
                   <div class="docProfile_pic align-items-end">
                     <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
@@ -180,10 +180,10 @@ include '../includes/head.php';
               </form>
   
               <form method="post" action="" enctype="multipart/form-data">
-                <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
+                <div class="d-flex flex-column align-items-center mx-4 mb-4">
                   <!-- Profile Picture -->
                   <div class="eSigniture_pic align-items-end">
-                    <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
+                    <label class="label brand-border-color d-flex flex-column" for="file">
                       <span>Change E Signature</span>
                     </label>
   
@@ -191,7 +191,7 @@ include '../includes/head.php';
                                 echo "../assets/images/" . $_SESSION['e_signature'];
                               } else {
                                 echo "../assets/images/defualt_profile.png";
-                              } ?>" id="outputesign" class="rounded" alt="User Avatar">
+                              } ?>" id="outputesign" alt="User Avatar">
   
                     <input id="fileesign" type="file" name="e_signature" accept=".jpg, .jpeg, .png" required onchange="previewImageesign(event)">
                   </div>
