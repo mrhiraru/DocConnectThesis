@@ -31,7 +31,7 @@ class Refer
                 WHERE r.doctor_id = :doctor_id ORDER BY r.is_created ASC";
 
         $query = $this->db->connect()->prepare($sql);
-        $query->bindParam(':doctor_id', $this->doctor_id);
+        $query->bindParam(':doctor_id', $doctor_id);
 
         $data = null;
         if ($query->execute()) {
