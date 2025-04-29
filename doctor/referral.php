@@ -65,8 +65,7 @@ include '../includes/head.php';
 
                                                 <td class="text-center">
 
-                                                    <a href="./appointment-view.php?account_id=<?= $item['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light">Accept</a>
-                                                    <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light">Decline</a>
+                                                    <a href="./appointment-view.php?account_id=<?= $item['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>&referral=true" class="btn btn-info btn-sm text-light"><i class='bx bx-file-blank me-1'></i>Appointment Result</a>
 
                                                 </td>
                                             </tr>
