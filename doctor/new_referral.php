@@ -9,6 +9,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
+require_once('../classes/doctor.class.php');
 
 $appointment_class = new Appointment();
 
@@ -49,8 +50,22 @@ include '../includes/head.php';
                                 ?>
                             </div>
                             <div class="col-12 col-md-4 mb-3">
-                                <label for="reason">Refer to:</label>
-                                <input type="text" class="form-control" id="reason" name="reason" required placeholder="" value="<?= isset($_POST['reason']) ? $_POST['reason'] : '' ?>">
+                                <label for="gender">Refer to:</label>
+                                <?=
+                                $doctor = new Doctor();
+                                $doctorArray = $doctor->get_doctors($_SESSION['doctor_id']);
+                                ?>
+                                <select class="form-select" aria-label="doctor_id" name="doctor_id">
+                                    <option selected disabled>Select Doctor</option>
+
+                                    <?php
+                                    foreach ($doctorArray as $item) {
+                                    ?>
+                                        <option value="<?= $item['doctor_id'] ?>" <?= (isset($_POST['doctor_id']) && $_POST['doctor_id'] == $item['doctor_id']) ? 'selected' : '' ?>><?= $item['doctor_name'] . ' - ' . $item['specialty'] ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
                                 <?php
                                 if (isset($_POST['reason']) && !validate_field($_POST['reason'])) {
                                 ?>
