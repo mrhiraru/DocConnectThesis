@@ -44,6 +44,7 @@ include '../includes/head.php';
                                         <th>Patient</th>
                                         <th>Referral Reason</th>
                                         <th>Date of Referral</th>
+                                        <th>Status</th>
                                         <th class="text-center">Action</th>
                                     </tr>
                                 </thead>
@@ -60,10 +61,12 @@ include '../includes/head.php';
                                                 <td><?= 'nagtatataeee' ?></td>
                                                 <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
 
+                                                <td><?= 'Accepted' ?></td>
+
                                                 <td class="text-center">
 
-                                                    <a href="./appointment-view.php?account_id=<?= $item['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light"><i class='bx bx-play-circle me-1'></i>Make Schedule</a>
-                                                    <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light"><i class='bx bxs-edit me-1'></i>Update</a>
+                                                    <a href="./appointment-view.php?account_id=<?= $item['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-success btn-sm text-light">Accept</a>
+                                                    <a href="./manage-appointment.php?appointment_id=<?= $item['appointment_id'] ?>" class="btn btn-warning btn-sm text-light">Decline</a>
 
                                                 </td>
                                             </tr>
