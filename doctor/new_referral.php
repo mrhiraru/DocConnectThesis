@@ -53,7 +53,7 @@ include '../includes/head.php';
                                 <label for="gender">Refer to:</label>
                                 <?=
                                 $doctor = new Doctor();
-                                $doctorArray = $doctor->get_doctors($_SESSION['doctor_id']);
+                                $doctorArray = $doctor->get_doctors();
                                 ?>
                                 <select class="form-select" aria-label="doctor_id" name="doctor_id">
                                     <option selected disabled>Select Doctor</option>
