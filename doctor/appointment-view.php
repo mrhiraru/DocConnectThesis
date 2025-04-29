@@ -77,7 +77,7 @@ include '../includes/head.php';
                                 <?php
                                 } else if (isset($_GET['referral']) && $_GET['referral'] == "true") {
                                 ?>
-                                    <a href="./new_appointment.php?appointment_id=<?= $_GET['appointment_id'] ?>" class="btn btn-primary text-light mb-3"></i>Accept Patient</a>
+                                    <a href="./new_appointment.php?appointment_id=<?= $_GET['appointment_id'] ?>&referral_id=<?= $_GET['referral_id'] ?>" class="btn btn-primary text-light mb-3"></i>Accept Patient</a>
                             <?php
                                 }
                             }
