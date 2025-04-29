@@ -60,6 +60,7 @@ if (isset($_POST['request'])) {
             ) {
                 if ($message->send_message()  && $refer->update_status($_GET['referral_id'], 'Accepted')) {
                     $success = 'success';
+                    header('location: ./referral');
                 } else {
                     echo 'An error occured while adding in the database.';
                 }
