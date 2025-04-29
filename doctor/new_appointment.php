@@ -18,7 +18,7 @@ $appointment_record = $appointment_class->get_appointment_details($_GET['appoint
 
 $appointment_class = new Appointment();
 if (isset($_POST['request'])) {
-    $appointment_class->patient_id = $_SESSION['patient_id'];
+    $appointment_class->patient_id = htmlentities($_POST['patient_id']);
     $appointment_class->doctor_id = htmlentities($_POST['doctor_id']);
     $appointment_class->appointment_date = htmlentities($_POST['appointment_date']);
     $appointment_class->appointment_time = htmlentities($_POST['appointment_time']);
