@@ -9,8 +9,10 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
 
 require_once('../tools/functions.php');
 require_once('../classes/appointment.class.php');
+require_once('../classes/referral.class.php');
 
 $appointment_class = new Appointment();
+$refer = new Refer();
 
 ?>
 
@@ -51,19 +53,19 @@ include '../includes/head.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Completed');
+                                    $referralArray = $refer->get_referral($_SESSION['doctor_id']);
                                     $counter = 1;
-                                    if (!empty($appointmentArray)) {
-                                        foreach ($appointmentArray as $item) {
+                                    if (!empty($referralArray)) {
+                                        foreach ($referralArray as $item) {
                                     ?>
                                             <tr>
                                                 <td><?= $counter ?></td>
                                                 <td><?= $item['patient_name'] ?></td>
-                                                <td><?= 'nagtatataeee' ?></td>
-                                                <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
+                                                <td><?= $item['reason'] ?></td>
+                                                <td><?= date("M d, Y", strtotime($item['is_created'])) ?></td>
 
-                                                <td><?= $item['patient_name'] ?></td>
-                                                <td><?= 'Accepted' ?></td>
+                                                <td><?= $item['doctor_name'] ?></td>
+                                                <td><?= $item['status'] ?></td>
 
                                                 <td class="text-center">
 
