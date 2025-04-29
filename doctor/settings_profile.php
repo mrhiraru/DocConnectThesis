@@ -156,27 +156,48 @@ include '../includes/head.php';
         <div class="card bg-body-tertiary mb-4">
           <div class="card-body">
 
-            <form method="post" action="" enctype="multipart/form-data">
-              <div class="d-flex flex-column flex-lg-row align-items-center mx-4 mb-4">
-                <!-- Profile Picture -->
-                <div class="campus-pic align-items-end">
-                  <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
-                    <i class="bx bxs-camera-plus text-light p-2 bg-primary"></i>
-                    <span>Change Image</span>
-                  </label>
+            <div class="d-flex align-items-center justify-content-center">
+              <form method="post" action="" enctype="multipart/form-data">
+                <div class="d-flex flex-column align-items-center mx-4 mb-4">
+                  <!-- Profile Picture -->
+                  <div class="docProfile_pic align-items-end">
+                    <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
+                      <i class="bx bxs-camera-plus text-light p-2 bg-primary"></i>
+                      <span>Change Image</span>
+                    </label>
 
-                  <img src="<?php if (isset($_SESSION['account_image'])) {
-                              echo "../assets/images/" . $_SESSION['account_image'];
-                            } else {
-                              echo "../assets/images/defualt_profile.png";
-                            } ?>" id="output" class="rounded-circle" alt="User Avatar">
+                    <img src="<?php if (isset($_SESSION['account_image'])) {
+                                echo "../assets/images/" . $_SESSION['account_image'];
+                              } else {
+                                echo "../assets/images/defualt_profile.png";
+                              } ?>" id="output" class="rounded-circle" alt="User Avatar">
 
-                  <input id="file" type="file" name="account_image" accept=".jpg, .jpeg, .png" required onchange="previewImage(event)">
+                    <input id="file" type="file" name="account_image" accept=".jpg, .jpeg, .png" required onchange="previewImage(event)">
+                  </div>
+                  <input type="submit" class="btn btn-primary text-light ms-0 mx-lg-3" name="save_image" value="Save Image">
                 </div>
-                <!-- <button class="btn btn-primary btn-md d-block mx-2 text-light" id="upload_profile" type="button">Upload New</button> -->
-                <input type="submit" class="btn btn-primary text-light ms-0 mx-lg-3" name="save_image" value="Save Image">
-              </div>
-            </form>
+              </form>
+
+              <form method="post" action="" enctype="multipart/form-data">
+                <div class="d-flex flex-column align-items-center mx-4 mb-4">
+                  <!-- E-Signature -->
+                  <div class="eSigniture_pic align-items-end">
+                    <label class="label brand-border-color d-flex flex-column" for="fileesign">
+                      <span>Change E Signature</span>
+                    </label>
+
+                    <img src="<?php if (isset($_SESSION['e_signature'])) {
+                                echo "../assets/images/" . $_SESSION['e_signature'];
+                              } else {
+                                echo "../assets/images/defualt_profile.png";
+                              } ?>" id="outputesign" alt="E-Signature">
+
+                    <input id="fileesign" type="file" name="e_signature" accept=".jpg, .jpeg, .png" required onchange="previewImageesign(event)">
+                  </div>
+                  <input type="submit" class="btn btn-primary text-light ms-0 mx-lg-3" name="save_esignature" value="Save E-Signature">
+                </div>
+              </form>
+            </div>
 
             <form id="profileForm" method="post" action="">
               <!-- Personal Information -->
@@ -350,27 +371,6 @@ include '../includes/head.php';
 
               <!-- Save Button -->
               <input type="submit" class="btn btn-primary text-light" name="save" value="Save Changes">
-            </form>
-
-            <form method="post" action="" enctype="multipart/form-data" class="mt-5">
-              <div class="d-flex flex-column flex-lg-row align-items-center  mb-4">
-                <!-- Profile Picture -->
-                <div class="campus-pic align-items-end">
-                  <label class="label brand-border-color d-flex flex-column" for="file" style="border-width: 4px !important;">
-                    <span>Change E Signature</span>
-                  </label>
-
-                  <img src="<?php if (isset($_SESSION['e_signature'])) {
-                              echo "../assets/images/" . $_SESSION['e_signature'];
-                            } else {
-                              echo "../assets/images/defualt_profile.png";
-                            } ?>" id="outputesign" class="rounded" alt="User Avatar">
-
-                  <input id="fileesign" type="file" name="e_signature" accept=".jpg, .jpeg, .png" required onchange="previewImageesign(event)">
-                </div>
-                <!-- <button class="btn btn-primary btn-md d-block mx-2 text-light" id="upload_profile" type="button">Upload New</button> -->
-                <input type="submit" class="btn btn-primary text-light ms-0 mx-lg-3" name="save_esignature" value="Save E-Signature">
-              </div>
             </form>
           </div>
         </div>
