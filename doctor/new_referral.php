@@ -24,6 +24,7 @@ if (isset($_POST['refer'])) {
     } else {
         $refer->doctor_id = '';
     }
+    $refer->status = 'Pending';
 
     if (
         validate_field($refer->appointment_id) &&
