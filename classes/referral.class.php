@@ -59,4 +59,19 @@ class Refer
             return false;
         }
     }
+
+    function update_status($referral_id, $status)
+    {
+        $sql = "UPDATE referral SET status = :status WHERE referral_id = :referral_id";
+
+        $query = $this->db->connect()->prepare($sql);
+        $query->bindParam(':status', $status);
+        $query->bindParam(':referral_id', $referral_id);
+
+        if ($query->execute()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
