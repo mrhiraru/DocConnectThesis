@@ -21,7 +21,7 @@ class Refer
 
     function get_referral($doctor_id)
     {
-        $sql = "SELECT a.*, di.*,
+        $sql = "SELECT r.*,
                 CONCAT(a.firstname, IF(a.middlename IS NOT NULL AND a.middlename != '', CONCAT(' ', a.middlename), ''), ' ', a.lastname) AS doctor_name
                 FROM account a
                 INNER JOIN doctor_info di ON di.account_id = a.account_id

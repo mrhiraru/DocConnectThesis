@@ -33,6 +33,7 @@ if (isset($_POST['refer'])) {
     ) {
         if ($refer->new_referral()) {
             $success = 'success';
+            header('location: ./referral');
         } else {
             echo 'An error occured while adding in the database.';
         }
