@@ -736,7 +736,7 @@ main.col-md-9 {
   cursor: pointer;
   width: 300px;
   height: 150px;
-  border-radius: 10px !important;
+  border-radius: 7px !important;
   z-index: 1000;
 }
 
@@ -768,7 +768,7 @@ main.col-md-9 {
   border: 3px solid var(--main-color);
   z-index: 0;
   border: 2px solid var(--primary);
-  border-radius: 10px !important;
+  border-radius: 7px !important;
 }
 /* ----------DoCOTROS_SETTINGS------------- */
 
