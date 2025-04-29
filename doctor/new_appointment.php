@@ -112,7 +112,7 @@ include '../includes/head.php';
             var rawendTime = '<?= $_SESSION["end_wt"] ?>';
             var request_btn = document.getElementById("request");
             var full_dates = '<?= $formattedDates ?>';
-            var doctor_id '<?= $_SESSION['doctor_id'] ?>';
+            var doctor_id = '<?= $_SESSION['doctor_id'] ?>';
 
             reinitializeFlatpickr();
 
