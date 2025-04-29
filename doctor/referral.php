@@ -50,7 +50,7 @@ include '../includes/head.php';
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Incoming');
+                                    $appointmentArray = $appointment_class->doctor_appointments($_SESSION['doctor_id'], 'Completed');
                                     $counter = 1;
                                     if (!empty($appointmentArray)) {
                                         foreach ($appointmentArray as $item) {
