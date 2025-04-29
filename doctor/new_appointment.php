@@ -93,6 +93,16 @@ include '../includes/head.php';
         </div>
     </div>
 
+    <?php
+    $appArray = $appointment_class->get_full_dates($_SESSION['doctor_id'], $$_SESSION['start_wt'], $$_SESSION['end_wt']);
+
+    $fullDates = array_map(function ($date) {
+        return date('Y-m-d', strtotime($date['appointment_date']));
+    }, $appArray);
+
+    $formattedDates = implode(', ', $fullDates);
+    ?>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var startDay = '<?= $_SESSION["start_day"] ?>';
@@ -101,7 +111,7 @@ include '../includes/head.php';
             var endTime = subtractOneHour('<?= $_SESSION["end_wt"] ?>');
             var rawendTime = '<?= $_SESSION["end_wt"] ?>';
             var request_btn = document.getElementById("request");
-            var full_dates = [];
+            var full_dates = '<?= $formattedDates ?>';
             var doctor_id '<?= $_SESSION['doctor_id'] ?>';
 
             reinitializeFlatpickr();
@@ -222,14 +232,6 @@ include '../includes/head.php';
                     maxTime: endTime,
                 });
             }
-
-            new TomSelect("#doctor_id", {
-                sortField: {
-                    field: "text",
-                    direction: "asc"
-                }
-            });
-
         });
 
         function set_value(selectedRadio) {
