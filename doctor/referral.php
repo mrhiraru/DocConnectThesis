@@ -69,7 +69,7 @@ include '../includes/head.php';
 
                                                 <td class="text-center">
 
-                                                    <a href="./appointment-view.php?account_id=<?= $_SESSION['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>&referral=true&referral_id=<?= $_GET['referral_id'] ?>" class="btn btn-info btn-sm text-light"><i class='bx bx-file-blank me-1'></i>Appointment Result</a>
+                                                    <a href="./appointment-view.php?account_id=<?= $_SESSION['account_id'] ?>&appointment_id=<?= $item['appointment_id'] ?>&referral=true&referral_id=<?= $item['referral_id'] ?>" class="btn btn-info btn-sm text-light"><i class='bx bx-file-blank me-1'></i>Appointment Result</a>
 
                                                 </td>
                                             </tr>
