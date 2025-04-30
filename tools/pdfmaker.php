@@ -347,7 +347,7 @@
 
     // Prescription PDF
     async function generatePDF() {
-        const imagePath = 'assets/images/signture.png';
+        const imagePath = 'assets/images/bg-1.png';
         try {
             const base64Image = await convertImageToBase64(imagePath);
 
