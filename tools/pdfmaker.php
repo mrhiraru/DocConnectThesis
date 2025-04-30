@@ -522,15 +522,15 @@
                     lineWidth: 2
                 }]
             },
-
-            {
-                        image: convertedImage,
-                        width: 200,
-                        margin: [0, 20, 0, 0]
-                    },
             {
                 text: 'Signature',
                 margin: [333, 5, 0, 0]
+            },
+
+            {
+                image: convertedImage,
+                width: 200,
+                margin: [0, 20, 0, 0]
             }
         ],
 
