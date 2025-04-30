@@ -347,7 +347,7 @@
 
     // Prescription PDF
     function generatePDF() {
-        const imagePath = 'assets/images/signture.png';
+        const imagePath = 'assets/images/logo.png';
         convertImageToBase64(imagePath, function(base64Image) {
 
             var prescription = {
