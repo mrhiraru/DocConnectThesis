@@ -511,6 +511,10 @@
                         margin: [0, 30, 0, 20]
                     },
                     {
+                        image: base64Image,
+                        height: 250,
+                    },
+                    {
                         canvas: [{
                             type: 'line',
                             x1: 500,
@@ -521,8 +525,6 @@
                         }]
                     },
                     {
-                        image: base64Image,
-                        width: 200,
                         text: 'Signature',
                         margin: [333, 5, 0, 0]
                     },
