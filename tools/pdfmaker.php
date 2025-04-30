@@ -347,10 +347,9 @@
 
     // Prescription PDF
     const imagePath = '../assets/images/logo.png';
-    var convertedImage;
-    convertImageToBase64(imagePath, function(base64Image) {
+    var convertedImage = convertImageToBase64(imagePath, function(base64Image) {
 
-        convertedImage = base64Image;
+        return base64Image;
     });
 
     var prescription = {
