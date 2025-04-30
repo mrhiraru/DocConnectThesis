@@ -347,7 +347,7 @@
 
     // Prescription PDF
     async function generatePDF() {
-        const imagePath = '../assets/images/<?= json_encode($_SESSION['e_signature']) ?>';
+        const imagePath = '../assets/images/<?= ($_SESSION['e_signature']) ?>';
         try {
             const base64Image = await convertImageToBase64(imagePath);
 
