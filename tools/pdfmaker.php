@@ -346,9 +346,10 @@
     };
 
     // Prescription PDF
-    function generatePDF() {
-        const imagePath = '../assets/images/bg-1.png';
-        convertImageToBase64(imagePath, function(base64Image) {
+    async function generatePDF2() {
+        const imagePath = 'assets/images/signture.png';
+        try {
+            const base64Image = await convertImageToBase64(imagePath);
 
             var prescription = {
 
@@ -557,27 +558,32 @@
                 }
 
             };
-            pdfMake.createPdf(prescription).download("prescription.pdf");
+            pdfMake.createPdf(docDefinition).download('pdf-with-image.pdf');
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+
+    function convertImageToBase64(url) {
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const dataURL = canvas.toDataURL('image/png');
+                resolve(dataURL);
+            };
+            img.onerror = function() {
+                reject(new Error("Failed to load image at " + url));
+            };
+            img.src = url;
         });
     }
 
-    function convertImageToBase64(url, callback) {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            const dataURL = canvas.toDataURL('image/png');
-            callback(dataURL);
-        };
-        img.onerror = function() {
-            alert("Failed to load image at " + url);
-        };
-        img.src = url;
-    }
 
     function generatePDF2() {
         const imagePath = 'assets/images/signture.png';
