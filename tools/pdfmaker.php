@@ -513,7 +513,7 @@
                     },
                     {
                         image: base64Image,
-                        height: 250,
+                        height: 50,
                     },
                     {
                         canvas: [{
