@@ -558,7 +558,7 @@
                 }
 
             };
-            pdfMake.createPdf(docDefinition).download('pdf-with-image.pdf');
+            pdfMake.createPdf(prescription).download('pdf-with-image.pdf');
         } catch (error) {
             alert(error.message);
         }
