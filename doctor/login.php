@@ -90,6 +90,8 @@ if (isset($_POST['login'])) {
     $_SESSION['civil_status'] = $account->civil_status;
     $_SESSION['religion'] = $account->religion;
     $_SESSION['suffix'] = $account->suffix;
+    
+    $_SESSION['e_signature'] = $account->e_signature;
 
     if (isset($_POST['remember-me'])) {
       $token = $account->createRememberMeToken($account->account_id);
