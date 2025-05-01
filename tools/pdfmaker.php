@@ -527,7 +527,7 @@
                     },
                     {
                         text: 'Signature',
-                        margin: [333, 5, 0, 0]
+                        margin: [0, 5, 0, 0]
                     },
                 ],
 
