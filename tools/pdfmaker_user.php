@@ -347,6 +347,11 @@
     };
 
     // Prescription PDF (Patient Version)
+    async function generatePDF() {
+        const imagePath = '../assets/images/<?= ($_SESSION['e_signature']) ?>';
+        try {
+            const base64Image = await convertImageToBase64(imagePath);
+
     var prescription = {
         content: [{
                 columns: [{
@@ -547,6 +552,11 @@
             }
         }
     };
+            pdfMake.createPdf(prescription).download('pdf-with-image.pdf');
+        } catch (error) {
+            alert(error.message);
+        }
+    }
 
     // Add event listeners for each download button
     document.addEventListener('DOMContentLoaded', function() {
