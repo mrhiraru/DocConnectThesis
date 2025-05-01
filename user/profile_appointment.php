@@ -45,17 +45,30 @@ include '../includes/head.php';
 
           <div class="card bg-body-tertiary mb-4">
             <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <h5 class="card-title mb-0 text-green">Appointment List</h5>
-                <a href="./appointment" class="btn btn-sm btn-primary text-light">
-                  New Appointment
-                </a>
+
+                <div class="d-flex align-items-center gap-2">
+                  <select id="statusFilter" class="form-select form-select-sm">
+                    <option value="All">All</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Incoming">Incoming</option>
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+
+                  <a href="./appointment" class="btn btn-sm btn-primary text-light">
+                    New Appointment
+                  </a>
+                </div>
               </div>
+
               <hr>
               <div class="table-responsive">
                 <table class="table table-striped" id="eventsTable">
                   <thead>
-                    <tr>
+                    <tr data-status="<?= strtolower($item['appointment_status']) ?>">
                       <th>#</th>
                       <th>Doctor</th>
                       <th>Date & Time</th>
@@ -203,7 +216,23 @@ include '../includes/head.php';
         });
       }
     }
+    
+    document.getElementById("statusFilter").addEventListener("change", function() {
+      const selectedStatus = this.value.toLowerCase();
+      const rows = document.querySelectorAll("#eventsTable tbody tr");
+
+      rows.forEach(row => {
+        const rowStatus = row.getAttribute("data-status");
+
+        if (selectedStatus === "all" || rowStatus === selectedStatus) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    });
   </script>
+
 </body>
 
 
