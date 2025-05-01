@@ -515,18 +515,21 @@
                         image: base64Image,
                         height: 100,
                         width: 250,
+                        margin: [275, 150, 0, 10]
                     },
                     {
                         canvas: [{
                             type: 'line',
-                            x1: 500, y1: 300,
-                            x2: 215, y2: 300,
+                            x1: 525, 
+                            y1: 0,
+                            x2: 275, 
+                            y2: 0,
                             lineWidth: 2
                         }]
                     },
                     {
                         text: 'Signature',
-                        margin: [333, 5, 0, 0]
+                        margin: [375, 5, 0, 0]
                     },
                 ],
 
