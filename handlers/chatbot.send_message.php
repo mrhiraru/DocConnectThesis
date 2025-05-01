@@ -20,8 +20,11 @@ if (isset($_POST['send'])) {
             $message->account_id = $_POST['account_id'];
             $message->message_type = 'bot';
 
+            echo "<script>console.log('Message sent: " . $message->message . "');</script>";
+
             if (validate_field($message->message)) {
                 if ($message->send_bot_message()) {
+                    echo "<script>console.log('Bot Message sent: " . $message->message . "');</script>";
                     $success = 'success';
                 } else {
                     echo 'An error occured while adding in the database.';
