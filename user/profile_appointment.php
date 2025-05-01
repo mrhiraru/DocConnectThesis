@@ -49,6 +49,10 @@ include '../includes/head.php';
                 <h5 class="card-title mb-0 text-green">Appointment List</h5>
 
                 <div class="d-flex align-items-center gap-2">
+                  <select id="doctorFilter" class="form-select form-select-sm me-2" style="width: 200px;">
+                    <option value="All">All Doctors</option>
+                  </select>
+
                   <select id="statusFilter" class="form-select form-select-sm" style="width: 200px;">
                     <option value="All">All</option>
                     <option value="Pending">Pending</option>
@@ -84,7 +88,7 @@ include '../includes/head.php';
                     if (empty(!$appointmentArray)) {
                       foreach ($appointmentArray as $item) {
                     ?>
-                        <tr data-status="<?= strtolower($item['appointment_status']) ?>">
+                        <tr data-status="<?= $item['appointment_status'] ?>" data-doctor="<?= htmlspecialchars($item['doctor_name'], ENT_QUOTES) ?>">
                           <td><?= $counter ?></td>
                           <td><?= $item['doctor_name'] ?></td>
                           <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
@@ -231,6 +235,46 @@ include '../includes/head.php';
         }
       });
     });
+
+    function filterAppointments() {
+      const selectedStatus = document.getElementById('statusFilter').value;
+      const selectedDoctor = document.getElementById('doctorFilter').value;
+      const rows = document.querySelectorAll('#eventsTable tbody tr');
+
+      rows.forEach(row => {
+        const rowStatus = row.getAttribute('data-status');
+        const rowDoctor = row.getAttribute('data-doctor');
+
+        const statusMatch = (selectedStatus === 'All' || rowStatus === selectedStatus);
+        const doctorMatch = (selectedDoctor === 'All' || rowDoctor === selectedDoctor);
+
+        row.style.display = (statusMatch && doctorMatch) ? '' : 'none';
+      });
+    }
+
+    document.getElementById('statusFilter').addEventListener('change', filterAppointments);
+    document.getElementById('doctorFilter').addEventListener('change', filterAppointments);
+
+    // Populate doctor filter dynamically
+    document.addEventListener('DOMContentLoaded', function() {
+      const rows = document.querySelectorAll('#eventsTable tbody tr');
+      const doctorSet = new Set();
+
+      rows.forEach(row => {
+        const doctor = row.getAttribute('data-doctor');
+        if (doctor) doctorSet.add(doctor);
+      });
+
+      const doctorFilter = document.getElementById('doctorFilter');
+      [...doctorSet].sort().forEach(doctor => {
+        const option = document.createElement('option');
+        option.value = doctor;
+        option.textContent = doctor;
+        doctorFilter.appendChild(option);
+      });
+    });
+  </script>
+
   </script>
 
 </body>
