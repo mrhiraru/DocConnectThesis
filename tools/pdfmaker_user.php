@@ -512,6 +512,10 @@
                 margin: [0, 30, 0, 20]
             },
             {
+                image: base64Image,
+                height: 100
+            },
+            {
                 canvas: [{
                     type: 'line',
                     x1: 500,
