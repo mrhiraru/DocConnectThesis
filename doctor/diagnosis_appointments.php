@@ -13,7 +13,8 @@ require_once('../classes/doctorDashboard.class.php');
 
 $diagnosis = isset($_GET['diagnosis']) ? urldecode($_GET['diagnosis']) : '';
 
-$dashboard = new Dashboard();
+$doctorId = $_SESSION['doctor_id'];
+$dashboard = new Dashboard($doctorId);
 $appointments = $dashboard->fetchAppointmentsByDiagnosis($diagnosis);
 
 ?>

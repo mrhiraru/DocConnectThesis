@@ -6,12 +6,13 @@ $appointment_class = new Appointment();
 
 ?>
 <div class="d-flex justify-content-end mt-2">
-    <button class="btn btn-green btn-sm me-2 text-light" onclick="exportTableToExcel('eventsTable')">Export to Excel</button>
-    <button class="btn btn-danger btn-sm text-light" onclick="exportTableToPDF('eventsTable')">Export to PDF</button>
+    <?php $tableId = 'eventsTable_' . strtolower($_GET['status']); ?>
+    <button class="btn btn-green btn-sm me-2 text-light" onclick="exportTableToExcel('<?= $tableId ?>', '<?= $_GET['status'] ?>')">Export to Excel</button>
+    <button class="btn btn-danger btn-sm text-light" onclick="exportTableToPDF('<?= $tableId ?>', '<?= $_GET['status'] ?>')">Export to PDF</button>
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped" id="eventsTable">
+    <table class="table table-striped" id="eventsTable_<?= strtolower($_GET['status']) ?>">
         <thead>
             <tr>
                 <th></th>
@@ -77,7 +78,7 @@ $appointment_class = new Appointment();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
-    function exportTableToExcel(tableID) {
+    function exportTableToExcel(tableID, status = 'appointments') {
         setTimeout(() => {
             const table = document.getElementById(tableID);
             if (!table) return alert('Table not found!');
@@ -118,14 +119,12 @@ $appointment_class = new Appointment();
             }
             ws['!cols'] = colWidths;
 
-            const status = new URLSearchParams(window.location.search).get('status') || 'appointments';
             const filename = `${capitalizeFirstLetter(status)}_Appointments.xlsx`;
-
             XLSX.writeFile(wb, filename);
         }, 100);
     }
 
-    function exportTableToPDF(tableID) {
+    function exportTableToPDF(tableID, status = 'appointments') {
         setTimeout(() => {
             const table = document.getElementById(tableID);
             if (!table) return alert('Table not found!');
@@ -138,7 +137,6 @@ $appointment_class = new Appointment();
                 if (actionCell) actionCell.remove();
             });
 
-            const status = new URLSearchParams(window.location.search).get('status') || 'appointments';
             const filename = `${capitalizeFirstLetter(status)}_Appointments.pdf`;
 
             const opt = {

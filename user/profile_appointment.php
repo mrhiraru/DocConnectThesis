@@ -45,12 +45,29 @@ include '../includes/head.php';
 
           <div class="card bg-body-tertiary mb-4">
             <div class="card-body">
-              <div class="d-flex justify-content-between align-items-center">
+              <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <h5 class="card-title mb-0 text-green">Appointment List</h5>
-                <a href="./appointment" class="btn btn-sm btn-primary text-light">
-                  New Appointment
-                </a>
+
+                <div class="d-flex align-items-center gap-2">
+                  <select id="doctorFilter" class="form-select form-select-sm me-2" style="width: 200px;">
+                    <option value="All">All Doctors</option>
+                  </select>
+
+                  <select id="statusFilter" class="form-select form-select-sm" style="width: 200px;">
+                    <option value="All">All</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Incoming">Incoming</option>
+                    <option value="Ongoing">Ongoing</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+
+                  <a href="./appointment" class="btn btn-sm btn-primary text-light">
+                    New Appointment
+                  </a>
+                </div>
               </div>
+
               <hr>
               <div class="table-responsive">
                 <table class="table table-striped" id="eventsTable">
@@ -71,7 +88,7 @@ include '../includes/head.php';
                     if (empty(!$appointmentArray)) {
                       foreach ($appointmentArray as $item) {
                     ?>
-                        <tr>
+                        <tr data-status="<?= $item['appointment_status'] ?>" data-doctor="<?= htmlspecialchars($item['doctor_name'], ENT_QUOTES) ?>">
                           <td><?= $counter ?></td>
                           <td><?= $item['doctor_name'] ?></td>
                           <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
@@ -203,7 +220,63 @@ include '../includes/head.php';
         });
       }
     }
+
+    document.getElementById("statusFilter").addEventListener("change", function() {
+      const selectedStatus = this.value.toLowerCase();
+      const rows = document.querySelectorAll("#eventsTable tbody tr");
+
+      rows.forEach(row => {
+        const rowStatus = row.getAttribute("data-status");
+
+        if (selectedStatus === "all" || rowStatus === selectedStatus) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    });
+
+    function filterAppointments() {
+      const selectedStatus = document.getElementById('statusFilter').value;
+      const selectedDoctor = document.getElementById('doctorFilter').value;
+      const rows = document.querySelectorAll('#eventsTable tbody tr');
+
+      rows.forEach(row => {
+        const rowStatus = row.getAttribute('data-status');
+        const rowDoctor = row.getAttribute('data-doctor');
+
+        const statusMatch = (selectedStatus === 'All' || rowStatus === selectedStatus);
+        const doctorMatch = (selectedDoctor === 'All' || rowDoctor === selectedDoctor);
+
+        row.style.display = (statusMatch && doctorMatch) ? '' : 'none';
+      });
+    }
+
+    document.getElementById('statusFilter').addEventListener('change', filterAppointments);
+    document.getElementById('doctorFilter').addEventListener('change', filterAppointments);
+
+    // Populate doctor filter dynamically
+    document.addEventListener('DOMContentLoaded', function() {
+      const rows = document.querySelectorAll('#eventsTable tbody tr');
+      const doctorSet = new Set();
+
+      rows.forEach(row => {
+        const doctor = row.getAttribute('data-doctor');
+        if (doctor) doctorSet.add(doctor);
+      });
+
+      const doctorFilter = document.getElementById('doctorFilter');
+      [...doctorSet].sort().forEach(doctor => {
+        const option = document.createElement('option');
+        option.value = doctor;
+        option.textContent = doctor;
+        doctorFilter.appendChild(option);
+      });
+    });
   </script>
+
+  </script>
+
 </body>
 
 
