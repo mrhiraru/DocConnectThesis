@@ -36,6 +36,15 @@ include '../includes/head.php';
         <div class="card flex-fill my-4">
           <div class="card-body">
             <h2>Appointments</h2>
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" data-status="incoming" href="#incoming">Incoming</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-status="pending" href="#pending">Pending</a>
+              </li>
+
+            </ul>
             <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="Pending-tab" data-bs-toggle="tab" data-bs-target="#Pending" type="button" role="tab" aria-controls="Pending" aria-selected="true" onclick="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Pending')">Pending</button>
