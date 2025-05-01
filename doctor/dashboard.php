@@ -11,9 +11,11 @@ require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
 require_once('../classes/doctorDashboard.class.php');
 
-$doctor_id = $_SESSION['doctor_id'];
+$diagnosis = isset($_GET['diagnosis']) ? urldecode($_GET['diagnosis']) : '';
 
-$dashboard = new Dashboard($doctor_id);
+$doctorId = $_SESSION['doctor_id'];
+$dashboard = new Dashboard($doctorId);
+$appointments = $dashboard->fetchAppointmentsByDiagnosis($diagnosis);
 $overviewData = $dashboard->fetchOverviewData();
 $chartData = $dashboard->fetchPatientSummaryChartData();
 $nextPatient = $dashboard->fetchNextPatientDetails();
