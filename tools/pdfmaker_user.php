@@ -348,7 +348,7 @@
 
     // Prescription PDF (Patient Version)
     async function generatePDF() {
-        const imagePath = '../assets/images/<?= ($record['e_signature']) ?>';
+        const imagePath = '../assets/images/<?= ($_SESSION['e_signature']) ?>';
         try {
             const base64Image = await convertImageToBase64(imagePath);
             var prescription = {
@@ -511,25 +511,19 @@
                         margin: [0, 30, 0, 20]
                     },
                     {
-                        image: base64Image,
-                        height: 100,
-                        width: 250,
-                        margin: [275, 150, 0, 10]
-                    },
-                    {
                         canvas: [{
                             type: 'line',
-                            x1: 525, 
-                            y1: 0,
-                            x2: 275, 
-                            y2: 0,
+                            x1: 500,
+                            y1: 250,
+                            x2: 215,
+                            y2: 250,
                             lineWidth: 2
                         }]
                     },
                     {
                         text: 'Signature',
-                        margin: [375, 5, 0, 0]
-                    },
+                        margin: [333, 5, 0, 0]
+                    }
                 ],
                 styles: {
                     header: {
