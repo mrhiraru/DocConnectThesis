@@ -650,6 +650,65 @@ main.col-md-9 {
   background-color: #ad263416;
 }
 
+.campus-pic {
+  color: transparent;
+  transition: all .3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.campus-pic .bxs-camera-plus {
+  position: absolute;
+  bottom: 0px;
+  right: 0;
+  border-radius: 98px;
+  border: 5px solid white;
+}
+
+.campus-pic .label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 150px;
+  height: 150px;
+  z-index: 1000;
+  border-radius: 100px;
+}
+
+.campus-pic .label:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  z-index: 1;
+  transition: background-color .2s ease-in-out;
+  border-radius: 100px;
+  margin-bottom: 0;
+}
+
+.campus-pic .label span{
+  display: inline-flex;
+  padding: .2em;
+  height: 2em;
+  font-size: 1em;
+}
+
+.campus-pic input {
+  display: none;
+}
+
+.campus-pic img {
+  position: absolute;
+  object-fit: cover;
+  height: 150px;
+  width: 150px;
+  border: 3px solid var(--main-color);
+  z-index: 0;
+  border: 2px solid var(--primary);
+}
+
 /* ----------DoCOTROS_SETTINGS------------- */
 /* ADD/ EDIT CAMPUS */
 .docProfile_pic {
