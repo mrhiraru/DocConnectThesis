@@ -45,7 +45,7 @@ include '../includes/head.php';
               </li>
 
             </ul>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
               <li class="nav-item" role="presentation">
                 <button class="nav-link active" id="Pending-tab" data-bs-toggle="tab" data-bs-target="#Pending" type="button" role="tab" aria-controls="Pending" aria-selected="true" onclick="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Pending')">Pending</button>
               </li>
@@ -61,7 +61,7 @@ include '../includes/head.php';
               <li class="nav-item" role="presentation">
                 <button class="nav-link" id="Cancelled-tab" data-bs-toggle="tab" data-bs-target="#Cancelled" type="button" role="tab" aria-controls="Cancelled" aria-selected="false" onclick="load_appointments(<?= $_SESSION['doctor_id'] ?>, 'Cancelled')">Cancelled</button>
               </li>
-            </ul>
+            </ul> -->
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="Pending" role="tabpanel" aria-labelledby="Pending" tabindex="0">
 
