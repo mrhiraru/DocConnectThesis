@@ -55,7 +55,6 @@
                 color: '#444',
                 table: {
                     widths: [225, 75, 75, 100],
-                    headerRows: 1,
                     body: [
                         [{
                                 text: "Patient's Name: " + (<?= json_encode($_SESSION['fullname']) ?>),
