@@ -6,12 +6,12 @@ $appointment_class = new Appointment();
 
 ?>
 <div class="d-flex justify-content-end mt-2">
-    <button class="btn btn-green btn-sm me-2 text-light" onclick="handleExport('excel')">Export to Excel</button>
-    <button class="btn btn-danger btn-sm text-light" onclick="handleExport('pdf')">Export to PDF</button>
+    <button class="btn btn-green btn-sm me-2 text-light" onclick="exportTableToExcel('eventsTable')">Export to Excel</button>
+    <button class="btn btn-danger btn-sm text-light" onclick="exportTableToPDF('eventsTable')">Export to PDF</button>
 </div>
 
 <div class="table-responsive">
-    <table class="table table-striped" id="eventsTable_<?= strtolower($_GET['status']) ?>">
+    <table class="table table-striped" id="eventsTable">
         <thead>
             <tr>
                 <th></th>
@@ -77,21 +77,7 @@ $appointment_class = new Appointment();
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
 <script>
-    function handleExport(type) {
-        const activeTab = document.querySelector('.nav-link.active');
-        if (!activeTab) return alert('No active tab found!');
-
-        const status = activeTab.dataset.status || 'appointments';
-        const tableID = `eventsTable_${status.toLowerCase()}`;
-
-        if (type === 'excel') {
-            exportTableToExcel(tableID, status);
-        } else if (type === 'pdf') {
-            exportTableToPDF(tableID, status);
-        }
-    }
-
-    function exportTableToExcel(tableID, status = 'appointments') {
+    function exportTableToExcel(tableID) {
         setTimeout(() => {
             const table = document.getElementById(tableID);
             if (!table) return alert('Table not found!');
@@ -139,7 +125,7 @@ $appointment_class = new Appointment();
         }, 100);
     }
 
-    function exportTableToPDF(tableID, status = 'appointments') {
+    function exportTableToPDF(tableID) {
         setTimeout(() => {
             const table = document.getElementById(tableID);
             if (!table) return alert('Table not found!');
