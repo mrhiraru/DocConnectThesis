@@ -1,13 +1,13 @@
 <nav id="sidebarMenu" class="bg-white fixed-top col-md-3 col-lg-2 d-md-block border-end sidebar collapse min-vh-100 p-0">
     <div class="d-flex flex-column h-100">
-        <div class="pt-3 mb-2 d-flex align-items-center flex-row flex-md-column mx-auto">
+        <div class="pt-3 mb-2 d-flex align-items-center flex-row flex-md-column mx-2">
             <img src="<?php if (isset($_SESSION['account_image'])) {
                             echo "../assets/images/" . $_SESSION['account_image'];
                         } else {
                             echo "../assets/images/defualt_profile.png";
                         } ?>" alt="" height="100" width="100" class="rounded rounded-circle border border-2 border-primary me-2 me-md-0 mb-0 mb-md-2">
             <div class="d-flex flex-column align-items-start align-items-md-center">
-                <h5 class="text-primary fw-semibold mb-1"><?= $_SESSION['fullname'] ?></h5>
+                <h5 class="text-primary text-start text-md-center fw-semibold mb-1"><?= $_SESSION['fullname'] ?></h5>
                 <p class="text-muted fw-light mb-0"><?= $_SESSION['specialty'] ?></p>
             </div>
         </div>
