@@ -8,6 +8,7 @@ if (isset($_SESSION['verification_status']) && $_SESSION['verification_status'] 
   header('location: ../index.php');
   exit();
 }
+$birthdate = isset($_SESSION['birthdate']) ? date('Y-m-d', strtotime($_SESSION['birthdate'])) : "";
 
 require_once('../tools/functions.php');
 require_once('../classes/account.class.php');
