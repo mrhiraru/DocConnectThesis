@@ -348,7 +348,7 @@
 
     // Prescription PDF (Patient Version)
     async function generatePDF() {
-        const imagePath = '../assets/images/bg-1.png';
+        const imagePath = '../assets/images/<?= ($record['e_signature']) ?>';
         try {
             const base64Image = await convertImageToBase64(imagePath);
 
