@@ -14,13 +14,11 @@ if (isset($_POST['send'])) {
 
     if (validate_field($message->message)) {
         if ($message->send_bot_message()) {
-            echo "<script>alert('Message sent successfully!');</script>";
 
             $new_message = chatbot_response($message->message);
             $message->message = $new_message;
             $message->account_id = $_POST['account_id'];
             $message->message_type = 'bot';
-
             
 
             if (validate_field($message->message)) {
