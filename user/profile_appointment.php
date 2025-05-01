@@ -49,7 +49,7 @@ include '../includes/head.php';
                 <h5 class="card-title mb-0 text-green">Appointment List</h5>
 
                 <div class="d-flex align-items-center gap-2">
-                  <select id="statusFilter" class="form-select form-select-sm">
+                  <select id="statusFilter" class="form-select form-select-sm" style="width: 200px;">
                     <option value="All">All</option>
                     <option value="Pending">Pending</option>
                     <option value="Incoming">Incoming</option>
@@ -68,7 +68,7 @@ include '../includes/head.php';
               <div class="table-responsive">
                 <table class="table table-striped" id="eventsTable">
                   <thead>
-                    <tr data-status="<?= strtolower($item['appointment_status']) ?>">
+                    <tr>
                       <th>#</th>
                       <th>Doctor</th>
                       <th>Date & Time</th>
@@ -84,7 +84,7 @@ include '../includes/head.php';
                     if (empty(!$appointmentArray)) {
                       foreach ($appointmentArray as $item) {
                     ?>
-                        <tr>
+                        <tr data-status="<?= strtolower($item['appointment_status']) ?>">
                           <td><?= $counter ?></td>
                           <td><?= $item['doctor_name'] ?></td>
                           <td><?= date("l, M d, Y", strtotime($item['appointment_date'])) . " " . date("g:i A", strtotime($item['appointment_time'])) ?></td>
@@ -216,7 +216,7 @@ include '../includes/head.php';
         });
       }
     }
-    
+
     document.getElementById("statusFilter").addEventListener("change", function() {
       const selectedStatus = this.value.toLowerCase();
       const rows = document.querySelectorAll("#eventsTable tbody tr");
