@@ -7,7 +7,7 @@
                             echo "../assets/images/defualt_profile.png";
                         } ?>" alt="" height="100" width="100" class="rounded rounded-circle border border-2 border-primary me-2 me-md-0 mb-0 mb-md-2">
             <div class="d-flex flex-column align-items-start align-items-md-center">
-                <h5 class="text-primary fw-semibold mb-1"><?= $_SESSION['fullname'] ?></h5>
+                <h5 class="text-primary text-start text-md-center fw-semibold mb-1"><?= $_SESSION['fullname'] ?></h5>
                 <p class="text-muted fw-light mb-0"><?= $_SESSION['specialty'] ?></p>
             </div>
         </div>
