@@ -168,49 +168,49 @@
         var end_dt = new Date(start_dt.getTime() + 59 * 60 * 1000);
 
         const event = {
-            'summary': title, // Event Title
-            'description': description, // Event Description
+            'summary': title, 
+            'description': description, 
             'start': {
-                'dateTime': start_dt.toISOString(), // Start Time (ISO 8601 format)
-                'timeZone': 'UTC' // Time Zone
+                'dateTime': start_dt.toISOString(), 
+                'timeZone': 'UTC' 
             },
             'end': {
-                'dateTime': end_dt.toISOString(), // End Time
+                'dateTime': end_dt.toISOString(), 
                 'timeZone': 'UTC'
             },
             'conferenceData': {
                 'createRequest': {
-                    'requestId': appointment_id, // Unique request ID (random string)
+                    'requestId': appointment_id, 
                     'conferenceSolutionKey': {
-                        'type': 'hangoutsMeet' // Specifies Google Meet
+                        'type': 'hangoutsMeet'
                     }
                 }
             },
             'attendees': [{
                     'email': patient_email
-                }, // Patient's email
+                }, 
                 {
                     'email': doctor_email
-                } // Doctor's email
+                } 
             ],
             'reminders': {
-                'useDefault': false, // Set to false to define custom reminders
+                'useDefault': false, 
                 'overrides': [{
                         'method': 'email',
                         'minutes': 10
-                    }, // Send an email reminder 30 mins before
+                    }, 
                     {
                         'method': 'popup',
                         'minutes': 5
-                    } // Show a popup notification 10 mins before
+                    } 
                 ]
             }
         };
 
         const request = gapi.client.calendar.events.insert({
-            'calendarId': 'primary', // Inserts into the user's primary calendar
-            'resource': event, // Uses the event object created above
-            'conferenceDataVersion': 1 // Required to generate a Google Meet link
+            'calendarId': 'primary', 
+            'resource': event, 
+            'conferenceDataVersion': 1 
         });
 
         return new Promise((resolve, reject) => {
@@ -268,8 +268,8 @@
         };
 
         const request = gapi.client.calendar.events.update({
-            'calendarId': 'primary', // Updates the existing event
-            'eventId': event_id, // Specify the event to update
+            'calendarId': 'primary',
+            'eventId': event_id, 
             'resource': event
         });
 
@@ -289,8 +289,8 @@
 
     async function delete_event(event_id) {
         const request = gapi.client.calendar.events.delete({
-            'calendarId': 'primary', // Deletes from the user's primary calendar
-            'eventId': event_id // Specify the event to delete
+            'calendarId': 'primary', 
+            'eventId': event_id
         });
 
         return new Promise((resolve, reject) => {
@@ -341,7 +341,7 @@
                             type: 'POST',
                             data: formData,
                             success: function(response) {
-                                if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                if (response.trim() === 'success') { 
                                     const updated = document.getElementById('updatedModal');
                                     message_notifcation('confirm');
                                     email_notifcation('confirm');
@@ -383,7 +383,7 @@
                             type: 'POST',
                             data: formData,
                             success: function(response) {
-                                if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                if (response.trim() === 'success') {
                                     const updated = document.getElementById('rescheduleModal');
                                     message_notifcation('resched');
                                     email_notifcation('reschedule');
@@ -427,7 +427,7 @@
                                     type: 'POST',
                                     data: formData,
                                     success: function(response) {
-                                        if (response.trim() === 'success') { // Trim to avoid whitespace issues
+                                        if (response.trim() === 'success') { 
                                             const updated = document.getElementById('cancelledModal');
                                             message_notifcation('cancel');
                                             email_notifcation('cancel');
